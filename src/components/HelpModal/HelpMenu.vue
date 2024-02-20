@@ -2,26 +2,26 @@
   <nav class="menu">
     <div
       v-if="!helpMenu && isLoadingMenu"
-      v-t="'loading'"
+      v-t="'HelpModal.HelpMenu.loading'"
       class="help-menu-placeholder"
     />
 
     <div
       v-else-if="!helpMenu"
-      v-t="'helpMenuErrorPlaceholder'"
+      v-t="'HelpModal.HelpMenu.helpMenuErrorPlaceholder'"
       class="help-menu-placeholder"
     />
 
     <div
       v-else-if="!isAdministrator && helpMenu.length === 0"
-      v-t="'helpMenuEmptyPlaceholder'"
+      v-t="'HelpModal.HelpMenu.helpMenuEmptyPlaceholder'"
       class="help-menu-placeholder"
     />
 
     <ul v-else>
       <li v-if="isAdministrator">
         <WeprodeButton
-          v-t="('createCategoryLabel')"
+          v-t="('HelpModal.HelpMenu.createCategoryLabel')"
           data-test="create-category-button"
           class="create-category-button"
           :class="{'phone': mq.phone}"
@@ -106,12 +106,3 @@ ul {
   width: 100%;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "helpMenuErrorPlaceholder": "Aucun menu displonible",
-  "helpMenuEmptyPlaceholder": "Aucun résultat",
-  "createCategoryLabel": "+ Créer une catégorie",
-  "loading": "Chargement..."
-}
-</i18n>

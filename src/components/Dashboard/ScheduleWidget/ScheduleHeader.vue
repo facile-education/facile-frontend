@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h2 :aria-label="$t('schedule')" />
+    <h2 :aria-label="$t('Dashboard.ScheduleHeader.schedule')" />
 
     <DayNavigation
       class="day-navigation"
@@ -18,7 +18,7 @@
         src="@/assets/icons/calendar.svg"
         alt=""
       >
-      <span v-t="'redirect'" />
+      <span v-t="'Dashboard.ScheduleHeader.redirect'" />
     </button>
   </header>
 </template>
@@ -95,12 +95,3 @@ button:not(.redirect-button){
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "goAfter": "Jour suivant",
-  "goBefore": "Jour précédent",
-  "schedule": "Horaires",
-  "redirect": "Accéder au semainier"
-}
-</i18n>

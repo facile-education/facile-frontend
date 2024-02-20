@@ -8,7 +8,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="isCreation ? 'creationTitle' : 'updateTitle'" />
+      <span v-t="isCreation ? 'Accesses.SaveAccessModal.creationTitle' : 'Accesses.SaveAccessModal.updateTitle'" />
     </template>
 
     <template #body>
@@ -22,7 +22,7 @@
           <WeprodeInput
             ref="nameInput"
             v-model="title"
-            :placeholder="$t('namePlaceHolder') + '*'"
+            :placeholder="$t('Accesses.SaveAccessModal.namePlaceHolder') + '*'"
           />
           <WeprodeErrorMessage
             :error-message="formErrorList.title"
@@ -59,7 +59,7 @@
       <div class="roles-selection">
         <WeprodeTagsInput
           v-model="roles"
-          :placeholder="$t('rolesPlaceholder') + '*'"
+          :placeholder="$t('Accesses.SaveAccessModal.rolesPlaceholder') + '*'"
           :list="availableRoleList"
           :close-on-select="true"
           display-field="displayText"
@@ -73,7 +73,7 @@
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="isCreation? $t('creationSubmit') : $t('updateSubmit')"
+        :label="isCreation? $t('Accesses.SaveAccessModal.creationSubmit') : $t('Accesses.SaveAccessModal.updateSubmit')"
         @click="submit"
       />
     </template>
@@ -121,7 +121,7 @@ export default {
   data () {
     return {
       title: undefined,
-      selectedCategory: { categoryId: -1, categoryName: this.$t('placeholderCategory') },
+      selectedCategory: { categoryId: -1, categoryName: this.$t('Accesses.SaveAccessModal.placeholderCategory') },
       roles: [],
       initRedirection: undefined,
       selectedType: undefined,
@@ -182,13 +182,13 @@ export default {
     formErrorList () {
       return {
         title: (this.v$.title.$invalid && this.v$.title.$dirty)
-          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('sizeLimit1') + inputMaxSize + this.$t('sizeLimit2'))
+          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('Accesses.SaveAccessModal.sizeLimit1') + inputMaxSize + this.$t('Accesses.SaveAccessModal.sizeLimit2'))
           : '',
         roles: (this.v$.roles.$invalid && this.v$.roles.$dirty)
-          ? this.$t('selectRoles')
+          ? this.$t('Accesses.SaveAccessModal.selectRoles')
           : '',
         category: (this.v$.selectedCategory.$invalid && this.v$.selectedCategory.$dirty)
-          ? this.$t('selectCategory')
+          ? this.$t('Accesses.SaveAccessModal.selectCategory')
           : ''
       }
     },
@@ -275,7 +275,7 @@ export default {
 
       saveSchoolAccess(this.selectedSchool.schoolId, access).then((data) => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Accesses.SaveAccessModal.saveSuccess'), type: 'success' })
           this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
           this.onClose()
         } else {
@@ -324,22 +324,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "creationTitle": "Ajouter un accès",
-  "updateTitle": "Modifier un accès",
-  "namePlaceHolder": "Titre",
-  "placeholderCategory": "Choisir une catégorie",
-  "rolesPlaceholder": "Profils cibles",
-  "creationSubmit": "Créer",
-  "updateSubmit": "Modifier",
-  "sizeLimit1": "Ne doit pas dépasser ",
-  "sizeLimit2": " caractères",
-  "saveSuccess": "Accès mis à jour",
-  "selectRoles": "Veuillez séléctionner au moins un profil cible",
-  "selectCategory": "Veuillez séléctionner une catégorie",
-  "selectFolder": "Sélectionnez un dossier collaboratif",
-  "selectFile": "Sélectionnez un fichier collaboratif"
-}
-</i18n>

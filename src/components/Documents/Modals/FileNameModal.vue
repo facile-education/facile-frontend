@@ -10,7 +10,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="submitAction==='rename' ? 'renameHeader' : 'createHeader'" />
+      <span v-t="submitAction==='rename' ? 'Documents.FileNameModal.renameHeader' : 'Documents.FileNameModal.createHeader'" />
     </template>
 
     <template #body>
@@ -44,7 +44,7 @@
         v-if="!(submitAction==='createAudio' && !stoppedState)"
         data-test="submitButton"
         :disabled="isActionInProgress"
-        :label="submitAction==='rename' ? $t('rename') : $t('createSubmit')"
+        :label="submitAction==='rename' ? $t('Documents.FileNameModal.rename') : $t('Documents.FileNameModal.createSubmit')"
         @click="submit"
       />
     </template>
@@ -154,18 +154,18 @@ export default {
         if (this.v$.inputText.$errors[0].$validator === 'required') {
           return this.$t('Commons.required')
         } else if (this.v$.inputText.$errors[0].$validator === 'isUnderMaxSize') {
-          return this.$t('sizeLimit1') + entityNameMaxSize + this.$t('sizeLimit2')
+          return this.$t('Documents.FileNameModal.sizeLimit1') + entityNameMaxSize + this.$t('Documents.FileNameModal.sizeLimit2')
         } else if (this.v$.inputText.$errors[0].$validator === 'notBeginByDot') {
-          return this.$t('notBeginByDot')
+          return this.$t('Documents.FileNameModal.notBeginByDot')
         } else if (this.v$.inputText.$errors[0].$validator === 'containsNoCotes') {
-          return this.$t('containsNoCotes')
+          return this.$t('Documents.FileNameModal.containsNoCotes')
         } else {
           console.error('Unknown validation error')
           return ''
         }
       } else {
         if (this.backError) {
-          return this.$t('backError')
+          return this.$t('Documents.FileNameModal.backError')
         } else {
           return ''
         }
@@ -373,17 +373,3 @@ p {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "backError": "Une erreur est survenue",
-  "containsNoCotes": "Ne doit pas contenir de caractères spéciaux",
-  "createHeader": "Nouveau",
-  "createSubmit": "Créer",
-  "notBeginByDot": "Ne doit pas commencer par un '.'",
-  "rename": "Renommer",
-  "renameHeader": "Renommer",
-  "sizeLimit1": "Ne doit pas dépasser ",
-  "sizeLimit2": " caractères"
-}
-</i18n>

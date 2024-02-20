@@ -63,7 +63,7 @@ export default {
       return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.SessionActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.SessionActivity.at') + ' HH:mm')
     },
     isCourse () {
       return this.activity.type === activityConstants.TYPE_SESSION
@@ -75,7 +75,7 @@ export default {
         case activityConstants.TYPE_HOMEWORK:
           return this.$t('TYPE_HOMEWORK', { homeworkDate: dayjs(this.activity.targetDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY') })
         default:
-          return this.$t('unknown-activity')
+          return this.$t('Dashboard.SessionActivity.unknown-activity')
       }
     }
   },
@@ -118,13 +118,3 @@ export default {
   width: 35px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "TYPE_SESSION": "a ajouté un support au cours du {courseDate}",
-  "TYPE_HOMEWORK": "a donné du travail pour le cours du {homeworkDate}",
-  "unknown-activity": "Activité inconnue",
-  "on": "Le",
-  "at": "à"
-}
-</i18n>

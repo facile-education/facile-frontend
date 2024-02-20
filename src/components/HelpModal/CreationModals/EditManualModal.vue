@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'HelpModal.EditManualModal.title'" />
     </template>
 
     <template #body>
@@ -24,7 +24,7 @@
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="$t('submit')"
+        :label="$t('HelpModal.EditManualModal.submit')"
         @click="submit"
       />
     </template>
@@ -94,10 +94,3 @@ export default {
   overflow-y: auto;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "title": "ÉDITER LE MANUEL",
-  "submit": "Valider"
-}
-</i18n>

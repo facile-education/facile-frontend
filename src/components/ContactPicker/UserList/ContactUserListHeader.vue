@@ -15,7 +15,7 @@
     <WeprodeInput
       v-model="filter"
       class="filter-input"
-      :placeholder="$t('searchPlaceHolder')"
+      :placeholder="$t('ContactPicker.ContactUserListHeader.searchPlaceHolder')"
       @update:model-value="updateFilter"
     />
 
@@ -119,9 +119,3 @@ button {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "searchPlaceHolder": "Filtrer"
-}
-</i18n>

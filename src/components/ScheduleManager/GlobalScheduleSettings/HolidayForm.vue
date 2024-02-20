@@ -3,7 +3,7 @@
     <div class="name">
       <WeprodeInput
         v-model="name"
-        :placeholder="$t('namePlaceHolder') + '*'"
+        :placeholder="$t('ScheduleManager.HolidayForm.namePlaceHolder') + '*'"
       />
       <WeprodeErrorMessage
         :error-message="formErrorList.name"
@@ -24,11 +24,11 @@
 
     <div class="buttons">
       <WeprodeButton
-        v-t="'submit'"
+        v-t="'ScheduleManager.HolidayForm.submit'"
         @click="submit"
       />
       <WeprodeButton
-        v-t="'cancel'"
+        v-t="'ScheduleManager.HolidayForm.cancel'"
         @click="$emit('cancel')"
       />
     </div>
@@ -85,13 +85,13 @@ export default {
     formErrorList () {
       return {
         name: (this.v$.name.$invalid && this.v$.name.$dirty)
-          ? this.$t('required')
+          ? this.$t('ScheduleManager.HolidayForm.required')
           : '',
         startDate: (this.v$.startDate.$invalid && this.v$.startDate.$dirty)
-          ? this.$t('required')
+          ? this.$t('ScheduleManager.HolidayForm.required')
           : '',
         endDate: (this.v$.endDate.$invalid && this.v$.endDate.$dirty)
-          ? (this.v$.endDate.$errors[0].$validator === 'required' ? this.$t('required') : this.$t('afterStartDate'))
+          ? (this.v$.endDate.$errors[0].$validator === 'required' ? this.$t('ScheduleManager.HolidayForm.required') : this.$t('ScheduleManager.HolidayForm.afterStartDate'))
           : ''
       }
     }
@@ -142,13 +142,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "namePlaceHolder": "Nom",
-  "submit": "Créer",
-  "cancel": "Annuler",
-  "required": "Champ requis",
-  "afterStartDate": "Cette date doit se situer après la date de début"
-}
-</i18n>

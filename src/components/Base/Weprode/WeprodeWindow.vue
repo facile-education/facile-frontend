@@ -59,8 +59,8 @@
               v-if="closable"
               class="header-option-item"
               data-test="closeModal"
-              :aria-label="$t('close')"
-              :title="$t('close')"
+              :aria-label="$t('Base.WeprodeWindow.close')"
+              :title="$t('Base.WeprodeWindow.close')"
               @click="$emit('close')"
             >
               <NeroIcon name="times" />
@@ -356,9 +356,3 @@ $modal-padding: 25px;
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "close": "Fermer"
-}
-</i18n>

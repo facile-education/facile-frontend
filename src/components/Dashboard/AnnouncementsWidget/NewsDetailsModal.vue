@@ -27,14 +27,14 @@
           v-if="initNews.isEditable"
           class="footer-button"
           data-test="updateButton"
-          :label="$t('update')"
+          :label="$t('Dashboard.NewsDetailsModal.update')"
           @click="openUpdateModal"
         />
         <WeprodeButton
           v-if="initNews.isDeletable"
           class="footer-button"
           data-test="deleteButton"
-          :label="$t('delete')"
+          :label="$t('Dashboard.NewsDetailsModal.delete')"
           @click="confirmDeleteNews"
         />
       </div>
@@ -100,10 +100,3 @@ export default {
   margin-left: 1rem;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "update": "Modifier",
-  "delete": "Supprimer"
-}
-</i18n>

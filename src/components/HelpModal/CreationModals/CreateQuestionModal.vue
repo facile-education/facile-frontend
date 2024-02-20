@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'HelpModal.CreateQuestionModal.title'" />
     </template>
 
     <template #body>
@@ -17,7 +17,7 @@
         ref="questionInput"
         v-model="questionInput"
         class="question-input"
-        :placeholder="$t('questionPlaceHolder')"
+        :placeholder="$t('HelpModal.CreateQuestionModal.questionPlaceHolder')"
       />
 
       <CKEditor
@@ -31,7 +31,7 @@
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="$t('submit')"
+        :label="$t('HelpModal.CreateQuestionModal.submit')"
         :disabled="questionInput.length === 0 || answerInput.length === 0"
         @click="submit"
       />
@@ -59,7 +59,7 @@ export default {
       answerInput: '',
       editor: InlineEditor,
       editorConfig: {
-        placeholder: this.$t('answerPlaceholder')
+        placeholder: this.$t('HelpModal.CreateQuestionModal.answerPlaceholder')
       }
     }
   },
@@ -108,12 +108,3 @@ export default {
   overflow-y: auto;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "title": "AJOUTER UNE QUESTION/RÉPONSE",
-  "questionPlaceHolder": "Question",
-  "answerPlaceholder": "Réponse",
-  "submit": "Valider"
-}
-</i18n>

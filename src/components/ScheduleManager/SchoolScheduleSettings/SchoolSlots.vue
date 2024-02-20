@@ -1,13 +1,13 @@
 <template>
   <section>
-    <h2 v-t="('schoolSlots')" />
+    <h2 v-t="('ScheduleManager.SchoolSlots.schoolSlots')" />
     <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'ScheduleManager.SchoolSlots.errorPlaceholder'"
       class="placeholder"
     />
     <div v-else>
@@ -24,7 +24,7 @@
         </li>
       </ol>
       <WeprodeButton
-        v-t="'addSlot'"
+        v-t="'ScheduleManager.SchoolSlots.addSlot'"
         @click="addSlot"
       />
     </div>
@@ -32,7 +32,7 @@
     <footer>
       <div class="right">
         <WeprodeButton
-          v-t="'submit'"
+          v-t="'ScheduleManager.SchoolSlots.submit'"
           @click="submit"
         />
         <WeprodeErrorMessage :error-message="formErrorList.slots" />
@@ -113,7 +113,7 @@ export default {
     formErrorList () {
       return {
         slots: (this.v$.slots.$invalid && this.v$.slots.$dirty)
-          ? this.$t('slotsOverlaps')
+          ? this.$t('ScheduleManager.SchoolSlots.slotsOverlaps')
           : ''
       }
     }
@@ -155,14 +155,14 @@ export default {
     saveSchoolSlotConfiguration () {
       saveSchoolSlotConfiguration(this.selectedSchool.schoolId, this.slotsWithPosition).then((data) => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('ScheduleManager.SchoolSlots.success'), type: 'success' })
           this.getSchoolSlotsConfiguration()
         } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('ScheduleManager.SchoolSlots.error'), type: 'error' })
           console.error('Error')
         }
       }, (err) => {
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('ScheduleManager.SchoolSlots.error'), type: 'error' })
         console.error(err)
       })
     },
@@ -219,15 +219,3 @@ footer {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "schoolSlots": "Créneaux horaires de l'établissement",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "addSlot": "Ajouter un créneau",
-  "submit": "Valider les créneaux",
-  "success": "Créneaux mis à jour",
-  "error": "Échec de l'enregistrement",
-  "slotsOverlaps": "Les créneaux ne doivent pas se chevaucher"
-}
-</i18n>

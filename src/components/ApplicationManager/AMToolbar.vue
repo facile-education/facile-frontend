@@ -50,7 +50,7 @@ export default {
 
       const schoolList = WeprodeUtils.deepCopy(this.$store.state.administration.schoolList)
       if (this.isAdministrator) {
-        schoolList.push({ schoolId: 0, schoolName: this.$t('allENT') })
+        schoolList.push({ schoolId: 0, schoolName: this.$t('ApplicationManager.AMToolbar.allENT') })
       }
       return schoolList
     },
@@ -95,9 +95,3 @@ export default {
   margin-left: auto;
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "allENT": "Tout l'ENTA"
-  }
-</i18n>

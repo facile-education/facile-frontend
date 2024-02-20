@@ -8,7 +8,7 @@
     @close="confirmClosure"
   >
     <template #header>
-      <span v-t="isCreation ? (isSchoolNews ? 'schoolCreationTitle' : 'creationTitle') : (isSchoolNews ? 'schoolUpdateTitle' : 'updateTitle')" />
+      <span v-t="isCreation ? (isSchoolNews ? 'Dashboard.SaveNewsModal.schoolCreationTitle' : 'Dashboard.SaveNewsModal.creationTitle') : (isSchoolNews ? 'Dashboard.SaveNewsModal.schoolUpdateTitle' : 'Dashboard.SaveNewsModal.updateTitle')" />
     </template>
 
     <template #body>
@@ -29,7 +29,7 @@
           <WeprodeTagsInput
             ref="tagsInput"
             v-model="populations"
-            :placeholder="$t('populationPlaceholder') + '*'"
+            :placeholder="$t('Dashboard.SaveNewsModal.populationPlaceholder') + '*'"
             :list="availablePopulationsList"
             :close-on-select="true"
             sort-field="order"
@@ -46,7 +46,7 @@
           class="release-date"
           :class="{'phone': mq.phone || mq.tablet}"
         >
-          <div v-t="'releaseDateLabel'" />
+          <div v-t="'Dashboard.SaveNewsModal.releaseDateLabel'" />
           <CustomDatePicker
             v-model:selected-date="releaseDate"
             :min-date="minDate"
@@ -69,7 +69,7 @@
           ref="tagsInput"
           v-model="populations"
           class="last-population-selection"
-          :placeholder="$t('populationPlaceholder') + '*'"
+          :placeholder="$t('Dashboard.SaveNewsModal.populationPlaceholder') + '*'"
           :list="availablePopulationsList"
           sort-field="order"
           :sort="true"
@@ -87,7 +87,7 @@
         <WeprodeInput
           ref="nameInput"
           v-model="title"
-          :placeholder="$t('namePlaceHolder') + '*'"
+          :placeholder="$t('Dashboard.SaveNewsModal.namePlaceHolder') + '*'"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.title"
@@ -98,7 +98,7 @@
         v-if="content !== undefined"
         v-model:content="content"
         class="ck-editor"
-        :placeholder="$t('contentPlaceHolder')"
+        :placeholder="$t('Dashboard.SaveNewsModal.contentPlaceHolder')"
       />
 
       <WeprodeErrorMessage
@@ -116,7 +116,7 @@
         v-if="isSchoolNews && !isCreation"
         class="unread-checkbox"
       >
-        <span v-t="'markAsUnreadForAll'" />
+        <span v-t="'Dashboard.SaveNewsModal.markAsUnreadForAll'" />
         <WeprodeToggleSwitch
           v-model="markAsUnreadForAll"
           data-test="markAsUnreadForAll"
@@ -124,7 +124,7 @@
         <InformationIcon
           class="info"
           :is-above=" true"
-          :text="$t('switchHelp')"
+          :text="$t('Dashboard.SaveNewsModal.switchHelp')"
         />
       </div>
     </template>
@@ -132,7 +132,7 @@
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="isCreation? $t('creationSubmit') : $t('updateSubmit')"
+        :label="isCreation? $t('Dashboard.SaveNewsModal.creationSubmit') : $t('Dashboard.SaveNewsModal.updateSubmit')"
         :disabled="isLoadingFiles"
         @click="submit"
       />
@@ -261,16 +261,16 @@ export default {
     formErrorList () {
       return {
         title: (this.v$.title.$invalid && this.v$.title.$dirty)
-          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('sizeLimit1') + inputMaxSize + this.$t('sizeLimit2'))
+          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('Dashboard.SaveNewsModal.sizeLimit1') + inputMaxSize + this.$t('Dashboard.SaveNewsModal.sizeLimit2'))
           : '',
         content: (this.v$.content.$invalid && this.v$.content.$dirty)
-          ? this.$t('sizeLimit1') + ckMaxSize + this.$t('sizeLimit2')
+          ? this.$t('Dashboard.SaveNewsModal.sizeLimit1') + ckMaxSize + this.$t('Dashboard.SaveNewsModal.sizeLimit2')
           : '',
         populations: (this.v$.populations.$invalid && this.v$.populations.$dirty)
-          ? this.$t('selectPopulations')
+          ? this.$t('Dashboard.SaveNewsModal.selectPopulations')
           : '',
         releaseDate: (this.v$.releaseDate.$invalid && this.v$.releaseDate.$dirty)
-          ? this.$t('dateInPast')
+          ? this.$t('Dashboard.SaveNewsModal.dateInPast')
           : ''
       }
     },
@@ -454,7 +454,7 @@ export default {
         this.isProcessingSave = false
         if (data.success) {
           if (this.releaseDate.isAfter(dayjs())) {
-            this.$store.dispatch('popups/pushPopup', { message: this.isSchoolNews ? this.$t('announcementCreationSuccess') : this.$t('groupNewsCreationSuccess'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.isSchoolNews ? this.$t('Dashboard.SaveNewsModal.announcementCreationSuccess') : this.$t('Dashboard.SaveNewsModal.groupNewsCreationSuccess'), type: 'success' })
           }
           this.$emit('create')
           this.onClose()
@@ -473,7 +473,7 @@ export default {
         this.isProcessingSave = false
         if (data.success) {
           if (this.releaseDate.isAfter(dayjs())) {
-            this.$store.dispatch('popups/pushPopup', { message: this.isSchoolNews ? this.$t('announcementUpdateSuccess') : this.$t('groupNewsUpdateSuccess'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.isSchoolNews ? this.$t('Dashboard.SaveNewsModal.announcementUpdateSuccess') : this.$t('Dashboard.SaveNewsModal.groupNewsUpdateSuccess'), type: 'success' })
           }
           this.$emit('update')
           this.onClose()
@@ -499,7 +499,7 @@ export default {
 
       if (JSON.stringify(actualForm) !== JSON.stringify(this.initialForm)) {
         this.$store.dispatch('warningModal/addWarning', {
-          text: this.$t('confirmClosure'),
+          text: this.$t('Dashboard.SaveNewsModal.confirmClosure'),
           lastAction: { fct: this.onClose }
         })
       } else {
@@ -601,30 +601,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "creationTitle": "Partager une information",
-  "updateTitle": "Modifier une information",
-  "schoolCreationTitle": "Créer une annonce",
-  "schoolUpdateTitle": "Modifier une annonce",
-  "releaseDateLabel": "Parution",
-  "namePlaceHolder": "Titre",
-  "contentPlaceHolder": "Détails",
-  "populationPlaceholder": "Destinataires",
-  "addFile": "Ajouter un fichier",
-  "markAsUnreadForAll": "Notifier les destinataires",
-  "creationSubmit": "Créer",
-  "updateSubmit": "Modifier",
-  "sizeLimit1": "Ne doit pas dépasser ",
-  "sizeLimit2": " caractères",
-  "selectPopulations": "Veuillez séléctionner une population cible",
-  "dateInPast": "La date de parution ne doit pas se situer dans le passé",
-  "switchHelp": "Cette option permet de notifier les destinataires et l'annonce sera considérée comme non lue",
-  "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
-  "announcementCreationSuccess": "Annonce créée",
-  "groupNewsCreationSuccess": "Information créée",
-  "announcementUpdateSuccess": "Annonce modifiée",
-  "groupNewsUpdateSuccess": "Information modifiée"
-}
-</i18n>

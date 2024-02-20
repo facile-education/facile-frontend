@@ -17,7 +17,7 @@
     <div class="is-admin">
       <WeprodeToggleSwitch
         v-model="adminValue"
-        :title="$t('admin')"
+        :title="$t('Groups.SelectedGroupMemberItem.admin')"
         :disabled="isCurrentMember || !isCurrentGroupAdmin"
         @update:model-value="toggleAdminStatus"
       />
@@ -132,11 +132,3 @@ export default {
 
 }
 </style>
-<i18n locale="fr">
-{
-  "false": "Non",
-  "true": "Oui",
-  "admin": "Administrateur",
-  "delete": "Supprimer l'utilisateur"
-}
-</i18n>

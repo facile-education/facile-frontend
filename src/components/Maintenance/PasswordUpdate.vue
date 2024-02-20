@@ -4,7 +4,7 @@
       <div class="search">
         <WeprodeInput
           v-model="searchInput"
-          :placeholder="$t('searchPlaceholder')"
+          :placeholder="$t('Maintenance.PasswordUpdate.searchPlaceholder')"
           :maxlength="75"
           @input="searchTimeOut"
         />
@@ -26,14 +26,14 @@
       <div class="password">
         <WeprodeInput
           v-model="password1"
-          :placeholder="$t('passwordPlaceholder')"
+          :placeholder="$t('Maintenance.PasswordUpdate.passwordPlaceholder')"
           :maxlength="75"
         />
         <WeprodeButton
           class="round"
           @click="updatePassword"
         >
-          <span>{{ $t('update-password') }}</span>
+          <span>{{ $t('Maintenance.PasswordUpdate.update-password') }}</span>
         </WeprodeButton>
       </div>
     </div>
@@ -43,10 +43,10 @@
       aria-label="result users"
     >
       <tr>
-        <th v-t="'identity'" />
-        <th v-t="'profile'" />
-        <th v-t="'screenName'" />
-        <th v-t="'school'" />
+        <th v-t="'Maintenance.PasswordUpdate.identity'" />
+        <th v-t="'Maintenance.PasswordUpdate.profile'" />
+        <th v-t="'Maintenance.PasswordUpdate.screenName'" />
+        <th v-t="'Maintenance.PasswordUpdate.school'" />
       </tr>
       <tr
         v-for="(user, index) in completionUsers"
@@ -147,9 +147,9 @@ export default {
     updatePassword () {
       updatePasswordByManager(this.selectedUser.userId, this.password1).then((data) => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.PasswordUpdate.success'), type: 'success' })
         } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.PasswordUpdate.error'), type: 'error' })
         }
       })
     }
@@ -194,17 +194,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "identity": "Identité",
-  "profile": "Profil",
-  "screenName": "Login",
-  "school": "Établissement",
-  "searchPlaceholder": "Rechercher par nom",
-  "passwordPlaceholder": "Nouveau mot de passe",
-  "update-password": "Changer le mot de passe",
-  "success": "Mot de passe changé",
-  "error": "Erreur lors du changement de mot de passe"
-}
-</i18n>

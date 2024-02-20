@@ -1,10 +1,10 @@
 <template>
   <section class="manual-section">
     <div class="header">
-      <h3 v-t="'manual'" />
+      <h3 v-t="'HelpModal.HelpManualSection.manual'" />
       <button
         v-if="isAdministrator"
-        v-t="'edit'"
+        v-t="'HelpModal.HelpManualSection.edit'"
         @click="isEditManualModalDisplayed=true"
       />
     </div>
@@ -19,7 +19,7 @@
       class="toggle-fold-button"
       @click="toggleFold"
     >
-      {{ isFolded ? $t('showMore') : $t('showLess') }}
+      {{ isFolded ? $t('HelpModal.HelpManualSection.showMore') : $t('HelpModal.HelpManualSection.showLess') }}
     </button>
 
     <teleport
@@ -163,12 +163,3 @@ h3 {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "manual": "MANUEL",
-  "edit": "Éditer",
-  "showMore": "VOIR PLUS",
-  "showLess": "VOIR MOINS"
-}
-</i18n>

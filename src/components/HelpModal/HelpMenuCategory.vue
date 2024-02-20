@@ -108,7 +108,7 @@ export default {
     },
     confirmCategoryRemoval () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('confirmCategoryRemovalMessage'),
+        text: this.$t('HelpModal.HelpMenuCategory.confirmCategoryRemovalMessage'),
         lastAction: { fct: this.deleteCategory, params: [] }
       })
     },
@@ -200,9 +200,3 @@ ul {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "confirmCategoryRemovalMessage": "Supprimmer la catégorie définitivement?"
-}
-</i18n>

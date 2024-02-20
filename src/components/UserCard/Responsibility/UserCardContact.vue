@@ -15,14 +15,14 @@
         class="contact-button"
         data-test="SendMessage"
         :cls="''"
-        :title="$t('contact')"
+        :title="$t('UserCard.UserCardContact.contact')"
         :class="{'phone': mq.phone}"
         @click="$emit('contact')"
       >
         <img
           class="contact-icon"
           src="@assets/icons/sent2.svg"
-          :alt="$t('contact')"
+          :alt="$t('UserCard.UserCardContact.contact')"
         >
         <span v-t="'Contacter'" />
       </WeprodeButton>
@@ -30,7 +30,7 @@
     <div class="bottom">
       <p>{{ userInfos.email }}</p>
       <p v-if="userInfos.homePhone">
-        {{ userInfos.homePhone }} {{ `(${$t('homePhone')})` }}
+        {{ userInfos.homePhone }} {{ `(${$t('UserCard.UserCardContact.homePhone')})` }}
       </p>
       <p v-if="userInfos.mobilePhone">
         {{ userInfos.mobilePhone }} (perso)
@@ -118,10 +118,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "contact": "Contacter cet utilisateur",
-    "homePhone": "maison"
-  }
-</i18n>

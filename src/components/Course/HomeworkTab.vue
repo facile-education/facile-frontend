@@ -1,14 +1,14 @@
 <template>
   <div class="homework-tab">
     <WeekHomeworks
-      :label="$t('currentWeek')"
+      :label="$t('Course.HomeworkTab.currentWeek')"
       :nb-undone="nbCurrentWeekUndone"
       :displayed="displayedSection === 'currentWeek'"
       :params="{dates: currentWeekDates, userId: userId}"
       @display="displayedSection = 'currentWeek'"
     />
     <WeekHomeworks
-      :label="$t('nextWeek')"
+      :label="$t('Course.HomeworkTab.nextWeek')"
       :nb-undone="nbNextWeekUndone"
       :displayed="displayedSection === 'nextWeek'"
       :params="{dates: nextWeekDates, userId: userId}"
@@ -16,7 +16,7 @@
     />
     <WeekHomeworks
       v-if="schoolYearEndDate"
-      :label="$t('later')"
+      :label="$t('Course.HomeworkTab.later')"
       :nb-undone="nbLaterUndone"
       :displayed="displayedSection === 'later'"
       :params="{dates: laterDates, userId: userId}"
@@ -99,11 +99,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "later": "Plus tard :",
-  "nextWeek": "La semaine prochaine :",
-  "currentWeek": "Cette semaine :"
-}
-</i18n>

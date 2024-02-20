@@ -19,7 +19,7 @@
           <button
             class="close-option"
             data-test="close-panel"
-            :title="$t('close')"
+            :title="$t('Groups.GroupDetails.close')"
             @click="closePanel"
           >
             <CustomIcon
@@ -35,25 +35,25 @@
               v-if="!selectedGroup.isExpired"
               class="option"
               data-test="edit-group-option"
-              :title="$t('edit')"
+              :title="$t('Groups.GroupDetails.edit')"
               @click="editGroup"
             >
               <img
                 class="button"
                 src="@assets/icons/pen.svg"
-                :alt="$t('edit')"
+                :alt="$t('Groups.GroupDetails.edit')"
               >
             </button>
             <button
               class="option"
               data-test="delete-group-option"
-              :title="$t('delete')"
+              :title="$t('Groups.GroupDetails.delete')"
               @click="confirmGroupDeletion"
             >
               <img
                 class="button"
                 src="@/assets/icons/trash2.svg"
-                :alt="$t('delete')"
+                :alt="$t('Groups.GroupDetails.delete')"
               >
             </button>
           </div>
@@ -68,13 +68,13 @@
       <WeprodeTabList>
         <WeprodeTabItem
           style="height: calc(100% - 37px)"
-          :title="$t('details')"
+          :title="$t('Groups.GroupDetails.details')"
         >
           <GroupDetailsTab :group="selectedGroup" />
         </WeprodeTabItem>
         <WeprodeTabItem
           style="height: calc(100% - 37px)"
-          :title="$t('activities')"
+          :title="$t('Groups.GroupDetails.activities')"
         >
           <GroupActivityTab :group="selectedGroup" />
         </WeprodeTabItem>
@@ -118,15 +118,15 @@ export default {
     groupCategory () {
       if (this.selectedGroup) {
         if (this.selectedGroup.isClass) {
-          return this.$t('class')
+          return this.$t('Groups.GroupDetails.class')
         } else if (this.selectedGroup.isPedagogical) {
-          return this.$t('pedagogical')
+          return this.$t('Groups.GroupDetails.pedagogical')
         } else if (this.selectedGroup.isSubject) {
-          return this.$t('subject')
+          return this.$t('Groups.GroupDetails.subject')
         } else if (this.selectedGroup.isSchool) {
-          return this.$t('school')
+          return this.$t('Groups.GroupDetails.school')
         } else if (this.selectedGroup.isInstitutional) {
-          return this.$t('institutionnal')
+          return this.$t('Groups.GroupDetails.institutionnal')
         } else {
           return ''
         }
@@ -138,7 +138,7 @@ export default {
   methods: {
     confirmGroupDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('warning'),
+        text: this.$t('Groups.GroupDetails.warning'),
         lastAction: { fct: this.deleteGroup }
       })
     },
@@ -262,19 +262,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "activities": "Activités",
-  "class": "Classe",
-  "close": "Fermer les détails",
-  "delete": "Supprimer",
-  "details": "Détails",
-  "edit": "Modifier",
-  "institutionnal": "Institutionnel",
-  "pedagogical": "Pédagogique",
-  "school": "Établissement",
-  "subject": "Discipline",
-  "warning": "La suppression de ce groupe est définitive."
-}
-</i18n>

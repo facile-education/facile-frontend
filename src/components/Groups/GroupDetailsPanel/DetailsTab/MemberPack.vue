@@ -9,8 +9,8 @@
       <img
         :class="isCollapsed ? 'extend': 'collapse'"
         src="@assets/icons/chevron_right.svg"
-        :alt="isCollapsed ? $t('unCollapse') : $t('collapse')"
-        :title="isCollapsed ? $t('unCollapse') : $t('collapse')"
+        :alt="isCollapsed ? $t('Groups.MemberPack.unCollapse') : $t('Groups.MemberPack.collapse')"
+        :title="isCollapsed ? $t('Groups.MemberPack.unCollapse') : $t('Groups.MemberPack.collapse')"
       >
     </div>
 
@@ -104,10 +104,3 @@ span {
   margin-left: 35px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "collapse": "replier",
-  "unCollapse": "déplier"
-}
-</i18n>

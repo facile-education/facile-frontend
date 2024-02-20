@@ -14,10 +14,10 @@
     v-else-if="groupList !== undefined"
     class="empty-container"
   >
-    <span v-t="'noContentFound'" />
+    <span v-t="'Groups.GroupList.noContentFound'" />
     <a
       v-if="canCreateGroup"
-      v-t="'addGroup'"
+      v-t="'Groups.GroupList.addGroup'"
       href="#"
       @click="isEditModalDisplayed=true"
     />
@@ -109,10 +109,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "noContentFound": "Aucun groupe.",
-  "addGroup": "Créez votre groupe !"
-}
-</i18n>

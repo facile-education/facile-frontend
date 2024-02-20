@@ -22,7 +22,7 @@
           src="@/assets/icons/calendar.svg"
           alt=""
         >
-        <span v-t="'back'" />
+        <span v-t="'Course.ScheduleTab.back'" />
       </button>
 
       <SessionDetails :session="selectedSession" />
@@ -131,9 +131,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "back": "Revenir au semainier"
-}
-</i18n>

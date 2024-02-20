@@ -4,7 +4,7 @@
       v-if="group.expirationDate"
       class="expiration-date"
     >
-      {{ $t('expire') + formattedDate }}
+      {{ $t('Groups.GroupDetailsTab.expire') + formattedDate }}
     </div>
 
     <p
@@ -25,7 +25,7 @@
           src="@assets/icons/folder.svg"
           alt="image"
         >
-        <span v-t="'accessToDocuments'" />
+        <span v-t="'Groups.GroupDetailsTab.accessToDocuments'" />
       </RouterLink>
     </div>
 
@@ -41,33 +41,33 @@
             alt="icon_commu"
           >
           <span>
-            {{ $tc('members', members.length) }}
+            {{ $tc('Groups.GroupDetailsTab.members', members.length) }}
           </span>
         </div>
         <div class="members-details">
           <MemberPack
             v-if="adminMembers.length > 0"
-            :title="$tc('admins', adminMembers.length)"
+            :title="$tc('Groups.GroupDetailsTab.admins', adminMembers.length)"
             :member-list="adminMembers"
           />
           <MemberPack
             v-if="teachersMembers.length > 0"
-            :title="$tc('teachers', teachersMembers.length)"
+            :title="$tc('Groups.GroupDetailsTab.teachers', teachersMembers.length)"
             :member-list="teachersMembers"
           />
           <MemberPack
             v-if="studentMembers.length > 0"
-            :title="$tc('students', studentMembers.length)"
+            :title="$tc('Groups.GroupDetailsTab.students', studentMembers.length)"
             :member-list="studentMembers"
           />
           <MemberPack
             v-if="parentMembers.length > 0"
-            :title="$tc('parents', parentMembers.length)"
+            :title="$tc('Groups.GroupDetailsTab.parents', parentMembers.length)"
             :member-list="parentMembers"
           />
           <MemberPack
             v-if="othersMembers.length > 0"
-            :title="$tc('others', othersMembers.length)"
+            :title="$tc('Groups.GroupDetailsTab.others', othersMembers.length)"
             :member-list="othersMembers"
           />
         </div>
@@ -233,17 +233,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "accessToDocuments": "Accéder aux documents",
-  "admins": "Administrateur | Administrateur | Administrateurs",
-  "expire": "Expire le ",
-  "members": "Aucun membre | {count} Membre | {count} Membres",
-  "others": "Personnel | Personnels",
-  "parents": "Responsable légal | Responsables légaux",
-  "publishNew": "Publier une actualité",
-  "students": "Elève | Elèves",
-  "teachers": "Enseignant | Enseignants"
-}
-</i18n>

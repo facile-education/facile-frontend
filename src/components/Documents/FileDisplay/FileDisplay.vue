@@ -51,12 +51,12 @@
     />
     <div
       v-else-if="typeOfView === 'Forbidden'"
-      v-t="('Forbidden')"
+      v-t="('Documents.FileDisplay.Forbidden')"
       class="placeHolder"
     />
     <div
       v-else
-      v-t="('Unsupported')"
+      v-t="('Documents.FileDisplay.Unsupported')"
       class="placeHolder"
     />
   </div>
@@ -214,7 +214,7 @@ export default {
               const message = this.$t('lockWarningUser', { userName: data.userName })
               this.$store.dispatch('popups/pushPopup', { message, type: 'warning' })
             } else if (data.isWritable !== undefined) {
-              const message = this.$t('lockWarning')
+              const message = this.$t('Documents.FileDisplay.lockWarning')
               this.$store.dispatch('popups/pushPopup', { message, type: 'warning' })
             }
             this.fileUrl = this.fileUrl.replace('editor.html', 'viewmode.html')
@@ -256,7 +256,7 @@ export default {
     },
     openWarningModal () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('quitWithoutSaving'),
+        text: this.$t('Documents.FileDisplay.quitWithoutSaving'),
         lastAction: { fct: this.emitCloseEvent }
       })
       this.$emit('keep-open') // In case of canceling the closure
@@ -285,13 +285,3 @@ export default {
   height: calc(100% - 20px);
 }
 </style>
-
-<i18n locale="fr">
-{
-  "lockWarning": "Ce fichier est ouvert en édition par un autre utilisateur. Ouverture en consultation seule...",
-  "lockWarningUser": "Ce fichier est ouvert en édition par {userName}. Ouverture en consultation seule...",
-  "quitWithoutSaving": "Toute modification non sauvegardée sera perdue",
-  "Unsupported": "Type de fichier non affichable",
-  "Forbidden": "Vous n'avez pas la permission de voir ce fichier"
-}
-</i18n>

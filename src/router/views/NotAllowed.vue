@@ -5,8 +5,8 @@
         src="@/assets/icons/alert.svg"
         alt=""
       >
-      <h1 v-t="'notAllowed'" />
-      <div v-t="'useOthersServicesPlease'" />
+      <h1 v-t="'NotAllowed.notAllowed'" />
+      <div v-t="'NotAllowed.useOthersServicesPlease'" />
     </div>
   </div>
 </template>
@@ -41,10 +41,3 @@ img {
   height: 24px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "notAllowed": "Vous ne disposez pas des autorisations pour accéder à ce service",
-  "useOthersServicesPlease": "Utilisez les services disponibles dans votre menu"
-}
-</i18n>

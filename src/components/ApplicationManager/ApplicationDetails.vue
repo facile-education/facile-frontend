@@ -6,7 +6,7 @@
     <WeprodeInput
       v-if="application.hasCustomUrl"
       v-model="applicationURL"
-      :placeholder="$t('customUrlPlaceholder')"
+      :placeholder="$t('ApplicationManager.ApplicationDetails.customUrlPlaceholder')"
       type="url"
       class="input"
       @blur="updateURL"
@@ -19,15 +19,15 @@
     >
       <p
         v-if="application.isBroadcasted"
-        v-t="'broadcastLabel'"
+        v-t="'ApplicationManager.ApplicationDetails.broadcastLabel'"
       />
       <p
         v-else
-        v-t="'noBroadcastLabel'"
+        v-t="'ApplicationManager.ApplicationDetails.noBroadcastLabel'"
       />
       <p
         v-if="!hasRules"
-        v-t="'addRule'"
+        v-t="'ApplicationManager.ApplicationDetails.addRule'"
       />
       <ul
         v-if="application.isBroadcasted"
@@ -43,7 +43,7 @@
     </div>
 
     <div v-if="hasExport">
-      <p v-t="'exportLabel'" />
+      <p v-t="'ApplicationManager.ApplicationDetails.exportLabel'" />
       <WeprodeDropdown
         v-if="!isAdministratorMode"
         v-model="selectedExport"
@@ -52,10 +52,10 @@
         class="export-list"
       />
       <WeprodeButton
-        :title="$t('export')"
+        :title="$t('ApplicationManager.ApplicationDetails.export')"
         @click="exportUserList"
       >
-        <span>{{ $t('export') }}</span>
+        <span>{{ $t('ApplicationManager.ApplicationDetails.export') }}</span>
       </WeprodeButton>
       <p>{{ exportMessage }}</p>
     </div>
@@ -67,13 +67,13 @@
     <WeprodeToggleSwitch
       v-if="!isAdministratorMode"
       :model-value="application.isBroadcasted"
-      :title="$t('broadcastButtonTooltip')"
+      :title="$t('ApplicationManager.ApplicationDetails.broadcastButtonTooltip')"
       :disabled="!hasRules"
       @update:model-value="updateBroadcast"
     />
     <WeprodeButton
       v-if="isAdministrator && isAdministratorMode"
-      :title="$t('editButtonTooltip')"
+      :title="$t('ApplicationManager.ApplicationDetails.editButtonTooltip')"
       type="circle"
       @click="toggleEditionModal"
     >
@@ -81,7 +81,7 @@
     </WeprodeButton>
     <WeprodeButton
       v-if="!isAdministratorMode"
-      :title="$t('configurationButtonTooltip')"
+      :title="$t('ApplicationManager.ApplicationDetails.configurationButtonTooltip')"
       type="circle"
       @click="toggleBroadcastModal"
     >
@@ -89,7 +89,7 @@
     </WeprodeButton>
     <WeprodeButton
       v-if="isAdministrator && isAdministratorMode"
-      :title="$t('deleteButtonTooltip')"
+      :title="$t('ApplicationManager.ApplicationDetails.deleteButtonTooltip')"
       class="delete-button"
       type="circle"
       cls="delete"
@@ -97,7 +97,7 @@
     >
       <img
         src="@/assets/icons/trash3.svg"
-        :alt="$t('deleteButtonTooltip')"
+        :alt="$t('ApplicationManager.ApplicationDetails.deleteButtonTooltip')"
       >
     </WeprodeButton>
   </div>
@@ -141,16 +141,16 @@ export default {
     exportList () {
       const list = []
       if (this.application.exportStudent) {
-        list.push({ label: this.$t('studentsExportButton'), key: 'eleve' })
+        list.push({ label: this.$t('ApplicationManager.ApplicationDetails.studentsExportButton'), key: 'eleve' })
       }
       if (this.application.exportParent) {
-        list.push({ label: this.$t('parentsExportButton'), key: 'parent' })
+        list.push({ label: this.$t('ApplicationManager.ApplicationDetails.parentsExportButton'), key: 'parent' })
       }
       if (this.application.exportTeacher) {
-        list.push({ label: this.$t('teachersExportButton'), key: 'prof' })
+        list.push({ label: this.$t('ApplicationManager.ApplicationDetails.teachersExportButton'), key: 'prof' })
       }
       if (this.application.exportOther) {
-        list.push({ label: this.$t('otherExportButton'), key: 'other' })
+        list.push({ label: this.$t('ApplicationManager.ApplicationDetails.otherExportButton'), key: 'other' })
       }
       return list
     },
@@ -171,7 +171,7 @@ export default {
   methods: {
     confirmRemoval () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('removalConfirmMessage'),
+        text: this.$t('ApplicationManager.ApplicationDetails.removalConfirmMessage'),
         lastAction: { fct: this.removeApplication, params: [] }
       })
     },
@@ -179,10 +179,10 @@ export default {
       exportApplicationUserList(this.$store.state.applicationManager.selectedApplication.applicationId, this.$store.state.administration.selectedSchool.schoolId, this.selectedExport.key)
         .then((data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('exportSuccess'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('ApplicationManager.ApplicationDetails.exportSuccess'), type: 'success' })
             this.exportMessage = data.msg
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('exportError'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('ApplicationManager.ApplicationDetails.exportError'), type: 'error' })
           }
         })
     },
@@ -293,27 +293,3 @@ p {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "broadcastButtonTooltip": "Diffuser",
-  "broadcastLabel": "Diffusée aux profils suivants :",
-  "configurationButtonTooltip": "Gérer les règles de diffusion",
-  "customUrlPlaceholder": "http(s)://...",
-  "deleteButtonTooltip": "Supprimer",
-  "editButtonTooltip": "Modifier",
-  "exportLabel": "Exports nécessaires :",
-  "noBroadcastLabel": "L'application n'est pas diffusée.",
-  "addRule": "Veuillez au préalable ajouter une règle de diffusion.",
-  "otherExportButton": "Ressources",
-  "parentsExportButton": "Parents",
-  "removalConfirmButtonLabel": "Supprimer",
-  "removalConfirmMessage": "Souhaitez-vous vraiment supprimer cette application ?",
-  "removalConfirmTitle": "Suppression",
-  "studentsExportButton": "Elèves",
-  "teachersExportButton": "Enseignants",
-  "export": "Exporter",
-  "exportSuccess": "Export terminé",
-  "exportError": "Une erreur s'est produite lors de l'export"
-}
-</i18n>

@@ -2,14 +2,14 @@
   <div class="school-slot">
     <h3> {{ 'P' + (position + 1) }}</h3>
     <div class="time-selection">
-      <span v-t="'from'" />
+      <span v-t="'ScheduleManager.SchoolSlotItem.from'" />
       <TimeSelection
         :range="{start: slot.slotStartHour, end: slot.slotEndHour}"
         @update:range="updateRange"
       />
     </div>
     <WeprodeButton
-      v-t="'delete'"
+      v-t="'ScheduleManager.SchoolSlotItem.delete'"
       @click="$emit('delete')"
     />
   </div>
@@ -61,10 +61,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "from": "De",
-  "delete": "Supprimer"
-}
-</i18n>

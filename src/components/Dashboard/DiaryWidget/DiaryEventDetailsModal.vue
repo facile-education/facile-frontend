@@ -26,14 +26,14 @@
           v-if="initEvent.isEditable"
           class="footer-button"
           data-test="updateButton"
-          :label="$t('update')"
+          :label="$t('Dashboard.DiaryEventDetailsModal.update')"
           @click="openUpdateModal"
         />
         <WeprodeButton
           v-if="initEvent.isDeletable"
           class="footer-button"
           data-test="deleteButton"
-          :label="$t('delete')"
+          :label="$t('Dashboard.DiaryEventDetailsModal.delete')"
           @click="confirmDeleteEvent"
         />
       </div>
@@ -91,10 +91,3 @@ export default {
   margin-left: 1rem;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "update": "Modifier",
-  "delete": "Supprimer"
-}
-</i18n>

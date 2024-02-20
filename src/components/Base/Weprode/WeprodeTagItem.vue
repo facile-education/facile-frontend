@@ -5,8 +5,8 @@
   >
     <span class="label">{{ tag }}</span>
     <button
-      :aria-label="$t('remove')"
-      :title="$t('remove')"
+      :aria-label="$t('Base.WeprodeTagItem.remove')"
+      :title="$t('Base.WeprodeTagItem.remove')"
     >
       <NeroIcon
         name="times"
@@ -80,9 +80,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "remove": "Retirer"
-}
-</i18n>

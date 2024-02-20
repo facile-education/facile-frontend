@@ -12,15 +12,15 @@
         label=""
         @update:model-value="checkForm"
       />
-      {{ $t('forward') }}
+      {{ $t('Preferences.MessagingTab.forward') }}
       <InformationIcon
         class="info"
-        :text="$t('forwardInfo')"
+        :text="$t('Preferences.MessagingTab.forwardInfo')"
       />
     </div>
     <WeprodeTagsInput
       v-model="configuration.forward.addresses"
-      :placeholder="$t('addRedirection')"
+      :placeholder="$t('Preferences.MessagingTab.addRedirection')"
       display-field="text"
       id-field="id"
       :close-on-select="true"
@@ -38,7 +38,7 @@
         label=""
         @update:model-value="checkForm"
       />
-      {{ $t('signature') }}
+      {{ $t('Preferences.MessagingTab.signature') }}
     </div>
     <TextContent
       class="ck"
@@ -57,7 +57,7 @@
         label=""
         @update:model-value="checkForm"
       />
-      {{ $t('autoReply') }}
+      {{ $t('Preferences.MessagingTab.autoReply') }}
     </div>
     <TextContent
       class="ck"
@@ -104,7 +104,7 @@ export default {
       for (let i = 0; i < this.configuration.forward.addresses.length; i++) {
         const email = this.configuration.forward.addresses[i].text
         if (!this.isValidEmail(email)) {
-          this.errorMessage = this.$t('invalidEmailAddress')
+          this.errorMessage = this.$t('Preferences.MessagingTab.invalidEmailAddress')
         }
       }
       if (this.errorMessage === '') {
@@ -140,7 +140,7 @@ export default {
           configurationService.updateMessagingConfiguration(this.configuration).then((data) => {
             this.isLoading = false
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('successMessage'), type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Preferences.MessagingTab.successMessage'), type: 'success' })
               this.oldConfiguration = JSON.stringify(this.configuration)
               if (this.configuration.signature.isActive) {
                 this.$store.dispatch('messaging/setSignature', this.configuration.signature.content)
@@ -179,16 +179,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "addRedirection": "Ajouter un courriel",
-  "signature": "Signature",
-  "autoReply": "Réponse automatique",
-  "save": "Enregistrer",
-  "forward": "Être averti par courriel",
-  "forwardInfo": "Renseignez une adresse de courriel pour être averti de l’arrivée d’un nouveau message.",
-  "successMessage": "Paramètres sauvegardés",
-  "invalidEmailAddress": "Adresse e-mail invalide"
-}
-</i18n>

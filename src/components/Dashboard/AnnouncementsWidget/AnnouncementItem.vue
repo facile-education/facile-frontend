@@ -3,7 +3,7 @@
     ref="item"
     class="container"
     :class="{'is-in-horizontal-scroll': isInHorizontalScroll}"
-    :title="$t('selectToConsult')"
+    :title="$t('Dashboard.AnnouncementItem.selectToConsult')"
   >
     <div
       v-if="!announcement.hasRead"
@@ -39,7 +39,7 @@
         <div class="meta-data">
           <span class="text">
             <span>{{ announcementDay }}</span>
-            <span>{{ $t('by') + announcement.authorName }}</span>
+            <span>{{ $t('Dashboard.AnnouncementItem.by') + announcement.authorName }}</span>
           </span>
           <BaseIcon
             v-if="announcement.hasAttachedFiles"
@@ -71,8 +71,8 @@
         <button
           v-if="announcement.isEditable"
           class="option"
-          :aria-label="$t('update')"
-          :title="$t('update')"
+          :aria-label="$t('Dashboard.AnnouncementItem.update')"
+          :title="$t('Dashboard.AnnouncementItem.update')"
           data-test="buttonEditAnnouncement"
           @click.stop="isUpdateModalDisplayed = true"
           @keyup.stop
@@ -85,8 +85,8 @@
         <button
           v-if="announcement.isDeletable"
           class="option"
-          :aria-label="$t('delete')"
-          :title="$t('delete')"
+          :aria-label="$t('Dashboard.AnnouncementItem.delete')"
+          :title="$t('Dashboard.AnnouncementItem.delete')"
           data-test="buttonDeleteAnnouncement"
           @click.stop="confirmDeleteAnnouncement"
           @keyup.stop
@@ -187,10 +187,10 @@ export default {
       return !this.isSelectionMode && (this.announcement.isEditable || this.announcement.isDeletable)
     },
     announcementDay () {
-      return this.$t('at') + dayjs(this.announcement.publicationDate).format('DD/MM/YY')
+      return this.$t('Dashboard.AnnouncementItem.at') + dayjs(this.announcement.publicationDate).format('DD/MM/YY')
     },
     computedDescription () {
-      return this.announcement.shortContent ? this.announcement.shortContent : this.$t('descriptionPlaceholder')
+      return this.announcement.shortContent ? this.announcement.shortContent : this.$t('Dashboard.AnnouncementItem.descriptionPlaceholder')
     },
     thumbnail () {
       if (defaultImagesKeys.indexOf(this.announcement.thumbnailUrl) !== -1) {
@@ -249,7 +249,7 @@ export default {
       if (this.announcement.isEditable) {
         options.push({
           name: 'update',
-          title: this.$t('update'),
+          title: this.$t('Dashboard.AnnouncementItem.update'),
           icon: icons.options.rename,
           position: 1,
           hasSeparator: false
@@ -258,7 +258,7 @@ export default {
       if (this.announcement.isDeletable) {
         options.push({
           name: 'delete',
-          title: this.$t('delete'),
+          title: this.$t('Dashboard.AnnouncementItem.delete'),
           icon: icons.options.delete,
           position: 2,
           hasSeparator: false
@@ -468,15 +468,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "at": "Le ",
-  "by": " par ",
-  "update": "Modifier",
-  "delete": "Supprimer",
-  "removalConfirmMessage": "Veuillez confirmer la suppression de l'annonce \"{target}\"",
-  "selectToConsult": "Consulter",
-  "descriptionPlaceholder": "Aucune description"
-}
-</i18n>

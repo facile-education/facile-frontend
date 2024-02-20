@@ -8,7 +8,7 @@
 
     <div
       v-if="weekDisplay"
-      v-t="'instructions'"
+      v-t="'Course.CourseSchedule.instructions'"
       class="instructions"
     />
 
@@ -29,7 +29,7 @@
         src="@/assets/icons/calendar.svg"
         alt=""
       >
-      <span v-t="'displayWholeWeek'" />
+      <span v-t="'Course.CourseSchedule.displayWholeWeek'" />
     </button>
 
     <CustomCalendar
@@ -195,12 +195,3 @@ export default {
   @extend %content-placeholder;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "nextDay": "Jour suivant",
-  "previousDay": "Jour précédent",
-  "displayWholeWeek": "Afficher la semaine complète",
-  "instructions": "Veuillez sélectionner une séance pour accéder à son contenu"
-}
-</i18n>

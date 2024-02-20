@@ -2,7 +2,7 @@
   <WeprodeDropdown
     v-model="selectedRole"
     :list="roleList"
-    :placeholder="$t('seeAs')"
+    :placeholder="$t('Accesses.SeeAccessesAs.seeAs')"
     display-field="displayText"
     @update:model-value="isAccessVisualizationOpen=true"
   />
@@ -58,9 +58,3 @@ export default {
 <style lang="scss" scoped>
 
 </style>
-
-<i18n locale="fr">
-{
-  "seeAs": "Voir en tant que"
-}
-</i18n>

@@ -22,12 +22,12 @@
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'Dashboard.ActivityWidget.errorPlaceholder'"
       class="placeholder"
     />
     <div
       v-else-if="readActivities.length === 0 && unreadActivities.length === 0 && !isFirstLoad"
-      v-t="'emptyPlaceholder'"
+      v-t="'Dashboard.ActivityWidget.emptyPlaceholder'"
       class="placeholder"
     />
     <div
@@ -128,8 +128,8 @@ export default {
       return this.$store.state.user.isParent
     },
     separatorLabel () {
-      // return this.$t('newsSince') + dayjs(this.lastDashboardAccessDate, DATE_EXCHANGE_FORMAT).calendar()
-      return this.$t('newsSince')
+      // return this.$t('Dashboard.ActivityWidget.newsSince') + dayjs(this.lastDashboardAccessDate, DATE_EXCHANGE_FORMAT).calendar()
+      return this.$t('Dashboard.ActivityWidget.newsSince')
     },
     filterBooleans () {
       if (this.filter.activityTypes.length === 0) { // If no filter selected, return all activity types
@@ -373,11 +373,3 @@ ul {
   @extend %content-placeholder;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucune activité à afficher",
-  "newsSince": "Nouveautés"
-}
-</i18n>

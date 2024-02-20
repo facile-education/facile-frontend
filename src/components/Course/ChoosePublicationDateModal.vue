@@ -9,7 +9,7 @@
     @close="$emit('close')"
   >
     <template #header>
-      <span v-t="'choosePublicationDate'" />
+      <span v-t="'Course.ChoosePublicationDateModal.choosePublicationDate'" />
     </template>
 
     <template #body>
@@ -27,7 +27,7 @@
 
     <template #footer>
       <WeprodeButton
-        v-t="'schedule'"
+        v-t="'Course.ChoosePublicationDateModal.schedule'"
         data-test="futurePublication"
         @click="chooseDate"
       />
@@ -90,10 +90,3 @@ export default {
   }
 }
 </script>
-
-<i18n locale="fr">
-{
-  "choosePublicationDate": "Programmer la publication",
-  "schedule": "Programmer"
-}
-</i18n>

@@ -3,8 +3,8 @@
     <button
       class="arrow-button previous"
       data-test="PreviousDay"
-      :title="$t('goPrevious')"
-      :aria-label="$t('goPrevious')"
+      :title="$t('Dashboard.DayNavigation.goPrevious')"
+      :aria-label="$t('Dashboard.DayNavigation.goPrevious')"
       @click="$emit('go-previous')"
     >
       <CustomIcon icon-name="icon-chevron-left" />
@@ -35,8 +35,8 @@
     <button
       class="arrow-button after"
       data-test="NextDay"
-      :title="$t('goAfter')"
-      :aria-label="$t('goAfter')"
+      :title="$t('Dashboard.DayNavigation.goAfter')"
+      :aria-label="$t('Dashboard.DayNavigation.goAfter')"
       @click="$emit('go-after')"
     >
       <CustomIcon icon-name="icon-chevron-left" />
@@ -163,10 +163,3 @@ nav {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "goAfter": "Jour suivant",
-  "goPrevious": "Jour précédent"
-}
-</i18n>

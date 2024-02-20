@@ -1,6 +1,6 @@
 <template>
   <AddressBookItem
-    :title="$t('courses')"
+    :title="$t('ContactPicker.AddressBookCourses.courses')"
     :is-theme-color="true"
     :begin-extended="courses.isExpanded"
   >
@@ -83,9 +83,3 @@ export default {
 
 <style lang="scss" scoped>
 </style>
-
-<i18n locale="fr">
-  {
-    "courses": "Cours"
-  }
-</i18n>

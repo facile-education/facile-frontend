@@ -9,7 +9,7 @@
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
   >
-    <span v-t="'info-letter'" />
+    <span v-t="'Base.InformationIcon.info-letter'" />
     <div
       v-if="isHovering"
       class="text"
@@ -76,9 +76,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "info-letter": "i"
-}
-</i18n>

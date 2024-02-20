@@ -8,7 +8,7 @@
         ref="queryInput"
         v-model="searchQuery"
         :maxlength="200"
-        :placeholder="$t('queryPlaceholder')"
+        :placeholder="$t('ContactPicker.ContactAdvancedSearch.queryPlaceholder')"
         data-test="inputSearchAdvanceSearch"
         @keyup.enter.stop="runSearch"
       />
@@ -32,7 +32,7 @@
     />
 
     <WeprodeButton
-      :label="$t('search')"
+      :label="$t('ContactPicker.ContactAdvancedSearch.search')"
       @click="runSearch"
     />
   </section>
@@ -63,10 +63,10 @@ export default {
       errorMessage: '',
       roleList: [],
       selectedRole: undefined,
-      emptyRole: { label: this.$t('rolesPlaceHolder'), roleId: 0 },
+      emptyRole: { label: this.$t('ContactPicker.ContactAdvancedSearch.rolesPlaceHolder'), roleId: 0 },
       schoolList: [],
       selectedSchool: undefined,
-      emptySchool: { schoolName: this.$t('schoolsPlaceHolder'), schoolId: 0 }
+      emptySchool: { schoolName: this.$t('ContactPicker.ContactAdvancedSearch.schoolsPlaceHolder'), schoolId: 0 }
     }
   },
   mounted () {
@@ -116,13 +116,3 @@ export default {
   margin-bottom: 20px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "queryPlaceholder": "Nom/prénom",
-  "emptyRequest": "Veuillez renseigner au moins 2 caractères pour la recherche ou séléctionnez un élément dans une des liste déroulantes",
-  "rolesPlaceHolder": "Tous les profils",
-  "schoolsPlaceHolder": "Tous les établissements",
-  "search": "Rechercher"
-}
-</i18n>

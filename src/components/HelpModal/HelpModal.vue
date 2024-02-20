@@ -8,7 +8,7 @@
     @close="closeModal"
   >
     <template #header>
-      <h1 v-t="'helpModalTitle'" />
+      <h1 v-t="'HelpModal.helpModalTitle'" />
     </template>
 
     <template #body>
@@ -149,9 +149,3 @@ h1 {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "helpModalTitle": "Service d'aide"
-}
-</i18n>

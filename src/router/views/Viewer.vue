@@ -7,7 +7,7 @@
 
       <button
         class="close"
-        :title="$t('close')"
+        :title="$t('Viewer.close')"
         @click="back"
       >
         <BaseIcon name="times" />
@@ -96,9 +96,3 @@ h1 {
   cursor: pointer;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "close": "Retour"
-}
-</i18n>

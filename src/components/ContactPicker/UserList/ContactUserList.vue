@@ -17,7 +17,7 @@
     </div>
     <div
       v-else-if="error"
-      v-t="'errorPlaceholder'"
+      v-t="'ContactPicker.ContactUserList.errorPlaceholder'"
       class="placeholder"
     />
     <div
@@ -179,13 +179,3 @@ ul {
   text-align: center;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "addressBookEmptyPlaceholder": "Aucun contact",
-  "advancedSearchEmptyPlaceholder": "Aucun contact ne correspond à la recherche",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "addressBookPlaceholder": "Sélectionner une liste pour afficher les contacts",
-  "advancedSearchPlaceholder": "Effectuer une recherche pour afficher des contacts"
-}
-</i18n>

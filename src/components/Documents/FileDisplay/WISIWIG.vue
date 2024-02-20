@@ -69,9 +69,9 @@ export default {
           fileServices.saveHtmlContent(this.file.fileVersionId, this.currentContent.contentValue, majorVersion).then((data) => {
             if (data.success) {
               this.$emit('saved')
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('documentSaved'), type: 'info' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Documents.WISIWIG.documentSaved'), type: 'info' })
             } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('saveError'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Documents.WISIWIG.saveError'), type: 'error' })
             }
           })
         } else { // If content is the same, no need to call the WS
@@ -102,10 +102,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "documentSaved": "Document sauvegardé",
-  "saveError": "Erreur lors de l'enregistrement du fichier"
-}
-</i18n>

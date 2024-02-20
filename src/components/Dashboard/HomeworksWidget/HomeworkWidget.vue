@@ -13,12 +13,12 @@
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'Dashboard.HomeworkWidget.errorPlaceholder'"
       class="placeholder"
     />
     <div
       v-else-if="homeworkList.length === 0 && !isFirstLoad"
-      v-t="'emptyPlaceholder'"
+      v-t="'Dashboard.HomeworkWidget.emptyPlaceholder'"
       class="placeholder"
     />
     <div v-else>
@@ -98,7 +98,7 @@ export default {
         if (dayIndex !== -1) {
           homeworksByDay[dayIndex].homeworkList.push(homework)
         } else {
-          homeworksByDay.push({ dayId: homeworkDay, dayName: dayjs(homework.toDate).format(this.$t('for') + ' dddd DD MMM'), homeworkList: [homework] })
+          homeworksByDay.push({ dayId: homeworkDay, dayName: dayjs(homework.toDate).format(this.$t('Dashboard.HomeworkWidget.for') + ' dddd DD MMM'), homeworkList: [homework] })
         }
       })
       return homeworksByDay
@@ -174,11 +174,3 @@ ul {
   font-size: 0.875em;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun devoir à faire",
-  "for": "Pour"
-}
-</i18n>

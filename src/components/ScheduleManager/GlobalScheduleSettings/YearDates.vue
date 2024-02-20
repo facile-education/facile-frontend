@@ -1,9 +1,9 @@
 <template>
   <section>
-    <h2 v-t="'schoolYear'" />
+    <h2 v-t="'ScheduleManager.YearDates.schoolYear'" />
     <div class="dates">
       <div class="my-date start-date">
-        <label v-t="'startDateLabel'" />
+        <label v-t="'ScheduleManager.YearDates.startDateLabel'" />
         <CustomDatePicker
           class="date-picker"
           :selected-date="startDate"
@@ -15,7 +15,7 @@
         />
       </div>
       <div class="my-date semester-date">
-        <label v-t="'semesterDateLabel'" />
+        <label v-t="'ScheduleManager.YearDates.semesterDateLabel'" />
         <CustomDatePicker
           class="date-picker"
           :selected-date="semesterDate"
@@ -27,7 +27,7 @@
         />
       </div>
       <div class="my-date end-date">
-        <label v-t="'endDateLabel'" />
+        <label v-t="'ScheduleManager.YearDates.endDateLabel'" />
         <CustomDatePicker
           class="date-picker"
           :selected-date="endDate"
@@ -93,13 +93,13 @@ export default {
     formErrorList () {
       return {
         startDate: (this.v$.startDate.$invalid && this.v$.startDate.$dirty)
-          ? this.$t('required')
+          ? this.$t('ScheduleManager.YearDates.required')
           : '',
         semesterDate: (this.v$.semesterDate.$invalid && this.v$.semesterDate.$dirty)
-          ? (this.v$.semesterDate.$errors[0].$validator === 'required' ? this.$t('required') : this.$t('betweenStartAndEnd'))
+          ? (this.v$.semesterDate.$errors[0].$validator === 'required' ? this.$t('ScheduleManager.YearDates.required') : this.$t('ScheduleManager.YearDates.betweenStartAndEnd'))
           : '',
         endDate: (this.v$.endDate.$invalid && this.v$.endDate.$dirty)
-          ? (this.v$.endDate.$errors[0].$validator === 'required' ? this.$t('required') : this.$t('afterStartDate'))
+          ? (this.v$.endDate.$errors[0].$validator === 'required' ? this.$t('ScheduleManager.YearDates.required') : this.$t('ScheduleManager.YearDates.afterStartDate'))
           : ''
       }
     }
@@ -137,15 +137,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "schoolYear": "Année scolaire",
-  "startDateLabel": "Début d'année scolaire",
-  "semesterDateLabel": "Date de changement de semestre",
-  "endDateLabel": "Fin d'année scolaire",
-  "required": "Champ requis",
-  "betweenStartAndEnd": "Cette date doit se situer entre le début et la fin d'année scolaire",
-  "afterStartDate": "Cette date doit se situer après le début de l'année scolaire"
-}
-</i18n>

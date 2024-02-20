@@ -19,12 +19,12 @@
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'Dashboard.AnnouncementsWidget.errorPlaceholder'"
       class="placeholder"
     />
     <div
       v-else-if="announcementsList.length === 0 && !isFirstLoad"
-      v-t="unReadOnly ? 'unReadEmptyPlaceholder' : 'emptyPlaceholder'"
+      v-t="unReadOnly ? 'Dashboard.AnnouncementsWidget.unReadEmptyPlaceholder' : 'Dashboard.AnnouncementsWidget.emptyPlaceholder'"
       class="placeholder"
     />
     <div v-else>
@@ -273,11 +273,3 @@ ul {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucune annonce",
-  "unReadEmptyPlaceholder": "Aucune nouvelle annonce"
-}
-</i18n>

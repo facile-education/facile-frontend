@@ -35,7 +35,7 @@
     </div>
 
     <div class="score">
-      <p v-t="('score')" />
+      <p v-t="('Search.QuickSearchResultItem.score')" />
       <p class="theme-text-color">
         {{ searchResult.score + '%' }}
       </p>
@@ -361,9 +361,3 @@ p {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "score": "Pertinence"
-}
-</i18n>

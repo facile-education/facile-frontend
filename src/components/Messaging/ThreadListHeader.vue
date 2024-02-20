@@ -28,11 +28,11 @@
           <span
             v-if="isReadOnlyToggled"
             class="nb-messages"
-          >{{ $t('filterByUnread') }}</span>
+          >{{ $t('Messaging.ThreadListHeader.filterByUnread') }}</span>
           <span
             v-else
             class="nb-messages"
-          >{{ $tc('messages', nbMessages) }}</span>
+          >{{ $tc('Messaging.ThreadListHeader.messages', nbMessages) }}</span>
           <div
             v-if="nbUnread>0"
             class="unread theme-background-color"
@@ -40,7 +40,7 @@
           <span
             v-if="nbUnread>0"
             class="nb-unread theme-text-color"
-          >{{ $tc('unRead', nbUnread) }}</span>
+          >{{ $tc('Messaging.ThreadListHeader.unRead', nbUnread) }}</span>
         </div>
       </div>
     </div>
@@ -204,11 +204,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "unRead": "0 non lu | 1 non lu | {count} non lus",
-  "messages": "Aucun message | 1 message | {count} messages",
-  "filterByUnread": "Filtré par non lus"
-}
-</i18n>

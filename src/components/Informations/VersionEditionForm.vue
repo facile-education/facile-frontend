@@ -4,7 +4,7 @@
       <WeprodeInput
         v-model="form.versionNumber"
         data-test="versionNumber-input"
-        :placeholder="$t('versionNumber') + '*'"
+        :placeholder="$t('Informations.VersionEditionForm.versionNumber') + '*'"
         @blur="v$.form.versionNumber.$touch()"
       />
       <WeprodeErrorMessage :error-message="formErrorList.versionNumber" />
@@ -13,15 +13,15 @@
       <WeprodeInput
         v-model="form.versionDetails"
         data-test="versionDetails-input"
-        :placeholder="$t('jsonContent') + '*'"
+        :placeholder="$t('Informations.VersionEditionForm.jsonContent') + '*'"
         @blur="v$.form.versionDetails.$touch()"
       />
       <WeprodeErrorMessage :error-message="formErrorList.versionDetails" />
     </div>
     <WeprodeButton
       data-test="addVersion"
-      :label="$t('addVersionButtonLabel')"
-      :title="$t('addVersionButtonLabel')"
+      :label="$t('Informations.VersionEditionForm.addVersionButtonLabel')"
+      :title="$t('Informations.VersionEditionForm.addVersionButtonLabel')"
       @click="addVersion"
     />
   </div>
@@ -96,15 +96,15 @@ export default {
           ? (this.v$.form.versionNumber.required.$invalid
               ? this.$t('Commons.required')
               : (this.v$.form.versionNumber.isVersionNameValid.$invalid
-                  ? this.$t('invalidVersionName')
+                  ? this.$t('Informations.VersionEditionForm.invalidVersionName')
                   : ''))
           : '',
         versionDetails: (this.v$.form.versionDetails.$invalid && this.v$.form.versionDetails.$dirty)
           ? (this.v$.form.versionDetails.required.$invalid
               ? this.$t('Commons.required')
               : (this.v$.form.versionDetails.isValidJson.$invalid
-                  ? this.$t('invalidJson')
-                  : this.$t('invalidJsonContent')))
+                  ? this.$t('Informations.VersionEditionForm.invalidJson')
+                  : this.$t('Informations.VersionEditionForm.invalidJsonContent')))
           : ''
       }
     }
@@ -129,14 +129,3 @@ export default {
   float: right;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "addVersionButtonLabel": "Ajouter une version",
-  "jsonContent": "Contenu JSON",
-  "versionNumber": "Numéro de version",
-  "invalidJson": "La structure du json spécifié n'est pas valide",
-  "invalidVersionName": "Le numéro de version doit avoir le format suivant X.X.X avec X un nombre",
-  "invalidJsonContent": "L'objet Json doit contenir les champs \"news\" et \"others\""
-}
-</i18n>

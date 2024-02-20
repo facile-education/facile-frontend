@@ -16,19 +16,19 @@
       </div>
       <h3
         v-else-if="selectedDocuments.length === 0"
-        v-t="('noDocumentSelected')"
+        v-t="('Documents.DocumentDetails.noDocumentSelected')"
         class="document-name"
       />
       <h3
         v-else
         class="document-name"
       >
-        {{ selectedDocuments.length + ' ' + $t('selectedDocuments') }}
+        {{ selectedDocuments.length + ' ' + $t('Documents.DocumentDetails.selectedDocuments') }}
       </h3>
       <button
         class="close-option"
-        :aria-label="$t('close')"
-        :title="$t('close')"
+        :aria-label="$t('Documents.DocumentDetails.close')"
+        :title="$t('Documents.DocumentDetails.close')"
         @click="closePanel"
       >
         <CustomIcon
@@ -52,7 +52,7 @@
 
     <p
       v-if="selectedDocuments.length === 0"
-      v-t="('noData')"
+      v-t="('Documents.DocumentDetails.noData')"
       class="placeholder"
     />
   </div>
@@ -151,12 +151,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "close": "Fermer",
-  "noData": "Il n'y a aucune information à afficher",
-  "noDocumentSelected": "Aucun document sélectionné",
-  "selectedDocuments": "documents sélectionnés"
-}
-</i18n>

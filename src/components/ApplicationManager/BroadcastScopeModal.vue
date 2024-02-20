@@ -6,12 +6,12 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'modalTitle'" />
+      <span v-t="'ApplicationManager.BroadcastScopeModal.modalTitle'" />
     </template>
     <template #body>
       <div
         v-if="!hasRules"
-        v-t="'defaultLabel'"
+        v-t="'ApplicationManager.BroadcastScopeModal.defaultLabel'"
         class="fallback"
       />
       <template v-else>
@@ -33,7 +33,7 @@
 
     <template #footer>
       <WeprodeButton
-        :label="$t('updateButton')"
+        :label="$t('ApplicationManager.BroadcastScopeModal.updateButton')"
         @click="saveRuleList"
       />
     </template>
@@ -215,12 +215,3 @@ export default {
   text-align: center;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "addRuleButton":"Ajouter une règle de diffusion",
-  "defaultLabel": "L'application n'est pas diffusée",
-  "modalTitle": "Règles de diffusion",
-  "updateButton": "Valider"
-}
-</i18n>

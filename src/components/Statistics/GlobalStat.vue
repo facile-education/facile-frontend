@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h2 v-t="service" />
+    <h2 v-t="'Statistics.GlobalStat.' + service" />
     <div
       v-if="isLoading"
       class="loading-placeholder"
@@ -9,7 +9,7 @@
     </div>
     <div
       v-else-if="error === true"
-      v-t="'error'"
+      v-t="'Statistics.GlobalStat.error'"
       class="error-placeholder"
     />
     <div
@@ -171,12 +171,3 @@ h2 {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "messaging": "Messages envoyés",
-  "news": "Actualités",
-  "error": "Oups, une erreur est survenue...",
-  "schoolNews": "Annonces de l'établissement"
-}
-</i18n>

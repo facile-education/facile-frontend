@@ -10,7 +10,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="submitAction==='rename' ? 'renameHeader' : 'createHeader'" />
+      <span v-t="submitAction==='rename' ? 'Documents.FolderNameModal.renameHeader' : 'Documents.FolderNameModal.createHeader'" />
     </template>
 
     <template #body>
@@ -36,7 +36,7 @@
       <WeprodeButton
         data-test="submitButton"
         :disabled="isActionInProgress"
-        :label="submitAction==='rename' ? $t('rename') : $t('createSubmit')"
+        :label="submitAction==='rename' ? $t('Documents.FolderNameModal.rename') : $t('Documents.FolderNameModal.createSubmit')"
         @click="submit"
       />
     </template>
@@ -104,19 +104,19 @@ export default {
         if (this.v$.folderName.$errors[0].$validator === 'required') {
           return this.$t('Commons.required')
         } else if (this.v$.folderName.$errors[0].$validator === 'isUnderMaxSize') {
-          return this.$t('sizeLimit1') + entityNameMaxSize + this.$t('sizeLimit2')
+          return this.$t('Documents.FolderNameModal.sizeLimit1') + entityNameMaxSize + this.$t('Documents.FolderNameModal.sizeLimit2')
         } else if (this.v$.folderName.$errors[0].$validator === 'notBeginByDot') {
-          return this.$t('notBeginByDot')
+          return this.$t('Documents.FolderNameModal.notBeginByDot')
         } else if (this.v$.folderName.$errors[0].$validator === 'containsNoCotes') {
-          return this.$t('containsNoCotes')
+          return this.$t('Documents.FolderNameModal.containsNoCotes')
         } else {
           console.error('Unknown validation error')
           return ''
         }
       } else if (this.backError === 'DuplicateFileException') {
-        return this.$t('duplicateFileException')
+        return this.$t('Documents.FolderNameModal.duplicateFileException')
       } else if (this.backError) {
-        return this.$t('backError')
+        return this.$t('Documents.FolderNameModal.backError')
       } else {
         return ''
       }
@@ -210,18 +210,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "backError": "Une erreur est survenue",
-  "containsNoCotes": "Ne doit pas contenir de caractères spéciaux",
-  "createHeader": "Nouveau dossier",
-  "duplicateFileException": "Un dossier du même nom existe déjà",
-  "createSubmit": "Créer",
-  "notBeginByDot": "Ne doit pas commencer par un '.'",
-  "rename": "Renommer",
-  "renameHeader": "Renommer",
-  "sizeLimit1": "Ne doit pas dépasser ",
-  "sizeLimit2": " caractères"
-}
-</i18n>

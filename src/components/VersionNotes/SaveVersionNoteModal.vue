@@ -8,7 +8,7 @@
     @close="$emit('close')"
   >
     <template #header>
-      <span v-t="isCreation ? 'createHeader' : 'updateHeader'" />
+      <span v-t="isCreation ? 'VersionNotes.SaveVersionNoteModal.createHeader' : 'VersionNotes.SaveVersionNoteModal.updateHeader'" />
     </template>
 
     <template #body>
@@ -17,13 +17,13 @@
       <div class="title">
         <WeprodeInput
           v-model="title"
-          :placeholder="$t('titlePlaceholder')"
+          :placeholder="$t('VersionNotes.SaveVersionNoteModal.titlePlaceholder')"
         />
         <WeprodeErrorMessage :error-message="formErrorList.title" />
       </div>
       <div class="content">
         <div
-          v-t="'contentLabel'"
+          v-t="'VersionNotes.SaveVersionNoteModal.contentLabel'"
           class="content-label"
         />
         <TextContent
@@ -90,8 +90,8 @@ export default {
     },
     formErrorList () {
       return {
-        title: (this.v$.title.$invalid && this.v$.title.$dirty) ? this.$t('required') : '',
-        htmlContent: (this.v$.htmlContent.$invalid && this.v$.htmlContent.$dirty) ? this.$t('required') : ''
+        title: (this.v$.title.$invalid && this.v$.title.$dirty) ? this.$t('VersionNotes.SaveVersionNoteModal.required') : '',
+        htmlContent: (this.v$.htmlContent.$invalid && this.v$.htmlContent.$dirty) ? this.$t('VersionNotes.SaveVersionNoteModal.required') : ''
       }
     }
   },
@@ -119,12 +119,12 @@ export default {
           this.$store.dispatch('versionNotes/getVersionNotesList')
           this.$emit('close')
         } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('VersionNotes.SaveVersionNoteModal.error'), type: 'error' })
           console.error('Cannot create versionNote')
         }
       }, (err) => {
         this.isLoading = false
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('VersionNotes.SaveVersionNoteModal.error'), type: 'error' })
         console.error(err)
       })
     },
@@ -137,11 +137,11 @@ export default {
           this.$emit('close')
         } else {
           console.error('Cannot update versionNote')
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('VersionNotes.SaveVersionNoteModal.error'), type: 'error' })
         }
       }, (err) => {
         this.isLoading = false
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('VersionNotes.SaveVersionNoteModal.error'), type: 'error' })
         console.error(err)
       })
     }
@@ -174,16 +174,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "contentLabel": "Contenu:",
-  "create": "Créer",
-  "createHeader": "Création d'une note de version",
-  "error": "Échec de la requète",
-  "required": "Champs requis",
-  "titlePlaceholder": "Titre",
-  "update": "Modifier",
-  "updateHeader": "Modification d'une note de version"
-}
-</i18n>

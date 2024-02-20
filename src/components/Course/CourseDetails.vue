@@ -12,7 +12,7 @@
           src="@assets/icons/chevron_right2.svg"
           alt=""
         >
-        <span v-t="'back'" />
+        <span v-t="'Course.CourseDetails.back'" />
       </button>
       <h1>{{ course.groupName + ' - ' + course.subject }}</h1>
       <div
@@ -38,12 +38,12 @@
       />
       <div
         v-else-if="error === true"
-        v-t="'errorPlaceholder'"
+        v-t="'Course.CourseDetails.errorPlaceholder'"
         class="placeholder"
       />
       <div
         v-else-if="coursesSessions && coursesSessions.length === 0"
-        v-t="'emptyCoursePlaceholder'"
+        v-t="'Course.CourseDetails.emptyCoursePlaceholder'"
         class="placeholder"
       />
       <ul v-else-if="coursesSessions">
@@ -243,14 +243,3 @@ ul {
   gap: 3rem
 }
 </style>
-
-<i18n locale="fr">
-{
-  "andOthers": "et {nbRemaining} autres",
-  "back": "Revenir aux cours",
-  "emptyCoursePlaceholder": "Aucun contenu à afficher pour ce cours",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "showDrafts": "Montrer les nons publiés",
-  "hideDrafts": "Cacher les nons publiés"
-}
-</i18n>

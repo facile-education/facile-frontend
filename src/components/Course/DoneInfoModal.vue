@@ -8,7 +8,7 @@
     @close="$emit('close')"
   >
     <template #header>
-      <span v-if="studentList">{{ $tc('header', doneStudents.length, {n: doneStudents.length, totalCount: studentList.length}) }}</span>
+      <span v-if="studentList">{{ $tc('Course.DoneInfoModal.header', doneStudents.length, {n: doneStudents.length, totalCount: studentList.length}) }}</span>
     </template>
 
     <template #body>
@@ -20,12 +20,12 @@
       </div>
       <div
         v-else-if="error === true"
-        v-t="'errorPlaceholder'"
+        v-t="'Course.DoneInfoModal.errorPlaceholder'"
         class="placeholder"
       />
       <div
         v-else-if="studentList && studentList.length === 0"
-        v-t="'emptyPlaceholder'"
+        v-t="'Course.DoneInfoModal.emptyPlaceholder'"
         class="placeholder"
       />
 
@@ -147,11 +147,3 @@ ul {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "header": "Fait par {n} élève sur {totalCount} | Fait par {n} élève sur {totalCount} | Fait par {n} élèves sur {totalCount}",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "ce devoir n'a été distribué à aucun élève"
-}
-</i18n>

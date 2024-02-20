@@ -105,7 +105,7 @@ export default {
       return this.$store.state.accessManager.draggedAccess
     },
     formattedRoleList () {
-      let result = this.$t('profiles')
+      let result = this.$t('Accesses.AccessItem.profiles')
       for (let i = 0; i < this.access.profiles.length; i++) {
         result += this.access.profiles[i].displayText
         if (i !== this.access.profiles.length - 1) {
@@ -160,7 +160,7 @@ export default {
         if (this.draggedAccess.accessId !== this.access.accessId) {
           saveSchoolAccess(this.selectedSchool.schoolId, { ...this.draggedAccess, categoryId: this.parentCategory.categoryId, position }).then((data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Accesses.AccessItem.saveSuccess'), type: 'success' })
               this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
             } else {
               this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -178,7 +178,7 @@ export default {
     deleteAccess () {
       removeSchoolAccess(this.selectedSchool.schoolId, this.access.accessId).then((data) => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Accesses.AccessItem.saveSuccess'), type: 'success' })
           this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -329,11 +329,3 @@ h3 {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "deleteAccessWarning": "Souhaitez-vous supprimer l'accès {accessName} ?",
-  "profiles": "Profils: ",
-  "saveSuccess": "Accès mis à jour"
-}
-</i18n>

@@ -19,12 +19,12 @@
       />
       <div
         v-if="error === true"
-        v-t="'errorPlaceholder'"
+        v-t="'Accesses.AccessModal.errorPlaceholder'"
         class="placeholder"
       />
       <div
         v-else-if="categoryList.length === 0"
-        v-t="'emptyPlaceholder'"
+        v-t="'Accesses.AccessModal.emptyPlaceholder'"
         class="placeholder"
       />
       <ul v-else>
@@ -74,7 +74,7 @@ export default {
       if (this.concernedRole) {
         return this.$t('AccessesOf', { roleLabel: this.concernedRole.displayText.toLowerCase() })
       } else {
-        return this.$t('myAccesses')
+        return this.$t('Accesses.AccessModal.myAccesses')
       }
     },
     sortedCategoryList () {
@@ -131,12 +131,3 @@ ul {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "myAccesses": "Mes accès",
-  "AccessesOf": "Accès d'un.e {roleLabel}",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun accès"
-}
-</i18n>

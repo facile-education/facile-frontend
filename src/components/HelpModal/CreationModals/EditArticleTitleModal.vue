@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'HelpModal.EditArticleTitleModal.title'" />
     </template>
 
     <template #body>
@@ -17,14 +17,14 @@
         ref="titleInput"
         v-model="titleInput"
         class="name-input"
-        :placeholder="$t('titlePlaceHolder')"
+        :placeholder="$t('HelpModal.EditArticleTitleModal.titlePlaceHolder')"
       />
     </template>
 
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="$t('submit')"
+        :label="$t('HelpModal.EditArticleTitleModal.submit')"
         :disabled="titleInput.length === 0"
         @click="submit"
       />
@@ -94,11 +94,3 @@ export default {
 <style lang="scss" scoped>
 
 </style>
-
-<i18n locale="fr">
-{
-  "title": "ÉDITER LE MANUEL",
-  "titlePlaceHolder": "Titre",
-  "submit": "Valider"
-}
-</i18n>

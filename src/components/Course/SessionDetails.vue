@@ -36,8 +36,8 @@
           <CreateButton
             v-if="canEdit && !hasContent && !isInList"
             data-test="createSessionContent"
-            :aria-label="$t('add')"
-            :title="$t('add')"
+            :aria-label="$t('Course.SessionDetails.add')"
+            :title="$t('Course.SessionDetails.add')"
             @click="openCourseEditModal"
           />
           <div
@@ -52,8 +52,8 @@
             <button
               v-if="canEdit"
               class="edit-button"
-              :aria-label="$t('options')"
-              :title="$t('options')"
+              :aria-label="$t('Course.SessionDetails.options')"
+              :title="$t('Course.SessionDetails.options')"
               @click="toggleContextMenu"
             >
               <img
@@ -72,7 +72,7 @@
         />
         <div
           v-else-if="!isInList"
-          v-t="'courseContentPlaceholder'"
+          v-t="'Course.SessionDetails.courseContentPlaceholder'"
           class="placeholder"
         />
       </section>
@@ -90,11 +90,11 @@
             icon-name="icon-devoirs"
             class="icon theme-text-color"
           />
-          <h3 v-t="'workToDo'" />
+          <h3 v-t="'Course.SessionDetails.workToDo'" />
           <CreateButton
             v-if="canEdit"
-            :aria-label="$t('add')"
-            :title="$t('add')"
+            :aria-label="$t('Course.SessionDetails.add')"
+            :title="$t('Course.SessionDetails.add')"
             data-test="createSessionHomework"
             @click="openHomeworkEditModal"
           />
@@ -102,7 +102,7 @@
 
         <div
           v-if="session.toDoHomeworks.length + session.sessionHomeworks.length + session.givenHomeworks.length === 0"
-          v-t="'noHomeworksPlaceholder'"
+          v-t="'Course.SessionDetails.noHomeworksPlaceholder'"
           class="placeholder"
         />
         <HomeworkList
@@ -130,11 +130,11 @@
       v-if="canEdit && !isInList"
       class="notes"
     >
-      <h3 v-t="'notes'" />
+      <h3 v-t="'Course.SessionDetails.notes'" />
       <TextContent
         v-model:content="notes"
         class="ck-editor"
-        :placeholder="$t('notesPlaceholder')"
+        :placeholder="$t('Course.SessionDetails.notesPlaceholder')"
       />
     </section>
 
@@ -164,7 +164,7 @@
   </article>
   <div
     v-else
-    v-t="'selectSessionPlaceholder'"
+    v-t="'Course.SessionDetails.selectSessionPlaceholder'"
     class="select-session-placeholder"
   />
 </template>
@@ -241,24 +241,24 @@ export default {
     formattedStatus () {
       const publicationDate = dayjs(this.session.sessionContent.publicationDate, DATE_EXCHANGE_FORMAT)
       if (this.session.sessionContent.isDraft) {
-        return this.$t('draftStatus')
+        return this.$t('Course.SessionDetails.draftStatus')
       } else if (publicationDate.isAfter(dayjs())) {
-        return this.$t('scheduled')
+        return this.$t('Course.SessionDetails.scheduled')
       } else {
-        return this.$t('publishedOn') + publicationDate.format('DD/MM/YYYY')
+        return this.$t('Course.SessionDetails.publishedOn') + publicationDate.format('DD/MM/YYYY')
       }
     },
     formattedFuturePublicationDate () {
-      return dayjs(this.session.sessionContent.publicationDate, DATE_EXCHANGE_FORMAT).format('[' + this.$t('scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
+      return dayjs(this.session.sessionContent.publicationDate, DATE_EXCHANGE_FORMAT).format('[' + this.$t('Course.SessionDetails.scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
     },
     courseTitle () {
-      return (this.session.sessionContent && this.session.sessionContent.title) ? this.session.sessionContent.title : this.$t('courseContent')
+      return (this.session.sessionContent && this.session.sessionContent.title) ? this.session.sessionContent.title : this.$t('Course.SessionDetails.courseContent')
     },
     dateLabel () {
       return dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('dddd DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
     },
     listDateLabel () {
-      return this.$t('sessionOf') + dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
+      return this.$t('Course.SessionDetails.sessionOf') + dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
     },
     eventList () {
       return this.$store.state.course.sessionList
@@ -304,12 +304,12 @@ export default {
 
         savePrivateNotes(this.session.sessionId, value).then((data) => {
           if (!data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.SessionDetails.error'), type: 'error' })
             console.error('Cannot save private notes')
           }
         },
         (err) => {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.SessionDetails.error'), type: 'error' })
           console.error(err)
         })
       }, 500)
@@ -503,25 +503,3 @@ header {
   padding: 10px 0;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "add": "Ajouter",
-  "options": "Options",
-  "delete": "Supprimer",
-  "draftStatus": "Brouillon",
-  "edit": "Modifier",
-  "error": "Oups, une erreur est survenue...",
-  "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
-  "noHomeworksPlaceholder": "Aucun travail",
-  "sessionOf": "Séance du ",
-  "courseContent": "Support de cours",
-  "notes": "Note privée",
-  "notesPlaceholder": "Ma note privée",
-  "publishedOn": "Publié le ",
-  "workToDo": "Travaux à faire",
-  "scheduled": "Programmé",
-  "scheduledOn": "Publication prévue le",
-  "courseContentPlaceholder": "Aucun support de cours enregistré"
-}
-</i18n>

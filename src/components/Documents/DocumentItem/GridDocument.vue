@@ -46,7 +46,7 @@
           <img
             class="members-icon"
             src="@assets/icons/users.svg"
-            :title="$t('members')"
+            :title="$t('Documents.GridDocument.members')"
             alt=""
           >
         </div>
@@ -55,8 +55,8 @@
           class="button"
           src="@assets/icons/details.svg"
           data-test="open-details-icon"
-          :alt="$t('details')"
-          :title="$t('details')"
+          :alt="$t('Documents.GridDocument.details')"
+          :title="$t('Documents.GridDocument.details')"
           @click.stop="openDetailsPanel"
         >
       </div>
@@ -276,10 +276,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "details": "Afficher les informations",
-  "members": "Membres"
-}
-</i18n>

@@ -9,7 +9,7 @@
     @close="confirmClosure"
   >
     <template #header>
-      <span v-t="isCreation ? 'creationTitle' : 'updateTitle'" />
+      <span v-t="isCreation ? 'Dashboard.SaveDiaryEventModal.creationTitle' : 'Dashboard.SaveDiaryEventModal.updateTitle'" />
     </template>
 
     <template #body>
@@ -20,7 +20,7 @@
       <div class="population-selection">
         <WeprodeTagsInput
           v-model="populations"
-          :placeholder="$t('populationPlaceholder') + '*'"
+          :placeholder="$t('Dashboard.SaveDiaryEventModal.populationPlaceholder') + '*'"
           :list="availablePopulationsList"
           :close-on-select="true"
           sort-field="order"
@@ -35,7 +35,7 @@
 
       <div class="dates">
         <div class="start-date">
-          <div v-t="'startDateLabel'" />
+          <div v-t="'Dashboard.SaveDiaryEventModal.startDateLabel'" />
           <CustomDatePicker
             v-model:selected-date="startDate"
             :min-date="minDate"
@@ -50,7 +50,7 @@
           />
         </div>
         <div class="end-date">
-          <div v-t="'endDateLabel'" />
+          <div v-t="'Dashboard.SaveDiaryEventModal.endDateLabel'" />
           <CustomDatePicker
             v-model:selected-date="endDate"
             :min-date="startDate.toDate()"
@@ -70,7 +70,7 @@
           ref="nameInput"
           v-model="title"
           data-test="titleInputEvent"
-          :placeholder="$t('namePlaceHolder') + '*'"
+          :placeholder="$t('Dashboard.SaveDiaryEventModal.namePlaceHolder') + '*'"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.title"
@@ -81,7 +81,7 @@
         <WeprodeInput
           v-model="location"
           data-test="locationInputEvent"
-          :placeholder="$t('locationPlaceHolder')"
+          :placeholder="$t('Dashboard.SaveDiaryEventModal.locationPlaceHolder')"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.location"
@@ -92,7 +92,7 @@
         v-if="description !== undefined"
         v-model:content="description"
         class="ck-editor"
-        :placeholder="$t('descriptionPlaceHolder')"
+        :placeholder="$t('Dashboard.SaveDiaryEventModal.descriptionPlaceHolder')"
       />
       <WeprodeErrorMessage
         :error-message="formErrorList.description"
@@ -102,14 +102,14 @@
         v-if="!isCreation"
         class="unread-checkbox"
       >
-        <span v-t="'markAsUnreadForAll'" />
+        <span v-t="'Dashboard.SaveDiaryEventModal.markAsUnreadForAll'" />
         <WeprodeToggleSwitch
           v-model="markAsUnreadForAll"
         />
         <InformationIcon
           class="info"
           :is-above="true"
-          :text="$t('switchHelp')"
+          :text="$t('Dashboard.SaveDiaryEventModal.switchHelp')"
         />
       </div>
     </template>
@@ -117,7 +117,7 @@
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="isCreation? $t('creationSubmit') : $t('updateSubmit')"
+        :label="isCreation? $t('Dashboard.SaveDiaryEventModal.creationSubmit') : $t('Dashboard.SaveDiaryEventModal.updateSubmit')"
         @click="submit"
       />
     </template>
@@ -219,22 +219,22 @@ export default {
     formErrorList () {
       return {
         title: (this.v$.title.$invalid && this.v$.title.$dirty)
-          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('sizeLimit1') + inputMaxSize + this.$t('sizeLimit2'))
+          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('Dashboard.SaveDiaryEventModal.sizeLimit1') + inputMaxSize + this.$t('Dashboard.SaveDiaryEventModal.sizeLimit2'))
           : '',
         location: (this.v$.location.$invalid && this.v$.location.$dirty)
-          ? this.$t('sizeLimit1') + inputMaxSize + this.$t('sizeLimit2')
+          ? this.$t('Dashboard.SaveDiaryEventModal.sizeLimit1') + inputMaxSize + this.$t('Dashboard.SaveDiaryEventModal.sizeLimit2')
           : '',
         description: (this.v$.description.$invalid && this.v$.description.$dirty)
-          ? this.$t('sizeLimit1') + ckMaxSize + this.$t('sizeLimit2')
+          ? this.$t('Dashboard.SaveDiaryEventModal.sizeLimit1') + ckMaxSize + this.$t('Dashboard.SaveDiaryEventModal.sizeLimit2')
           : '',
         populations: (this.v$.populations.$invalid && this.v$.populations.$dirty)
-          ? this.$t('selectPopulations')
+          ? this.$t('Dashboard.SaveDiaryEventModal.selectPopulations')
           : '',
         startDate: (this.v$.startDate.$invalid && this.v$.startDate.$dirty)
-          ? this.$t('dateInPast')
+          ? this.$t('Dashboard.SaveDiaryEventModal.dateInPast')
           : '',
         endDate: (this.v$.endDate.$invalid && this.v$.endDate.$dirty)
-          ? this.$t('dateOrder')
+          ? this.$t('Dashboard.SaveDiaryEventModal.dateOrder')
           : ''
       }
     }
@@ -387,7 +387,7 @@ export default {
 
       if (JSON.stringify(actualForm) !== JSON.stringify(this.initialForm)) {
         this.$store.dispatch('warningModal/addWarning', {
-          text: this.$t('confirmClosure'),
+          text: this.$t('Dashboard.SaveDiaryEventModal.confirmClosure'),
           lastAction: { fct: this.onClose }
         })
       } else {
@@ -465,28 +465,3 @@ export default {
   margin-bottom: 15px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "creationTitle": "Créer un événement",
-  "updateTitle": "Modifier l'événement",
-  "namePlaceHolder": "Titre",
-  "locationPlaceHolder": "Lieu",
-  "startDateLabel": "Date / heure événement",
-  "endDateLabel": "Date / heure de fin d'événement",
-  "descriptionPlaceHolder": "Détails",
-  "populationPlaceholder": "Population cible",
-  "markAsUnreadForAll": "Notifier les destinataires",
-  "creationSubmit": "Créer",
-  "updateSubmit": "Modifier",
-  "sizeLimit1": "Ne doit pas dépasser ",
-  "sizeLimit2": " caractères",
-  "selectPopulations": "Veuillez séléctionner une population cible",
-  "dateInPast": "La date de début ne doit pas se situer dans le passé",
-  "dateOrder": "La date de fin doit être postérieure à celle de début",
-  "switchHelp": "Cette option permet de notifier les destinataires et l'évènement sera considéré comme non lu",
-  "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
-  "creationSuccess": "Évènement créé",
-  "updateSuccess": "Évènement modifié"
-}
-</i18n>

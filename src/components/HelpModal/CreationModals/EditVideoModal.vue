@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'HelpModal.EditVideoModal.title'" />
     </template>
 
     <template #body>
@@ -17,19 +17,19 @@
         ref="urlInput"
         v-model="videoUrlInput"
         class="url-input"
-        :placeholder="$t('videoUrlPlaceHolder')"
+        :placeholder="$t('HelpModal.EditVideoModal.videoUrlPlaceHolder')"
       />
 
       <WeprodeInput
         v-model="videoDescriptionInput"
-        :placeholder="$t('videoDescriptionPlaceHolder')"
+        :placeholder="$t('HelpModal.EditVideoModal.videoDescriptionPlaceHolder')"
       />
     </template>
 
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="$t('submit')"
+        :label="$t('HelpModal.EditVideoModal.submit')"
         @click="submit"
       />
     </template>
@@ -105,12 +105,3 @@ export default {
   margin-bottom: 15px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "title": "ÉDITER UNE VIDÉO",
-  "videoUrlPlaceHolder": "Url de la vidéo (laisser vide pour aucune vidéo)",
-  "videoDescriptionPlaceHolder": "Description",
-  "submit": "Valider"
-}
-</i18n>

@@ -6,12 +6,12 @@
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'Course.CourseTab.errorPlaceholder'"
       class="placeholder"
     />
     <div
       v-else-if="courses && courses.length === 0"
-      v-t="'emptyPlaceholder'"
+      v-t="'Course.CourseTab.emptyPlaceholder'"
       class="placeholder"
     />
     <ul
@@ -121,10 +121,3 @@ ul {
   overflow: auto;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun cours à afficher"
-}
-</i18n>

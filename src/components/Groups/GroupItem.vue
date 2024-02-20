@@ -28,8 +28,8 @@
         <span>{{ group.nbMembers }}</span>
         <img
           src="@assets/icons/users.svg"
-          :title="$tc('members', group.nbMembers)"
-          :alt="$tc('members', group.nbMembers)"
+          :title="$tc('Groups.GroupItem.members', group.nbMembers)"
+          :alt="$tc('Groups.GroupItem.members', group.nbMembers)"
         >
       </div>
       <div
@@ -41,8 +41,8 @@
         class="button"
         src="@assets/icons/pen.svg"
         data-test="edit-group-icon"
-        :alt="$t('edit')"
-        :title="$t('edit')"
+        :alt="$t('Groups.GroupItem.edit')"
+        :title="$t('Groups.GroupItem.edit')"
         @click.stop="editGroup()"
       >
       <div
@@ -54,8 +54,8 @@
         class="button"
         src="@/assets/icons/trash2.svg"
         data-test="delete-group-icon"
-        :alt="$t('delete')"
-        :title="$t('delete')"
+        :alt="$t('Groups.GroupItem.delete')"
+        :title="$t('Groups.GroupItem.delete')"
         @click.stop="confirmGroupDeletion()"
       >
     </div>
@@ -64,13 +64,13 @@
       v-if="group.isExpired"
       class="expired"
     >
-      <p v-t="'disabledSpace'" />
+      <p v-t="'Groups.GroupItem.disabledSpace'" />
       <button
         v-if="hasEditionRights"
         class="activate-button button"
         @click.stop="extendGroup"
       >
-        {{ $t('reactivate') }}
+        {{ $t('Groups.GroupItem.reactivate') }}
       </button>
     </div>
   </div>
@@ -113,15 +113,15 @@ export default {
   computed: {
     groupCategory () {
       if (this.group.isClass) {
-        return this.$t('class')
+        return this.$t('Groups.GroupItem.class')
       } else if (this.group.isPedagogical) {
-        return this.$t('pedagogical')
+        return this.$t('Groups.GroupItem.pedagogical')
       } else if (this.group.isSubject) {
-        return this.$t('subject')
+        return this.$t('Groups.GroupItem.subject')
       } else if (this.group.isSchool) {
-        return this.$t('school')
+        return this.$t('Groups.GroupItem.school')
       } else if (this.group.isInstitutional) {
-        return this.$t('institutional')
+        return this.$t('Groups.GroupItem.institutional')
       } else {
         return ''
       }
@@ -149,7 +149,7 @@ export default {
   methods: {
     confirmGroupDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('warning'),
+        text: this.$t('Groups.GroupItem.warning'),
         lastAction: { fct: this.deleteGroup }
       })
     },
@@ -168,7 +168,7 @@ export default {
         this.isLoading = false
         if (data.success) {
           this.$store.dispatch('groups/getGroupList', { filter: this.$store.state.groups.currentFilter })
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('extension-success'), type: 'info' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Groups.GroupItem.extension-success'), type: 'info' })
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
@@ -321,20 +321,3 @@ export default {
 
 }
 </style>
-
-<i18n locale="fr">
-{
-  "class": "Classe",
-  "delete": "Supprimer",
-  "disabledSpace": "Désactivé avant suppression",
-  "edit": "Modifier",
-  "institutional": "Institutionnel",
-  "members": "Aucun membre | {count} membre | {count} membres",
-  "pedagogical": "Pédagogique",
-  "reactivate": "Réactiver",
-  "school": "Établissement",
-  "subject": "Discipline",
-  "warning": "La suppression de ce groupe est définitive.",
-  "extension-success": "Groupe réactivé"
-}
-</i18n>

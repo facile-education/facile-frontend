@@ -9,8 +9,8 @@
       v-if="isHovering"
       data-test="send-message"
       src="@assets/icons/message2.svg"
-      :alt="$t('send-message')"
-      :title="$t('send-message')"
+      :alt="$t('Groups.DetailsTabMember.send-message')"
+      :title="$t('Groups.DetailsTabMember.send-message')"
       @click="openCreateMessageModal"
     >
   </div>
@@ -81,9 +81,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-  {
-    "send-message": "Envoyer un message"
-  }
-  </i18n>

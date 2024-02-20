@@ -13,7 +13,7 @@
         class="content"
       >
         <a
-          v-t="'clickHereLabel'"
+          v-t="'ExternalResource.clickHereLabel'"
           place="link"
           class="link"
           @click="onClickShowIncidents()"
@@ -44,7 +44,7 @@
           class="description"
         >
           <a
-            v-t="'clickHereLabel'"
+            v-t="'ExternalResource.clickHereLabel'"
             place="link"
             class="link"
             @click="openInNewTab"
@@ -52,7 +52,7 @@
         </I18n>
         <div class="nero-separator" />
         <p class="content">
-          {{ $t('popupIssueLabel') }}
+          {{ $t('ExternalResource.popupIssueLabel') }}
         </p>
       </div>
 
@@ -63,7 +63,7 @@
           class="description"
         >
           <a
-            v-t="'clickHereLabel'"
+            v-t="'ExternalResource.clickHereLabel'"
             place="link"
             class="link"
             @click="openInNewTab"
@@ -212,15 +212,3 @@ export default {
   border: 0;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "clickHereLabel": "cliquez ici",
-  "noConfigLabel": "Aucun de vos établissements ne possède une configuration {resourceName}.",
-  "contactLabel": "Vous pouvez signaler un incident en {0}.",
-  "newTabLabel": "{resourceName} a été ouvert dans un nouvel onglet.",
-  "openAgainLabel": "Si vous ne le voyez pas, {0} pour l'ouvrir à nouveau.",
-  "popupIssueLabel": "Si le problème persiste, votre navigateur doit certainement bloquer les fenêtres surgissantes (pop-ups) ouvertes depuis l'ENTA.",
-  "openInTabLabel": "Vous pouvez également {0} pour ouvrir le service dans un nouvel onglet."
-}
-</i18n>

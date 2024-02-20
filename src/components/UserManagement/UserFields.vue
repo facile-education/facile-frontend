@@ -38,14 +38,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "firstName": "Prénom",
-  "lastName": "Nom",
-  "roles": "Profil",
-  "affectations": "Affectations",
-  "isSchoolAdmin": "Administrateur local",
-  "isNewsDelegate": "Rédacteur annonces"
-}
-</i18n>

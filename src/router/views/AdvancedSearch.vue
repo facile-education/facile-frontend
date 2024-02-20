@@ -1,12 +1,12 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('AdvancedSearch.serviceTitle')" />
   <WeprodeInput
     v-model="searchInput"
-    :placeholder="$t('searchPlaceholder')"
+    :placeholder="$t('AdvancedSearch.searchPlaceholder')"
     :maxlength="75"
   />
   <WeprodeButton
-    :label="$t('search')"
+    :label="$t('AdvancedSearch.search')"
     class="confirm-button"
     :disabled="searchInput === ''"
     @click="runSearch"
@@ -49,12 +49,3 @@ export default {
 
 <style lang="scss" scoped>
 </style>
-
-<i18n locale="fr">
-{
-  "search": "Rechercher",
-  "serviceTitle": "Recherche avancée",
-  "searchPlaceholder": "Mots-clés",
-  "buttonLabel": "Rechercher"
-}
-</i18n>

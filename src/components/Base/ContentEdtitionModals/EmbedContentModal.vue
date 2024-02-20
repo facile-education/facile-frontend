@@ -30,7 +30,7 @@
           ref="nameInput"
           v-model="contentName"
           :maxlength="200"
-          :placeholder="$t('namePlaceholder')"
+          :placeholder="$t('Base.EmbedContentModal.namePlaceholder')"
           @keyup.enter.stop="submit"
         />
         <WeprodeErrorMessage
@@ -55,7 +55,7 @@
 
       <a
         v-if="!readOnly && isH5P"
-        v-t="'h5pUrl'"
+        v-t="'Base.EmbedContentModal.h5pUrl'"
         href="https://h5p.eduge.ch/mes-ressources-h5p"
         rel="noopener"
         target="_blank"
@@ -75,7 +75,7 @@
     >
       <WeprodeButton
         v-if="isCreation"
-        :label="isCreation ? $t('add') : $t('edit')"
+        :label="isCreation ? $t('Base.EmbedContentModal.add') : $t('Base.EmbedContentModal.edit')"
         class="button"
         @click="submit"
       />
@@ -138,7 +138,7 @@ export default {
       return {
         contentName: (this.v$.contentName.$invalid && this.v$.contentName.$dirty) ? this.$t('Commons.required') : '',
         embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t(this.isH5P ? 'embedElementCheckFailed-h5p' : 'embedElementCheckFailed') : '',
-        embedSrcAttribute: (this.v$.embedSrcAttribute.$invalid && this.v$.embedSrcAttribute.$dirty) ? this.$t('srcRequired') : ''
+        embedSrcAttribute: (this.v$.embedSrcAttribute.$invalid && this.v$.embedSrcAttribute.$dirty) ? this.$t('Base.EmbedContentModal.srcRequired') : ''
       }
     },
     embedHTMLElement () {
@@ -186,7 +186,7 @@ export default {
               this.$emit('save', { contentType: this.isH5P ? 6 : 4, contentName: this.contentName, contentValue: this.embedSrcAttribute })
               this.closeModal()
             } else {
-              this.urlError = this.$t('UnauthorizedUrlException')
+              this.urlError = this.$t('Base.EmbedContentModal.UnauthorizedUrlException')
             }
           } else {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -227,23 +227,3 @@ export default {
     }
   }
 </style>
-
-<i18n locale="fr">
-{
-  "add": "Ajouter",
-  "cancel": "Annuler",
-  "creation-title": "Ajouter une vidéo",
-  "creation-title-h5p": "Ajouter un contenu H5P",
-  "edit": "Modifier",
-  "edition-title": "Modifier une video",
-  "edition-title-h5p": "Editer un contenu H5P",
-  "embedElementCheckFailed": "Ceci n'est pas un code d'intégration valide (par exemple {embedText} )",
-  "embedElementCheckFailed-h5p": "Ce type de contenu n'est pas un contenu embarqué valide",
-  "h5pUrl": "Récupérer une activité depuis h5p.eduge.ch",
-  "namePlaceholder": "Titre",
-  "srcRequired": "Le contenu embarqué doit comprendre un attribut \"src\" non vide",
-  "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",
-  "urlPlaceholder": "Coller ici le code d'intégration de la vidéo",
-  "urlPlaceholder-h5p": "Coller ici le code d'intégration H5P"
-}
-</i18n>

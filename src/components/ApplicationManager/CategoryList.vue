@@ -10,7 +10,7 @@
         <!-- span v-if / v-t / class -->
         <span
           v-if="category === 'Création de contenu'"
-          v-t="'documents-info'"
+          v-t="'ApplicationManager.CategoryList.documents-info'"
           class="info"
         />
       </h3>
@@ -57,9 +57,3 @@ export default {
   font-style: italic;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "documents-info": " - Disponibles directement au sein du service \"Mes documents\""
-}
-</i18n>

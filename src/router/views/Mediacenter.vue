@@ -1,5 +1,5 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('Mediacenter.serviceTitle')" />
   <NeroToolbar v-if="(schoolList && schoolList.length > 1)">
     <WeprodeDropdown
       v-model="selectedSchool"
@@ -51,9 +51,3 @@ export default {
 
 <style lang="scss" scoped>
 </style>
-
-<i18n locale="fr">
-{
-  "serviceTitle": "Médiacentre"
-}
-</i18n>

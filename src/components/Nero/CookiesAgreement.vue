@@ -2,18 +2,18 @@
   <section class="cookie-agreement theme-background-color">
     <div class="text">
       <div
-        v-t="'cookiesPolicy'"
+        v-t="'Nero.CookiesAgreement.cookiesPolicy'"
         class="cookie-policy"
       />
       <button
-        v-t="'moreDetails'"
+        v-t="'Nero.CookiesAgreement.moreDetails'"
         class="more-details"
         @click="openTermsOfUse"
       />
     </div>
 
     <button
-      v-t="'IAgree'"
+      v-t="'Nero.CookiesAgreement.IAgree'"
       class="agree-button"
       @click="agreeToCookies"
     />
@@ -113,11 +113,3 @@ button {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "cookiesPolicy": "Ce site n'utilise que des cookies nécessaires au fonctionnement de la plateforme.",
-  "moreDetails": "Plus d'informations ici.",
-  "IAgree": "J'ai compris"
-}
-</i18n>

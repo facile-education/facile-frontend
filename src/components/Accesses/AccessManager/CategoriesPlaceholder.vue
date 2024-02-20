@@ -1,8 +1,8 @@
 <template>
   <div class="placeholder">
-    <span v-t="'noAccess'" />
+    <span v-t="'Accesses.CategoriesPlaceholder.noAccess'" />
     <em
-      v-t="'createCategory'"
+      v-t="'Accesses.CategoriesPlaceholder.createCategory'"
       data-test="buttonAddCategoryPlaceholder"
       @click="$emit('createCategory')"
     />
@@ -43,10 +43,3 @@ em {
   font-weight: 600;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "noAccess": "Aucun accès",
-  "createCategory": "Ajoutez votre première catégorie d'accès !"
-}
-</i18n>

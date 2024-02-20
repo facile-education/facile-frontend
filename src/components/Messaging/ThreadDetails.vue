@@ -119,7 +119,7 @@
         v-if="!messageToDisplay"
         class="placeholder"
       >
-        <div v-t="'noSelectedMessage'" />
+        <div v-t="'Messaging.ThreadDetails.noSelectedMessage'" />
         <img
           src="@/assets/icons/messaging_placeholder.svg"
           alt=""
@@ -475,9 +475,3 @@ hr {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "noSelectedMessage": "Sélectionnez une discussion ou un message"
-}
-</i18n>

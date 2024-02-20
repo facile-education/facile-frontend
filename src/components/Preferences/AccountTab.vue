@@ -4,7 +4,7 @@
     data-test="account-tab"
   >
     <section class="user-picture">
-      <h4 v-t="'userPicture'" />
+      <h4 v-t="'Preferences.AccountTab.userPicture'" />
       <div class="body">
         <div class="left-section">
           <div class="thumbnail-container">
@@ -19,7 +19,7 @@
 
             <WeprodeButton
               v-if="user.picture !== ''"
-              :title="$t('deleteButtonTitle')"
+              :title="$t('Preferences.AccountTab.deleteButtonTitle')"
               type="circle"
               cls="cancel delete"
               @click="removePicture"
@@ -32,8 +32,8 @@
 
             <WeprodeButton
               v-else
-              :title="$t('addButtonTitle')"
-              :aria-label="$t('addButtonTitle')"
+              :title="$t('Preferences.AccountTab.addButtonTitle')"
+              :aria-label="$t('Preferences.AccountTab.addButtonTitle')"
               class="add-picture"
               type="circle"
               @click="toggleImagePicker"
@@ -53,7 +53,7 @@
       </div>
     </section>
     <section class="theme-color">
-      <h4 v-t="'themeColor'" />
+      <h4 v-t="'Preferences.AccountTab.themeColor'" />
       <ColorPicker
         class="color-picker"
         :model-value="themeColor"
@@ -62,7 +62,7 @@
       />
     </section>
     <!-- <section class="activity-report">
-      <h4 v-t="'activityReport'" />
+      <h4 v-t="'Preferences.AccountTab.activityReport'" />
       <WeprodeDropdown
         :model-value="selectedFrequency"
         :list="frequency"
@@ -105,9 +105,9 @@ export default {
         '#7F8C8D', '#16A085', '#34495E', '#E74C3C', '#F1C40F'],
       // Frequency : NONE = 0, DAILY = 1, WEEKLY = 2
       frequency: [
-        { label: this.$t('none'), value: 0 },
-        { label: this.$t('daily'), value: 1 },
-        { label: this.$t('weekly'), value: 2 }
+        { label: this.$t('Preferences.AccountTab.none'), value: 0 },
+        { label: this.$t('Preferences.AccountTab.daily'), value: 1 },
+        { label: this.$t('Preferences.AccountTab.weekly'), value: 2 }
       ],
       selectedFrequency: undefined
     }
@@ -243,22 +243,3 @@ h4 {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "none": "Aucun",
-  "daily": "Quotidien",
-  "weekly": "Hebdomadaire",
-  "addressLabel": "Adresse: ",
-  "deleteButtonTitle": "Supprimer la photo de profil",
-  "addButtonTitle": "Ajouter une image de profil",
-  "emailAddressLabel": "Courriel: ",
-  "homePhoneNumberLabel": "Téléphone maison: ",
-  "mobilePhoneNumberLabel": "Téléphone mobile: ",
-  "officePhoneNumberLabel": "Téléphone bureau: ",
-  "activityReport": "Rapport d'activités",
-  "reportChange": "Signaler un changement",
-  "themeColor": "Couleur du thème",
-  "userPicture": "Image de profil"
-}
-</i18n>

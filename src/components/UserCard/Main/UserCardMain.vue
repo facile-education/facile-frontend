@@ -21,13 +21,13 @@
             data-test="SendMessage"
             :class="{'phone': mq.phone}"
             :cls="''"
-            :title="$t('contact')"
+            :title="$t('UserCard.UserCardMain.contact')"
             @click="createNewMessage([{ type: 1, text: userDetails.lastName + ' ' + userDetails.firstName, userId: userDetails.userId }])"
           >
             <img
               class="contact-icon"
               src="@assets/icons/sent2.svg"
-              :alt="$t('contact')"
+              :alt="$t('UserCard.UserCardMain.contact')"
             >
             <span v-t="'Contacter'" />
           </WeprodeButton>
@@ -57,7 +57,7 @@
           v-if="userDetails.homePhone"
           class="mainPhone"
         >
-          {{ userDetails.homePhone }} {{ `(${$t('homePhone')})` }}
+          {{ userDetails.homePhone }} {{ `(${$t('UserCard.UserCardMain.homePhone')})` }}
         </p>
       </div>
     </div>
@@ -95,7 +95,7 @@ export default {
   computed: {
     role () {
       if (this.userDetails.isParent) {
-        return this.$t('relative')
+        return this.$t('UserCard.UserCardMain.relative')
       } else if (this.userDetails.isPersonal || this.userDetails.isTeacher) {
         return this.userDetails.roles
       } else {
@@ -202,12 +202,3 @@ export default {
 }
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "contact": "Contacter cet utilisateur",
-    "relative": "Responsable légal",
-    "studentLabel": "Élève de {volee}ème",
-    "homePhone": "maison"
-  }
-</i18n>

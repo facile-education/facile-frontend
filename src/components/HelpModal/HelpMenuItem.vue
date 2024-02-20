@@ -74,7 +74,7 @@ export default {
     },
     confirmItemRemoval () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('confirmItemRemovalMessage'),
+        text: this.$t('HelpModal.HelpMenuItem.confirmItemRemovalMessage'),
         lastAction: { fct: this.deleteItem, params: [] }
       })
     },
@@ -135,9 +135,3 @@ a {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "confirmItemRemovalMessage": "Supprimmer l'article définitivement?"
-}
-</i18n>

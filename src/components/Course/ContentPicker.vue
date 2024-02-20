@@ -94,38 +94,38 @@ export default {
         {
           icon: 'icon-folder',
           fontSize: '1.25rem',
-          name: this.$t('addFile'),
+          name: this.$t('Course.ContentPicker.addFile'),
           callback: this.toggleFilePicker
         },
         {
           icon: 'icon-upload',
           fontSize: '1.25rem',
-          name: this.$t('addOSFile'),
+          name: this.$t('Course.ContentPicker.addOSFile'),
           callback: this.toggleOSFilePicker,
           hasInput: true
         },
         {
           icon: 'icon-Aa',
           fontSize: '0.8rem',
-          name: this.$t('addText'),
+          name: this.$t('Course.ContentPicker.addText'),
           callback: this.addText
         },
         {
           icon: 'icon-record',
           fontSize: '1.25rem',
-          name: this.$t('addSound'),
+          name: this.$t('Course.ContentPicker.addSound'),
           callback: this.toggleAudioRecorderModal
         },
         {
           icon: 'icon-link',
           fontSize: '1.1rem',
-          name: this.$t('addLink'),
+          name: this.$t('Course.ContentPicker.addLink'),
           callback: this.toggleLinkModal
         },
         {
           icon: 'icon-play',
           fontSize: '1rem',
-          name: this.$t('addVideo'),
+          name: this.$t('Course.ContentPicker.addVideo'),
           callback: this.toggleVideoModal
         }
       ],
@@ -147,7 +147,7 @@ export default {
       const h5pContent = {
         icon: 'icon-h5p',
         fontSize: '0.6rem',
-        name: this.$t('addH5p'),
+        name: this.$t('Course.ContentPicker.addH5p'),
         callback: this.toggleH5PModal
       }
       return this.contents.concat((this.isH5pBroadcasted ? h5pContent : []))
@@ -245,15 +245,3 @@ input {
   display: none;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "addFile": "Ajouter une pièce jointe depuis vos documents de l'ENTA",
-  "addOSFile": "Ajouter une pièce jointe depuis le poste de travail",
-  "addH5p": "Ajouter un élément H5P",
-  "addLink": "Ajouter un lien",
-  "addSound": "Ajouter un enregistrement audio",
-  "addText": "Ajouter du texte",
-  "addVideo": "Ajouter une vidéo"
-}
-</i18n>

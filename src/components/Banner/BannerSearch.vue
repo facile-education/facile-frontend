@@ -6,7 +6,7 @@
     <input
       v-if="!mq.phone"
       v-model="searchInput"
-      :placeholder="$t('searchLabel') + '...'"
+      :placeholder="$t('Banner.BannerSearch.searchLabel') + '...'"
       class="search-input"
       @input="inputChange"
       @focus="focus"
@@ -14,7 +14,7 @@
       @keyup.enter.stop="submit"
     >
     <span
-      :title="$t('searchLabel')"
+      :title="$t('Banner.BannerSearch.searchLabel')"
       class="search-icon"
       @click="submit"
     >
@@ -126,9 +126,3 @@ export default {
   font-size: 1.3rem;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "searchLabel": "Rechercher"
-}
-</i18n>

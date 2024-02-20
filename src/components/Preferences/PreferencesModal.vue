@@ -7,15 +7,15 @@
     @close="close"
   >
     <template #header>
-      <span v-t="'modalHeaderLabel'" />
+      <span v-t="'Preferences.PreferencesModal.modalHeaderLabel'" />
     </template>
 
     <template #body>
       <WeprodeTabList ref="tabList">
-        <WeprodeTabItem :title="$t('accountTabLabel')">
+        <WeprodeTabItem :title="$t('Preferences.PreferencesModal.accountTabLabel')">
           <AccountTab @save="updateInfoLabel" />
         </WeprodeTabItem>
-        <WeprodeTabItem :title="$t('messagingTabLabel')">
+        <WeprodeTabItem :title="$t('Preferences.PreferencesModal.messagingTabLabel')">
           <MessagingTab @save="updateInfoLabel" />
         </WeprodeTabItem>
       </WeprodeTabList>
@@ -76,7 +76,7 @@ export default {
       this.$store.dispatch('messaging/closeParametersModal')
     },
     updateInfoLabel () {
-      this.infoLabel = this.$t('infoLabel') + dayjs().format('HH:mm')
+      this.infoLabel = this.$t('Preferences.PreferencesModal.infoLabel') + dayjs().format('HH:mm')
     }
   }
 }
@@ -92,12 +92,3 @@ export default {
 
 <style lang="scss" scoped>
 </style>
-
-<i18n locale="fr">
-{
-  "accountTabLabel": "Mon compte",
-  "infoLabel": "Paramètres enregistrés - ",
-  "messagingTabLabel": "Messagerie",
-  "modalHeaderLabel": "Préférences"
-}
-</i18n>

@@ -113,24 +113,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "National_1": "Élève",
-  "National_2": "Responsable légal",
-  "National_3": "Enseignant·e",
-  "National_4": "Directeur·trice",
-  "Group_admin": "Admin. ENTA",
-  "Assistanttechnique": "Assistant·e technique",
-  "Caissiercomptable": "Caissier·ère comptable",
-  "Conseillersocial": "Conseiller·ère social·e",
-  "Conseillerd'orientation": "Conseiller·ère d'orientation",
-  "Doyen": "Doyen·ne",
-  "Infirmiere": "Infirmier·ère",
-  "Bibliothecaire": "Bibliothécaire",
-  "Psychologue": "Psychologue",
-  "Secretaire": "Secrétaire",
-  "SiteAdministrator": "Admin. de site",
-  "SiteOwner": "Créateur·trice de site"
-}
-</i18n>

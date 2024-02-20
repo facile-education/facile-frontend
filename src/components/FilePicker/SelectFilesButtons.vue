@@ -74,13 +74,13 @@ export default {
         {
           icon: 'icon-folder',
           fontSize: '1.25rem',
-          name: this.$t('addFile'),
+          name: this.$t('FilePicker.SelectFilesButtons.addFile'),
           callback: this.toggleFilePicker
         },
         {
           icon: 'icon-upload',
           fontSize: '1rem',
-          name: this.$t('addOSFile'),
+          name: this.$t('FilePicker.SelectFilesButtons.addOSFile'),
           callback: this.toggleOSFilePicker,
           hasInput: true
         }
@@ -126,10 +126,3 @@ input {
   display: none;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "addFile": "Ajouter une pièce jointe depuis vos documents de l'ENTA",
-  "addOSFile": "Ajouter une pièce jointe depuis le poste de travail"
-}
-</i18n>

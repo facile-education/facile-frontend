@@ -22,12 +22,12 @@
             class="teacher"
           >
             <div class="name">
-              <span><b>{{ `${teacher.firstName.substring(0, 1)}. ${teacher.lastName} ` }}</b>{{ $t('substitutedBy') }}</span>
+              <span><b>{{ `${teacher.firstName.substring(0, 1)}. ${teacher.lastName} ` }}</b>{{ $t('Horaires.SessionTeacherModal.substitutedBy') }}</span>
               <UserCompletion
                 v-model="teacher.substitutes"
                 style="display: inline-block;"
                 user-type="teacher"
-                :placeholder="$t('substitute')"
+                :placeholder="$t('Horaires.SessionTeacherModal.substitute')"
               />
             <!-- @blur="v$.newEvent.extendedProps.teacher.teacherId.$touch()" -->
             </div>
@@ -39,7 +39,7 @@
               @update:model-value="filterSessionList(teacher)"
             />
             <div>
-              <span v-t="'lastSession'" />
+              <span v-t="'Horaires.SessionTeacherModal.lastSession'" />
               <WeprodeDropdown
                 v-if="teacher.filteredSessions.length > 0"
                 v-model="teacher.targetSession"
@@ -57,7 +57,7 @@
     <template #footer>
       <!-- form="teacherform" -->
       <WeprodeButton
-        :label="$t('confirm')"
+        :label="$t('Horaires.SessionTeacherModal.confirm')"
         @click="onConfirm"
       />
     </template>
@@ -211,15 +211,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "allSessions": "Appliquer le remplacement pour toutes les séances de {course}",
-  "confirm": "Valider",
-  "firstSession": "Première séance affectée : le {date} de {start} à {end}",
-  "lastSession": "Dernière séance affectée : ",
-  "substitute": "Remplaçant.e",
-  "substitutedBy": " remplacé.e par ",
-  "teacherManagement": "Gérer les maîtres de {course}"
-}
-</i18n>

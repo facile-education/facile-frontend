@@ -142,30 +142,30 @@ export default {
     formattedStatus () {
       const publicationDate = dayjs(this.homework.publicationDate, DATE_EXCHANGE_FORMAT)
       if (this.homework.isDraft) {
-        return this.$t('draftStatus')
+        return this.$t('Course.Homework.draftStatus')
       } else if (publicationDate.isAfter(dayjs())) {
-        return this.$t('scheduled')
+        return this.$t('Course.Homework.scheduled')
       } else {
-        return this.$t('publishedOn') + publicationDate.format('DD/MM/YYYY')
+        return this.$t('Course.Homework.publishedOn') + publicationDate.format('DD/MM/YYYY')
       }
     },
     formattedEstimatedTime () {
       const nbMinutes = this.homework.estimatedTime
       const nbHour = Math.floor(nbMinutes / 60)
       if (nbHour > 0) {
-        return nbHour + this.$t('hourLabel') + nbMinutes % 60
+        return nbHour + this.$t('Course.Homework.hourLabel') + nbMinutes % 60
       } else {
-        return nbMinutes + ' ' + this.$t('minuteLabel')
+        return nbMinutes + ' ' + this.$t('Course.Homework.minuteLabel')
       }
     },
     formattedToDate () {
       return dayjs(this.homework.toDate, DATE_EXCHANGE_FORMAT).format('DD/MM')
     },
     formattedFuturePublicationDate () {
-      return dayjs(this.homework.publicationDate, DATE_EXCHANGE_FORMAT).format('[' + this.$t('scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
+      return dayjs(this.homework.publicationDate, DATE_EXCHANGE_FORMAT).format('[' + this.$t('Course.Homework.scheduledOn') + '] YYYY-MM-DD [' + this.$t('Course.Homework.at') + '] HH:mm')
     },
     formattedDoneStatus () {
-      return this.$tc('doneStatus', { nbDone: this.homework.doneStudents.length, nbStudents: this.homework.selectedStudents.length })
+      return this.$tc('Course.Homework.doneStatus', { nbDone: this.homework.doneStudents.length, nbStudents: this.homework.selectedStudents.length })
     }
   },
   methods: {
@@ -288,21 +288,3 @@ button {
   cursor: pointer;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "at": "à",
-  "delete": "Supprimer",
-  "doneStatus": "Réalisé par {nbDone} élève sur {nbStudents} | Réalisé par {nbDone} élève sur {nbStudents} | Réalisé par {nbDone} élèves sur {nbStudents}",
-  "edit": "Modifier",
-  "hourLabel": "h",
-  "minuteLabel": "min",
-  "publishedOn": "Publié le ",
-  "draftStatus": "Brouillon",
-  "toDoHomework": "À faire pour cette séance",
-  "sessionHomework": "À faire pendant la séance",
-  "scheduled": "Programmé",
-  "scheduledOn": "Publication prévue le",
-  "givenHomework": "Pour le {targetDate}"
-}
-</i18n>

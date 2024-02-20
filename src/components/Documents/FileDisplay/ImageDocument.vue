@@ -1,7 +1,7 @@
 <template>
   <img
     :src="src"
-    :alt="$t('unknown-url')"
+    :alt="$t('Documents.ImageDocument.unknown-url')"
     class="img"
   >
 </template>
@@ -24,9 +24,3 @@ export default {
     max-height: 100%;
   }
 </style>
-
-<i18n locale="fr">
-  {
-    "unknown-url": "Document non disponible"
-  }
-</i18n>

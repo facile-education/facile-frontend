@@ -28,14 +28,14 @@
     <!-- Students and parents have student and parents lists -->
     <AddressBookItem
       v-if="isStudent || isParent"
-      :title="isStudent ? $t('myClass') : $t('myStudents')"
+      :title="isStudent ? $t('ContactPicker.AddressBookSchool.myClass') : $t('ContactPicker.AddressBookSchool.myStudents')"
       :is-leaf="true"
       :is-a-selectable-leaf="false"
       @select="getMyStudents()"
     />
     <AddressBookItem
       v-if="isStudent || isParent"
-      :title="isStudent ? $t('myRelatives') : $t('relatives')"
+      :title="isStudent ? $t('ContactPicker.AddressBookSchool.myRelatives') : $t('ContactPicker.AddressBookSchool.relatives')"
       :is-leaf="true"
       :is-a-selectable-leaf="false"
       @select="getMyRelatives()"
@@ -84,12 +84,3 @@ export default {
 
 <style lang="scss" scoped>
 </style>
-
-<i18n locale="fr">
-{
-  "myClass": "Ma classe",
-  "myStudents": "Elèves en responsabilité",
-  "relatives": "Responsables légaux",
-  "myRelatives": "Mes responsables légaux"
-}
-</i18n>

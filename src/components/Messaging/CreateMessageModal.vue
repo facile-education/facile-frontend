@@ -13,19 +13,19 @@
       <template #header>
         <span
           v-if="messageParameters.isForward"
-          v-t="'headerForward'"
+          v-t="'Messaging.CreateMessageModal.headerForward'"
         />
         <span
           v-else-if="messageParameters.isReply"
-          v-t="'headerReply'"
+          v-t="'Messaging.CreateMessageModal.headerReply'"
         />
         <span
           v-else-if="messageParameters.isReplyAll"
-          v-t="'headerReplyAll'"
+          v-t="'Messaging.CreateMessageModal.headerReplyAll'"
         />
         <span
           v-else
-          v-t="'header'"
+          v-t="'Messaging.CreateMessageModal.header'"
         />
       </template>
 
@@ -42,7 +42,7 @@
             :close-on-select="true"
             :completion-only="true"
             :min-length="1"
-            :placeholder="$t('recipientsPlaceHolder')"
+            :placeholder="$t('Messaging.CreateMessageModal.recipientsPlaceHolder')"
             display-field="text"
             id-field="id"
             :list="autocompleteItems"
@@ -68,7 +68,7 @@
         <div class="error-container">
           <WeprodeErrorMessage
             v-if="error==='missingRecipient'"
-            :error-message="$t('missingRecipient')"
+            :error-message="$t('Messaging.CreateMessageModal.missingRecipient')"
           />
         </div>
 
@@ -80,7 +80,7 @@
           :class="device"
           class="subject"
           data-test="subject-input"
-          :placeholder="$t('subjectPlaceHolder')"
+          :placeholder="$t('Messaging.CreateMessageModal.subjectPlaceHolder')"
         />
 
         <!-- Content -->
@@ -127,13 +127,13 @@
           <WeprodeButton
             data-test="draftButton"
             class="draftButton"
-            :label="$t('draftButton')"
+            :label="$t('Messaging.CreateMessageModal.draftButton')"
             @click="saveDraft"
           />
           <WeprodeButton
             data-test="submitButton"
             class="dark"
-            :label="$t('submitButton')"
+            :label="$t('Messaging.CreateMessageModal.submitButton')"
             :disabled="isLoading"
             @click="checkFields"
           />
@@ -389,7 +389,7 @@ export default {
       }
     },
     sendMessage () {
-      const successMessage = this.$t('successMessage')
+      const successMessage = this.$t('Messaging.CreateMessageModal.successMessage')
       this.isLoading = true
       // In case of reply, replyAll or forward
       // previous content is added in case of forward OR (reply or replyAll AND no recipient added)
@@ -447,16 +447,16 @@ export default {
       })
     },
     formatPreviousContent (content) {
-      return '</br><details><summary>' + this.$t('at') +
+      return '</br><details><summary>' + this.$t('Messaging.CreateMessageModal.at') +
         dayjs(this.originMessage.sendDate, DATE_EXCHANGE_FORMAT).format('DD/MM/YYYY HH:mm') +
-        ' ' + this.originMessage.senderName + this.$t('wrote') + '</summary>' +
+        ' ' + this.originMessage.senderName + this.$t('Messaging.CreateMessageModal.wrote') + '</summary>' +
         '</br> ' + "<div style='border-left:1px solid #000; padding-left:20px'>" +
         content +
         '</div>' +
         '</details>'
     },
     saveDraft () {
-      const successMessage = this.$t('draftSaved')
+      const successMessage = this.$t('Messaging.CreateMessageModal.draftSaved')
       const originThreadId = (this.originMessage !== undefined && this.originMessage.threadId !== undefined ? this.originMessage.threadId : 0)
       messageService.saveDraft(this.recipients, this.subject, this.content, this.attachedFiles, this.messageParameters.draftMessageId, originThreadId, false).then((data) => {
         if (data.success) {
@@ -491,7 +491,7 @@ export default {
         })
         if (currentForm !== this.initialForm) {
           this.$store.dispatch('warningModal/addWarning', {
-            text: this.$t('closeWarning'),
+            text: this.$t('Messaging.CreateMessageModal.closeWarning'),
             lastAction: { fct: this.onClose }
           })
         } else {
@@ -626,25 +626,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "header": "Nouveau message",
-  "headerForward": "Transférer",
-  "headerReply": "Répondre",
-  "headerReplyAll": "Répondre à tous",
-  "submitButton": "Envoyer",
-  "recipientsPlaceHolder": "Destinataires",
-  "subjectPlaceHolder": "Objet",
-  "draftButton": "Enregistrer en brouillon",
-  "draftSaved": "Brouillon enregistré",
-  "successMessage": "Message envoyé",
-  "required": "Champ requis",
-  "missingRecipient": "Sélectionnez au moins un destinataire",
-  "addRecipients": "Ajouter des destinataires",
-  "closeWarning": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
-  "at": "Le ",
-  "wrote": " a écrit :",
-  "othersLabel": "et {nbOthers} autres"
-}
-</i18n>

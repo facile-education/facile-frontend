@@ -9,7 +9,7 @@
     @close="$emit('close')"
   >
     <template #header>
-      <span>{{ $t('WorkLoadFor') + (!isWholeClass ? $tc('nbSelectedStudents', selectedStudents.length) : '') + courseName }}</span>
+      <span>{{ $t('Course.WorkLoadModal.WorkLoadFor') + (!isWholeClass ? $tc('Course.WorkLoadModal.nbSelectedStudents', selectedStudents.length) : '') + courseName }}</span>
     </template>
 
     <template #body>
@@ -35,7 +35,7 @@
         </div>
         <div
           v-if="error === true"
-          v-t="'errorPlaceholder'"
+          v-t="'Course.WorkLoadModal.errorPlaceholder'"
           class="placeholder"
         />
         <WorkList
@@ -198,11 +198,3 @@ export default {
   @extend %content-placeholder;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "nbSelectedStudents": "aucun élève de | {count} élève de | {count} élèves de ",
-  "WorkLoadFor": "Charge de travail de "
-}
-</i18n>

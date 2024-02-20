@@ -2,12 +2,12 @@
   <section class="faq-section">
     <div class="header">
       <h3
-        v-t="'FAQ'"
-        :title="$t('frequentlyAskedQuestions')"
+        v-t="'HelpModal.HelpFAQSection.FAQ'"
+        :title="$t('HelpModal.HelpFAQSection.frequentlyAskedQuestions')"
       />
       <button
         v-if="isAdministrator"
-        v-t="'add-question'"
+        v-t="'HelpModal.HelpFAQSection.add-question'"
         @click="isCreateQuestionModalDisplayed=true"
       />
     </div>
@@ -105,11 +105,3 @@ h3 {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "FAQ": "F.A.Q.",
-  "frequentlyAskedQuestions": "Question fréquentes",
-  "add-question": "+ Ajouter"
-}
-</i18n>

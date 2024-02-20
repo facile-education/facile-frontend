@@ -8,7 +8,7 @@
         <IconOption
           class="button"
           :icon="unreadOnly ? 'icon-filter-plain' : 'icon-filter'"
-          :title="unreadOnly ? $t('all') : $t('Messaging.unreadOnly')"
+          :title="unreadOnly ? $t('Messaging.ThreadListOptions.all') : $t('Messaging.unreadOnly')"
           :active="unreadOnly"
           name="toggleUnreadOnly"
           icon-height="18px"
@@ -31,7 +31,7 @@
         <IconOption
           class="button"
           :icon="require('@assets/icons/side_menu.svg')"
-          :title="isMenuPanelDisplayed ? $t('hideMenuPanel') : $t('displayMenuPanel')"
+          :title="isMenuPanelDisplayed ? $t('Messaging.ThreadListOptions.hideMenuPanel') : $t('Messaging.ThreadListOptions.displayMenuPanel')"
           name="toggleMessagingMenu"
           icon-height="18px"
           alt="toggle menu"
@@ -42,7 +42,7 @@
         <IconOption
           class="button"
           :icon="require('@assets/icons/refresh.svg')"
-          :title="$t('refresh')"
+          :title="$t('Messaging.ThreadListOptions.refresh')"
           name="refresh"
           icon-height="18px"
           alt="refresh"
@@ -227,15 +227,3 @@ button {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "mark": "Marquer",
-  "trash": "Supprimer",
-  "displayMenuPanel": "Afficher le menu",
-  "hideMenuPanel": "Cacher le menu",
-  "all": "Tous",
-  "refresh": "Rafraîchir"
-}
-
-</i18n>

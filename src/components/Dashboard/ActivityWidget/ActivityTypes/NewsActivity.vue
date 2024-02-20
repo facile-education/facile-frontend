@@ -3,7 +3,7 @@
     class="news-activity"
     :class="{'phone': mq.phone || mq.tablet}"
     tabindex="0"
-    :title="$t('selectToConsult')"
+    :title="$t('Dashboard.NewsActivity.selectToConsult')"
     @click="showDetails"
     @keyup.enter="showDetails"
   >
@@ -24,7 +24,7 @@
       <div class="description">
         <div class="left">
           <span class="text">
-            {{ (news.isSchoolNews ? $t('hasPublishedAnnounce') : $t('hasPublishedInfo')) + news.title }}
+            {{ (news.isSchoolNews ? $t('Dashboard.NewsActivity.hasPublishedAnnounce') : $t('Dashboard.NewsActivity.hasPublishedInfo')) + news.title }}
           </span>
           <BaseIcon
             v-if="news.hasAttachedFiles"
@@ -43,10 +43,10 @@
       {{ formattedDate }}
       <button
         v-if="!news.hasRead"
-        v-t="'show'"
+        v-t="'Dashboard.NewsActivity.show'"
         class="show"
-        :aria-label="$t('show')"
-        :title="$t('show')"
+        :aria-label="$t('Dashboard.NewsActivity.show')"
+        :title="$t('Dashboard.NewsActivity.show')"
         @click="showDetails"
       />
     </div>
@@ -72,9 +72,9 @@
     >
       <button
         class="option"
-        :aria-label="$t('update')"
+        :aria-label="$t('Dashboard.NewsActivity.update')"
         data-test="buttonEditInformation"
-        :title="$t('update')"
+        :title="$t('Dashboard.NewsActivity.update')"
         @click.stop="isUpdateModalDisplayed = true"
         @keyup.stop
       >
@@ -86,8 +86,8 @@
       <button
         class="option"
         data-test="buttonDeleteInformation"
-        :aria-label="$t('delete')"
-        :title="$t('delete')"
+        :aria-label="$t('Dashboard.NewsActivity.delete')"
+        :title="$t('Dashboard.NewsActivity.delete')"
         @click.stop="confirmNewsDeletion"
         @keyup.stop
       >
@@ -176,7 +176,7 @@ export default {
       return dayjs(this.news.publicationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.news.publicationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.news.publicationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.NewsActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.NewsActivity.at') + ' HH:mm')
     }
   },
   methods: {
@@ -214,7 +214,7 @@ export default {
     },
     confirmNewsDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('deleteNewsWarning'),
+        text: this.$t('Dashboard.NewsActivity.deleteNewsWarning'),
         lastAction: { fct: this.deleteNews }
       })
     },
@@ -347,19 +347,3 @@ button {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "on": "Le",
-  "at": "à",
-  "see": "Voir",
-  "groups-activity": "Fil d'activité de mes groupes",
-  "update": "Modifier",
-  "delete": "Supprimer",
-  "deleteNewsWarning": "Supprimer cette information ?",
-  "selectToConsult": "Consulter",
-  "hasPublishedInfo": "a publié ",
-  "hasPublishedAnnounce": "a publié l'annonce ",
-  "show": "Voir"
-}
-</i18n>

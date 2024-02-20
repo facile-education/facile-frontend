@@ -6,8 +6,8 @@
     <div class="popover-content">
       <button
         class="close-button"
-        :title="$t('close')"
-        :aria-label="$t('close')"
+        :title="$t('Accesses.AccessPopover.close')"
+        :aria-label="$t('Accesses.AccessPopover.close')"
         @click="onClose"
       >
         <CustomIcon
@@ -21,12 +21,12 @@
       />
       <div
         v-if="error === true"
-        v-t="'errorPlaceholder'"
+        v-t="'Accesses.AccessPopover.errorPlaceholder'"
         class="placeholder"
       />
       <div
         v-else-if="categoryList && categoryList.length === 0"
-        v-t="'emptyPlaceholder'"
+        v-t="'Accesses.AccessPopover.emptyPlaceholder'"
         class="placeholder"
       />
       <ul v-else-if="categoryList">
@@ -193,13 +193,3 @@ ul {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "AccessesOf": "Accès des {roleLabel}",
-  "close": "Fermer",
-  "emptyPlaceholder": "Aucun accès",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "myAccesses": "Mes accès"
-}
-</i18n>

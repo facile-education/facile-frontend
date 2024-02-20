@@ -9,8 +9,8 @@
     <template #default="{ togglePopover }">
       <button
         data-test="toggle-calendar-selector"
-        :aria-label="$t('selectDate')"
-        :title="$t('selectDate')"
+        :aria-label="$t('Horaires.DatepickerNav.selectDate')"
+        :title="$t('Horaires.DatepickerNav.selectDate')"
         @click="togglePopover()"
       >
         <NeroIcon
@@ -104,9 +104,3 @@ button {
   cursor: pointer;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "selectDate": "Choisir une date"
-}
-</i18n>

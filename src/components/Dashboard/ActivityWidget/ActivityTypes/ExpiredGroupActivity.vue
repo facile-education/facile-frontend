@@ -19,7 +19,7 @@
           {{ activity.groupName }}
         </i>
         <span>
-          {{ ' - ' + $t('deactivation') }}
+          {{ ' - ' + $t('Dashboard.ExpiredGroupActivity.deactivation') }}
         </span>
       </div>
       <div class="description">
@@ -27,7 +27,7 @@
           {{ description }}
         </span>
         <i
-          v-t="'reactivate'"
+          v-t="'Dashboard.ExpiredGroupActivity.reactivate'"
           tabindex="0"
           @click="confirmGroupReactivation"
           @keyup.enter="confirmGroupReactivation"
@@ -66,10 +66,10 @@ export default {
       return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.ExpiredGroupActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.ExpiredGroupActivity.at') + ' HH:mm')
     },
     description () {
-      return this.$t('space-is-deactivated')
+      return this.$t('Dashboard.ExpiredGroupActivity.space-is-deactivated')
     }
   },
   methods: {
@@ -85,7 +85,7 @@ export default {
     reactivateGroup () {
       extendCommunity(this.activity.groupId).then((data) => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('extension-success'), type: 'info' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Dashboard.ExpiredGroupActivity.extension-success'), type: 'info' })
           this.$emit('refresh')
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -107,15 +107,3 @@ export default {
   width: 30px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "on": "Le",
-  "at": "à",
-  "space-is-deactivated": "L'espace est désactivé. Voulez vous le ",
-  "deactivation": "Désactivation",
-  "reactivate": "réactiver",
-  "reactivationConfirmMessage": "Voulez-vous vraiment réactiver le groupe {groupName} ?",
-  "extension-success": "Groupe réactivé"
-}
-</i18n>

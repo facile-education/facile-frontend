@@ -24,7 +24,7 @@
           v-if="canUpdateStatus"
           v-model="isDone"
           data-test="toggleDoneUndone"
-          :label="homework.isDone ? $t('done') : $t('todo')"
+          :label="homework.isDone ? $t('Course.StudentHomework.done') : $t('Course.StudentHomework.todo')"
           :disabled="isPast"
           :right-display="true"
         />
@@ -89,12 +89,12 @@ export default {
               this.$emit('change-done-status', isDone)
             } else {
               console.error('Cannot update done status')
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.StudentHomework.error'), type: 'error' })
             }
           },
           (err) => {
             console.error(err)
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.StudentHomework.error'), type: 'error' })
           })
       }
     },
@@ -111,9 +111,9 @@ export default {
       const nbMinutes = this.homework.estimatedTime
       const nbHour = Math.floor(nbMinutes / 60)
       if (nbHour > 0) {
-        return nbHour + this.$t('hourLabel') + nbMinutes % 60
+        return nbHour + this.$t('Course.StudentHomework.hourLabel') + nbMinutes % 60
       } else {
-        return nbMinutes + ' ' + this.$t('minuteLabel')
+        return nbMinutes + ' ' + this.$t('Course.StudentHomework.minuteLabel')
       }
     }
   },
@@ -220,15 +220,3 @@ header {
   @extend %font-regular-xs;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "done": "Fait",
-  "error": "Oups, une erreur est survenue...",
-  "given": "Donné le {date}",
-  "modified": "modifié le {date}",
-  "todo": "À faire",
-  "hourLabel": "h",
-  "minuteLabel": "minutes"
-}
-</i18n>

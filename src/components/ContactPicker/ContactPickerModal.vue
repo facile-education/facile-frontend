@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <h1 v-t="'header'" />
+      <h1 v-t="'ContactPicker.ContactPickerModal.header'" />
     </template>
 
     <template #body>
@@ -67,9 +67,3 @@ h1 {
     }
   }
 </style>
-
-<i18n locale="fr">
-{
-  "header": "Sélection de contact"
-}
-</i18n>

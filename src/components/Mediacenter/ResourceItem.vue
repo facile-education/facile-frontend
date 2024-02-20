@@ -26,7 +26,7 @@
       <div class="links">
         <!--a v-t="'resourceAccessLabel'" :href="resource.url" class="nero-text" target="_blank" /-->
         <a
-          v-t="'details'"
+          v-t="'Mediacenter.ResourceItem.details'"
           href="javascript:void(0);"
           class="nero-text"
           @click="toggleDetails"
@@ -127,9 +127,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "details": "Détails"
-}
-</i18n>

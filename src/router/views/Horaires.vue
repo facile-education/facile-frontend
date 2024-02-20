@@ -1,5 +1,5 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('Horaires.serviceTitle')" />
   <HorairesToolbar
     v-if="!$store.state.user.isStudent || mq.phone"
     @update-sessions="getSessions"
@@ -158,9 +158,3 @@ export default {
   z-index: 1;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "serviceTitle": "Horaires"
-}
-</i18n>

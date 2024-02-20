@@ -33,9 +33,9 @@ export default {
     },
     formattedStatus () {
       if (this.field === 'isDone') {
-        return this.user[this.field] ? this.$t('done') : this.$t('unDone')
+        return this.user[this.field] ? this.$t('Dashboard.InfoModalUser.done') : this.$t('Dashboard.InfoModalUser.unDone')
       } else if (this.field === 'hasRead') {
-        return this.user[this.field] ? this.$t('read') + ' (' + dayjs(this.user.readDate, DATE_EXCHANGE_FORMAT).calendar() + ')' : this.$t('unread')
+        return this.user[this.field] ? this.$t('Dashboard.InfoModalUser.read') + ' (' + dayjs(this.user.readDate, DATE_EXCHANGE_FORMAT).calendar() + ')' : this.$t('Dashboard.InfoModalUser.unread')
       } else {
         return undefined
       }
@@ -53,12 +53,3 @@ export default {
   padding-right: 2rem;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "unread": "Non lu",
-  "read": "Lu",
-  "done": "Fait",
-  "unDone": "Non fait"
-}
-</i18n>

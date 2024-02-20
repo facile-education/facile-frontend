@@ -6,9 +6,9 @@
     @dragleave="dragover=false"
     @drop="drop"
   >
-    <span v-t="'noAccess'" />
+    <span v-t="'Accesses.AccessesPlaceholder.noAccess'" />
     <em
-      v-t="'createAccess'"
+      v-t="'Accesses.AccessesPlaceholder.createAccess'"
       data-test="createAccess"
       @click="isSaveAccessModalDisplayed=true"
     />
@@ -125,10 +125,3 @@ em {
   border: 2px solid;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "noAccess": "Aucun accès",
-  "createAccess": "Ajoutez votre premier accès !"
-}
-</i18n>

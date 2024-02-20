@@ -48,28 +48,28 @@
         v-if="isCollaborative"
         class="folder"
       >
-        <label>{{ $t('group') + ': ' }}</label>
+        <label>{{ $t('Search.SearchResultPreview.group') + ': ' }}</label>
         <span>{{ searchResult.groupName }}</span>
       </div>
       <div
         v-if="searchResult && searchResult.folder"
         class="folder"
       >
-        <label>{{ $t('folder') + ': ' }}</label>
+        <label>{{ $t('Search.SearchResultPreview.folder') + ': ' }}</label>
         <a @mousedown.stop="redirectInDocument(searchResult.folder.folderId)">{{ searchResult.folder.folderName }}</a>
       </div>
       <div
         v-else-if="searchResult && searchResult.message"
         class="folder"
       >
-        <label>{{ $t('message') + ': ' }}</label>
+        <label>{{ $t('Search.SearchResultPreview.message') + ': ' }}</label>
         <a @mousedown.stop="redirectInMessaging(searchResult.message.messageId)">{{ searchResult.message.subject }}</a>
       </div>
       <div
         v-else-if="searchResult && searchResult.news"
         class="folder"
       >
-        <label>{{ $t('news') + ': ' }}</label>
+        <label>{{ $t('Search.SearchResultPreview.news') + ': ' }}</label>
         <a @mousedown.stop="redirectInNews(searchResult.news.newsId)">{{ searchResult.news.title }}</a>
       </div>
       <div
@@ -273,25 +273,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "folder": "Dossier",
-  "group": "Espace",
-  "news": "Annonce",
-  "message": "Message",
-  "1": "Actualités",
-  "2": "Actualités",
-  "3": "Messagerie",
-  "4": "Messagerie",
-  "5": "Document",
-  "6": "Document",
-  "7": "Document collaboratif",
-  "8": "Document collaboratif",
-  "9": "Progression",
-  "10": "Progression",
-  "11": "Progression",
-  "12": "Progression",
-  "18": "Agenda"
-}
-</i18n>

@@ -9,7 +9,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'add-affected-user-title'" />
+      <span v-t="'UserManagement.AddAffectedUserModal.add-affected-user-title'" />
     </template>
 
     <template #body>
@@ -20,7 +20,7 @@
           :close-on-select="true"
           :completion-only="true"
           :min-length="3"
-          :placeholder="$t('completionPlaceholder')"
+          :placeholder="$t('UserManagement.AddAffectedUserModal.completionPlaceholder')"
           display-field="nameAndRole"
           id-field="userId"
           :list="schoolMembers"
@@ -33,7 +33,7 @@
 
     <template #footer>
       <WeprodeButton
-        :label="$t('add')"
+        :label="$t('UserManagement.AddAffectedUserModal.add')"
         class="button"
         @click="addUsers"
       />
@@ -105,7 +105,7 @@ export default {
       )
     },
     addUsers () {
-      this.$store.dispatch('popups/pushPopup', { message: this.$t('added'), type: 'success' })
+      this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.AddAffectedUserModal.added'), type: 'success' })
       this.$emit('newUsers', this.selectedUsers)
       this.closeModal()
     }
@@ -120,12 +120,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "add-affected-user-title": "Ajouter un utilisateur pour affectation",
-  "completionPlaceholder": "Saisir le nom ou prénom",
-  "add": "Ajouter",
-  "added": "Utilisateur(s) ajouté(s)"
-}
-</i18n>

@@ -1,7 +1,7 @@
 <template>
   <div class="activity-filter">
     <button
-      v-t="'filter'"
+      v-t="'Dashboard.ActivityFilter.filter'"
       class="filter-label"
       @click="isFiltersDisplayed=!isFiltersDisplayed"
     />
@@ -15,7 +15,7 @@
           :key="index"
         >
           <ActivityFilterItem
-            :name="$t(type)"
+            :name="$t('Dashboard.ActivityFilter.' + type)"
             :is-active="isActive(type)"
             @add="addType(type)"
             @remove="removeType(type)"
@@ -83,7 +83,7 @@ export default {
       getUserCommunities(this.$store.state.user.userId, { label: '', isCommunityActive: false, isInstitutionalActive: false, isPedagogicalActive: false }).then((data) => {
         this.isLoadingGroups = false
         if (data.success) {
-          const allGroupObject = { groupId: 0, groupName: this.$t('allGroups') }
+          const allGroupObject = { groupId: 0, groupName: this.$t('Dashboard.ActivityFilter.allGroups') }
           this.groupList = data.groups
           this.groupList.unshift(allGroupObject)
           this.filter.selectedGroup = allGroupObject
@@ -157,15 +157,3 @@ ol {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "allGroups": "Tous les espaces",
-  "filter": "Filtrer",
-  "news": "Informations",
-  "docs": "Documents",
-  "schoolLife": "Vie scolaire",
-  "membership": "Cycle de vie des groupes",
-  "sessions": "Cours et devoirs"
-}
-</i18n>

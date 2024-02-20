@@ -239,14 +239,14 @@ export default {
         options: [
           {
             name: 'save',
-            title: this.$t('save'),
+            title: this.$t('Course.CourseContentItem.save'),
             icon: icons.options.save,
             position: 1,
             hasSeparator: false
           },
           {
             name: 'download',
-            title: this.$t('download'),
+            title: this.$t('Course.CourseContentItem.download'),
             icon: icons.options.download,
             position: 2,
             hasSeparator: false
@@ -273,7 +273,7 @@ export default {
     },
     saveInFolder (targetFolder) {
       const fileToSave = { ...this.content, id: this.content.fileId }
-      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [fileToSave], successMessage: this.$t('addToFolderSuccess') })
+      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [fileToSave], successMessage: this.$t('Course.CourseContentItem.addToFolderSuccess') })
     }
   }
 }
@@ -394,16 +394,3 @@ button {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "audio": "Audio",
-  "file": "Fichier",
-  "h5p": "Contenu riche",
-  "link": "Lien externe",
-  "video": "Vidéo",
-  "addToFolderSuccess": "Fichier déposé",
-  "save": "Enregistrer",
-  "download": "Télécharger"
-}
-</i18n>

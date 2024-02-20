@@ -30,14 +30,14 @@
         <img
           v-if="!isSelected"
           src="@/assets/icons/add.svg"
-          :alt="$t('add')"
-          :title="$t('add')"
+          :alt="$t('ContactPicker.AddressBookItem.add')"
+          :title="$t('ContactPicker.AddressBookItem.add')"
         >
         <img
           v-else
           src="@/assets/icons/remove.svg"
-          :alt="$t('remove')"
-          :title="$t('remove')"
+          :alt="$t('ContactPicker.AddressBookItem.remove')"
+          :title="$t('ContactPicker.AddressBookItem.remove')"
         >
       </button>
     </button>
@@ -229,10 +229,3 @@ button {
 }
 
 </style>
-
-<i18n locale="fr">
-  {
-    "add": "Ajouter",
-    "remove": "Supprimer"
-  }
-</i18n>

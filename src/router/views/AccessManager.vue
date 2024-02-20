@@ -1,5 +1,5 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('AccessManager.serviceTitle')" />
 
   <div v-if="roleList && roleList.length > 0">
     <SchoolSelector class="school-selector" />
@@ -19,7 +19,7 @@
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'AccessManager.errorPlaceholder'"
       class="placeholder"
     />
     <CategoriesPlaceholder
@@ -42,7 +42,7 @@
   </div>
   <div
     v-else-if="roleList && roleList.length === 0"
-    v-t="'noRolePlaceholder'"
+    v-t="'AccessManager.noRolePlaceholder'"
     class="placeholder"
   />
 
@@ -124,7 +124,7 @@ export default {
         const category = { categoryName: name, position: this.categoryList.length }
         saveSchoolCategory(this.selectedSchool.schoolId, category).then((data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('AccessManager.saveSuccess'), type: 'success' })
             this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to assure to have the backend-data
           } else {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -172,12 +172,3 @@ export default {
   margin-top: 15px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "serviceTitle": "Gestion des accès",
-  "saveSuccess": "Catégorie enregistrée",
-  "noRolePlaceholder": "Erreur lors de la récupération des roles, veuillez contacter le service technique"
-}
-</i18n>

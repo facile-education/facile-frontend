@@ -4,31 +4,31 @@
       class="round"
       @click="runSynchro"
     >
-      <span>{{ $t('synchro') }}</span>
+      <span>{{ $t('Maintenance.Administration.synchro') }}</span>
     </WeprodeButton>
     <WeprodeButton
       class="round"
       @click="runParentSynchro"
     >
-      <span>{{ $t('parentSynchro') }}</span>
+      <span>{{ $t('Maintenance.Administration.parentSynchro') }}</span>
     </WeprodeButton>
     <WeprodeButton
       class="round"
       @click="startFsAnalysis"
     >
-      <span>{{ $t('startFsAnalysis') }}</span>
+      <span>{{ $t('Maintenance.Administration.startFsAnalysis') }}</span>
     </WeprodeButton>
     <WeprodeButton
       class="round"
       @click="startFsAnalysisV2"
     >
-      <span>{{ $t('startFsAnalysisV2') }}</span>
+      <span>{{ $t('Maintenance.Administration.startFsAnalysisV2') }}</span>
     </WeprodeButton>
     <WeprodeButton
       class="round"
       @click="runAbsenceNotifications"
     >
-      <span>{{ $t('runAbsenceNotifications') }}</span>
+      <span>{{ $t('Maintenance.Administration.runAbsenceNotifications') }}</span>
     </WeprodeButton>
   </div>
 </template>
@@ -55,9 +55,9 @@ export default {
       startSynchro().then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.Administration.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.Administration.error'), type: 'error' })
           }
         }
       )
@@ -66,9 +66,9 @@ export default {
       startParentSynchro().then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.Administration.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.Administration.error'), type: 'error' })
           }
         }
       )
@@ -77,9 +77,9 @@ export default {
       startFsAnalysis().then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.Administration.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.Administration.error'), type: 'error' })
           }
         }
       )
@@ -88,9 +88,9 @@ export default {
       startFsAnalysisV2().then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.Administration.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.Administration.error'), type: 'error' })
           }
         }
       )
@@ -99,9 +99,9 @@ export default {
       runAbsenceNotifications().then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.Administration.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.Administration.error'), type: 'error' })
           }
         }
       )
@@ -122,15 +122,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "synchro": "Synchro",
-  "parentSynchro": "Synchro Parents",
-  "success": "Opération terminée en succès",
-  "error": "Opération terminée en erreur",
-  "startFsAnalysis": "Explorer le Fs",
-  "startFsAnalysisV2": "Explorer les fichiers en DB",
-  "runAbsenceNotifications": "Notifications des absences HHC"
-}
-</i18n>

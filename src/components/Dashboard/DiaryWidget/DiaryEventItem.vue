@@ -12,7 +12,7 @@
       class="diary-event"
       :class="{'theme-border-color': !event.hasRead, 'theme-light-background-color': isSelected, 'theme-hover-light-background-color': isSelectionMode, 'theme-extra-light-background-color': (!isSelected && !isSelectionMode && event.hasRead)}"
       tabindex="0"
-      :title="$t('selectToConsult')"
+      :title="$t('Dashboard.DiaryEventItem.selectToConsult')"
       @keyup.enter="handleClick"
       @click="handleClick"
     >
@@ -57,8 +57,8 @@
         <button
           v-if="event.isEditable"
           class="option"
-          :aria-label="$t('update')"
-          :title="$t('update')"
+          :aria-label="$t('Dashboard.DiaryEventItem.update')"
+          :title="$t('Dashboard.DiaryEventItem.update')"
           data-test="buttonEditEvent"
           @click.stop="isUpdateModalDisplayed = true"
           @keyup.stop
@@ -71,8 +71,8 @@
         <button
           v-if="event.isDeletable"
           class="option"
-          :aria-label="$t('delete')"
-          :title="$t('delete')"
+          :aria-label="$t('Dashboard.DiaryEventItem.delete')"
+          :title="$t('Dashboard.DiaryEventItem.delete')"
           data-test="buttonDeleteEvent"
           @click.stop="confirmDeleteEvent"
           @keyup.stop
@@ -248,7 +248,7 @@ export default {
       if (this.event.isEditable) {
         options.push({
           name: 'update',
-          title: this.$t('update'),
+          title: this.$t('Dashboard.DiaryEventItem.update'),
           icon: icons.options.rename,
           position: 1,
           hasSeparator: false
@@ -257,7 +257,7 @@ export default {
       if (this.event.isDeletable) {
         options.push({
           name: 'delete',
-          title: this.$t('delete'),
+          title: this.$t('Dashboard.DiaryEventItem.delete'),
           icon: icons.options.delete,
           position: 2,
           hasSeparator: false
@@ -415,12 +415,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "delete": "Supprimer",
-  "update": "Modifier",
-  "removalConfirmMessage": "Veuillez confirmer la suppression de l'évènement \"{target}\"",
-  "selectToConsult": "Consulter"
-}
-</i18n>

@@ -17,7 +17,7 @@
 
     <div class="content">
       <div class="author">
-        {{ isPendingFiring ? $t('setFiringReason') : activity.author }}
+        {{ isPendingFiring ? $t('Dashboard.HHCActivity.setFiringReason') : activity.author }}
       </div>
       <div class="description">
         <span>
@@ -55,7 +55,7 @@ export default {
       return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.HHCActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.HHCActivity.at') + ' HH:mm')
     },
     isPendingFiring () {
       return this.activity.type === activityConstants.TYPE_PENDING_RENVOI
@@ -78,7 +78,7 @@ export default {
       }
     },
     formatDate (date) {
-      return dayjs(date, DATE_EXCHANGE_FORMAT).format(' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(date, DATE_EXCHANGE_FORMAT).format(' DD MMMM YYYY ' + this.$t('Dashboard.HHCActivity.at') + ' HH:mm')
     }
   }
 }
@@ -99,13 +99,3 @@ export default {
   width: 30px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "TYPE_SCHOOL_RENVOI": "a renvoyé {firedUser} du cours de {courseName} du {courseDate}",
-  "TYPE_PENDING_RENVOI": "Pensez à motiver le renvoi de {firedUser} du cours de {courseName} du {courseDate}",
-  "setFiringReason": "Motivation de renvoi",
-  "at": "à",
-  "on": "Le"
-}
-</i18n>

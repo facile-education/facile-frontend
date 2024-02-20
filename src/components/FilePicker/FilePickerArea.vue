@@ -13,7 +13,7 @@
       <div class="message">
         <span class="text">
           <BaseIcon name="folder-open" />
-          {{ $t('dropZoneLabel') }}
+          {{ $t('FilePicker.FilePickerArea.dropZoneLabel') }}
         </span>
       </div>
     </div>
@@ -84,7 +84,7 @@ export default {
           if (result.listFiles.length !== 0) {
             this.$emit('fileAdded', result.listFiles)
           } else if (!result.sizeException) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('errorNoFiles'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('FilePicker.FilePickerArea.errorNoFiles'), type: 'error' })
           }
         })
       }
@@ -146,10 +146,3 @@ export default {
   pointer-events: none;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorNoFiles": "Le chargement n'est pas autorisé",
-  "dropZoneLabel": "Déposer un document"
-}
-</i18n>

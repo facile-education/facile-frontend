@@ -9,17 +9,17 @@
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'Dashboard.StatisticsWidget.errorPlaceholder'"
       class="placeholder"
     />
     <div
       v-else-if="statistics.length === 0 && !isFirstLoad"
-      v-t="'emptyPlaceholder'"
+      v-t="'Dashboard.StatisticsWidget.emptyPlaceholder'"
       class="placeholder"
     />
     <div v-else>
       <div
-        v-t="'lastWeek'"
+        v-t="'Dashboard.StatisticsWidget.lastWeek'"
         class="period"
       />
       <ul @click="redirect">
@@ -65,19 +65,19 @@ export default {
         if (data.success) {
           this.error = false
           const nbUsers = {
-            label: this.$t('nbUsers'),
+            label: this.$t('Dashboard.StatisticsWidget.nbUsers'),
             current: data.activeUsersCount,
             previous: data.previousActiveUsersCount,
             type: 1
           }
           const nbConnexions = {
-            label: this.$t('nbConnexions'),
+            label: this.$t('Dashboard.StatisticsWidget.nbConnexions'),
             current: data.nbConnexions,
             previous: data.previousNbConnexions,
             type: 2
           }
           const nbActivities = {
-            label: this.$t('nbActivities'),
+            label: this.$t('Dashboard.StatisticsWidget.nbActivities'),
             current: data.nbActivities,
             previous: data.nbPreviousActivities,
             type: 3
@@ -136,14 +136,3 @@ ul {
   font-size: 0.8rem;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucune statistique à afficher",
-  "lastWeek": "7 derniers jours",
-  "nbActivities": "Activités",
-  "nbConnexions": "Sessions",
-  "nbUsers": "Visiteurs uniques"
-}
-</i18n>

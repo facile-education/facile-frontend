@@ -10,13 +10,13 @@
       <NeroIcon
         name="fa-plus"
       />
-      <span>{{ $t('add') }}</span>
+      <span>{{ $t('Groups.GroupToolbar.add') }}</span>
     </WeprodeButton>
 
     <WeprodeInput
       v-model="filter"
       class="filter-input"
-      :placeholder="$t('SearchPlaceholder')"
+      :placeholder="$t('Groups.GroupToolbar.SearchPlaceholder')"
       :maxlength="75"
       @input="updateFilter"
     />
@@ -62,10 +62,10 @@ export default {
       filter: '',
       selectedScope: {},
       scopeList: [
-        { name: this.$t('spaces') },
-        { name: this.$t('community'), isCommunity: true },
-        { name: this.$t('institutional'), isInstitutional: true },
-        { name: this.$t('pedagogical'), isPedagogical: true }
+        { name: this.$t('Groups.GroupToolbar.spaces') },
+        { name: this.$t('Groups.GroupToolbar.community'), isCommunity: true },
+        { name: this.$t('Groups.GroupToolbar.institutional'), isInstitutional: true },
+        { name: this.$t('Groups.GroupToolbar.pedagogical'), isPedagogical: true }
       ]
     }
   },
@@ -128,14 +128,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "add": "NOUVEAU",
-  "community": "Personnel",
-  "institutional": "Institutionnel",
-  "pedagogical": "Pédagogique",
-  "SearchPlaceholder": "Filtrer par nom",
-  "spaces": "Mes espaces"
-}
-</i18n>

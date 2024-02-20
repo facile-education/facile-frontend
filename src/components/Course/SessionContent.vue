@@ -6,7 +6,7 @@
   />
   <div
     v-else
-    v-t="'courseContentPlaceholder'"
+    v-t="'Course.SessionContent.courseContentPlaceholder'"
     class="placeholder"
   />
 </template>
@@ -46,9 +46,3 @@ ul {
   gap: 8px
 }
 </style>
-
-<i18n locale="fr">
-{
-  "courseContentPlaceholder": "Aucun contenu"
-}
-</i18n>

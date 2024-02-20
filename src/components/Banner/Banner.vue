@@ -2,8 +2,8 @@
   <header class="banner">
     <button
       v-if="mq.phone || mq.tablet"
-      :aria-label="$t('toggleMenu')"
-      :title="$t('toggleMenu')"
+      :aria-label="$t('Banner.toggleMenu')"
+      :title="$t('Banner.toggleMenu')"
       class="menu-icon-button"
       @click.stop="onShowMobileMenu"
     >
@@ -106,9 +106,3 @@ button {
   align-items: center;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "toggleMenu": "Menu"
-}
-</i18n>

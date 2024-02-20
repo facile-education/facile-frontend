@@ -14,14 +14,14 @@
         <img
           v-if="!isSelected"
           src="@/assets/icons/add.svg"
-          :alt="$t('add')"
-          :title="$t('add')"
+          :alt="$t('ContactPicker.ContactUserListItem.add')"
+          :title="$t('ContactPicker.ContactUserListItem.add')"
         >
         <img
           v-else
           src="@/assets/icons/remove.svg"
-          :alt="$t('remove')"
-          :title="$t('remove')"
+          :alt="$t('ContactPicker.ContactUserListItem.remove')"
+          :title="$t('ContactPicker.ContactUserListItem.remove')"
         >
       </div>
     </button>
@@ -120,10 +120,3 @@ button {
   }
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "add": "Ajouter",
-    "remove": "Supprimer"
-  }
-</i18n>

@@ -2,7 +2,7 @@
   <SelectFilesButtons
     v-if="!readOnly"
     class="select-buttons"
-    :label="$t('title')"
+    :label="$t('AttachedFiles.title')"
     :allow-multiple="true"
     @load="importDocument"
     @select-files="addNewFiles"
@@ -13,7 +13,7 @@
       v-if="readOnly && withHeader"
       class="header"
     >
-      {{ modelValue.length + (modelValue.length > 1 ? $t('attachedFiles') : $t('attachedFile')) }}
+      {{ modelValue.length + (modelValue.length > 1 ? $t('AttachedFiles.attachedFiles') : $t('AttachedFiles.attachedFile')) }}
     </div>
     <ul
       class="file-list"
@@ -138,18 +138,3 @@ button {
   width: 100%;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "attachedFile": " pièce jointe",
-  "attachedFiles": " pièces jointes",
-  "title": "Pièces jointes :",
-  "addAttachFileButton": "Ajouter une pièce jointe depuis mes documents",
-  "addLocalAttachFileButton": "Ajouter une pièce jointe depuis mon poste de travail",
-  "addToFolder": "Enregistrer dans mes documents",
-  "addToFolderSuccess": "Fichier déposé",
-  "download": "Télécharger",
-  "view": "Visualiser",
-  "remove": "Supprimer"
-}
-</i18n>

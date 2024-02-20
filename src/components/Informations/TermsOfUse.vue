@@ -34,9 +34,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "confidentialityRulesLinkText": "Règles de confidentialité"
-}
-</i18n>

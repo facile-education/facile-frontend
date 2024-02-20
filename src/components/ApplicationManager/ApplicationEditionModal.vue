@@ -48,7 +48,7 @@
         <div class="informations">
           <WeprodeInput
             v-model="application.applicationName"
-            :placeholder="$t('namePlaceholder') + '*'"
+            :placeholder="$t('ApplicationManager.ApplicationEditionModal.namePlaceholder') + '*'"
             :maxlength="75"
             class="name"
             @blur="v$.application.applicationName.$touch()"
@@ -57,7 +57,7 @@
 
           <WeprodeInput
             v-model="application.applicationKey"
-            :placeholder="$t('keyPlaceholder') + '*'"
+            :placeholder="$t('ApplicationManager.ApplicationEditionModal.keyPlaceholder') + '*'"
             :maxlength="75"
             @blur="v$.application.applicationKey.$touch()"
           />
@@ -70,7 +70,7 @@
           <WeprodeInput
             ref="category"
             v-model="application.category"
-            :placeholder="$t('categoryPlaceholder') + '*'"
+            :placeholder="$t('ApplicationManager.ApplicationEditionModal.categoryPlaceholder') + '*'"
             :max-lenght="75"
             @blur="v$.application.category.$touch()"
             @focus="toggleCompletion"
@@ -87,7 +87,7 @@
         <WeprodeTagsInput
           v-if="schoolList"
           v-model="application.authorizedSchools"
-          :placeholder="$t('schoolsPlaceholder')"
+          :placeholder="$t('ApplicationManager.ApplicationEditionModal.schoolsPlaceholder')"
           :list="schoolList"
           display-field="schoolName"
           id-field="schoolId"
@@ -97,7 +97,7 @@
           <WeprodeTagsInput
             v-if="roleList"
             v-model="application.defaultRoles"
-            :placeholder="$t('rolesPlaceholder')"
+            :placeholder="$t('ApplicationManager.ApplicationEditionModal.rolesPlaceholder')"
             :list="roleList"
             display-field="displayText"
             id-field="roleId"
@@ -108,17 +108,17 @@
           <WeprodeInput
             ref="category"
             v-model="application.menuEntryId"
-            :placeholder="$t('menuEntryLabel')"
+            :placeholder="$t('ApplicationManager.ApplicationEditionModal.menuEntryLabel')"
             :max-lenght="75"
             type="number"
           />
         </div>
 
-        <h5 v-t="'urlTypeLabel'" />
+        <h5 v-t="'ApplicationManager.ApplicationEditionModal.urlTypeLabel'" />
         <div class="urls">
           <WeprodeRadioButton
             v-model="urlType"
-            :label="$t('globalUrlCombobox')"
+            :label="$t('ApplicationManager.ApplicationEditionModal.globalUrlCombobox')"
             name="url"
             rb-value="global"
             class="radio"
@@ -126,7 +126,7 @@
 
           <WeprodeRadioButton
             v-model="urlType"
-            :label="$t('customUrlCombobox')"
+            :label="$t('ApplicationManager.ApplicationEditionModal.customUrlCombobox')"
             name="url"
             rb-value="custom"
             class="radio"
@@ -134,7 +134,7 @@
 
           <WeprodeRadioButton
             v-model="urlType"
-            :label="$t('noUrlCombobox')"
+            :label="$t('ApplicationManager.ApplicationEditionModal.noUrlCombobox')"
             name="url"
             rb-value="none"
             class="radio"
@@ -142,33 +142,33 @@
         </div>
         <WeprodeInput
           v-model="application.globalUrl"
-          :placeholder="$t('globalUrlPlaceholder')"
+          :placeholder="$t('ApplicationManager.ApplicationEditionModal.globalUrlPlaceholder')"
           :disabled="urlType !== 'global'"
         />
 
-        <h5 v-t="'exportLabel'" />
+        <h5 v-t="'ApplicationManager.ApplicationEditionModal.exportLabel'" />
         <div class="exports">
           <WeprodeCheckbox
             v-model="application.exportParent"
-            :label="$t('exportParentsCheckbox')"
+            :label="$t('ApplicationManager.ApplicationEditionModal.exportParentsCheckbox')"
             class="export"
           />
 
           <WeprodeCheckbox
             v-model="application.exportStudent"
-            :label="$t('exportStudentsCheckbox')"
+            :label="$t('ApplicationManager.ApplicationEditionModal.exportStudentsCheckbox')"
             class="export"
           />
 
           <WeprodeCheckbox
             v-model="application.exportTeacher"
-            :label="$t('exportTeachersCheckbox')"
+            :label="$t('ApplicationManager.ApplicationEditionModal.exportTeachersCheckbox')"
             class="export"
           />
 
           <WeprodeCheckbox
             v-model="application.exportOther"
-            :label="$t('exportOtherCheckbox')"
+            :label="$t('ApplicationManager.ApplicationEditionModal.exportOtherCheckbox')"
             class="export"
           />
         </div>
@@ -183,7 +183,7 @@
     </template>
     <template #footer>
       <WeprodeButton
-        :label="$t('modalSaveButton')"
+        :label="$t('ApplicationManager.ApplicationEditionModal.modalSaveButton')"
         @click="save"
       />
     </template>
@@ -436,27 +436,3 @@ h5 {
   flex: 0 0 25%;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "addModalTitle": "Ajouter une nouvelle application",
-  "categoryPlaceholder": "Catégorie",
-  "customUrlCombobox": "URL personnalisée",
-  "editModalTitle": "Modifier une application",
-  "exportOtherCheckbox": "Ressources",
-  "exportParentsCheckbox": "Parents",
-  "exportStudentsCheckbox": "Elèves",
-  "exportTeachersCheckbox": "Enseignants",
-  "exportLabel": "Exporter un/ou plusieurs types d'utilisateurs",
-  "globalUrlCombobox": "URL globale",
-  "globalUrlPlaceholder": "https://...",
-  "keyPlaceholder": "Clé",
-  "modalSaveButton": "Valider",
-  "namePlaceholder": "Nom",
-  "noUrlCombobox": "Aucun",
-  "menuEntryLabel": "Id de menu correspondant",
-  "rolesPlaceholder": "Profil(s) par défaut",
-  "schoolsPlaceholder": "Filtre d'établissements",
-  "urlTypeLabel": "Type de lien"
-}
-</i18n>

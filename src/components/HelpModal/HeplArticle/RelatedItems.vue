@@ -1,7 +1,7 @@
 <template>
   <div v-if="isAdministrator || relatedArticles.length > 0">
     <h3>
-      {{ $t('related-articles') }}
+      {{ $t('HelpModal.RelatedItems.related-articles') }}
       <BaseIcon
         v-if="isAdministrator"
         class="add-icon"
@@ -70,7 +70,7 @@ export default {
     },
     confirmRelationRemoval (relatedArticleItem) {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('confirmRelationRemovalMessage'),
+        text: this.$t('HelpModal.RelatedItems.confirmRelationRemovalMessage'),
         lastAction: { fct: this.deleteRelation, params: [relatedArticleItem] }
       })
     },
@@ -151,10 +151,3 @@ a {
   opacity: 0;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "related-articles": "Voir aussi",
-  "confirmRelationRemovalMessage": "Supprimmer le lien définitivement?"
-}
-</i18n>

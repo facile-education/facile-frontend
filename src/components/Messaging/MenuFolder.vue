@@ -88,7 +88,7 @@
       ref="newFolderInput"
       v-model="newFolderName"
       class="new-folder-input"
-      :placeholder="$t('newFolder')"
+      :placeholder="$t('Messaging.MenuFolder.newFolder')"
       @blur="createSubFolder"
       @keyup.enter.stop="blurNewFolderNameInput"
       @keyup.escape="displayNewFolderInput = false"
@@ -421,9 +421,3 @@ button {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "newFolder": "Nouveau dossier"
-}
-</i18n>

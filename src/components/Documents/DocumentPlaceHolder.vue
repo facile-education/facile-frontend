@@ -58,20 +58,20 @@ export default {
     },
     text1 () {
       if (this.isLoadDocumentsError) {
-        return this.$t('isLoadDocumentsError')
+        return this.$t('Documents.DocumentPlaceHolder.isLoadDocumentsError')
       } else if (this.mq.phone || this.mq.tablet) {
-        return this.$t('noDocumentToDisplayMobile')
+        return this.$t('Documents.DocumentPlaceHolder.noDocumentToDisplayMobile')
       } else {
-        return this.$t('noDocumentToDisplay')
+        return this.$t('Documents.DocumentPlaceHolder.noDocumentToDisplay')
       }
     },
     text2 () {
       if (this.isLoadDocumentsError) {
-        return this.$t('isLoadDocumentsError2')
+        return this.$t('Documents.DocumentPlaceHolder.isLoadDocumentsError2')
       } else if (this.mq.phone || this.mq.tablet) {
         return undefined
       } else {
-        return this.$t('noDocumentToDisplay2')
+        return this.$t('Documents.DocumentPlaceHolder.noDocumentToDisplay2')
       }
     }
   }
@@ -141,13 +141,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "isLoadDocumentsError": "Problème rencontré lors du",
-  "isLoadDocumentsError2": "chargement des fichiers",
-  "noDocumentToDisplay": "Déposez vos fichiers ici",
-  "noDocumentToDisplay2": "ou utilisez le bouton +",
-  "noDocumentToDisplayMobile": "Ajouter un document avec le bouton +"
-}
-</i18n>

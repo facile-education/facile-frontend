@@ -10,7 +10,7 @@
   >
     <template #header>
       <span
-        v-t="'add-delegation-title'"
+        v-t="'UserManagement.AddDelegationModal.add-delegation-title'"
       />
     </template>
 
@@ -22,7 +22,7 @@
           :close-on-select="true"
           :completion-only="true"
           :min-length="3"
-          :placeholder="$t('completionPlaceholder')"
+          :placeholder="$t('UserManagement.AddDelegationModal.completionPlaceholder')"
           display-field="fullName"
           id-field="userId"
           :list="delegationCandidates"
@@ -35,7 +35,7 @@
 
     <template #footer>
       <WeprodeButton
-        :label="$t('add')"
+        :label="$t('UserManagement.AddDelegationModal.add')"
         class="button"
         @click="addDelegations"
       />
@@ -132,11 +132,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "add-delegation-title": "Ajouter une délégation",
-  "completionPlaceholder": "Saisir le nom ou prénom",
-  "add": "Ajouter"
-}
-</i18n>

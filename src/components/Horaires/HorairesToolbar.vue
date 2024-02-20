@@ -13,15 +13,15 @@
       <NeroIcon
         name="fa-plus"
       />
-      <span>{{ $t('add') }}</span>
+      <span>{{ $t('Horaires.HorairesToolbar.add') }}</span>
     </WeprodeButton>
 
     <div class="filters">
       <!-- To switch between user selection and group selection -->
       <button
         v-if="mq.phone && !$store.state.user.isStudent && !$store.state.user.isParent"
-        :aria-label="$t('toggleGroupsFilter')"
-        :title="$t('toggleGroupsFilter')"
+        :aria-label="$t('Horaires.HorairesToolbar.toggleGroupsFilter')"
+        :title="$t('Horaires.HorairesToolbar.toggleGroupsFilter')"
         class="toggle-group-filter-button"
         @click="toggleSelection"
       >
@@ -36,7 +36,7 @@
         v-if="children.length === 1"
         class="child"
       >
-        {{ $t('timetableOf') }} {{ children[0].firstName }}
+        {{ $t('Horaires.HorairesToolbar.timetableOf') }} {{ children[0].firstName }}
       </p>
 
       <!-- Group selector for agents -->
@@ -44,7 +44,7 @@
         v-if="groupList && (!mq.phone || !isSingleUser) && !$store.state.user.isStudent && !$store.state.user.isParent"
         v-model="selectedGroup"
         class="group-list"
-        :placeholder="$t('groupFilter')"
+        :placeholder="$t('Horaires.HorairesToolbar.groupFilter')"
         :list="groupList"
         display-field="groupName"
       />
@@ -55,7 +55,7 @@
         v-model="tagsList"
         class="search"
         data-test="user-completion-input"
-        :placeholder="$t('userInput')"
+        :placeholder="$t('Horaires.HorairesToolbar.userInput')"
         :close-on-select="true"
         :max-size="maxSize"
         :completion-only="true"
@@ -72,12 +72,12 @@
         class="children"
       >
         <p class="children-label">
-          {{ $t('timetableOf') }}
+          {{ $t('Horaires.HorairesToolbar.timetableOf') }}
         </p>
         <WeprodeDropdown
           v-model="selectedChild"
           class="children-list"
-          :placeholder="$t('childFilter')"
+          :placeholder="$t('Horaires.HorairesToolbar.childFilter')"
           :list="$store.state.user.children"
           display-field="firstName"
         />
@@ -363,15 +363,3 @@ export default {
   margin-left: auto;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "add": "NOUVEAU",
-  "groupFilter": "Groupe",
-  "userInput": "Elève / Maître",
-  "childFilter": "Enfant",
-  "timetableOf": "Horaires de ",
-  "createSession": "Créer un cours",
-  "toggleGroupsFilter": "Sélectionner des classes / utilisateurs"
-}
-</i18n>

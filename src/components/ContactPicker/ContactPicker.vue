@@ -9,7 +9,7 @@
     >
       <WeprodeTabList v-if="hasAdvancedSearchPanel">
         <WeprodeTabItem
-          :title="$t('addressBook')"
+          :title="$t('ContactPicker.addressBook')"
           :icon="require('@assets/icons/users.svg')"
           class="tab-item"
         >
@@ -23,7 +23,7 @@
           />
         </WeprodeTabItem>
         <WeprodeTabItem
-          :title="$t('advancedSearch')"
+          :title="$t('ContactPicker.advancedSearch')"
           :icon="require('@assets/icons/contact-book.svg')"
         >
           <ContactAdvancedSearch
@@ -100,13 +100,13 @@ export default {
     addContacts (contacts) {
       this.$emit('addContacts', contacts)
       if (this.mq.phone) {
-        this.$store.dispatch('popups/pushPopup', { message: this.$tc('addContacts', contacts.length), type: 'success' })
+        this.$store.dispatch('popups/pushPopup', { message: this.$tc('ContactPicker.addContacts', contacts.length), type: 'success' })
       }
     },
     removeContacts (contacts) {
       this.$emit('removeContacts', contacts)
       if (this.mq.phone) {
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('removeContacts'), type: 'success' })
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('ContactPicker.removeContacts'), type: 'success' })
       }
     }
   }
@@ -161,12 +161,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "addressBook": "Carnet d'adresses",
-  "advancedSearch": "Annuaire",
-  "addContacts": "Destinataire ajouté | Destinataire ajouté | {count} destinataires ajoutés",
-  "removeContacts": "Destinataire retiré"
-}
-</i18n>

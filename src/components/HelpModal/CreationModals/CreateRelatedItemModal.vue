@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'HelpModal.CreateRelatedItemModal.title'" />
     </template>
 
     <template #body>
@@ -25,7 +25,7 @@
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="$t('submit')"
+        :label="$t('HelpModal.CreateRelatedItemModal.submit')"
         :disabled="selectedRelatedItem.itemId === 0"
         @click="submit"
       />
@@ -102,10 +102,3 @@ export default {
   width: 100%;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "title": "ÉDITER UNE RELATION",
-  "submit": "Valider"
-}
-</i18n>

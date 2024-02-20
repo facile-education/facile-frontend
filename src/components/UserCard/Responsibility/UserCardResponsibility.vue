@@ -8,7 +8,7 @@
         class="legalGuardians-icon"
         :icon-name="'icon-collab-workspace'"
       />
-      <span>{{ $t('relativeTitle') }} :</span>
+      <span>{{ $t('UserCard.UserCardResponsibility.relativeTitle') }} :</span>
     </h2>
     <div class="content">
       <template v-if="userDetails.parents && userDetails.parents.length > 0">
@@ -25,7 +25,7 @@
       </template>
       <template v-if="userDetails.children && userDetails.children.length > 0">
         <p class="children-container">
-          {{ $t('responsibility') }}
+          {{ $t('UserCard.UserCardResponsibility.responsibility') }}
           <span
             v-for="(child, index) in userDetails.children"
             :key="index"
@@ -146,10 +146,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "relativeTitle": "Responsable(s) légal(aux) ",
-    "responsibility": "En responsabilité de "
-  }
-</i18n>

@@ -9,7 +9,7 @@
       <NeroIcon
         name="fa-plus"
       />
-      <span>{{ $t('new') }}</span>
+      <span>{{ $t('Documents.OptionItem.new') }}</span>
     </WeprodeButton>
     <button
       v-else
@@ -150,9 +150,3 @@ img {
   @extend %create-button;
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "new": "NOUVEAU"
-  }
-</i18n>

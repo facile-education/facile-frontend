@@ -1,9 +1,9 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('NotFound.serviceTitle')" />
   <WeprodeSpinner v-if="menu === undefined" />
   <h2
     v-else-if="showMessage"
-    v-t="'message'"
+    v-t="'NotFound.message'"
   />
 </template>
 
@@ -38,10 +38,3 @@ export default {
 <style lang="scss" scoped>
 
 </style>
-
-<i18n locale="fr">
-{
-  "message": "Oups, cette page n'existe pas",
-  "serviceTitle": "Erreur 404 : ressource introuvable"
-}
-</i18n>

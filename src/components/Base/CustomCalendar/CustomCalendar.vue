@@ -195,7 +195,7 @@ export default {
   methods: {
     onCalendarMount () {
       if (this.canCreateSlots) {
-        this.$refs.fullCalendar.$el.setAttribute('title', this.$t('clickToAddSlot'))
+        this.$refs.fullCalendar.$el.setAttribute('title', this.$t('Base.CustomCalendar.clickToAddSlot'))
       }
       this.goToDisplayDate()
     },
@@ -357,9 +357,3 @@ export default {
   width: 100%;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "clickToAddSlot": "Cliquer pour ajouter un créneau"
-}
-</i18n>

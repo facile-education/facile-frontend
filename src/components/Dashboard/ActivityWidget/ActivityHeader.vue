@@ -8,17 +8,17 @@
       >
         <img
           src="@assets/icons/chevron_left.svg"
-          :alt="$t('dashboard')"
-          :title="$t('dashboard')"
+          :alt="$t('Dashboard.ActivityHeader.dashboard')"
+          :title="$t('Dashboard.ActivityHeader.dashboard')"
         >
       </RouterLink>
       <h1
         v-if="displayAll"
-        v-t="'allActivities'"
+        v-t="'Dashboard.ActivityHeader.allActivities'"
       />
       <h2
         v-else
-        v-t="'activities'"
+        v-t="'Dashboard.ActivityHeader.activities'"
       />
       <Pellet
         v-if="nbNewActivities > 0"
@@ -33,14 +33,14 @@
     >
       <button
         v-if="!displayAll"
-        v-t="'showMore'"
+        v-t="'Dashboard.ActivityHeader.showMore'"
         class="show-more"
         @click="$router.push({ name: 'AllActivities' })"
       />
       <CreateButton
         v-if="canCreateNews"
         data-test="CreateActivity"
-        :title="$t('create-news')"
+        :title="$t('Dashboard.ActivityHeader.create-news')"
         @click="isCreateModalDisplayed = true"
       />
     </div>
@@ -139,13 +139,3 @@ h2 {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "activities": "Activités",
-  "allActivities": "Toutes les activités",
-  "dashboard": "Tableau de bord",
-  "create-news": "Partager une information",
-  "showMore": "Voir plus"
-}
-</i18n>

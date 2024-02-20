@@ -56,7 +56,7 @@ export default {
     },
     confirmQuestionRemoval () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('confirmQuestionRemovalMessage'),
+        text: this.$t('HelpModal.HelpQuestion.confirmQuestionRemovalMessage'),
         lastAction: { fct: this.deleteQuestion, params: [] }
       })
     },
@@ -137,9 +137,3 @@ button {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "confirmQuestionRemovalMessage": "Supprimmer la question définitivement?"
-}
-</i18n>

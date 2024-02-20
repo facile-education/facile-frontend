@@ -6,7 +6,7 @@
     />
     <p
       v-if="activityList.length === 0 && !activitiesLoading"
-      v-t="('noActivity')"
+      v-t="('Groups.GroupActivityTab.noActivity')"
       class="placeholder"
     />
     <div
@@ -168,10 +168,3 @@ ul {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "activity-feed": "Fil d'activité",
-  "noActivity": "Aucune activité dans ce groupe"
-}
-</i18n>

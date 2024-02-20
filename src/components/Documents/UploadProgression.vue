@@ -26,7 +26,7 @@
         </div>
         <button
           v-if="!isUploadFinished && !cancelStatus"
-          v-t="'cancel'"
+          v-t="'Documents.UploadProgression.cancel'"
           class="cancel-button"
           @click="cancel"
         />
@@ -34,8 +34,8 @@
         <button
           v-else
           class="close-button"
-          :title="$t('close')"
-          :aria-label="$t('close')"
+          :title="$t('Documents.UploadProgression.close')"
+          :aria-label="$t('Documents.UploadProgression.close')"
           @click="close"
         >
           <CustomIcon
@@ -89,9 +89,9 @@ export default {
     headerText () {
       let text = ''
       if (!this.isUploadFinished && !this.cancelStatus) {
-        text = this.$tc('uploadOn', this.listUploadedFiles.length, { done: this.listUploadedFiles.length, total: this.listFilesToUpload.length })
+        text = this.$tc('Documents.UploadProgression.uploadOn', this.listUploadedFiles.length, { done: this.listUploadedFiles.length, total: this.listFilesToUpload.length })
       } else {
-        text = this.$tc('uploadfinished', this.listUploadedFiles.length, { nb: this.listUploadedFiles.length })
+        text = this.$tc('Documents.UploadProgression.uploadfinished', this.listUploadedFiles.length, { nb: this.listUploadedFiles.length })
       }
       return text
     }
@@ -179,12 +179,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "cancel": "Annuler",
-  "close": "Fermer",
-  "uploadOn": "{done} chargement sur {total} | {done} chargement sur {total} | {done} chargements sur {total}",
-  "uploadfinished": "{nb} chargement terminé | {nb} chargement terminé | {nb} chargements terminés"
-}
-</i18n>

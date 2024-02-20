@@ -14,7 +14,7 @@
         class="pull-to-refresh-icon"
         :class="{'is-waiting': isWaiting}"
         :icon="require('@assets/icons/refresh.svg')"
-        :title="$t('refresh')"
+        :title="$t('Messaging.ThreadList.refresh')"
         name="refresh"
         icon-height="20px"
         alt=""
@@ -485,14 +485,3 @@ hr.hr-thread-list {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "noMessage": "Aucun message",
-  "noNewMessage": "Aucun message non lu",
-  "emptyFolder": "Ce dossier est vide",
-  "loadingError": "Erreur lors du chargement de la ressource",
-  "permissionError": "Permission non accordée",
-  "refresh": "Rafraîchir"
-}
-</i18n>

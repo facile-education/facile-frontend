@@ -1,12 +1,12 @@
 <template>
-  <h1 :aria-label="$t('title')" />
+  <h1 :aria-label="$t('AuthenticationRequired.title')" />
   <div class="error">
     <img
       src="@/assets/icons/user.svg"
       alt=""
     >
-    <h2 v-t="'authRequired'" />
-    <p>{{ $t('redirected') }}</p>
+    <h2 v-t="'AuthenticationRequired.authRequired'" />
+    <p>{{ $t('AuthenticationRequired.redirected') }}</p>
     <div class="spinner-container">
       <WeprodeSpinner class="my-spinner" />
     </div>
@@ -51,11 +51,3 @@ img {
   position: relative;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "title": "Authentification requise",
-  "authRequired": "Une authentification est requise pour accéder au service.",
-  "redirected": "Vous allez être redirigé vers la page d'authentification."
-}
-</i18n>

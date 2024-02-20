@@ -1,5 +1,5 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('UserManagement.serviceTitle')" />
 
   <div
     v-if="schoolList.length > 1"
@@ -15,19 +15,19 @@
 
   <WeprodeTabList>
     <WeprodeTabItem
-      :title="$t('manual-users')"
+      :title="$t('UserManagement.manual-users')"
       class="tab"
     >
       <ManualUsers />
     </WeprodeTabItem>
     <WeprodeTabItem
-      :title="$t('delegations')"
+      :title="$t('UserManagement.delegations')"
       class="tab"
     >
       <Delegations />
     </WeprodeTabItem>
     <WeprodeTabItem
-      :title="$t('affectations')"
+      :title="$t('UserManagement.affectations')"
       class="tab"
     >
       <Affectations />
@@ -104,12 +104,3 @@ export default {
   height: calc(100% - #{$um-ĥeader-height} - 32px);
 }
 </style>
-
-<i18n locale="fr">
-{
-  "serviceTitle": "Gestion des utilisateurs",
-  "manual-users": "Comptes manuels",
-  "delegations": "Délégations",
-  "affectations": "Affectations"
-}
-</i18n>

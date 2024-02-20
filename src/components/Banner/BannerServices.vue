@@ -2,13 +2,13 @@
   <div class="banner-services">
     <BannerItem
       :src="require('@/assets/icons/accesses.svg')"
-      :title="$t('accesses')"
+      :title="$t('Banner.BannerServices.accesses')"
       @click="toggleAccesses"
     />
     <BannerItem
       data-test="open-help-item"
       :src="require('@/assets/icons/help.svg')"
-      :title="$t('help')"
+      :title="$t('Banner.BannerServices.help')"
       @click="openHelpModal"
     />
 
@@ -61,10 +61,3 @@ div {
   position: relative;
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "accesses": "Accès",
-    "help": "Aide",
-  }
-  </i18n>

@@ -4,7 +4,7 @@
       class="check-icon"
       name="check"
     />
-    <span> {{ $tc('usersOn', allReadMembers.length, {n: allReadMembers.length, totalCount: allMembers.length}) }} </span>
+    <span> {{ $tc('Dashboard.ReadInfos.usersOn', allReadMembers.length, {n: allReadMembers.length, totalCount: allMembers.length}) }} </span>
   </button>
 
   <teleport
@@ -75,10 +75,3 @@ button {
   margin-right: 5px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "readBy": "Lu par ",
-  "usersOn": "{n} destinataire sur {totalCount} | {n} destinataire sur {totalCount} | {n} destinataires sur {totalCount}"
-}
-</i18n>

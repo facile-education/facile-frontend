@@ -3,7 +3,7 @@
     <div
       v-if="homeworks && homeworks.length === 0"
     >
-      <p>{{ $t('no-homeworks') }}</p>
+      <p>{{ $t('Course.TeacherHomeworkTab.no-homeworks') }}</p>
     </div>
     <div
       v-else
@@ -56,9 +56,3 @@ export default {
 @import '@design';
 
 </style>
-
-<i18n locale="fr">
-{
-  "no-homeworks": "Aucun devoir à corriger"
-}
-</i18n>

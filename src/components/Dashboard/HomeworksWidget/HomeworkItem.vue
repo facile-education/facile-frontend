@@ -34,7 +34,7 @@
           <WeprodeCheckbox
             v-if="canUpdateStatus"
             v-model="isDoneSwitchStatus"
-            :label="homework.isDone ? $t('done') : $t('todo')"
+            :label="homework.isDone ? $t('Dashboard.HomeworkItem.done') : $t('Dashboard.HomeworkItem.todo')"
             :right-display="true"
             @update:model-value="toggleDoneStatus"
             @click.stop
@@ -50,7 +50,7 @@
           v-else-if="homework.isSent"
           class="right-section"
         >
-          {{ $t('returned') }}
+          {{ $t('Dashboard.HomeworkItem.returned') }}
           <BaseIcon
             class="paper-clip"
             name="paperclip"
@@ -58,7 +58,7 @@
         </span>
         <span
           v-else
-          v-t="'toReturn'"
+          v-t="'Dashboard.HomeworkItem.toReturn'"
           class="right-section"
         />
       </span>
@@ -237,12 +237,3 @@ button {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "done": "Fait",
-  "todo": "À faire",
-  "returned": "Rendu",
-  "toReturn": "À rendre"
-}
-</i18n>

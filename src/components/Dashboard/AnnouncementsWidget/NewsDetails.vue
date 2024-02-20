@@ -8,7 +8,7 @@
     </div>
     <div
       v-else-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'Dashboard.NewsDetails.errorPlaceholder'"
       class="placeholder"
     />
     <div
@@ -29,7 +29,7 @@
             class="populations"
           >
             <div
-              v-t="'populations'"
+              v-t="'Dashboard.NewsDetails.populations'"
               class="label"
             />
             <PopulationList :population-list="detailedNews.populations" />
@@ -40,7 +40,7 @@
             class="read-infos"
           >
             <div
-              v-t="'readBy'"
+              v-t="'Dashboard.NewsDetails.readBy'"
               class="label"
             />
             <ReadInfos :read-infos="detailedNews.readInfos" />
@@ -49,7 +49,7 @@
           <div
             class="publication"
           >
-            {{ $t('at') + formattedPublicationDate + $t('by') + detailedNews.authorName }}
+            {{ $t('Dashboard.NewsDetails.at') + formattedPublicationDate + $t('Dashboard.NewsDetails.by') + detailedNews.authorName }}
           </div>
         </div>
       </div>
@@ -66,7 +66,7 @@
       />
       <div
         v-else
-        v-t="'contentPlaceholder'"
+        v-t="'Dashboard.NewsDetails.contentPlaceholder'"
         class="content-placeholder"
       />
 
@@ -85,14 +85,14 @@
           v-if="detailedNews.isEditable"
           class="footer-button"
           data-test="updateButton"
-          :label="$t('update')"
+          :label="$t('Dashboard.NewsDetails.update')"
           @click="openUpdateModal"
         />
         <WeprodeButton
           v-if="detailedNews.isDeletable"
           class="footer-button"
           data-test="deleteButton"
-          :label="$t('delete')"
+          :label="$t('Dashboard.NewsDetails.delete')"
           @click="confirmDeleteNews"
         />
       </div>
@@ -189,7 +189,7 @@ export default {
     },
     confirmDeleteNews () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.initNews.isSchoolNews ? this.$t('removalAnnouncementConfirmMessage', { target: this.initNews.title }) : this.$t('removalGroupNewsConfirmMessage'),
+        text: this.initNews.isSchoolNews ? this.$t('removalAnnouncementConfirmMessage', { target: this.initNews.title }) : this.$t('Dashboard.NewsDetails.removalGroupNewsConfirmMessage'),
         lastAction: { fct: this.deleteNews, params: [] }
       })
     },
@@ -342,18 +342,3 @@ h2 {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "populations": "Diffusé à",
-  "at": "Le ",
-  "by": " par ",
-  "readBy": "Lu par",
-  "update": "Modifier",
-  "delete": "Supprimer",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "contentPlaceholder": "Aucun contenu pour cette actualité",
-  "removalAnnouncementConfirmMessage": "Veuillez confirmer la suppression de l'annonce \"{target}\"",
-  "removalGroupNewsConfirmMessage": "Supprimer cette information ?"
-}
-</i18n>

@@ -4,7 +4,7 @@
     <div class="header">
       <WeprodeButton
         class="add-delegation"
-        :label="$t('add-delegation')"
+        :label="$t('UserManagement.Delegations.add-delegation')"
         @click="openAddDelegationModal()"
       />
     </div>
@@ -14,13 +14,13 @@
       v-if="selectedSchool === undefined"
       class="main-label"
     >
-      <p>{{ $t('please-select-school') }}</p>
+      <p>{{ $t('UserManagement.Delegations.please-select-school') }}</p>
     </div>
     <div
       v-else-if="schoolAdmins.length === 0"
       class="main-label"
     >
-      <p>{{ $t('no-delegation') }}</p>
+      <p>{{ $t('UserManagement.Delegations.no-delegation') }}</p>
     </div>
     <div
       v-else
@@ -120,7 +120,7 @@ export default {
             if (data.success) {
               user.isSchoolAdmin = !user.isSchoolAdmin
             } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.Delegations.error'), type: 'error' })
             }
           }
         )
@@ -130,7 +130,7 @@ export default {
             if (data.success) {
               user.isSchoolAdmin = !user.isSchoolAdmin
             } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.Delegations.error'), type: 'error' })
             }
           }
         )
@@ -143,7 +143,7 @@ export default {
             if (data.success) {
               user.isNewsDelegate = !user.isNewsDelegate
             } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.Delegations.error'), type: 'error' })
             }
           }
         )
@@ -153,7 +153,7 @@ export default {
             if (data.success) {
               user.isNewsDelegate = !user.isNewsDelegate
             } else {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.Delegations.error'), type: 'error' })
             }
           }
         )
@@ -195,13 +195,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "add-delegation": "Ajouter une délégation",
-  "no-delegation": "Aucune délégation pour cet établissement",
-  "please-select-school": "Veuillez sélectionner un établissement",
-  "warning": "La suppression de cet administrateur est définitive.",
-  "error": "Erreur lors de l'enregistrement de la délégation"
-}
-</i18n>

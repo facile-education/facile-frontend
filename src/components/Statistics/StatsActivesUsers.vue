@@ -20,7 +20,7 @@
         v-else
         class="label"
       >
-        {{ $tc('activeUsers', nbUsers) }}
+        {{ $tc('Statistics.StatsActivesUsers.activeUsers', nbUsers) }}
       </span>
     </span>
   </section>
@@ -112,10 +112,3 @@ img {
   margin-left: 10px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "activeUsers": "Aucun utilisateur unique sur la période | utilisateur unique sur la période | utilisateurs uniques sur la période",
-  "activeUsersShort": "Aucun utilisateur unique | utilisateur unique | utilisateurs uniques"
-}
-</i18n>

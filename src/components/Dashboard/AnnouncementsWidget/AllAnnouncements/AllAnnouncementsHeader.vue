@@ -7,12 +7,12 @@
       >
         <img
           src="@assets/icons/chevron_left.svg"
-          :alt="$t('dashboard')"
-          :title="$t('dashboard')"
+          :alt="$t('Dashboard.AllAnnouncementsHeader.dashboard')"
+          :title="$t('Dashboard.AllAnnouncementsHeader.dashboard')"
         >
       </RouterLink>
       <h1
-        v-t="'header'"
+        v-t="'Dashboard.AllAnnouncementsHeader.header'"
         @click="back"
       />
       <Pellet
@@ -23,8 +23,8 @@
       />
       <button
         class="read-only-button"
-        :aria-label="$t('unreadFilter')"
-        :title="$t('unreadFilter')"
+        :aria-label="$t('Dashboard.AllAnnouncementsHeader.unreadFilter')"
+        :title="$t('Dashboard.AllAnnouncementsHeader.unreadFilter')"
         @click="toggleReadOnly"
       >
         <CustomIcon
@@ -152,12 +152,3 @@ h1 {
   margin-left: 10px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "header": "Toutes les annonces",
-  "dashboard": "Tableau de bord",
-  "unreadFilter": "Filtrer les non lues",
-  "errorPlaceholder": "Oups, une erreur est survenue..."
-}
-</i18n>

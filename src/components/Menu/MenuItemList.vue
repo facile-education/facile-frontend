@@ -6,7 +6,7 @@
     />
     <div
       v-if="menuError"
-      v-t="'errorPlaceholder'"
+      v-t="'Menu.MenuItemList.errorPlaceholder'"
       class="placeholder"
     />
 
@@ -71,9 +71,3 @@ ul {
   font-size: 1em;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Une erreur est survenue lors du chargement du menu"
-}
-</i18n>

@@ -16,7 +16,7 @@
     <template #body>
       <div
         v-if="!isEventCreation"
-        v-t="'updateMessage'"
+        v-t="'NotUsualSlotManager.EditSlotModal.updateMessage'"
         class="update-message"
       />
 
@@ -42,7 +42,7 @@
         class="period"
       >
         <span
-          v-t="'onThePeriod'"
+          v-t="'NotUsualSlotManager.EditSlotModal.onThePeriod'"
           class="label"
         />
         <DateRangePicker
@@ -179,7 +179,7 @@ export default {
       return {
         teacher: (form.teacher.teacherId.$invalid && form.teacher.teacherId.$dirty) ? this.$t('Commons.formRequired') : '',
         capacity: (form.capacity.$invalid && form.capacity.$dirty)
-          ? (form.capacity.required.$invalid ? this.$t('Commons.formRequired') : this.$t('formMoreThanRegistered'))
+          ? (form.capacity.required.$invalid ? this.$t('Commons.formRequired') : this.$t('NotUsualSlotManager.EditSlotModal.formMoreThanRegistered'))
           : '',
         room: (form.room.$invalid && form.room.$dirty) ? this.$t('Commons.formRequired') : ''
       }
@@ -205,9 +205,9 @@ export default {
     },
     slotLabel () {
       if (this.isEventCreation) {
-        return this.$t('all-the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + 's ' + this.$t('on')
+        return this.$t('NotUsualSlotManager.EditSlotModal.all-the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + 's ' + this.$t('NotUsualSlotManager.EditSlotModal.on')
       } else {
-        return this.$t('the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + ' ' + this.$t('on')
+        return this.$t('NotUsualSlotManager.EditSlotModal.the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + ' ' + this.$t('NotUsualSlotManager.EditSlotModal.on')
       }
     },
     configuration () {
@@ -401,15 +401,3 @@ export default {
   margin-left: auto;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "updateMessage": "Les modifications affecteront toutes les sessions concernées par ce créneau",
-  "formMoreThanRegistered": "La capacité de la salle doit être au moins supérieure au nombre d'inscrits",
-  "all-the": "Tous les ",
-  "the": "Le ",
-  "on": "en",
-  "until-school-year-end": "jusqu'à la fin de l'année scolaire.",
-  "onThePeriod": "Sur la période"
-}
-</i18n>

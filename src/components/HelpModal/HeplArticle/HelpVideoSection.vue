@@ -14,7 +14,7 @@
     </video>
     <button
       v-if="isAdministrator"
-      v-t="'editVideo'"
+      v-t="'HelpModal.HelpVideoSection.editVideo'"
       :class="{'visible': videoUrl === ''}"
       @click="isEditVideoModalDisplayed=true"
     />
@@ -96,9 +96,3 @@ video {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "editVideo": "Éditer la vidéo"
-}
-</i18n>

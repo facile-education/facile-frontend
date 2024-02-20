@@ -14,7 +14,7 @@
 
       <div
         v-if="(currentFolders && currentFiles) && allSortedDocuments.length === 0"
-        v-t="('emptyPlaceholder')"
+        v-t="('FilePicker.FilePickerModalDocuments.emptyPlaceholder')"
         class="placeholder"
       />
 
@@ -389,9 +389,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "emptyPlaceholder": "Aucun document"
-}
-</i18n>

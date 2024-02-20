@@ -41,8 +41,8 @@
       <button
         v-else-if="mq.phone || mq.tablet"
         class="options-button"
-        :aria-label="$t('options')"
-        :title="$t('options')"
+        :aria-label="$t('AttachedFiles.AttachedFile.options')"
+        :title="$t('AttachedFiles.AttachedFile.options')"
         @click="toggleContextMenu"
       >
         <img
@@ -58,8 +58,8 @@
         class="file-actions"
       >
         <WeprodeButton
-          :title="$t('save')"
-          :aria-label="$t('save')"
+          :title="$t('AttachedFiles.AttachedFile.save')"
+          :aria-label="$t('AttachedFiles.AttachedFile.save')"
           class="circle"
           @click.stop="isDepositModalDisplayed = true"
           @keyup.stop
@@ -70,8 +70,8 @@
           />
         </WeprodeButton>
         <WeprodeButton
-          :title="$t('download')"
-          :aria-label="$t('download')"
+          :title="$t('AttachedFiles.AttachedFile.download')"
+          :aria-label="$t('AttachedFiles.AttachedFile.download')"
           class="circle"
           @click.stop="downloadAttachedFile"
           @keyup.stop
@@ -159,14 +159,14 @@ export default {
         options: [
           {
             name: 'save',
-            title: this.$t('save'),
+            title: this.$t('AttachedFiles.AttachedFile.save'),
             icon: icons.options.save,
             position: 1,
             hasSeparator: false
           },
           {
             name: 'download',
-            title: this.$t('download'),
+            title: this.$t('AttachedFiles.AttachedFile.download'),
             icon: icons.options.download,
             position: 2,
             hasSeparator: false
@@ -197,7 +197,7 @@ export default {
       downloadDocuments([this.attachedFile])
     },
     saveInFolder (targetFolder) {
-      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.attachedFile], successMessage: this.$t('addToFolderSuccess') })
+      this.$store.dispatch('clipboard/duplicate', { targetFolder, entities: [this.attachedFile], successMessage: this.$t('AttachedFiles.AttachedFile.addToFolderSuccess') })
     }
   }
 }
@@ -316,19 +316,3 @@ button {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "attachedFile": " pièce jointe",
-  "attachedFiles": " pièces jointes",
-  "title": "Pièces jointes :",
-  "addAttachFileButton": "Ajouter une pièce jointe depuis mes documents",
-  "addLocalAttachFileButton": "Ajouter une pièce jointe depuis mon poste de travail",
-  "save": "Enregistrer",
-  "addToFolderSuccess": "Fichier déposé",
-  "download": "Télécharger",
-  "options": "Options",
-  "viewFile": "Visualiser {target}",
-  "remove": "Supprimer"
-}
-</i18n>

@@ -10,11 +10,11 @@
     <template #header>
       <span
         v-if="isCreation"
-        v-t="'creation-title'"
+        v-t="'Base.LinkModal.creation-title'"
       />
       <span
         v-else
-        v-t="'edition-title'"
+        v-t="'Base.LinkModal.edition-title'"
       />
     </template>
 
@@ -24,7 +24,7 @@
           ref="nameInput"
           v-model="linkName"
           :maxlength="200"
-          :placeholder="$t('namePlaceholder')"
+          :placeholder="$t('Base.LinkModal.namePlaceholder')"
           @keyup.enter.stop="submit"
         />
         <WeprodeErrorMessage
@@ -35,7 +35,7 @@
         <WeprodeInput
           v-model="linkUrl"
           :maxlength="250"
-          :placeholder="$t('urlPlaceholder')"
+          :placeholder="$t('Base.LinkModal.urlPlaceholder')"
           @keyup.enter.stop="submit"
         />
         <WeprodeErrorMessage
@@ -47,7 +47,7 @@
     <template #footer>
       <WeprodeButton
         v-if="isCreation"
-        :label="isCreation ? $t('add') : $t('edit')"
+        :label="isCreation ? $t('Base.LinkModal.add') : $t('Base.LinkModal.edit')"
         class="button"
         @click="submit"
       />
@@ -133,7 +133,7 @@ export default {
               this.$emit('save', { contentType: 3, contentName: this.linkName, contentValue: this.linkUrl })
               this.closeModal()
             } else {
-              this.urlError = this.$t('UnauthorizedUrlException')
+              this.urlError = this.$t('Base.LinkModal.UnauthorizedUrlException')
             }
           } else {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -160,16 +160,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "creation-title": "Ajouter un lien",
-  "edition-title": "Modifier un lien",
-  "cancel": "Annuler",
-  "add": "Ajouter",
-  "edit": "Modifier",
-  "namePlaceholder": "Titre",
-  "urlPlaceholder": "https://www.monlien.com",
-  "UnauthorizedUrlException": "Url non valide"
-}
-</i18n>

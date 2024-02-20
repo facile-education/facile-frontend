@@ -1,7 +1,7 @@
 <template>
   <section>
     <header>
-      <h2 v-t="'globalVisits'" />
+      <h2 v-t="'Statistics.VisitsChart.globalVisits'" />
     </header>
     <div
       v-if="isLoading"
@@ -11,7 +11,7 @@
     </div>
     <div
       v-else-if="error === true"
-      v-t="'error'"
+      v-t="'Statistics.VisitsChart.error'"
       class="error-placeholder"
     />
     <div v-else-if="data !== undefined">
@@ -60,7 +60,7 @@ export default {
       isLoading: false,
       data: undefined,
       error: false,
-      defaultService: { applicationId: -1, name: this.$t('allServices') },
+      defaultService: { applicationId: -1, name: this.$t('Statistics.VisitsChart.allServices') },
       selectedService: undefined,
       services: []
     }
@@ -159,11 +159,3 @@ h2 {
   max-height: 442px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "allServices": "Tous les services",
-  "globalVisits": "Fréquentation globale (Nombre de connexions)",
-  "error": "Oups, une erreur est survenue..."
-}
-</i18n>

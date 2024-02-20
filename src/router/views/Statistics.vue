@@ -1,7 +1,7 @@
 <template>
   <div v-if="selectedSchool">
     <div class="statistics">
-      <h1 :aria-label="$t('serviceTitle')" />
+      <h1 :aria-label="$t('Statistics.serviceTitle')" />
 
       <div>
         <div
@@ -135,7 +135,7 @@ export default {
   emits: ['update:layout'],
   data () {
     return {
-      allSchools: { schoolName: this.$t('allSchools'), schoolId: 0 },
+      allSchools: { schoolName: this.$t('Statistics.allSchools'), schoolId: 0 },
       selectedStartDate: dayjs().subtract(7, 'days'),
       selectedEndDate: dayjs(),
       globalScheduleConfiguration: undefined
@@ -249,10 +249,3 @@ export default {
   gap: 25px 50px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "allSchools": "Tous les établissements",
-  "serviceTitle": "Statistiques"
-}
-</i18n>

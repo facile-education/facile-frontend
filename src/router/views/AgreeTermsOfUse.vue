@@ -1,5 +1,5 @@
 <template>
-  <h1 :aria-label="$t('title')" />
+  <h1 :aria-label="$t('AgreeTermsOfUse.title')" />
   <div class="center">
     <div class="chart-container">
       <div
@@ -11,11 +11,11 @@
     <div class="buttons">
       <WeprodeButton
         ref="declineButton"
-        v-t="'decline'"
+        v-t="'AgreeTermsOfUse.decline'"
         @click="declineTermsOfUse"
       />
       <WeprodeButton
-        v-t="'accept'"
+        v-t="'AgreeTermsOfUse.accept'"
         @click="acceptTermsOfUse"
       />
     </div>
@@ -113,11 +113,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "title": "Acceptation des conditions d'utilisation",
-  "accept": "Accepter",
-  "decline": "Refuser"
-}
-</i18n>

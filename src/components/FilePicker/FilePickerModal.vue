@@ -43,13 +43,13 @@
         <WeprodeButton
           v-if="canCreateFolderInCurrentFolder"
           class="create-folder-button"
-          :label="$t('createFolder')"
+          :label="$t('FilePicker.FilePickerModal.createFolder')"
           @click="createFolder"
         />
         <WeprodeButton
           data-test="submitButton"
           class="submit-button"
-          :label="submitLabel !== 'noSelectedFolder' ? submitLabel : $t('noSelectedFolder')"
+          :label="submitLabel !== 'noSelectedFolder' ? submitLabel : $t('FilePicker.FilePickerModal.noSelectedFolder')"
           :disabled="submitLabel === 'noSelectedFolder'"
           @click="emitSelectedFolder"
         />
@@ -58,7 +58,7 @@
       <WeprodeButton
         v-else
         data-test="submitButton"
-        :label="$t('submitButton')"
+        :label="$t('FilePicker.FilePickerModal.submitButton')"
         :disabled="!selectedFiles || selectedFiles.length === 0"
         @click="addNewFiles"
       />
@@ -134,9 +134,9 @@ export default {
   computed: {
     defaultHeader () {
       if (this.imagesOnly) {
-        return this.$t('headerImagePicker')
+        return this.$t('FilePicker.FilePickerModal.headerImagePicker')
       } else {
-        return this.folderSelection ? this.$t('headerFolder') : this.$t('headerFile')
+        return this.folderSelection ? this.$t('FilePicker.FilePickerModal.headerFolder') : this.$t('FilePicker.FilePickerModal.headerFile')
       }
     },
     canCreateFolderInCurrentFolder () {
@@ -144,9 +144,9 @@ export default {
     },
     submitLabel () {
       if (this.selectedFolder?.permissions.ADD_OBJECT) {
-        return this.$t('chooseSelectedFolder') + this.selectedFolder.name
+        return this.$t('FilePicker.FilePickerModal.chooseSelectedFolder') + this.selectedFolder.name
       } else if (this.currentFolder?.permissions.ADD_OBJECT) {
-        return this.$t('chooseCurrentFolder')
+        return this.$t('FilePicker.FilePickerModal.chooseCurrentFolder')
       } else {
         return 'noSelectedFolder'
       }
@@ -217,21 +217,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "createFolder": "Nouveau dossier",
-  "documents": "Personnels",
-  "errorNoFiles": "Le chargement n'est pas autorisé",
-  "groups": "Collaboratifs",
-  "headerImagePicker": "Sélectionnez une image",
-  "headerFolder": "Sélectionnez un dossier de destination",
-  "headerFile": "Ajouter un document",
-  "noSelectedFolder": "Dépose impossible",
-  "or": "ou",
-  "submitButton": "Ajouter",
-  "uploadFile": "Importer un ou plusieurs documents",
-  "chooseCurrentFolder": "Choisir ce dossier",
-  "chooseSelectedFolder": "Choisir  "
-}
-</i18n>

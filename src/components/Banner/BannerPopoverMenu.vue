@@ -8,7 +8,7 @@
       <li>
         <span class="username">{{ firstName }}</span>
         <button
-          v-t="'preferences'"
+          v-t="'Banner.BannerPopoverMenu.preferences'"
           data-test="openPreferencesModal"
           @click="togglePreferencesModal"
         />
@@ -18,7 +18,7 @@
         style="position: relative"
       >
         <button
-          v-t="'news'"
+          v-t="'Banner.BannerPopoverMenu.news'"
           data-test="openVersionNotesModal"
           @click="toggleVersionNotesModal"
         />
@@ -29,21 +29,21 @@
       </li>
       <li>
         <button
-          v-t="'informations'"
+          v-t="'Banner.BannerPopoverMenu.informations'"
           data-test="openInformationModal"
           @click="toggleInformationsModal"
         />
       </li>
       <li class="top">
         <button
-          v-t="'assistance'"
+          v-t="'Banner.BannerPopoverMenu.assistance'"
           data-test="openSupportModal"
           @click="toggleSupportModal"
         />
       </li>
       <li>
         <button
-          v-t="'suggestion'"
+          v-t="'Banner.BannerPopoverMenu.suggestion'"
           data-test="openSuggestionModal"
           @click="toggleSuggestionModal"
         />
@@ -53,7 +53,7 @@
         class="top"
       >
         <a
-          v-t="'controlPanel'"
+          v-t="'Banner.BannerPopoverMenu.controlPanel'"
           data-test="openControl_panel"
           href="/lfr"
         />
@@ -70,7 +70,7 @@
           src="@/assets/icons/logout.svg"
           alt=""
         >
-        <span>{{ $t('logout') }}</span>
+        <span>{{ $t('Banner.BannerPopoverMenu.logout') }}</span>
       </a>
     </div>
 
@@ -262,15 +262,3 @@ a.logout-link {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "assistance": "Assistance",
-  "controlPanel": "Panneau de contrôle",
-  "informations": "Informations",
-  "logout": "Fermer la session",
-  "news": "Nouveautés",
-  "preferences": "Préférences",
-  "suggestion": "Suggestion"
-}
-</i18n>

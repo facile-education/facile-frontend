@@ -2,7 +2,7 @@
   <WeprodeInput
     v-model="searchInput"
     class="search-input"
-    :placeholder="$t('searchPlaceholder')"
+    :placeholder="$t('HelpModal.HelpSearch.searchPlaceholder')"
     :maxlength="75"
     @input="inputHandler"
   />
@@ -44,9 +44,3 @@ export default {
   width: 100%;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "searchPlaceholder": "Rechercher"
-}
-</i18n>

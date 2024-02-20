@@ -2,7 +2,7 @@
   <div data-test="time-selection">
     <div class="input-section">
       <slot />
-      <!--      <span> {{ ` ${$t('the')} ${startTime.format('dddd')}s ${$t('at')} ` }}</span>-->
+      <!--      <span> {{ ` ${$t('NotUsualSlotManager.TimeSelection.the')} ${startTime.format('dddd')}s ${$t('NotUsualSlotManager.TimeSelection.at')} ` }}</span>-->
       <div>
         <WeprodeInput
           v-model="inputStartHour"
@@ -13,7 +13,7 @@
         />
         <WeprodeErrorMessage :error-message="formErrorList.startHour" />
       </div>
-      <span v-t="'to'" />
+      <span v-t="'NotUsualSlotManager.TimeSelection.to'" />
       <div>
         <WeprodeInput
           v-model="inputEndHour"
@@ -85,10 +85,10 @@ export default {
     formErrorList () {
       return {
         startHour: (this.v$.inputStartHour.$invalid && this.v$.inputStartHour.$dirty)
-          ? (this.v$.inputEndHour.$errors[0].$validator === 'required' ? this.$t('required') : this.$t('invalidDateFormat'))
+          ? (this.v$.inputEndHour.$errors[0].$validator === 'required' ? this.$t('NotUsualSlotManager.TimeSelection.required') : this.$t('NotUsualSlotManager.TimeSelection.invalidDateFormat'))
           : '',
         endHour: (this.v$.inputEndHour.$invalid && this.v$.inputEndHour.$dirty)
-          ? (this.v$.inputEndHour.$errors[0].$validator === 'required' ? this.$t('required') : this.$t('afterStartDate'))
+          ? (this.v$.inputEndHour.$errors[0].$validator === 'required' ? this.$t('NotUsualSlotManager.TimeSelection.required') : this.$t('NotUsualSlotManager.TimeSelection.afterStartDate'))
           : ''
       }
     }
@@ -134,15 +134,3 @@ export default {
   margin-bottom: 20px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "at": "de",
-  "fromThe": "À partir du ",
-  "the": "des",
-  "to": "à",
-  "required": "Champ requis",
-  "afterStartDate": "Cette date doit être sous la forme \"HH:mm\" et doit se situer après la date de début",
-  "invalidDateFormat": "Format de date invalide, veuillez utiliser la forme \"HH:mm\""
-}
-</i18n>

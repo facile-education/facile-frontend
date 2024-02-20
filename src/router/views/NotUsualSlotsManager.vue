@@ -1,5 +1,5 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('NotUsualSlotsManager.serviceTitle')" />
   <div
     v-if="currentUser.userId !== 0 && currentUser.schoolList.length !== 0"
     class="non-classical-slots"
@@ -24,7 +24,7 @@
       <WeprodeDropdown
         v-if="currentUser.selectedSchool && currentSlotType && currentSlotType.type === 5"
         v-model="selectedClass"
-        :placeholder="$t('groupFilter')"
+        :placeholder="$t('NotUsualSlotsManager.groupFilter')"
         :list="classList"
         display-field="orgName"
         class="class-dropdown"
@@ -186,10 +186,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "groupFilter": "Groupe",
-  "serviceTitle": "Horaires hors cadre"
-}
-</i18n>

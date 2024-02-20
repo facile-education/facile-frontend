@@ -1,7 +1,7 @@
 <template>
   <section>
     <header>
-      <h2 v-t="'serviceActions'" />
+      <h2 v-t="'Statistics.ActionsChart.serviceActions'" />
       <WeprodeDropdown
         v-model="selectedService"
         :list="services"
@@ -19,7 +19,7 @@
     </div>
     <div
       v-else-if="error === true"
-      v-t="'error'"
+      v-t="'Statistics.ActionsChart.error'"
       class="error-placeholder"
     />
     <div v-else-if="data !== undefined">
@@ -168,11 +168,3 @@ h2 {
   max-height: 442px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "allServices": "Tous les services",
-  "error": "Oups, une erreur est survenue...",
-  "serviceActions": "Fréquentation par service (Nombre d'accès au service)"
-}
-</i18n>

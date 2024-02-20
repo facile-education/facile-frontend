@@ -6,7 +6,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'header'" />
+      <span v-t="'Nero.ImagePicker.header'" />
     </template>
 
     <template #body>
@@ -58,7 +58,7 @@
         </div>
 
         <SelectFilesButtons
-          :label="$t('changePictureLabel')"
+          :label="$t('Nero.ImagePicker.changePictureLabel')"
           :images-only="true"
           @load="loadImage"
           @select-files="selectImageFromApp"
@@ -69,7 +69,7 @@
     <template #footer>
       <WeprodeButton
         v-if="result.image !== null"
-        :label="$t('saveButton')"
+        :label="$t('Nero.ImagePicker.saveButton')"
         @click="onConfirm"
       />
     </template>
@@ -249,11 +249,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "header": "Choisir une image",
-  "saveButton": "Valider",
-  "changePictureLabel": "Changer l'image"
-}
-</i18n>

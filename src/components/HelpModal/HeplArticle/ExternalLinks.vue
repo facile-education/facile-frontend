@@ -1,7 +1,7 @@
 <template>
   <div v-if="isAdministrator || links.length > 0">
     <h3>
-      {{ $t('external-links') }}
+      {{ $t('HelpModal.ExternalLinks.external-links') }}
       <BaseIcon
         v-if="isAdministrator"
         class="add-icon"
@@ -66,7 +66,7 @@ export default {
   methods: {
     confirmLinkRemoval (link) {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('confirmLinkRemovalMessage'),
+        text: this.$t('HelpModal.ExternalLinks.confirmLinkRemovalMessage'),
         lastAction: { fct: this.deleteLink, params: [link] }
       })
     },
@@ -147,10 +147,3 @@ a {
   opacity: 0;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "external-links": "Liens externes",
-  "confirmLinkRemovalMessage": "Supprimmer le lien définitivement?"
-}
-</i18n>

@@ -12,26 +12,26 @@
       @close="onClose"
     >
       <template #header>
-        <span v-t="'modalHeaderLabel'" />
+        <span v-t="'Informations.InformationModal.modalHeaderLabel'" />
       </template>
 
       <template #body>
         <WeprodeTabList ref="tabList">
           <WeprodeTabItem
             class="tab-item"
-            :title="$t('termsOfUseTabLabel')"
+            :title="$t('Informations.InformationModal.termsOfUseTabLabel')"
           >
             <TermsOfUse />
           </WeprodeTabItem>
           <WeprodeTabItem
             class="tab-item"
-            :title="$t('privacyLabel')"
+            :title="$t('Informations.InformationModal.privacyLabel')"
           >
             <Privacy />
           </WeprodeTabItem>
           <WeprodeTabItem
             class="tab-item"
-            :title="$t('accessibilityLabel')"
+            :title="$t('Informations.InformationModal.accessibilityLabel')"
           >
             <Accessibility />
           </WeprodeTabItem>
@@ -110,12 +110,3 @@ export default {
 //}
 
 </style>
-
-<i18n locale="fr">
-{
-  "modalHeaderLabel": "Informations générales relatives à l'ENTA",
-  "accessibilityLabel": "Accessibilité",
-  "privacyLabel": "Confidentialité",
-  "termsOfUseTabLabel": "CGU"
-}
-</i18n>

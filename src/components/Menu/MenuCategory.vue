@@ -3,8 +3,8 @@
     <button
       class="category-name root-menu-entry"
       :class="{'expanded': isMenuExpanded, 'show-menu': menuCategory.showSubMenu}"
-      :aria-label="isMenuExpanded ? (menuCategory.showSubMenu ? $t('collapse') : $t('extend')) : ''"
-      :title="isMenuExpanded ? (menuCategory.showSubMenu ? $t('collapse') : $t('extend')) :''"
+      :aria-label="isMenuExpanded ? (menuCategory.showSubMenu ? $t('Menu.MenuCategory.collapse') : $t('Menu.MenuCategory.extend')) : ''"
+      :title="isMenuExpanded ? (menuCategory.showSubMenu ? $t('Menu.MenuCategory.collapse') : $t('Menu.MenuCategory.extend')) :''"
       @click="toggleSubMenu"
     >
       <CustomIcon
@@ -139,10 +139,3 @@ button {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "collapse" : "Réduire",
-  "extend" : "Dérouler"
-}
-</i18n>

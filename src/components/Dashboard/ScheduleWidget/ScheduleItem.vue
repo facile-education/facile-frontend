@@ -133,9 +133,3 @@ strong, .metadata {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "room": "Salle: "
-}
-</i18n>

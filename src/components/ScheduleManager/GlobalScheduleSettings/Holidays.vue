@@ -1,10 +1,10 @@
 <template>
   <section>
     <header>
-      <h2 v-t="'holidays'" />
+      <h2 v-t="'ScheduleManager.Holidays.holidays'" />
       <InformationIcon
         class="info"
-        :text="$t('holidaysInfos')"
+        :text="$t('ScheduleManager.Holidays.holidaysInfos')"
       />
     </header>
 
@@ -22,7 +22,7 @@
 
     <WeprodeButton
       v-if="!isFormDisplayed"
-      v-t="'addHoliday'"
+      v-t="'ScheduleManager.Holidays.addHoliday'"
       class="add-button"
       @click="isFormDisplayed = true"
     />
@@ -109,11 +109,3 @@ ul {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "holidays": "Vacances",
-  "addHoliday": "Ajouter des vacances",
-  "holidaysInfos": "Pour une paire de dates de vacances, la 1ère date est la date du 1er jour de vacances, et la 2ème date est la date du 1er jour de reprise."
-}
-</i18n>

@@ -1,22 +1,22 @@
 <template>
   <section>
     <header>
-      <h2 v-t="'weekParity'" />
+      <h2 v-t="'ScheduleManager.WeeksParity.weekParity'" />
       <InformationIcon
         class="info"
-        :text="$t('weekParityInfos')"
+        :text="$t('ScheduleManager.WeeksParity.weekParityInfos')"
       />
     </header>
     <WeprodeInput
       class="week-input"
       :model-value="h1Weeks"
-      :placeholder="$t('h1WeeksPlaceholder')"
+      :placeholder="$t('ScheduleManager.WeeksParity.h1WeeksPlaceholder')"
       @update:model-value="$emit('update:h1Weeks', $event)"
     />
     <WeprodeInput
       class="week-input"
       :model-value="h2Weeks"
-      :placeholder="$t('h2WeeksPlaceholder')"
+      :placeholder="$t('ScheduleManager.WeeksParity.h2WeeksPlaceholder')"
       @update:model-value="$emit('update:h2Weeks', $event)"
     />
   </section>
@@ -58,12 +58,3 @@ header {
   margin-bottom: 1rem;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "weekParity": "Parité des semaines",
-  "weekParityInfos": "Le formattage des champs est sous la forme: \"[Numérosemaine],[Numérosemaine], [...], [Numérosemaine]\", par exemple: \"1,3,5\"",
-  "h1WeeksPlaceholder": "Semaines catégorisées \"H1\"",
-  "h2WeeksPlaceholder": "Semaines catégorisées \"H2\""
-}
-</i18n>

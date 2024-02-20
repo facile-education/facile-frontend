@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'HelpModal.CreateArticleModal.title'" />
     </template>
 
     <template #body>
@@ -17,13 +17,13 @@
         ref="nameInput"
         v-model="articleName"
         class="name-input"
-        :placeholder="$t('namePlaceHolder')"
+        :placeholder="$t('HelpModal.CreateArticleModal.namePlaceHolder')"
       />
 
       <WeprodeTagsInput
         v-model="selectedRoles"
         class="tags-input"
-        :placeholder="$t('rolesPlaceholder')"
+        :placeholder="$t('HelpModal.CreateArticleModal.rolesPlaceholder')"
         :list="roleList"
         display-field="displayText"
         id-field="roleId"
@@ -40,7 +40,7 @@
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="$t('submit')"
+        :label="$t('HelpModal.CreateArticleModal.submit')"
         :disabled="articleName.length === 0"
         @click="submit"
       />
@@ -125,12 +125,3 @@ export default {
   width: 100%;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "title": "CRÉER UN ARTICLE",
-  "namePlaceHolder": "Titre",
-  "rolesPlaceholder": "Roles (laisser vide pour tous)",
-  "submit": "Valider"
-}
-</i18n>

@@ -45,9 +45,9 @@ export default {
         const nbMinutes = this.work.estimatedTime
         const nbHour = Math.floor(nbMinutes / 60)
         if (nbHour > 0) {
-          return nbHour + this.$t('hourLabel') + nbMinutes % 60
+          return nbHour + this.$t('Course.WorkItem.hourLabel') + nbMinutes % 60
         } else {
-          return nbMinutes + this.$t('minuteLabel')
+          return nbMinutes + this.$t('Course.WorkItem.minuteLabel')
         }
       } else {
         return undefined
@@ -62,7 +62,7 @@ export default {
       }
     },
     formattedGivenDate () {
-      return this.$t('givenThe') + dayjs(this.work.sourceSessionDate, DATE_EXCHANGE_FORMAT).format('DD/MM')
+      return this.$t('Course.WorkItem.givenThe') + dayjs(this.work.sourceSessionDate, DATE_EXCHANGE_FORMAT).format('DD/MM')
     }
   }
 }
@@ -115,11 +115,3 @@ strong, .course-name, .given-date {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "hourLabel": "h",
-  "minuteLabel": "mn",
-  "givenThe": "Donné le "
-}
-</i18n>

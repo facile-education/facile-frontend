@@ -43,7 +43,7 @@
         @refresh="$emit('refresh')"
       />
       <div v-else>
-        {{ $t('unknown-activity') }}
+        {{ $t('Dashboard.ActivityItem.unknown-activity') }}
       </div>
     </div>
   </div>
@@ -152,9 +152,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-  {
-    "unknown-activity": "Activité inconnue"
-  }
-  </i18n>

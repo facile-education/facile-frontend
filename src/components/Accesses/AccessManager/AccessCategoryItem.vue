@@ -30,10 +30,10 @@
         <img
           class="trash-icon"
           src="@/assets/icons/trash.svg"
-          :alt="$t('delete')"
-          :title="$t('delete')"
+          :alt="$t('Accesses.AccessCategoryItem.delete')"
+          :title="$t('Accesses.AccessCategoryItem.delete')"
         >
-        <span v-t="'delete'" />
+        <span v-t="'Accesses.AccessCategoryItem.delete'" />
       </WeprodeButton>
     </div>
 
@@ -103,7 +103,7 @@ export default {
       if (name.length > 0) {
         saveSchoolCategory(this.selectedSchool.schoolId, { ...this.category, categoryName: name }).then((data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('saveSuccess'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Accesses.AccessCategoryItem.saveSuccess'), type: 'success' })
             this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to ensure to have the backend-data
           } else {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -114,7 +114,7 @@ export default {
     deleteCategory () {
       removeSchoolCategory(this.selectedSchool.schoolId, this.category.categoryId).then((data) => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('deleteSuccess'), type: 'success' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Accesses.AccessCategoryItem.deleteSuccess'), type: 'success' })
           this.$store.dispatch('accessManager/getSchoolAccesses') // Reload changes to ensure to have the backend-data
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -183,12 +183,3 @@ ul {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "delete": "Supprimer cette catégorie",
-  "deleteCategoryWarning": "Souhaitez-vous supprimer la catégorie {categoryName} et ses accès?",
-  "saveSuccess": "Catégorie enregistrée",
-  "deleteSuccess": "Catégorie supprimée"
-}
-</i18n>

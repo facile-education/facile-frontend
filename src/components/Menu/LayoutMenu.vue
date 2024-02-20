@@ -9,8 +9,8 @@
     <button
       v-if="!mq.phone && !mq.tablet"
       class="expand-menu"
-      :aria-label="expanded ? $t('collapse') : $t('extend')"
-      :title="expanded ? $t('collapse') : $t('extend')"
+      :aria-label="expanded ? $t('Menu.LayoutMenu.collapse') : $t('Menu.LayoutMenu.extend')"
+      :title="expanded ? $t('Menu.LayoutMenu.collapse') : $t('Menu.LayoutMenu.extend')"
       @click="toggleSideMenu"
     >
       <CustomIcon
@@ -148,11 +148,3 @@ button {
   transform: rotate(180deg);
 }
 </style>
-
-<i18n locale="fr">
-{
-  "close": "Fermer le menu",
-  "collapse": "Réduire",
-  "extend": "Étendre"
-}
-</i18n>

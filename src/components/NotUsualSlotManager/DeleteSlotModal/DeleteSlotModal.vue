@@ -8,7 +8,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'NotUsualSlotManager.DeleteSlotModal.title'" />
     </template>
 
     <template #body>
@@ -22,7 +22,7 @@
           data-test="period"
         >
           <span
-            v-t="'onThePeriod'"
+            v-t="'NotUsualSlotManager.DeleteSlotModal.onThePeriod'"
             class="label"
           />
           <DateRangePicker
@@ -39,7 +39,7 @@
     <template #footer>
       <div class="footer">
         <WeprodeButton
-          :label="$t('deleteSlot')"
+          :label="$t('NotUsualSlotManager.DeleteSlotModal.deleteSlot')"
           class="delete"
           :disabled="!isLoaded"
           @click="confirmSlotDeletion"
@@ -127,7 +127,7 @@ export default {
     },
     confirmSlotDeletion () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('deleteWarning'),
+        text: this.$t('NotUsualSlotManager.DeleteSlotModal.deleteWarning'),
         lastAction: { fct: this.deleteSlot, params: [] }
       })
     },
@@ -187,13 +187,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "deleteWarning": "La suppression de ce créneau sera définitive",
-  "deleteSlot": "Supprimer",
-  "message": "Supprimer les sessions de {slotType} du {dayLabel} de {startHour} à {endHour}",
-  "onThePeriod": "Sur la période",
-  "title": "Supprimer un horaire hors cadre"
-}
-</i18n>

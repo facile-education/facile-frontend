@@ -7,14 +7,14 @@
     <button
       :disabled="disablePrevious"
       class="nav-btn horizontal-timeline-left"
-      :title="$t('previous')"
-      :aria-label="$t('previous')"
+      :title="$t('Horaires.Timeline.previous')"
+      :aria-label="$t('Horaires.Timeline.previous')"
       @click="onClickPrevious()"
     >
       <img
         class="reverse-icon"
         src="@assets/icons/chevron_right2.svg"
-        :alt="$t('previous')"
+        :alt="$t('Horaires.Timeline.previous')"
       >
     </button>
 
@@ -34,13 +34,13 @@
     <button
       class="nav-btn horizontal-timeline-right"
       :disabled="disableNext"
-      :title="$t('next')"
-      :aria-label="$t('next')"
+      :title="$t('Horaires.Timeline.next')"
+      :aria-label="$t('Horaires.Timeline.next')"
       @click="onClickNext()"
     >
       <img
         src="@assets/icons/chevron_right2.svg"
-        :alt="$t('next')"
+        :alt="$t('Horaires.Timeline.next')"
       >
     </button>
   </div>
@@ -291,10 +291,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-  {
-    "previous": "Précédent",
-    "next": "Suivant"
-  }
-</i18n>

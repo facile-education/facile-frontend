@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="left">
-      <h2 v-t="'diary'" />
+      <h2 v-t="'Dashboard.DiaryHeader.diary'" />
       <Pellet
         v-if="nbNewEvents > 0"
         class="header-pellet"
@@ -10,8 +10,8 @@
       />
       <button
         class="read-only-button"
-        :aria-label="$t('unreadFilter')"
-        :title="$t('unreadFilter')"
+        :aria-label="$t('Dashboard.DiaryHeader.unreadFilter')"
+        :title="$t('Dashboard.DiaryHeader.unreadFilter')"
         data-test="ReadOnlyEventButton"
         @click="toggleReadOnly"
       >
@@ -24,13 +24,13 @@
     </div>
     <div class="right">
       <button
-        v-t="'showMore'"
+        v-t="'Dashboard.DiaryHeader.showMore'"
         class="show-more"
         @click="showMore"
       />
       <CreateButton
         v-if="canCreateDiaryEvent"
-        :title="$t('create-event')"
+        :title="$t('Dashboard.DiaryHeader.create-event')"
         data-test="buttonCreateEvent"
         @click="isCreateModalDisplayed = true"
       />
@@ -122,12 +122,3 @@ header {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "diary": "Agenda",
-  "unreadFilter": "Filtrer les non lus",
-  "create-event": "Créer un évènement",
-  "showMore": "Voir plus"
-}
-</i18n>

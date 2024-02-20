@@ -18,7 +18,7 @@
             ref="titleInput"
             v-model="sessionContent.title"
             :maxlength="250"
-            :placeholder="$t('courseTitle')"
+            :placeholder="$t('Course.CourseEditModal.courseTitle')"
           />
           <WeprodeErrorMessage :error-message="formErrorList" />
         </div>
@@ -44,7 +44,7 @@
           v-if="isScheduled"
           class="update-scheduled-date"
         >
-          <span v-t="'scheduledOn'" />
+          <span v-t="'Course.CourseEditModal.scheduledOn'" />
           <CustomDatePicker
             v-model:selected-date="publicationDate"
             :min-date="minDate"
@@ -137,15 +137,15 @@ export default {
       publicationOptions: [
         {
           name: 'publish',
-          title: this.$t('publish')
+          title: this.$t('Course.CourseEditModal.publish')
         },
         {
           name: 'setPublishDate',
-          title: this.$t('setPublishDate')
+          title: this.$t('Course.CourseEditModal.setPublishDate')
         },
         {
           name: 'publishLater',
-          title: this.$t('publishLater')
+          title: this.$t('Course.CourseEditModal.publishLater')
         }
       ]
     }
@@ -165,7 +165,7 @@ export default {
     formErrorList () {
       const form = this.v$.sessionContent.title
       if (form.$invalid && form.$dirty) {
-        return this.$t('required')
+        return this.$t('Course.CourseEditModal.required')
       } else {
         return ''
       }
@@ -200,10 +200,10 @@ export default {
       } else {
         this.initialPublicationOption = this.publicationOptions[0]
       }
-      this.publicationOptions[1].title = this.$t('schedule')
+      this.publicationOptions[1].title = this.$t('Course.CourseEditModal.schedule')
     } else { // isCreation = true
       this.sessionContent.blocks.push({
-        contentType: 1, contentValue: '', contentName: '', placeholder: this.$t('description')
+        contentType: 1, contentValue: '', contentName: '', placeholder: this.$t('Course.CourseEditModal.description')
       })
       this.initialPublicationOption = this.publicationOptions[0]
     }
@@ -267,10 +267,10 @@ export default {
             this.onClose()
           } else {
             console.error('Cannot create session content')
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.CourseEditModal.error'), type: 'error' })
           }
         }, (err) => {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.CourseEditModal.error'), type: 'error' })
           console.error(err)
         })
       } else {
@@ -284,10 +284,10 @@ export default {
             this.onClose()
           } else {
             console.error('Cannot update session content')
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.CourseEditModal.error'), type: 'error' })
           }
         }, (err) => {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.CourseEditModal.error'), type: 'error' })
           console.error(err)
         })
       }
@@ -295,7 +295,7 @@ export default {
     confirmClosure () {
       if (JSON.stringify(this.sessionContent) !== this.initialForm) {
         this.$store.dispatch('warningModal/addWarning', {
-          text: this.$t('confirmClosure'),
+          text: this.$t('Course.CourseEditModal.confirmClosure'),
           lastAction: { fct: this.onClose }
         })
       } else {
@@ -357,20 +357,3 @@ export default {
   gap: 1rem;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "title": "Support du cours {courseName} - Séance du {day} à {hour}",
-  "courseTitle": "Titre du support*",
-  "publish": "Publier",
-  "schedule": "Programmer",
-  "setPublishDate": "Programmer la publication",
-  "publishLater": "Enregistrer en brouillon",
-  "scheduledOn": "Programmé le",
-  "error": "Oups, une erreur est survenue...",
-  "previousSession": "Voir la séance précédente",
-  "description": "Description",
-  "required": "Champ requis",
-  "confirmClosure": "Des modifications ne sont pas enregistrées, êtes-vous certain de quitter l’édition et de perdre les modifications ?"
-}
-</i18n>

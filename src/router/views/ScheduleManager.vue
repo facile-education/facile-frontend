@@ -1,9 +1,9 @@
 <template>
   <WeprodeTabList>
-    <WeprodeTabItem :title="$t('globalSettings')">
+    <WeprodeTabItem :title="$t('ScheduleManager.globalSettings')">
       <GlobalScheduleSettings />
     </WeprodeTabItem>
-    <WeprodeTabItem :title="$t('schoolSettings')">
+    <WeprodeTabItem :title="$t('ScheduleManager.schoolSettings')">
       <SchoolScheduleSettings />
     </WeprodeTabItem>
   </WeprodeTabList>
@@ -36,10 +36,3 @@ export default {
 <style lang="scss" scoped>
 
 </style>
-
-<i18n locale="fr">
-{
-  "globalSettings": "Paramètres globaux",
-  "schoolSettings": "Paramètres d'établissement"
-}
-</i18n>

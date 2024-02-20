@@ -7,7 +7,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'group'" />
+      <span v-t="'Groups.EditGroupModal.group'" />
     </template>
 
     <template #body>
@@ -17,7 +17,7 @@
         <WeprodeInput
           ref="name"
           v-model="group.groupName"
-          :placeholder="$t('name')"
+          :placeholder="$t('Groups.EditGroupModal.name')"
           :maxlength="2000"
           @blur="v$.group.groupName.$touch()"
         />
@@ -26,25 +26,25 @@
 
       <WeprodeTextArea
         v-model="group.description"
-        :placeholder="$t('description')"
+        :placeholder="$t('Groups.EditGroupModal.description')"
         maxlength="75"
         class="description"
       />
 
       <div class="others-fields">
         <div class="group-color">
-          <span v-t="'color-selection'" />
+          <span v-t="'Groups.EditGroupModal.color-selection'" />
           <ColorPicker v-model="group.color" />
         </div>
         <div class="group-is-educational">
           <div
-            v-t="'isPedagogical'"
+            v-t="'Groups.EditGroupModal.isPedagogical'"
             class="is-educational-label"
           />
           <div class="toggle-section">
             <WeprodeToggleSwitch
               v-model="group.isPedagogical"
-              :title="$t('isPedagogical')"
+              :title="$t('Groups.EditGroupModal.isPedagogical')"
             />
             <span>{{ $t(group.isPedagogical.toString()) }}</span>
           </div>
@@ -61,7 +61,7 @@
           <div class="search">
             <WeprodeInput
               v-model="searchInput"
-              :placeholder="$t('searchPlaceholder')"
+              :placeholder="$t('Groups.EditGroupModal.searchPlaceholder')"
               :maxlength="75"
               @input="searchTimeOut"
             />
@@ -95,9 +95,9 @@
                   @update:model-value="toggleAll"
                 />
               </th>
-              <th v-t="'identity'" />
-              <th v-t="'profile'" />
-              <th v-t="'school'" />
+              <th v-t="'Groups.EditGroupModal.identity'" />
+              <th v-t="'Groups.EditGroupModal.profile'" />
+              <th v-t="'Groups.EditGroupModal.school'" />
             </tr>
             <GroupUserItem
               v-for="(user, index) in sortedCompletionUsers"
@@ -116,7 +116,7 @@
             v-if="groupMembers.length > 0"
             class="header"
           >
-            <div v-t="'admin'" />
+            <div v-t="'Groups.EditGroupModal.admin'" />
           </div>
 
           <SelectedGroupMemberItem
@@ -218,7 +218,7 @@ export default {
   },
   computed: {
     buttonLabel () {
-      return this.editedGroup ? this.$t('edit') : this.$t('create')
+      return this.editedGroup ? this.$t('Groups.EditGroupModal.edit') : this.$t('Groups.EditGroupModal.create')
     },
     currentUser () {
       return this.$store.state.user
@@ -378,7 +378,7 @@ export default {
             }
             // Case 2 : else, display warning
             if (data.errorCode === 2) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('community-name-exists'), type: 'error' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('Groups.EditGroupModal.community-name-exists'), type: 'error' })
             }
           }
         }, (err) => {
@@ -388,7 +388,7 @@ export default {
       }
     },
     updateGroup () {
-      const message = this.$t('edition-success')
+      const message = this.$t('Groups.EditGroupModal.edition-success')
       this.isLoading = true
       editCommunity(this.group.groupId, this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
         this.isLoading = false
@@ -403,7 +403,7 @@ export default {
       })
     },
     createGroup () {
-      const message = this.$t('creation-success')
+      const message = this.$t('Groups.EditGroupModal.creation-success')
       this.isLoading = true
       createCommunity(this.group.groupName, this.group.description, this.group.isPedagogical, this.groupMembers, this.group.color).then((data) => {
         this.isLoading = false
@@ -516,27 +516,3 @@ hr {
   width: 130px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "color-selection": "Couleur",
-  "create": "Créer",
-  "description": "Description",
-  "edit": "Modifier",
-  "false": "Non",
-  "group": "Groupe",
-  "isPedagogical": "Espace à vocation pédagogique",
-  "name": "Nom du groupe",
-  "true": "Oui",
-  "identity": "Identité",
-  "profile": "Profil",
-  "school": "Établissement",
-  "searchPlaceholder": "Rechercher par nom",
-  "admin": "Administrateur",
-  "creation-success": "Groupe créé",
-  "edition-success": "Groupe modifié",
-  "community-name-exists": "Un espace existe déjà avec ce nom, merci d'en choisir un autre",
-  "reactivate-community": "Un espace du même nom a été trouvé, créé par vous-même le {creationDate}, et expiré depuis le {expirationDate}. Nous vous invitons à le réactiver.",
-  "community-reactivated": "Votre communauté a été réactivée"
-}
-</i18n>

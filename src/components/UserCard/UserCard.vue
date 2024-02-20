@@ -22,7 +22,7 @@
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'UserCard.errorPlaceholder'"
       class="placeholder"
     />
   </div>
@@ -92,9 +92,3 @@ export default {
   overflow: visible;
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "errorPlaceholder": "Oups, une erreur est survenue...",
-  }
-  </i18n>

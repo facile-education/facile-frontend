@@ -10,7 +10,7 @@
     @close="$emit('close')"
   >
     <template #header>
-      <span v-t="'versionNotesHeader'" />
+      <span v-t="'VersionNotes.VersionNotesModal.versionNotesHeader'" />
     </template>
 
     <template #body>
@@ -22,7 +22,7 @@
         <NeroIcon
           name="fa-plus"
         />
-        <span>{{ $t('new') }}</span>
+        <span>{{ $t('VersionNotes.VersionNotesModal.new') }}</span>
       </WeprodeButton>
 
       <VersionNoteSelector
@@ -37,7 +37,7 @@
 
       <div
         v-if="error === true"
-        v-t="'errorPlaceholder'"
+        v-t="'VersionNotes.VersionNotesModal.errorPlaceholder'"
         class="placeholder"
       />
 
@@ -140,11 +140,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "new": "Nouveau",
-  "versionNotesHeader": "Nouveautés dans votre ENTA"
-}
-</i18n>

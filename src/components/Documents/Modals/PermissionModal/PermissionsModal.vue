@@ -13,35 +13,35 @@
     @keydown.ctrl.stop=""
   >
     <template #header>
-      <span v-t="'header'" />
+      <span v-t="'Documents.PermissionsModal.header'" />
     </template>
 
     <template #body>
       <div class="fields">
         <div
-          v-t="('name')"
+          v-t="('Documents.PermissionsModal.name')"
           class="name"
         />
         <div
-          v-t="('view')"
+          v-t="('Documents.PermissionsModal.view')"
           class="view"
         />
         <div
           v-if="document.type==='File'"
-          v-t="('update')"
+          v-t="('Documents.PermissionsModal.update')"
           class="update"
         />
         <div
           v-if="document.type==='Folder'"
-          v-t="('add')"
+          v-t="('Documents.PermissionsModal.add')"
           class="add"
         />
         <div
-          v-t="('delete')"
+          v-t="('Documents.PermissionsModal.delete')"
           class="delete"
         />
         <div
-          v-t="('permissions')"
+          v-t="('Documents.PermissionsModal.permissions')"
           class="permissions"
         />
       </div>
@@ -55,7 +55,7 @@
       <WeprodeCheckbox
         v-if="document.type==='Folder'"
         :model-value="isRecursive"
-        :label="$t('recursiveLabel')"
+        :label="$t('Documents.PermissionsModal.recursiveLabel')"
         @update:model-value="updateRecursive"
       />
     </template>
@@ -64,12 +64,12 @@
       <WeprodeButton
         v-if="initialPermissionMatrix.length > 0"
         class="reset-button"
-        :label="$t('reset')"
+        :label="$t('Documents.PermissionsModal.reset')"
         @click="reset"
       />
       <WeprodeButton
         data-test="submitButton"
-        :label="$t('submit')"
+        :label="$t('Documents.PermissionsModal.submit')"
         @click="submit"
       />
     </template>
@@ -139,7 +139,7 @@ export default {
       if (this.document.type === 'File') {
         permissionsService.saveFilePermissionMatrix(this.document.id, this.permissionMatrix).then((data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('permission-success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Documents.PermissionsModal.permission-success'), type: 'success' })
             this.$emit('saveEntityPermissions')
             this.onClose()
           }
@@ -147,7 +147,7 @@ export default {
       } else if (this.document.type === 'Folder') {
         permissionsService.saveFolderPermissionMatrix(this.document.id, this.permissionMatrix, this.isRecursive).then((data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('permission-success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Documents.PermissionsModal.permission-success'), type: 'success' })
             this.$emit('saveEntityPermissions')
             this.onClose()
           }
@@ -188,19 +188,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "header": "Gestion des permissions",
-  "reset": "Réinitialiser",
-  "add": "Ajouter",
-  "view": "Voir",
-  "update": "Modifier",
-  "delete": "Supprimer",
-  "permissions": "Permissions",
-  "recursiveLabel": "Appliquer ces permissions à tous les éléments contenus dans le dossier",
-  "name": "Rôle",
-  "submit": "Valider",
-  "permission-success": "Permissions enregistrées"
-}
-</i18n>

@@ -90,7 +90,7 @@ export default {
       return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('on') + ' DD MMMM YYYY ' + this.$t('at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.MembershipActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.MembershipActivity.at') + ' HH:mm')
     },
     isDeactivation () {
       return this.activity.type === activityConstants.TYPE_EXPIRED_GROUP
@@ -98,9 +98,9 @@ export default {
     description1 () {
       switch (this.activity.type) {
         case activityConstants.TYPE_ADD_MEMBERSHIP:
-          return this.$t('added')
+          return this.$t('Dashboard.MembershipActivity.added')
         case activityConstants.TYPE_REMOVE_MEMBERSHIP:
-          return this.$t('removed')
+          return this.$t('Dashboard.MembershipActivity.removed')
         default:
           return ''
       }
@@ -111,9 +111,9 @@ export default {
     description2 () {
       switch (this.activity.type) {
         case activityConstants.TYPE_ADD_MEMBERSHIP:
-          return this.$t('in-this-space')
+          return this.$t('Dashboard.MembershipActivity.in-this-space')
         case activityConstants.TYPE_REMOVE_MEMBERSHIP:
-          return this.$t('from-this-space')
+          return this.$t('Dashboard.MembershipActivity.from-this-space')
         default:
           return ''
       }
@@ -137,9 +137,9 @@ export default {
     dashboardDescription () {
       switch (this.activity.type) {
         case activityConstants.TYPE_ADD_MEMBERSHIP:
-          return this.$t('added-you')
+          return this.$t('Dashboard.MembershipActivity.added-you')
         case activityConstants.TYPE_REMOVE_MEMBERSHIP:
-          return this.$t('removed-you')
+          return this.$t('Dashboard.MembershipActivity.removed-you')
         default:
           return ''
       }
@@ -164,17 +164,3 @@ export default {
   width: 30px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "on": "Le",
-  "at": "à",
-  "added-you": "vous a inscrit dans cet espace",
-  "added": "a inscrit ",
-  "removed-you": "vous a désinscrit de cet espace",
-  "removed": "a désinscrit ",
-  "nb-users": "{nbUsers} utilisateurs ",
-  "in-this-space": "dans cet espace",
-  "from-this-space": "de cet espace"
-}
-</i18n>

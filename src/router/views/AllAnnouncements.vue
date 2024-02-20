@@ -19,12 +19,12 @@
       </div>
       <div
         v-if="error === true"
-        v-t="'errorPlaceholder'"
+        v-t="'AllAnnouncements.errorPlaceholder'"
         class="placeholder"
       />
       <div
         v-else-if="announcementsList.length === 0"
-        v-t="'emptyPlaceholder'"
+        v-t="'AllAnnouncements.emptyPlaceholder'"
         class="placeholder"
       />
       <div
@@ -57,7 +57,7 @@
     />
     <div
       v-if="!selectedAnnouncement && isDetailsPanelDisplayed"
-      v-t="'detailsPlaceholder'"
+      v-t="'AllAnnouncements.detailsPlaceholder'"
       class="details-placeholder"
     />
   </div>
@@ -202,11 +202,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucune annonce publiée",
-  "detailsPlaceholder": "Veuillez séléctionner une annonce"
-}
-</i18n>

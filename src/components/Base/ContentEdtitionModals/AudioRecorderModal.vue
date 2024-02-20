@@ -7,7 +7,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'Base.AudioRecorderModal.title'" />
     </template>
 
     <template #body>
@@ -16,7 +16,7 @@
           ref="nameInput"
           v-model="audioName"
           :maxlength="200"
-          :placeholder="$t('namePlaceholder')"
+          :placeholder="$t('Base.AudioRecorderModal.namePlaceholder')"
           @keyup.enter.stop="addRecord"
         />
         <WeprodeErrorMessage
@@ -32,7 +32,7 @@
 
     <template #footer>
       <WeprodeButton
-        :label="$t('save')"
+        :label="$t('Base.AudioRecorderModal.save')"
         :disabled="!isStopped || !formErrorList"
         data-test="submitRecord"
         @click="addRecord"
@@ -120,11 +120,3 @@ export default {
   margin-bottom: 20px
 }
 </style>
-
-<i18n locale="fr">
-{
-  "namePlaceholder": "Titre",
-  "title": "Enregistrement audio",
-  "save": "Valider"
-}
-</i18n>

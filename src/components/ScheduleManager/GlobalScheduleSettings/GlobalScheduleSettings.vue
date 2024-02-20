@@ -1,13 +1,13 @@
 <template>
   <div class="global-schedule-settings">
-    <h1 :aria-label="$t('serviceTitle')" />
+    <h1 :aria-label="$t('ScheduleManager.GlobalScheduleSettings.serviceTitle')" />
     <WeprodeSpinner
       v-if="isLoading"
       style="z-index: 1"
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'ScheduleManager.GlobalScheduleSettings.errorPlaceholder'"
       class="placeholder"
     />
     <div v-else>
@@ -30,7 +30,7 @@
 
       <footer>
         <WeprodeButton
-          v-t="'submit'"
+          v-t="'ScheduleManager.GlobalScheduleSettings.submit'"
           @click="submit"
         />
       </footer>
@@ -95,14 +95,14 @@ export default {
     updateConfiguration () {
       saveGlobalConfiguration(this.schoolYearStartDate, this.schoolYearSemesterDate, this.schoolYearEndDate, this.holidays, this.h1Weeks, this.h2Weeks).then((data) => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('ScheduleManager.GlobalScheduleSettings.success'), type: 'success' })
           this.loadConfiguration()
         } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('ScheduleManager.GlobalScheduleSettings.error'), type: 'error' })
           console.error('Error')
         }
       }, (err) => {
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('ScheduleManager.GlobalScheduleSettings.error'), type: 'error' })
         console.error(err)
       })
     },
@@ -140,13 +140,3 @@ footer {
   justify-content: flex-end;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "serviceTitle": "Paramètres globaux d'emploi du temps",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "submit": "Valider la configuration",
-  "success": "Configuration mise à jour",
-  "error": "Échec de l'enregistrement"
-}
-</i18n>

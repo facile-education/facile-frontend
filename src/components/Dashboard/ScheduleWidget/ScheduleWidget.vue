@@ -17,12 +17,12 @@
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'Dashboard.ScheduleWidget.errorPlaceholder'"
       class="placeholder"
     />
     <div
       v-else-if="sessionList.length === 0 && !isFirstLoad"
-      v-t="'emptyPlaceholder'"
+      v-t="'Dashboard.ScheduleWidget.emptyPlaceholder'"
       class="placeholder"
     />
     <ol
@@ -144,10 +144,3 @@ ol {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun cours"
-}
-</i18n>

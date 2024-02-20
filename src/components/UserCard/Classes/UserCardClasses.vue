@@ -7,7 +7,7 @@
       v-if="userDetails.classes"
       data-test="assignment"
       :items="userDetails.classes"
-      :title="$t('assignment')"
+      :title="$t('UserCard.UserCardClasses.assignment')"
     />
     <template v-if="userDetails.isTeacher">
       <div
@@ -15,7 +15,7 @@
         data-test="containerSubject"
       >
         <h2>
-          <span>{{ $tc('discipline', userDetails.subjects.length) }}</span>
+          <span>{{ $tc('UserCard.UserCardClasses.discipline', userDetails.subjects.length) }}</span>
         </h2>
         <p class="subjects">
           {{ subject }}
@@ -52,7 +52,7 @@
                   data-test="doyenClasses"
                 >
                   <h2 class="theme-text-color">
-                    {{ $t('doyenClassesLabel') }}:
+                    {{ $t('UserCard.UserCardClasses.doyenClassesLabel') }}:
                   </h2>
                 </UserCardList>
                 <UserCardList
@@ -63,7 +63,7 @@
                   data-test="mainTeacherClasses"
                 >
                   <h2 class="theme-text-color">
-                    {{ $t('mainTeacherClassesLabel') }}:
+                    {{ $t('UserCard.UserCardClasses.mainTeacherClassesLabel') }}:
                   </h2>
                 </UserCardList>
               </div>
@@ -163,12 +163,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "assignment": "Affectation",
-    "discipline": "Discipline | Disciplines",
-    "mainTeacherClassesLabel": "Maître de classe de",
-    "doyenClassesLabel": "Doyen de"
-  }
-</i18n>

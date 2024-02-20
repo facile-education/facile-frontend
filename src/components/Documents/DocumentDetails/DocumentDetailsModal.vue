@@ -30,7 +30,7 @@
 
         <p
           v-if="selectedDocuments.length === 0"
-          v-t="('noData')"
+          v-t="('Documents.DocumentDetailsModal.noData')"
           class="placeholder"
         />
         <p
@@ -62,9 +62,9 @@ export default {
       if (this.selectedDocuments.length === 1) {
         return this.documentToDisplay.name
       } else if (this.selectedDocuments.length === 0) {
-        return this.$t('noDocumentSelected')
+        return this.$t('Documents.DocumentDetailsModal.noDocumentSelected')
       } else {
-        return this.selectedDocuments.length + '  ' + this.$t('selectedDocuments')
+        return this.selectedDocuments.length + '  ' + this.$t('Documents.DocumentDetailsModal.selectedDocuments')
       }
     },
     selectedDocuments () {
@@ -127,11 +127,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "noData": "Il n'y a aucune information à afficher",
-  "noDocumentSelected": "Aucun document sélectionné",
-  "selectedDocuments": " documents sélectionnés"
-}
-</i18n>

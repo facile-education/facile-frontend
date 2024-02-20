@@ -6,7 +6,7 @@
       alt=""
     >
 
-    <h1 v-t="'title'" />
+    <h1 v-t="'PasswordChange.title'" />
 
     <div class="passwords-section">
       <div class="password1 input-container">
@@ -14,7 +14,7 @@
           v-model="password1"
           class="input"
           :type="password1InputType"
-          :placeholder="$t('passwordPlaceholder')"
+          :placeholder="$t('PasswordChange.passwordPlaceholder')"
           :maxlength="75"
           @input="errorMessage = ''"
           @keyup.enter.stop="updatePassword"
@@ -22,8 +22,8 @@
         <!--  TODO: Put those logic on pentila component-->
         <button
           class="toggle-password-type"
-          :aria-label="$t('showPassword')"
-          :title="$t('showPassword')"
+          :aria-label="$t('PasswordChange.showPassword')"
+          :title="$t('PasswordChange.showPassword')"
           @click="togglePassword1Type"
         >
           <img
@@ -34,7 +34,7 @@
       </div>
 
       <div
-        v-t="'passwordPolicy'"
+        v-t="'PasswordChange.passwordPolicy'"
         class="password-policy"
       />
 
@@ -44,7 +44,7 @@
             v-model="password2"
             class="input"
             :type="password2InputType"
-            :placeholder="$t('confirmPasswordPlaceholder')"
+            :placeholder="$t('PasswordChange.confirmPasswordPlaceholder')"
             :maxlength="75"
             @input="errorMessage = ''"
             @keyup.enter.stop="updatePassword"
@@ -52,8 +52,8 @@
           <!--  TODO: Put those logic on pentila component-->
           <button
             class="toggle-password-type"
-            :aria-label="$t('showPassword')"
-            :title="$t('showPassword')"
+            :aria-label="$t('PasswordChange.showPassword')"
+            :title="$t('PasswordChange.showPassword')"
             @click="togglePassword2Type"
           >
             <img
@@ -71,12 +71,12 @@
 
     <div class="buttons">
       <a
-        v-t="'logout'"
+        v-t="'PasswordChange.logout'"
         :href="logoutUrl"
         class="logout-link"
       />
       <WeprodeButton
-        v-t="'submit'"
+        v-t="'PasswordChange.submit'"
         class="button"
         type="submit"
         @click="updatePassword"
@@ -120,9 +120,9 @@ export default {
     updatePassword () {
       // First check if passwords are equals
       if (this.password1.trim() === '') {
-        this.errorMessage = this.$t('emptyPassword')
+        this.errorMessage = this.$t('PasswordChange.emptyPassword')
       } else if (this.password1 !== this.password2) {
-        this.errorMessage = this.$t('differentPasswords')
+        this.errorMessage = this.$t('PasswordChange.differentPasswords')
       } else {
         // 2 cases :
         if (this.$store.state.user !== undefined && this.ticketKey === undefined) {
@@ -134,11 +134,11 @@ export default {
               this.$store.commit('user/setPAuth', undefined)
               window.location = constants.LOGOUT_URL // Logout
             } else {
-              this.errorMessage = data.error ? data.error : this.$t('unknownError')
+              this.errorMessage = data.error ? data.error : this.$t('PasswordChange.unknownError')
             }
           }, (err) => {
             console.error(err)
-            this.errorMessage = this.$t('unknownError')
+            this.errorMessage = this.$t('PasswordChange.unknownError')
           })
         } else if (this.$store.state.user.userId === undefined && this.ticketKey !== undefined) {
           // The user has asked for a password retrieval : the user is not connected, but has a ticketId
@@ -150,11 +150,11 @@ export default {
               this.$store.commit('user/setPAuth', undefined)
               window.location = constants.LOGOUT_URL // Logout
             } else {
-              this.errorMessage = data.error ? data.error : this.$t('unknownError')
+              this.errorMessage = data.error ? data.error : this.$t('PasswordChange.unknownError')
             }
           }, (err) => {
             console.error(err)
-            this.errorMessage = this.$t('unknownError')
+            this.errorMessage = this.$t('PasswordChange.unknownError')
           })
         } else {
           console.error('Password change init error : store userId is ', this.$store.state.user.userId, ' and ticketKey=' + this.ticketKey)
@@ -255,19 +255,3 @@ a.logout-link {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "title": "Mise à jour de votre mot de passe",
-  "passwordPlaceholder": "Mot de passe",
-  "confirmPasswordPlaceholder": "Confirmer le mot de passe",
-  "submit": "Mettre à jour",
-  "differentPasswords": "Les mots de passe sont différents",
-  "errorMessage": "Une erreur est survenue",
-  "passwordPolicy": "Le mot de passe doit contenir au moins 8 caractères dont une majuscule, un chiffre et un caractère spécial",
-  "emptyPassword": "Veuillez saisir un mot de passe",
-  "showPassword": "Montrer",
-  "unknownError": "Oups, une erreur est survenue...",
-  "logout": "Abandonner"
-}
-</i18n>

@@ -1,6 +1,6 @@
 <template>
   <AddressBookItem
-    :title="$t('personals')"
+    :title="$t('ContactPicker.AddressBookPersonals.personals')"
     :is-theme-color="true"
   >
     <AddressBookItem
@@ -67,9 +67,3 @@ export default {
 
 <style lang="scss" scoped>
 </style>
-
-<i18n locale="fr">
-  {
-    "personals": "Personnels"
-  }
-</i18n>

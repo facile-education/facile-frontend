@@ -1,6 +1,6 @@
 <template>
   <AddressBookItem
-    :title="$t('communities')"
+    :title="$t('ContactPicker.AddressBookCommunities.communities')"
     :icon="require('@assets/icons/users.svg')"
   >
     <AddressBookItem
@@ -72,9 +72,3 @@ export default {
 
 <style lang="scss" scoped>
 </style>
-
-<i18n locale="fr">
-  {
-    "communities": "Communautés"
-  }
-</i18n>

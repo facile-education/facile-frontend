@@ -9,7 +9,7 @@
       class="current-week-bar theme-background-color"
     />
     <span class="week-number-label">
-      {{ $t('weekInitial') + week.weekNumber }}
+      {{ $t('Horaires.TimeLineWeekItem.weekInitial') + week.weekNumber }}
     </span>
     <span class="week-label">
       {{ weekLabel }}
@@ -44,8 +44,8 @@ export default {
     weekTitle () {
       const startDate = dayjs(this.week.firstDayOfWeek, 'YYYY-MM-DD')
       const endDate = startDate.endOf('week')
-      return this.$t('from') + ' ' + startDate.format('DD MMMM YYYY') +
-        ' ' + this.$t('to') + ' ' + endDate.format('DD MMMM YYYY')
+      return this.$t('Horaires.TimeLineWeekItem.from') + ' ' + startDate.format('DD MMMM YYYY') +
+        ' ' + this.$t('Horaires.TimeLineWeekItem.to') + ' ' + endDate.format('DD MMMM YYYY')
     }
   },
   methods: {
@@ -103,11 +103,3 @@ button {
   @extend %font-medium-s;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "from": "Du",
-  "to": "au",
-  "weekInitial": "S."
-}
-</i18n>

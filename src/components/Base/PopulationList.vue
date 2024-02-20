@@ -17,7 +17,7 @@
       @focus="listDisplayed = true"
       @blur="listDisplayed = false"
     >
-      {{ populationList.length + $t('populations') }}
+      {{ populationList.length + $t('Base.PopulationList.populations') }}
     </button>
 
     <ul v-if="listDisplayed">
@@ -102,9 +102,3 @@ li {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "populations": " populations"
-}
-</i18n>

@@ -9,7 +9,7 @@
     </div>
     <div
       v-else-if="error === true"
-      v-t="'error'"
+      v-t="'Statistics.StatsDoughnut.error'"
       class="error-placeholder"
     />
     <div v-else-if="data !== undefined">
@@ -68,11 +68,11 @@ export default {
   computed: {
     nullPlaceholder () {
       if (this.service === 'documents') {
-        return this.$t('documentsPlaceholder')
+        return this.$t('Statistics.StatsDoughnut.documentsPlaceholder')
       } else if (this.service === 'homeworks') {
-        return this.$t('homeworkPlaceholder')
+        return this.$t('Statistics.StatsDoughnut.homeworkPlaceholder')
       } else if (this.service === 'schoolLife') {
-        return this.$t('schoolLifePlaceholder')
+        return this.$t('Statistics.StatsDoughnut.schoolLifePlaceholder')
       } else {
         return '0'
       }
@@ -175,36 +175,3 @@ h2 {
   font-size: 1.25em;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "documents": "Documents",
-  "error": "Oups, une erreur est survenue...",
-  "homeworks": "Travaux donnés",
-  "schoolLife": "Horaires hors cadre",
-  "documentsPlaceholder": "Aucun document mis en ligne",
-  "homeworkPlaceholder": "Aucun travail donné",
-  "schoolLifePlaceholder": "Aucune donnée",
-  "1": "Consigne simple",
-  "2": "Doc. à compléter",
-  "3": "Doc. à rendre",
-  "slot-1": "Renvoi",
-  "slot-2": "Retenue",
-  "slot-3": "Travail à refaire",
-  "slot-4": "Dépannage",
-  "slot-5": "Cercle d'étude",
-  "text": "Texte",
-  "other": "Autre",
-  "tab": "Tableur",
-  "pres": "Présentation",
-  "pdf": "PDF",
-  "html": "HTML",
-  "image": "Image",
-  "audio": "Audio",
-  "video": "Vidéo",
-  "solidworks": "Solidworks",
-  "geogebra": "Géogébra",
-  "scratch": "Scratch",
-  "mindmap": "Carte mentale"
-}
-</i18n>

@@ -4,16 +4,16 @@
       {{ holiday.name }}
     </h3>
     <span class="start-date">
-      {{ $t('startDate') }}
+      {{ $t('ScheduleManager.HolidayItem.startDate') }}
       <strong>{{ holiday.startDate }}</strong>
     </span>
     <span class="end-date">
-      {{ $t('endDate') }}
+      {{ $t('ScheduleManager.HolidayItem.endDate') }}
       <strong>{{ holiday.endDate }}</strong>
     </span>
 
     <WeprodeButton
-      v-t="'delete'"
+      v-t="'ScheduleManager.HolidayItem.delete'"
       @click="$emit('delete')"
     />
   </div>
@@ -51,11 +51,3 @@ h3 {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "startDate": "Date de début: ",
-  "endDate": "Date de fin: ",
-  "delete": "Supprimer"
-}
-</i18n>

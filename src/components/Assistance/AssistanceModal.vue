@@ -27,10 +27,10 @@
         <div class="service">
           <p
             v-if="modalType==='Assistance'"
-            v-t="'applyContextText'"
+            v-t="'Assistance.AssistanceModal.applyContextText'"
             class="italic"
           />
-          <h5> {{ (modalType==='Assistance' ? $t('serviceLabel') : $t('serviceConcernLabel')) + '*' }} </h5>
+          <h5> {{ (modalType==='Assistance' ? $t('Assistance.AssistanceModal.serviceLabel') : $t('Assistance.AssistanceModal.serviceConcernLabel')) + '*' }} </h5>
           <WeprodeDropdown
             v-if="applicationList"
             v-model="selected"
@@ -40,7 +40,7 @@
           />
         </div>
         <div class="issue-description">
-          <h5> {{ (modalType==='Assistance' ? $t('issueDescription') : $t('suggestionDescription')) + '*' }} </h5>
+          <h5> {{ (modalType==='Assistance' ? $t('Assistance.AssistanceModal.issueDescription') : $t('Assistance.AssistanceModal.suggestionDescription')) + '*' }} </h5>
           <TextContent
             v-model:content="form.issueDescription"
             class="ck-editor"
@@ -58,7 +58,7 @@
       <template #footer>
         <WeprodeButton
           data-test="submitTicket"
-          :label="$t('submitButtonLabel')"
+          :label="$t('Assistance.AssistanceModal.submitButtonLabel')"
           :disabled="isLoading"
           @click="submitTicket"
         />
@@ -163,9 +163,9 @@ export default {
     },
     topLabel () {
       if (this.modalType === 'Assistance') {
-        return this.$store.state.user.isLocalAdmin ? this.$t('adminAssistanceMessage') : this.$t('nonAdminAssistanceMessage')
+        return this.$store.state.user.isLocalAdmin ? this.$t('Assistance.AssistanceModal.adminAssistanceMessage') : this.$t('Assistance.AssistanceModal.nonAdminAssistanceMessage')
       } else {
-        return this.$store.state.user.isLocalAdmin ? this.$t('adminSuggestionMessage') : this.$t('nonAdminSuggestionMessage')
+        return this.$store.state.user.isLocalAdmin ? this.$t('Assistance.AssistanceModal.adminSuggestionMessage') : this.$t('Assistance.AssistanceModal.nonAdminSuggestionMessage')
       }
     }
   },
@@ -197,7 +197,7 @@ export default {
         ).then((data) => {
           this.isLoading = false
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Assistance.AssistanceModal.success'), type: 'success' })
             this.onClose()
           } else {
             this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
@@ -244,22 +244,3 @@ h5 {
   margin-top: 5px
 }
 </style>
-
-<i18n locale="fr">
-{
-  "applyContextText": "Penser à expliquer le contexte de votre erreur, si besoin nous communiquer une copie d'écran et tout autre élément que vous jugez utile pour nous permettre de reproduire votre problème.",
-  "addFilesButtonLabel": "Ajouter un fichier (facultatif)",
-  "submitButtonLabel": "Envoyer",
-  "issueDescription": "Description de l'incident",
-  "suggestionDescription": "Description de la suggestion",
-  "assistanceHeaderLabel": "Signaler un problème",
-  "suggestionHeaderLabel": "Proposer une amélioration",
-  "nonAdminAssistanceMessage": "Votre demande de support sera transmise à l'administrateur de votre établissement.",
-  "nonAdminSuggestionMessage": "Votre suggestion sera transmise à l'administrateur de votre établissement.",
-  "adminAssistanceMessage": "Votre demande de support sera traitée par les équipes de Weprode, vous recevrez une réponse dans votre messagerie.",
-  "adminSuggestionMessage": "Votre suggestion sera transmise aux équipes de Weprode, vous recevrez une réponse dans votre messagerie.",
-  "serviceLabel": "Service affecté",
-  "serviceConcernLabel": "Service concerné",
-  "success": "Demande envoyée"
-}
-</i18n>

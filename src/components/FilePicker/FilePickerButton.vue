@@ -1,7 +1,7 @@
 <template>
   <button
-    :title="$t('selectFromDevice')"
-    :aria-label="$t('selectFromDevice')"
+    :title="$t('FilePicker.FilePickerButton.selectFromDevice')"
+    :aria-label="$t('FilePicker.FilePickerButton.selectFromDevice')"
     class="file-picker-button"
     @click="$refs.file.click()"
   >
@@ -62,9 +62,3 @@ export default {
     display: none;
   }
 </style>
-
-<i18n locale="fr">
-{
-  "selectFromDevice": "importer depuis le poste de travail"
-}
-</i18n>

@@ -8,7 +8,7 @@
   </div>
 
   <p
-    v-t="'recording'"
+    v-t="'Nero.AudioRecorder.recording'"
     class="state"
     :class="{'recording': isRecording}"
   />
@@ -31,20 +31,20 @@
         <NeroIcon
           :name="isAudioPlaying ? 'pause' : 'play'"
         />
-        <span>{{ isAudioPlaying ? $t('pause') : $t('listen') }}</span>
+        <span>{{ isAudioPlaying ? $t('Nero.AudioRecorder.pause') : $t('Nero.AudioRecorder.listen') }}</span>
       </WeprodeButton>
       <WeprodeButton
         cls="cancel"
         @click="restartRecording"
       >
         <NeroIcon name="undo" />
-        <span>{{ $t('restart') }}</span>
+        <span>{{ $t('Nero.AudioRecorder.restart') }}</span>
       </WeprodeButton>
     </template>
     <template v-else>
       <WeprodeButton @click="toggleRecording">
         <NeroIcon :name="isRecording ? 'pause' : 'play'" />
-        <span>{{ isPaused ? $t('continue') : isRecording ? $t('pause') : $t('start') }}</span>
+        <span>{{ isPaused ? $t('Nero.AudioRecorder.continue') : isRecording ? $t('Nero.AudioRecorder.pause') : $t('Nero.AudioRecorder.start') }}</span>
       </WeprodeButton>
       <WeprodeButton
         cls="cancel"
@@ -55,7 +55,7 @@
         <NeroIcon
           name="stop"
         />
-        <span>{{ $t('stop') }}</span>
+        <span>{{ $t('Nero.AudioRecorder.stop') }}</span>
       </WeprodeButton>
     </template>
     <WeprodeErrorMessage :error-message="errorMessage" />
@@ -131,10 +131,10 @@ export default {
         navigator.mediaDevices.getUserMedia({ audio: true })
           .then(this.startRecording,
             () => {
-              this.errorMessage = this.$t('deniedError')
+              this.errorMessage = this.$t('Nero.AudioRecorder.deniedError')
             })
       } else {
-        this.errorMessage = this.$t('browserError')
+        this.errorMessage = this.$t('Nero.AudioRecorder.browserError')
       }
     },
     displayStream () {
@@ -323,19 +323,3 @@ $red: rgb(230, 109, 109);
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "browserError": "Votre navigateur ne permet pas l'enregistrement de contenu media.",
-  "continue": "Reprendre",
-  "deniedError": "Une erreur est survenue lors de l'accès aux ressources de l'ordinateur (Accès refusé)",
-  "listen": "Écouter",
-  "namePlaceholder": "Titre",
-  "title": "Enregistrement audio",
-  "pause": "Interrompre",
-  "recording": "Enregistrement...",
-  "restart": "Recommencer",
-  "start": "Démarrer",
-  "stop": "Arrêter"
-}
-</i18n>

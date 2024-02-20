@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'HelpModal.CreateExternalLinkModal.title'" />
     </template>
 
     <template #body>
@@ -17,23 +17,23 @@
         ref="labelInput"
         v-model="linkLabel"
         class="label-input"
-        :placeholder="$t('linkLabelPlaceHolder')"
+        :placeholder="$t('HelpModal.CreateExternalLinkModal.linkLabelPlaceHolder')"
       />
 
       <WeprodeInput
         v-model="linkUrl"
-        :placeholder="$t('linkUrlPlaceHolder')"
+        :placeholder="$t('HelpModal.CreateExternalLinkModal.linkUrlPlaceHolder')"
       />
       <WeprodeErrorMessage
         v-if="linkUrl.length > linkUrlMaxSize"
-        :error-message="$t('overflowUrlSize') + linkUrlMaxSize"
+        :error-message="$t('HelpModal.CreateExternalLinkModal.overflowUrlSize') + linkUrlMaxSize"
       />
     </template>
 
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="$t('submit')"
+        :label="$t('HelpModal.CreateExternalLinkModal.submit')"
         :disabled="!(linkLabel.length > 0 && linkUrl.length > 0 && linkUrl.length <= linkUrlMaxSize)"
         @click="submit"
       />
@@ -98,13 +98,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "title": "ÉDITER UN LIEN",
-  "linkLabelPlaceHolder": "Label",
-  "linkUrlPlaceHolder": "Url",
-  "overflowUrlSize": "L'url ne doit pas excéder la taille suivante: ",
-  "submit": "Valider"
-}
-</i18n>

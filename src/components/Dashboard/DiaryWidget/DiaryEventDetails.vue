@@ -8,7 +8,7 @@
     </div>
     <div
       v-else-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'Dashboard.DiaryEventDetails.errorPlaceholder'"
       class="placeholder"
     />
     <div
@@ -31,7 +31,7 @@
         <div class="first-line-right">
           <div class="populations">
             <div
-              v-t="'populations'"
+              v-t="'Dashboard.DiaryEventDetails.populations'"
               class="label"
             />
             <PopulationList :population-list="detailedEvent.populations" />
@@ -42,14 +42,14 @@
             class="read-infos"
           >
             <div
-              v-t="'readBy'"
+              v-t="'Dashboard.DiaryEventDetails.readBy'"
               class="label"
             />
             <ReadInfos :read-infos="detailedEvent.readInfos" />
           </div>
 
           <div class="author">
-            {{ $t('by') + detailedEvent.authorName }}
+            {{ $t('Dashboard.DiaryEventDetails.by') + detailedEvent.authorName }}
           </div>
 
           <h2 v-if="!isInModal">
@@ -82,7 +82,7 @@
       />
       <div
         v-else
-        v-t="'descriptionPlaceholder'"
+        v-t="'Dashboard.DiaryEventDetails.descriptionPlaceholder'"
         class="description-placeholder"
       />
 
@@ -94,14 +94,14 @@
           v-if="detailedEvent.isEditable"
           class="footer-button"
           data-test="updateButton"
-          :label="$t('update')"
+          :label="$t('Dashboard.DiaryEventDetails.update')"
           @click="openUpdateModal"
         />
         <WeprodeButton
           v-if="detailedEvent.isDeletable"
           class="footer-button"
           data-test="deleteButton"
-          :label="$t('delete')"
+          :label="$t('Dashboard.DiaryEventDetails.delete')"
           @click="confirmDeleteEvent"
         />
       </div>
@@ -167,12 +167,12 @@ export default {
       const startDate = dayjs(this.detailedEvent.startDate)
       const endDate = dayjs(this.detailedEvent.endDate)
       if (startDate.isSame(endDate, 'day')) { // If start date and end date are the same day
-        return this.$t('from') + startDate.format('HH:mm') + this.$t('at') + endDate.format('HH:mm')
+        return this.$t('Dashboard.DiaryEventDetails.from') + startDate.format('HH:mm') + this.$t('Dashboard.DiaryEventDetails.at') + endDate.format('HH:mm')
       } else if (startDate.isSame(endDate, 'year')) { // If start date and end date are the same year
-        return this.$t('fromDay') + startDate.format('dddd DD MMMM') + this.$t('at') + startDate.format('HH:mm') +
-          this.$t('to') + endDate.format('dddd DD MMMM') + this.$t('at') + endDate.format('HH:mm')
+        return this.$t('Dashboard.DiaryEventDetails.fromDay') + startDate.format('dddd DD MMMM') + this.$t('Dashboard.DiaryEventDetails.at') + startDate.format('HH:mm') +
+          this.$t('Dashboard.DiaryEventDetails.to') + endDate.format('dddd DD MMMM') + this.$t('Dashboard.DiaryEventDetails.at') + endDate.format('HH:mm')
       } else {
-        return this.$t('fromDay') + startDate.format('DD-MM-YY HH:mm') + this.$t('to') + endDate.format('DD-MM-YY HH:mm')
+        return this.$t('Dashboard.DiaryEventDetails.fromDay') + startDate.format('DD-MM-YY HH:mm') + this.$t('Dashboard.DiaryEventDetails.to') + endDate.format('DD-MM-YY HH:mm')
       }
     }
   },
@@ -359,20 +359,3 @@ h2 {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "descriptionPlaceholder": "Aucune description pour cet événement",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "from": "De ",
-  "fromDay": "Du ",
-  "at": " à ",
-  "to": " au ",
-  "by": "Par ",
-  "populations": "Diffusé à",
-  "readBy": "Lu par",
-  "update": "Modifier",
-  "delete": "Supprimer",
-  "removalConfirmMessage": "Veuillez confirmer la suppression de l'évènement \"{target}\""
-}
-</i18n>

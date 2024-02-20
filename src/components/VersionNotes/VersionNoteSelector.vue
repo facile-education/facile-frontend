@@ -7,7 +7,7 @@
 
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'VersionNotes.VersionNoteSelector.errorPlaceholder'"
       class="placeholder"
     />
 
@@ -23,15 +23,15 @@
 
     <div
       v-else-if="notesList"
-      v-t="'emptyPlaceholder'"
+      v-t="'VersionNotes.VersionNoteSelector.emptyPlaceholder'"
       class="placeholder"
     />
 
     <button
       v-if="selectedNote && isAdministrator"
       data-test="buttonToggleOptions"
-      :aria-label="$t('options')"
-      :title="$t('options')"
+      :aria-label="$t('VersionNotes.VersionNoteSelector.options')"
+      :title="$t('VersionNotes.VersionNoteSelector.options')"
       @click="toggleContextMenu"
     >
       <img
@@ -104,14 +104,14 @@ export default {
         options: [
           {
             name: 'update',
-            title: this.$t('update'),
+            title: this.$t('VersionNotes.VersionNoteSelector.update'),
             icon: icons.options.rename,
             position: 1,
             hasSeparator: false
           },
           {
             name: 'delete',
-            title: this.$t('delete'),
+            title: this.$t('VersionNotes.VersionNoteSelector.delete'),
             icon: icons.options.delete,
             position: 2,
             hasSeparator: false
@@ -134,7 +134,7 @@ export default {
     },
     confirmDeleteVersionNote () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('deleteVersionNoteWarning'),
+        text: this.$t('VersionNotes.VersionNoteSelector.deleteVersionNoteWarning'),
         lastAction: { fct: this.deleteVersionNote }
       })
     },
@@ -180,14 +180,3 @@ button {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "delete": "Supprimer",
-  "deleteVersionNoteWarning": "Vous êtes sur le point de supprimer une note de version, cette action sera irréversible",
-  "emptyPlaceholder": "Aucune note de version disponible",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "options": "Options",
-  "update": "Modifier"
-}
-</i18n>

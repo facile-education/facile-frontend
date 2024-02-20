@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <h1>{{ $tc('header', allReadMembers.length, {n: allReadMembers.length, totalCount: allMembers.length}) }}</h1>
+      <h1>{{ $tc('Dashboard.ReadInfoModal.header', allReadMembers.length, {n: allReadMembers.length, totalCount: allMembers.length}) }}</h1>
     </template>
 
     <template #body>
@@ -93,9 +93,3 @@ ul {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "header": "Lu par {n} destinataire sur {totalCount} | Lu par {n} destinataire sur {totalCount} | Lu par {n} destinataires sur {totalCount}"
-}
-</i18n>

@@ -10,12 +10,12 @@
   >
     <template #body>
       <div class="text">
-        {{ $t('sessionExpiresIn') + formattedRemainingTime }}
+        {{ $t('Nero.SessionEndAdvertising.sessionExpiresIn') + formattedRemainingTime }}
       </div>
 
       <div class="button-container">
         <WeprodeButton
-          v-t="('keepSessionAlive')"
+          v-t="('Nero.SessionEndAdvertising.keepSessionAlive')"
           class="extend-session-button"
           @click="extendSession"
         />
@@ -101,10 +101,3 @@ export default {
   margin: 0 auto;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "sessionExpiresIn": "Votre session va expirer dans ",
-  "keepSessionAlive": "Garder la session active"
-}
-</i18n>

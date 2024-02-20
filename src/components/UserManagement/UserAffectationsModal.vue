@@ -9,7 +9,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'add-affectation-title'" />
+      <span v-t="'UserManagement.UserAffectationsModal.add-affectation-title'" />
       <span>{{ editedUser.firstName }} {{ editedUser.lastName }}</span>
     </template>
 
@@ -22,7 +22,7 @@
             v-model="filter"
             class="class-filter"
             :maxlength="200"
-            :placeholder="$t('classnameFilterPlaceholder')"
+            :placeholder="$t('UserManagement.UserAffectationsModal.classnameFilterPlaceholder')"
           />
           <div
             class="school-header"
@@ -50,7 +50,7 @@
         <!-- Right panel : user affectations -->
         <div class="user-affectations">
           <p v-if="noAffectation">
-            {{ $t('no-affectation') }}
+            {{ $t('UserManagement.UserAffectationsModal.no-affectation') }}
           </p>
           <div
             v-for="affectation in editedUser.affectations"
@@ -134,7 +134,7 @@ export default {
       return this.editedUser.affectations === undefined ? false : this.editedUser.affectations.find(affectation => affectation.orgId === orgId) !== undefined
     },
     buildTooltip (affectation) {
-      return this.$t('affected-by') + ' ' + affectation.adminName + this.$t('the') + dayjs(affectation.expirationDate, DATE_EXCHANGE_FORMAT).format('L')
+      return this.$t('UserManagement.UserAffectationsModal.affected-by') + ' ' + affectation.adminName + this.$t('UserManagement.UserAffectationsModal.the') + dayjs(affectation.expirationDate, DATE_EXCHANGE_FORMAT).format('L')
     },
     closeModal () {
       this.$emit('close')
@@ -147,7 +147,7 @@ export default {
         addUserAffectation(this.editedUser.userId, orgId).then(
           (data) => {
             if (data.success) {
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('added'), type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.UserAffectationsModal.added'), type: 'success' })
               this.$store.dispatch('userManagement/setUserAffectations', { userId: this.editedUser.userId, affectations: data.affectations })
             }
           }
@@ -158,7 +158,7 @@ export default {
       removeUserAffectation(this.editedUser.userId, removedAffectation.orgId).then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('removed'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.UserAffectationsModal.removed'), type: 'success' })
             this.$store.dispatch('userManagement/setUserAffectations', { userId: this.editedUser.userId, affectations: data.affectations })
           }
         }
@@ -258,20 +258,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "add-affectation-title": "Gérer les affectations de ",
-  "affectationPlaceholder": "Saisir le nom ou prénom",
-  "collapse": "Replier",
-  "expand": "Déplier",
-  "no-affectation": "Aucune affectation",
-  "remove-affectation": "Supprimer l'affectation",
-  "add": "Fermer",
-  "classnameFilterPlaceholder": "Filtrer",
-  "affected-by": "Affectation ajoutée par ",
-  "the": " le ",
-  "added": "Affectation enregistrée",
-  "removed": "Affectation supprimée"
-}
-</i18n>

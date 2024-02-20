@@ -4,10 +4,10 @@
       class="round"
       @click="runArchiving"
     >
-      <span>{{ $t('archive') }}</span>
+      <span>{{ $t('Maintenance.GroupsMaintenance.archive') }}</span>
     </WeprodeButton>
 
-    <p>{{ $t('group-deletion') }}</p>
+    <p>{{ $t('Maintenance.GroupsMaintenance.group-deletion') }}</p>
 
     <div class="group-deletion">
       <WeprodeInput
@@ -20,7 +20,7 @@
         class="round"
         @click="deleteGroup"
       >
-        <span>{{ $t('delete-group') }}</span>
+        <span>{{ $t('Maintenance.GroupsMaintenance.delete-group') }}</span>
       </WeprodeButton>
     </div>
 
@@ -34,7 +34,7 @@
         class="round"
         @click="deleteGroups"
       >
-        <span>{{ $t('delete-groups') }}</span>
+        <span>{{ $t('Maintenance.GroupsMaintenance.delete-groups') }}</span>
       </WeprodeButton>
     </div>
   </div>
@@ -68,9 +68,9 @@ export default {
       runArchiving().then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.GroupsMaintenance.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.GroupsMaintenance.error'), type: 'error' })
           }
         }
       )
@@ -79,9 +79,9 @@ export default {
       deleteGroup(this.groupId).then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.GroupsMaintenance.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.GroupsMaintenance.error'), type: 'error' })
           }
         }
       )
@@ -90,9 +90,9 @@ export default {
       deleteGroups(this.files[0]).then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.GroupsMaintenance.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.GroupsMaintenance.error'), type: 'error' })
           }
         }
       )
@@ -110,14 +110,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "archive": "Archivage",
-  "group-deletion": "Suppression de groupe(s)",
-  "delete-group": "Supprimer le groupe",
-  "delete-groups": "Supprimer les groupes",
-  "success": "Opération terminée en succès",
-  "error": "Opération terminée en erreur"
-}
-</i18n>

@@ -8,7 +8,7 @@
       <NeroIcon
         name="fa-plus"
       />
-      <span v-t="'new'" />
+      <span v-t="'Accesses.AccessCreateButton.new'" />
     </WeprodeButton>
 
     <ContextMenu
@@ -50,7 +50,7 @@ export default {
       const options = [
         {
           name: 'createCategory',
-          title: this.$t('category'),
+          title: this.$t('Accesses.AccessCreateButton.category'),
           position: 0,
           hasSeparator: false
         }
@@ -59,7 +59,7 @@ export default {
         options.push(
           {
             name: 'createAccess',
-            title: this.$t('access'),
+            title: this.$t('Accesses.AccessCreateButton.access'),
             position: 1,
             hasSeparator: false
           }
@@ -108,11 +108,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "category": "Catégorie",
-  "access": "Accès",
-  "new": "Nouveau"
-}
-</i18n>

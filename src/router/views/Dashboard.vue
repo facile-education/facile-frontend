@@ -1,5 +1,5 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('Dashboard.serviceTitle')" />
   <div class="dashboard-panel">
     <div class="administration-widgets">
       <DiaryWidget
@@ -279,9 +279,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "serviceTitle": "Tableau de bord"
-}
-</i18n>

@@ -9,7 +9,7 @@
     </div>
     <div
       v-if="dayWorks.length === 0"
-      v-t="'emptyPlaceholder'"
+      v-t="'Course.WorkDay.emptyPlaceholder'"
       class="empty-placeholder"
     />
     <ul v-else>
@@ -96,9 +96,3 @@ ul {
   gap: 0.5rem
 }
 </style>
-
-<i18n locale="fr">
-{
-  "emptyPlaceholder": "Aucun travail"
-}
-</i18n>

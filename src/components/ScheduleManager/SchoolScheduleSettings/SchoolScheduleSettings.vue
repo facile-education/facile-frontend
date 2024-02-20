@@ -1,5 +1,5 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('ScheduleManager.SchoolScheduleSettings.serviceTitle')" />
   <div
     v-if="schoolList && schoolList.length > 1"
     class="school-selection"
@@ -49,9 +49,3 @@ export default {
 <style lang="scss" scoped>
 
 </style>
-
-<i18n locale="fr">
-{
-  "serviceTitle": "Gestion des horaires de l'école"
-}
-</i18n>

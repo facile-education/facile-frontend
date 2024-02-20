@@ -4,24 +4,24 @@
     <div class="header">
       <WeprodeButton
         class="create-user"
-        :label="$t('create')"
+        :label="$t('UserManagement.ManualUsers.create')"
         @click="createUser"
       />
       <div
         v-if="nbTotalResults > 0"
         class="pagination"
       >
-        <span>{{ $t('display') }}</span>
-        <span>{{ $t('to') }}</span>
+        <span>{{ $t('UserManagement.ManualUsers.display') }}</span>
+        <span>{{ $t('UserManagement.ManualUsers.to') }}</span>
         <span>{{ maxIndex }}</span>
-        <span>{{ $t('over') }}</span>
+        <span>{{ $t('UserManagement.ManualUsers.over') }}</span>
         <span>{{ nbTotalResults }}</span>
       </div>
       <WeprodeInput
         ref="tagsinput"
         v-model="filter"
         :maxlength="200"
-        :placeholder="$t('nameFilterPlaceholder')"
+        :placeholder="$t('UserManagement.ManualUsers.nameFilterPlaceholder')"
         @keyup.enter.stop="cleanAndRunSearch"
       />
     </div>
@@ -32,13 +32,13 @@
       v-if="selectedSchool === undefined"
       class="main-label"
     >
-      <p>{{ $t('please-select-school') }}</p>
+      <p>{{ $t('UserManagement.ManualUsers.please-select-school') }}</p>
     </div>
     <div
       v-else-if="userList && userList.length === 0 && filter === ''"
       class="main-label"
     >
-      <p>{{ $t('no-users') }}</p>
+      <p>{{ $t('UserManagement.ManualUsers.no-users') }}</p>
     </div>
     <div
       v-else-if="userList && userList.length === 0 && filter !== ''"
@@ -231,23 +231,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "action": "Editer",
-  "display": "Résultats 1",
-  "to": "à",
-  "over": "sur un total de",
-  "create": "Ajouter un utilisateur",
-  "no-users" : "Aucun compte manuel pour cet établissement",
-  "no-users-for-filter" : "Aucun compte manuel avec le filtre '{filter}'",
-  "please-select-school": "Veuillez sélectionner un établissement",
-  "email": "E-mail",
-  "firstName": "Prénom",
-  "lastName": "Nom",
-  "login": "Identifiant",
-  "role": "Profil",
-  "search": "Recherche",
-  "nameFilterPlaceholder": "Filtrer par nom / prénom"
-}
-</i18n>

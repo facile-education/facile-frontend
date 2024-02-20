@@ -11,11 +11,11 @@
     <template #header>
       <span
         v-if="isCreation"
-        v-t="'creation-title'"
+        v-t="'UserManagement.EditUserModal.creation-title'"
       />
       <span
         v-else
-        v-t="'edition-title'"
+        v-t="'UserManagement.EditUserModal.edition-title'"
       />
     </template>
 
@@ -25,7 +25,7 @@
           ref="lastNameInput"
           v-model="lastName"
           :maxlength="200"
-          :placeholder="$t('lastNamePlaceholder')"
+          :placeholder="$t('UserManagement.EditUserModal.lastNamePlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
         <WeprodeErrorMessage
@@ -37,7 +37,7 @@
           ref="firstNameInput"
           v-model="firstName"
           :maxlength="200"
-          :placeholder="$t('firstNamePlaceholder')"
+          :placeholder="$t('UserManagement.EditUserModal.firstNamePlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
         <WeprodeErrorMessage
@@ -49,7 +49,7 @@
           ref="emailInput"
           v-model="email"
           :maxlength="200"
-          :placeholder="$t('emailPlaceholder')"
+          :placeholder="$t('UserManagement.EditUserModal.emailPlaceholder')"
           @keyup.enter.stop="pressEnter"
         />
         <WeprodeErrorMessage
@@ -59,7 +59,7 @@
 
       <!-- School -->
       <div class="school">
-        <p v-t="'school'" />
+        <p v-t="'UserManagement.EditUserModal.school'" />
         <WeprodeDropdown
           v-if="(schoolList && schoolList.length > 1 && !isParent)"
           v-model="school"
@@ -76,7 +76,7 @@
         v-if="(roleList && roleList.length > 1 && !isParent)"
         class="role"
       >
-        <p v-t="'role'" />
+        <p v-t="'UserManagement.EditUserModal.role'" />
         <WeprodeDropdown
           v-model="selectedRole"
           :list="roleList"
@@ -95,12 +95,12 @@
       <p
         v-if="!isCreation && isParent"
       >
-        {{ $t('parent-account') }}{{ screenName }}
+        {{ $t('UserManagement.EditUserModal.parent-account') }}{{ screenName }}
       </p>
 
       <p
         v-if="isCreation"
-        v-t="'email-warning'"
+        v-t="'UserManagement.EditUserModal.email-warning'"
       />
 
       <div
@@ -109,38 +109,38 @@
       >
         <WeprodeInput
           v-model="password"
-          :placeholder="$t('passwordPlaceholder')"
+          :placeholder="$t('UserManagement.EditUserModal.passwordPlaceholder')"
           :maxlength="75"
         />
         <WeprodeButton
           class="round"
           @click="updatePassword"
         >
-          <span>{{ $t('update-password') }}</span>
+          <span>{{ $t('UserManagement.EditUserModal.update-password') }}</span>
         </WeprodeButton>
       </div>
       <p
         v-if="!isCreation"
-        v-t="'password-policy'"
+        v-t="'UserManagement.EditUserModal.password-policy'"
       />
     </template>
 
     <template #footer>
       <WeprodeButton
         v-if="isCreation"
-        :label="$t('add')"
+        :label="$t('UserManagement.EditUserModal.add')"
         class="button"
         @click="createUser"
       />
       <WeprodeButton
         v-else
-        :label="$t('edit')"
+        :label="$t('UserManagement.EditUserModal.edit')"
         class="button"
         @click="editUser"
       />
       <WeprodeButton
         v-if="!isCreation"
-        :label="$t('delete')"
+        :label="$t('UserManagement.EditUserModal.delete')"
         class="button"
         @click="confirmUserRemoval"
       />
@@ -265,12 +265,12 @@ export default {
           (data) => {
             if (data.success) {
               this.$store.dispatch('userManagement/addManualUser', data.user)
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('userAdded'), type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.EditUserModal.userAdded'), type: 'success' })
               this.closeModal()
             } else if (data.errorCode === 'email') {
-              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('existingEmail') })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('UserManagement.EditUserModal.existingEmail') })
             } else {
-              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('popupError') })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('UserManagement.EditUserModal.popupError') })
             }
           }
         )
@@ -287,12 +287,12 @@ export default {
           (data) => {
             if (data.success) {
               this.$store.dispatch('userManagement/editManualUser', data.user)
-              this.$store.dispatch('popups/pushPopup', { message: this.$t('userEdited'), type: 'success' })
+              this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.EditUserModal.userEdited'), type: 'success' })
               this.closeModal()
             } else if (data.errorCode === 'email') {
-              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('existingEmail') })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('UserManagement.EditUserModal.existingEmail') })
             } else {
-              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('popupError') })
+              store.dispatch('popups/pushPopup', { type: 'error', message: this.$t('UserManagement.EditUserModal.popupError') })
             }
           }
         )
@@ -300,7 +300,7 @@ export default {
     },
     confirmUserRemoval () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('delete-warning'),
+        text: this.$t('UserManagement.EditUserModal.delete-warning'),
         lastAction: { fct: this.removeUser, params: [this.editedUser] }
       })
     },
@@ -309,7 +309,7 @@ export default {
         (data) => {
           if (data.success) {
             this.$store.dispatch('userManagement/removeManualUser', user)
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('userRemoved'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.EditUserModal.userRemoved'), type: 'success' })
             this.closeModal()
           }
         }
@@ -318,9 +318,9 @@ export default {
     updatePassword () {
       updatePasswordByManager(this.editedUser.userId, this.password).then((data) => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.EditUserModal.success'), type: 'success' })
         } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.EditUserModal.error'), type: 'error' })
         }
       })
     }
@@ -359,31 +359,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "creation-title": "Créer un utilisateur",
-  "edition-title": "Modifier un utilisateur",
-  "add": "Créer",
-  "edit": "Valider",
-  "delete": "Supprimer",
-  "lastNamePlaceholder": "Nom",
-  "firstNamePlaceholder": "Prénom",
-  "emailPlaceholder": "Mail",
-  "school": "Établissement",
-  "role": "Profil",
-  "parent-account": "Identifiant: {0}",
-  "email-warning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé.",
-  "delete-warning": "La suppression de cet utilisateur est définitive.",
-  "userAdded": "Utilisateur créé",
-  "userEdited": "Utilisateur modifié",
-  "userRemoved": "Utilisateur supprimé",
-  "popupError": "Une erreur est survenue. Merci de réessayer",
-  "existingEmail": "L'adresse e-mail existe déjà. Vous pouvez utiliser le service affectation pour affecter l'utilisateur à votre établissement.",
-  "passwordPlaceholder": "Nouveau mot de passe",
-  "update-password": "Changer le mot de passe",
-  "password-policy": "Le mot de passe doit contenir au moins 8 caractères dont une majuscule, un chiffre et un caractère spécial",
-  "success": "Mot de passe changé",
-  "error": "Erreur lors du changement de mot de passe"
-}
-</i18n>

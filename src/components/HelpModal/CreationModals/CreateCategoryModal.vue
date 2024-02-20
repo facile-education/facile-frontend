@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'HelpModal.CreateCategoryModal.title'" />
     </template>
 
     <template #body>
@@ -17,7 +17,7 @@
         ref="nameInput"
         v-model="categoryName"
         class="name-input"
-        :placeholder="$t('namePlaceHolder')"
+        :placeholder="$t('HelpModal.CreateCategoryModal.namePlaceHolder')"
       />
 
       <WeprodeDropdown
@@ -32,7 +32,7 @@
     <template #footer>
       <WeprodeButton
         data-test="submitButton"
-        :label="$t('submit')"
+        :label="$t('HelpModal.CreateCategoryModal.submit')"
         :disabled="categoryName.length === 0 || selectedApplication.applicationId === 0"
         @click="submit"
       />
@@ -108,11 +108,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "title": "CRÉER UNE CATEGORIE",
-  "namePlaceHolder": "Titre",
-  "submit": "Valider"
-}
-</i18n>

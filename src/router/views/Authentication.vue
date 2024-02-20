@@ -1,23 +1,23 @@
 <template>
-  <h1 :aria-label="$t('title')" />
+  <h1 :aria-label="$t('Authentication.title')" />
   <div class="wrapper">
     <img
       src="@assets/images/gva/logo_eel.png"
-      :alt="$t('eelImg')"
+      :alt="$t('Authentication.eelImg')"
       class="eel-img"
     >
     <a
       id="academic"
-      v-t="'studentTeacher'"
+      v-t="'Authentication.studentTeacher'"
       :href="ssoUrl"
-      :title="$t('entLogin')"
+      :title="$t('Authentication.entLogin')"
       class="btn"
     />
     <div
       class="guest"
     >
       <span
-        v-t="'parentOther'"
+        v-t="'Authentication.parentOther'"
         tabindex="0"
         @click="toggleGuestForm"
         @keyup.enter="toggleGuestForm"
@@ -33,20 +33,20 @@
           >
             <div class="login-label">
               <p
-                v-t="'login-label'"
+                v-t="'Authentication.login-label'"
               />
             </div>
             <input
               v-model="recoveryLogin"
-              :placeholder="$t('loginPlaceholder')"
+              :placeholder="$t('Authentication.loginPlaceholder')"
               class="input"
               autocapitalize="none"
               @keypress="handleKeyPressed"
             >
             <button
-              v-t="'send-recovery'"
+              v-t="'Authentication.send-recovery'"
               class="btn"
-              :title="$t('send-recovery')"
+              :title="$t('Authentication.send-recovery')"
               type="submit"
             />
             <div
@@ -54,12 +54,12 @@
               class="check-email"
             >
               <span
-                v-t="'check-email'"
+                v-t="'Authentication.check-email'"
               />
             </div>
             <div>
               <a
-                v-t="'main-form'"
+                v-t="'Authentication.main-form'"
                 href="#"
                 @click="showPasswordRecoveryForm = false"
               />
@@ -74,7 +74,7 @@
           >
             <input
               v-model="login"
-              :placeholder="$t('login')"
+              :placeholder="$t('Authentication.login')"
               class="input"
               name="unsername"
               data-test="inputUsername"
@@ -85,7 +85,7 @@
               <input
                 v-model="password"
                 :type="passwordInputType"
-                :placeholder="$t('password')"
+                :placeholder="$t('Authentication.password')"
                 class="input"
                 name="password"
                 data-test="inputPassword"
@@ -95,8 +95,8 @@
               <button
                 class="toggle-password-type"
                 type="button"
-                :aria-label="$t('showPassword')"
-                :title="$t('showPassword')"
+                :aria-label="$t('Authentication.showPassword')"
+                :title="$t('Authentication.showPassword')"
                 @click.stop="togglePasswordType"
               >
                 <img
@@ -111,7 +111,7 @@
               <!-- Login error -->
               <span
                 v-show="isError && !isLocked"
-                v-t="'loginError'"
+                v-t="'Authentication.loginError'"
                 class="errorMessage"
               />
               <!-- Nb remaining tries -->
@@ -133,12 +133,12 @@
               class="btn"
               :class="{'running': isLoading, 'disabled': areEmptyFields}"
               :disabled="isLoading || areEmptyFields"
-              :title="$t('authenticate')"
+              :title="$t('Authentication.authenticate')"
               type="submit"
             />
             <div>
               <a
-                v-t="'forgot-password'"
+                v-t="'Authentication.forgot-password'"
                 href="#"
                 @click="showPasswordRecoveryForm = true"
               />
@@ -149,7 +149,7 @@
     </div>
     <img
       src="@assets/images/gva/geneve-logo.png"
-      :alt="$t('gvaImg')"
+      :alt="$t('Authentication.gvaImg')"
       width="140"
       height="108"
       class="gva-img"
@@ -213,7 +213,7 @@ export default {
       return '/Shibboleth.sso/Login?entityID=https://ssoeel.geneveid.ch/ginasso/gina/fed/ent&target=' + encodeURIComponent(window.location.origin + '/login' + (this.isMobileApp ? '?mobile_app=true' : ''))
     },
     authenticateButtonLabel () {
-      return this.isLoading ? 'authenticationOnGoing' : 'authenticate'
+      return this.isLoading ? 'Authentication.authenticationOnGoing' : 'Authentication.authenticate'
     },
     areEmptyFields () {
       return this.login === '' || this.password === ''
@@ -523,29 +523,3 @@ $eel-blue: #2c7bb8;
   max-height: 200px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "title": "Authentification",
-  "authenticate": "Se connecter",
-  "authenticationOnGoing": "Connexion en cours ...",
-  "eelImg": "Logo d'école en ligne",
-  "entLogin": "Se connecter à l'ENTA",
-  "gvaImg": "Logo du Canton de Genève",
-  "login": "Identifiant",
-  "parentOther": "Parents / Autres profils",
-  "password": "Mot de passe",
-  "studentTeacher": "Élève / Enseignant",
-  "loginError": "Identifiant ou mot de passe incorrect",
-  "inactiveAccount": "Votre compte est inactif.",
-  "forgot-password": "Mot de passe oublié",
-  "login-label": "Saisissez votre identifiant. Vous recevrez un lien de réinitialisation de votre mot de passe ENTA sur le courriel associé à votre compte.",
-  "loginPlaceholder": "Identifiant",
-  "send-recovery": "Envoyer",
-  "main-form": "Retour au formulaire",
-  "showPassword": "Montrer",
-  "check-email": "Vérifier votre courriel",
-  "nbRemainingTries": "Il vous reste {nbRemainingTries} tentatives",
-  "accountLocked": "Votre compte est bloqué pendant {lockoutDuration} minutes."
-}
-</i18n>

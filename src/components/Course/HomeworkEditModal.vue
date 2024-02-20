@@ -8,7 +8,7 @@
     @close="confirmClosure"
   >
     <template #header>
-      <span v-t="isCreation ? 'creationTitle' : 'updateTitle'" />
+      <span v-t="isCreation ? 'Course.HomeworkEditModal.creationTitle' : 'Course.HomeworkEditModal.updateTitle'" />
     </template>
 
     <template #body>
@@ -18,14 +18,14 @@
             ref="titleInput"
             v-model="homework.title"
             :maxlength="250"
-            :placeholder="$t('homeworkTitle')"
+            :placeholder="$t('Course.HomeworkEditModal.homeworkTitle')"
           />
           <WeprodeErrorMessage :error-message="formErrorList" />
         </div>
         <div class="dropdowns">
           <div class="type">
             <!-- Homework type menu -->
-            <label>{{ $t('homeworkType') }}</label>
+            <label>{{ $t('Course.HomeworkEditModal.homeworkType') }}</label>
             <WeprodeDropdown
               v-model="homework.homeworkType"
               :list="homeworkTypes"
@@ -35,11 +35,11 @@
           </div>
           <div class="duration">
             <!-- Homework duration -->
-            <label>{{ $t('duration') }}</label>
+            <label>{{ $t('Course.HomeworkEditModal.duration') }}</label>
             <WeprodeDropdown
               v-model="homework.homeworkDuration"
               :list="homeworkDurations"
-              :placeholder="$t('select')"
+              :placeholder="$t('Course.HomeworkEditModal.select')"
               :sort="false"
               :filtered="false"
               display-field="label"
@@ -67,10 +67,10 @@
             src="@/assets/icons/stats.svg"
             alt=""
           >
-          <span v-t="'workLoad'" />
+          <span v-t="'Course.HomeworkEditModal.workLoad'" />
         </button>
         <div class="target-students">
-          <label v-t="'for'" />
+          <label v-t="'Course.HomeworkEditModal.for'" />
           <button
             class="target-students-button"
             @click="openStudentModal"
@@ -86,7 +86,7 @@
         <div class="target-session">
           <WeprodeRadioButton
             v-model="homework.dateType"
-            :label="$t('sessionDate')"
+            :label="$t('Course.HomeworkEditModal.sessionDate')"
             :disabled="isInList"
             name="date"
             rb-value="session"
@@ -95,7 +95,7 @@
           />
           <WeprodeRadioButton
             v-model="homework.dateType"
-            :label="$t('futureDate')"
+            :label="$t('Course.HomeworkEditModal.futureDate')"
             name="date"
             :disabled="nextSessions.length===0 || (homework.dateType === 'session' && isInList)"
             rb-value="custom"
@@ -121,7 +121,7 @@
           v-if="isScheduled"
           class="update-scheduled-date"
         >
-          <span v-t="'scheduledOn'" />
+          <span v-t="'Course.HomeworkEditModal.scheduledOn'" />
           <CustomDatePicker
             v-if="selectedTargetDate"
             v-model:selected-date="publicationDate"
@@ -237,7 +237,7 @@ export default {
       displayPublicationDateModal: false,
       initialPublicationOption: undefined,
       homework: {
-        blocks: [{ contentId: -1, contentName: '', contentType: 1, contentValue: '', placeholder: this.$t('instructions') }],
+        blocks: [{ contentId: -1, contentName: '', contentType: 1, contentValue: '', placeholder: this.$t('Course.HomeworkEditModal.instructions') }],
         date: undefined,
         dateType: 'custom',
         homeworkType: undefined,
@@ -250,9 +250,9 @@ export default {
       },
       initialForm: undefined,
       homeworkTypes: [
-        { type: contentTypeConstants.TYPE_HOMEWORK_BASIC_INSTRUCTION, name: this.$t('basicInstruction') }
-        // { type: contentTypeConstants.TYPE_HOMEWORK_DOC_TO_COMPLETE, name: this.$t('docToComplete') },
-        // { type: contentTypeConstants.TYPE_HOMEWORK_DOC_TO_RETURN, name: this.$t('docToReturn') }
+        { type: contentTypeConstants.TYPE_HOMEWORK_BASIC_INSTRUCTION, name: this.$t('Course.HomeworkEditModal.basicInstruction') }
+        // { type: contentTypeConstants.TYPE_HOMEWORK_DOC_TO_COMPLETE, name: this.$t('Course.HomeworkEditModal.docToComplete') },
+        // { type: contentTypeConstants.TYPE_HOMEWORK_DOC_TO_RETURN, name: this.$t('Course.HomeworkEditModal.docToReturn') }
       ],
       homeworkDurations: [
         { label: '15 min', time: '15' },
@@ -267,15 +267,15 @@ export default {
       publicationOptions: [
         {
           name: 'publish',
-          title: this.$t('publish')
+          title: this.$t('Course.HomeworkEditModal.publish')
         },
         {
           name: 'setPublishDate',
-          title: this.$t('setPublishDate')
+          title: this.$t('Course.HomeworkEditModal.setPublishDate')
         },
         {
           name: 'publishLater',
-          title: this.$t('publishLater')
+          title: this.$t('Course.HomeworkEditModal.publishLater')
         }
       ]
     }
@@ -284,7 +284,7 @@ export default {
     formErrorList () {
       const form = this.v$.homework.title
       if (form.$invalid && form.$dirty) {
-        return this.$t('required')
+        return this.$t('Course.HomeworkEditModal.required')
       } else {
         return ''
       }
@@ -317,7 +317,7 @@ export default {
   created () {
     if (!this.isCreation) {
       this.homework = WeprodeUtils.deepCopy(this.editedHomework)
-      this.publicationOptions[1].title = this.$t('schedule')
+      this.publicationOptions[1].title = this.$t('Course.HomeworkEditModal.schedule')
       this.initHomeworkType()
       this.initEstimatedTimeDropdown()
       this.initPublicationOption()
@@ -429,10 +429,10 @@ export default {
             this.onClose()
           } else {
             console.error('Cannot create homework')
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.HomeworkEditModal.error'), type: 'error' })
           }
         }, (err) => {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.HomeworkEditModal.error'), type: 'error' })
           console.error(err)
         })
       } else {
@@ -445,10 +445,10 @@ export default {
             this.onClose()
           } else {
             console.error('Cannot update homework')
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.HomeworkEditModal.error'), type: 'error' })
           }
         }, (err) => {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.HomeworkEditModal.error'), type: 'error' })
           console.error(err)
         })
       }
@@ -488,11 +488,11 @@ export default {
 
           this.initialForm = JSON.stringify(this.homework)
         } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('getNextSessionsError'), type: 'error' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.HomeworkEditModal.getNextSessionsError'), type: 'error' })
           console.error('error on homework date initialisation')
         }
       }, (err) => {
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('getNextSessionsError'), type: 'error' })
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('Course.HomeworkEditModal.getNextSessionsError'), type: 'error' })
         console.error(err)
       })
     },
@@ -503,7 +503,7 @@ export default {
     confirmClosure () {
       if (JSON.stringify(this.homework) !== this.initialForm) {
         this.$store.dispatch('warningModal/addWarning', {
-          text: this.$t('confirmClosure'),
+          text: this.$t('Course.HomeworkEditModal.confirmClosure'),
           lastAction: { fct: this.onClose }
         })
       } else {
@@ -658,34 +658,3 @@ label {
   margin-bottom: 5rem;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "allStudents": "Tous les élèves",
-  "basicInstruction": "Consigne simple",
-  "confirmClosure": "Des modifications ne sont pas enregistrées, êtes-vous certain de quitter l’édition et de perdre les modifications ?",
-  "docToComplete": "Doc. à compléter",
-  "docToReturn": "Doc. à rendre",
-  "error": "Oups, une erreur est survenue...",
-  "for": "Pour",
-  "getNextSessionsError": "Une erreur est survenue lors de la récupération des prochaines séances",
-  "instructions": "Consigne",
-  "duration": "Durée estimée",
-  "homeworkTitle": "Titre du travail*",
-  "homeworkType": "Type de travail",
-  "futureDate": "À faire pour le ",
-  "publish": "Publier",
-  "schedule": "Programmer",
-  "setPublishDate": "Programmer la publication",
-  "publishLater": "Enregistrer en brouillon",
-  "preview": "Aperçu",
-  "required": "Champ requis",
-  "scheduledOn": "Programmé le",
-  "select": "Sélectionner",
-  "sessionDate": "À faire pendant la séance",
-  "someStudents": "Un élève sur {total} | {count} élèves sur {total}",
-  "creationTitle": "Donner du travail",
-  "updateTitle": "Modifier un travail",
-  "workLoad": "Charge de travail"
-}
-</i18n>

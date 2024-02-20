@@ -8,7 +8,7 @@
     <img
       src="@assets/icons/chevron_left2.svg"
       class="image"
-      :alt="$t('goBack')"
+      :alt="$t('Documents.BreadCrumbItem.goBack')"
     >
     <span class="previous-name">{{ (previousFolderName.length > 12) ? $t('Commons.back') : previousFolderName }}</span>
   </button>
@@ -391,9 +391,3 @@ export default {
 //}
 
 </style>
-
-<i18n locale="fr">
-{
-  "goBack": "Retour"
-}
-</i18n>

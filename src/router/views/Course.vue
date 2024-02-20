@@ -1,19 +1,19 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('Course.serviceTitle')" />
   <WeprodeTabList v-if="isTeacher">
     <WeprodeTabItem
-      :title="$t('schedule')"
+      :title="$t('Course.schedule')"
     >
       <ScheduleTab />
     </WeprodeTabItem>
     <WeprodeTabItem
-      :title="$t('course')"
+      :title="$t('Course.course')"
       class="course-tab-content"
     >
       <CourseTab :user-id="selectedUser.userId" />
     </WeprodeTabItem>
     <!--            <WeprodeTabItem-->
-    <!--              :title="$t('toCorrect')"-->
+    <!--              :title="$t('Course.toCorrect')"-->
     <!--            >-->
     <!--              <TeacherHomeworkTab />-->
   </WeprodeTabList>
@@ -37,13 +37,13 @@
 
     <WeprodeTabList ref="tabList">
       <WeprodeTabItem
-        :title="$t('homework')"
+        :title="$t('Course.homework')"
         :nb-notification="nbUndoneHomeworks"
       >
         <HomeworkTab :user-id="selectedUser.userId" />
       </WeprodeTabItem>
       <WeprodeTabItem
-        :title="$t('course')"
+        :title="$t('Course.course')"
         class="course-tab-content"
       >
         <CourseTab :user-id="selectedUser.userId" />
@@ -186,13 +186,3 @@ export default {
   margin-bottom: 0.5rem;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "course": "Cours",
-  "serviceTitle": "Cours & Devoirs",
-  "schedule": "Séances",
-  "homework": "À faire",
-  "toCorrect": "À corriger"
-}
-</i18n>

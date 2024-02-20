@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="left">
-      <h2 v-t="'homeworks'" />
+      <h2 v-t="'Dashboard.HomeworkHeader.homeworks'" />
       <Pellet
         v-if="nbHomeworksUndone > 0"
         class="header-pellet"
@@ -10,8 +10,8 @@
       />
       <button
         class="read-only-button"
-        :aria-label="$t('unreadFilter')"
-        :title="$t('unreadFilter')"
+        :aria-label="$t('Dashboard.HomeworkHeader.unreadFilter')"
+        :title="$t('Dashboard.HomeworkHeader.unreadFilter')"
         data-test="doneFilter"
         @click="toggleUndoneOnly"
       >
@@ -24,7 +24,7 @@
     </div>
 
     <button
-      v-t="'showMore'"
+      v-t="'Dashboard.HomeworkHeader.showMore'"
       class="show-more"
       @click="redirect"
     />
@@ -90,11 +90,3 @@ header {
   @extend %show-more-button;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "homeworks": "À faire",
-  "unreadFilter": "Filtrer les non faits",
-  "showMore": "Voir plus"
-}
-</i18n>

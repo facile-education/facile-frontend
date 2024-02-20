@@ -12,7 +12,7 @@
       v-if="selectedType.type === types.TYPE_EXTERNAL_URL"
       v-model="url"
       class="field"
-      :placeholder="$t('urlPlaceHolder') + '*'"
+      :placeholder="$t('Accesses.AccessRedirectionSelector.urlPlaceHolder') + '*'"
       @input="$emit('updateUrl', url)"
     />
     <RedirectionEntity
@@ -24,7 +24,7 @@
     />
     <button
       v-else-if="selectedType.type === types.TYPE_COLLABORATIVE_FOLDER && folder === undefined"
-      v-t="'selectFolder'"
+      v-t="'Accesses.AccessRedirectionSelector.selectFolder'"
       @click="isFolderPickerDisplayed = true"
     />
     <RedirectionEntity
@@ -36,7 +36,7 @@
     />
     <button
       v-else-if="selectedType.type === types.TYPE_SHARED_FILE && file === undefined"
-      v-t="'selectFile'"
+      v-t="'Accesses.AccessRedirectionSelector.selectFile'"
       @click="isFilePickerDisplayed = true"
     />
   </div>
@@ -95,9 +95,9 @@ export default {
   data () {
     return {
       typeList: [
-        { type: Types.TYPE_EXTERNAL_URL, label: this.$t('TYPE_EXTERNAL_URL') },
-        { type: Types.TYPE_COLLABORATIVE_FOLDER, label: this.$t('TYPE_COLLABORATIVE_FOLDER') },
-        { type: Types.TYPE_SHARED_FILE, label: this.$t('TYPE_SHARED_FILE') }
+        { type: Types.TYPE_EXTERNAL_URL, label: this.$t('Accesses.AccessRedirectionSelector.TYPE_EXTERNAL_URL') },
+        { type: Types.TYPE_COLLABORATIVE_FOLDER, label: this.$t('Accesses.AccessRedirectionSelector.TYPE_COLLABORATIVE_FOLDER') },
+        { type: Types.TYPE_SHARED_FILE, label: this.$t('Accesses.AccessRedirectionSelector.TYPE_SHARED_FILE') }
       ],
       selectedType: undefined,
       url: undefined,
@@ -130,13 +130,13 @@ export default {
     formErrorList () {
       return {
         url: (this.v$.url && this.v$.url.$invalid && this.v$.url.$dirty)
-          ? (this.v$.url.$errors[0].$validator === 'required' ? this.$t('urlRequired') : this.$t('urlInvalid'))
+          ? (this.v$.url.$errors[0].$validator === 'required' ? this.$t('Accesses.AccessRedirectionSelector.urlRequired') : this.$t('Accesses.AccessRedirectionSelector.urlInvalid'))
           : '',
         folder: (this.v$.folder && this.v$.folder.$invalid && this.v$.folder.$dirty)
-          ? this.$t('folderRequired')
+          ? this.$t('Accesses.AccessRedirectionSelector.folderRequired')
           : '',
         file: (this.v$.file && this.v$.file.$invalid && this.v$.file.$dirty)
-          ? this.$t('fileRequired')
+          ? this.$t('Accesses.AccessRedirectionSelector.fileRequired')
           : ''
       }
     },
@@ -182,7 +182,7 @@ export default {
           console.error('Unknown type: ' + this.initRedirection.type)
       }
     } else {
-      this.selectedType = { type: Types.TYPE_EXTERNAL_URL, label: this.$t('TYPE_EXTERNAL_URL') }
+      this.selectedType = { type: Types.TYPE_EXTERNAL_URL, label: this.$t('Accesses.AccessRedirectionSelector.TYPE_EXTERNAL_URL') }
       this.$emit('updateType', this.selectedType.type)
     }
   },
@@ -215,18 +215,3 @@ button {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "urlPlaceHolder": "Url",
-  "TYPE_EXTERNAL_URL": "Url externe",
-  "TYPE_COLLABORATIVE_FOLDER": "Dossier interne",
-  "TYPE_SHARED_FILE": "Fichier interne",
-  "urlRequired": "Champ requis",
-  "urlInvalid": "Url invalide",
-  "folderRequired": "Veuillez sélectionner un dossier",
-  "fileRequired": "Veuillez sélectionner un fichier",
-  "selectFolder": "Sélectionnez un dossier",
-  "selectFile": "Sélectionnez un fichier"
-}
-</i18n>

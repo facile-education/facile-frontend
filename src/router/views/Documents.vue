@@ -1,5 +1,5 @@
 <template>
-  <h1 :aria-label="$t('serviceTitle')" />
+  <h1 :aria-label="$t('Documents.serviceTitle')" />
   <div
     v-if="currentUser.userId !== 0"
     ref="documents"
@@ -365,12 +365,12 @@ export default {
             }
           } else {
             console.error('Missing ADD_OBJECT permission in current folder')
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('missingPastePermissions'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Documents.missingPastePermissions'), type: 'error' })
           }
           break
         case 'delete':
           this.$store.dispatch('warningModal/addWarning', {
-            text: this.$t('deletionWarning'),
+            text: this.$t('Documents.deletionWarning'),
             lastAction: { fct: deleteEntities, params: [this.selectedDocuments] }
           })
           break
@@ -458,7 +458,7 @@ export default {
     doSelectFolderAction (targetFolder) {
       if (this.folderSelectionOption === 'move') {
         if (targetFolder.id === this.currentFolderId) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('moveInCurrentFolder'), type: 'warning' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Documents.moveInCurrentFolder'), type: 'warning' })
         } else {
           this.$store.dispatch('clipboard/move', { targetFolder, entities: this.selectedDocuments })
         }
@@ -618,13 +618,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "deletionWarning": "Ce document sera définitivement perdu",
-  "moveInCurrentFolder": "Le dossier de destination est le même que celui de départ!",
-  "serviceTitle": "Mes documents",
-  "rootCollaborativeUploadForbidden": "Il n'est pas autorisé d'ajouter un document ici",
-  "missingPastePermissions": "Dépose non autorisée ici"
-}
-</i18n>

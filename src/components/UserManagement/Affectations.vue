@@ -6,14 +6,14 @@
     <div class="header">
       <WeprodeButton
         class="add-affected-user"
-        :label="$t('add-affected-user')"
+        :label="$t('UserManagement.Affectations.add-affected-user')"
         @click="openAddAffectedUserModal()"
       />
       <WeprodeInput
         ref="nameInput"
         v-model="filter"
         :maxlength="200"
-        :placeholder="$t('nameFilterPlaceholder')"
+        :placeholder="$t('UserManagement.Affectations.nameFilterPlaceholder')"
         @keyup.enter.stop="cleanAndRunSearch"
       />
     </div>
@@ -23,13 +23,13 @@
       v-if="selectedSchool === undefined"
       class="main-label"
     >
-      <p>{{ $t('please-select-school') }}</p>
+      <p>{{ $t('UserManagement.Affectations.please-select-school') }}</p>
     </div>
     <div
       v-else-if="sortedAffectedUsers.length === 0 && filter === ''"
       class="main-label"
     >
-      <p>{{ $t('no-affectation') }}</p>
+      <p>{{ $t('UserManagement.Affectations.no-affectation') }}</p>
     </div>
     <div
       v-else-if="sortedAffectedUsers.length === 0 && filter !== ''"
@@ -183,18 +183,3 @@ export default {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "nameFilterPlaceholder": "Filtrer par nom/prénom",
-  "add-affected-user": "Ajouter une affectation",
-  "please-select-school": "Veuillez sélectionner un établissement",
-  "no-affectation": "Aucune affectation pour cet établissement",
-  "no-affectation-for-filter": "Aucune affectation avec le filtre '{filter}''",
-  "lastName": "Nom",
-  "firstName": "Prénom",
-  "role": "Profil",
-  "nbAffectations": "Nombre d'affectations",
-  "edit-affectations": "Editer"
-}
-</i18n>

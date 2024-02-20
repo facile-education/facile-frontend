@@ -7,12 +7,12 @@
       >
         <img
           src="@assets/icons/chevron_left.svg"
-          :alt="$t('dashboard')"
-          :title="$t('dashboard')"
+          :alt="$t('Dashboard.AllDiaryEventsHeader.dashboard')"
+          :title="$t('Dashboard.AllDiaryEventsHeader.dashboard')"
         >
       </RouterLink>
       <h1
-        v-t="'header'"
+        v-t="'Dashboard.AllDiaryEventsHeader.header'"
         @click="back"
       />
       <Pellet
@@ -23,8 +23,8 @@
       />
       <button
         class="read-only-button"
-        :aria-label="$t('unreadFilter')"
-        :title="$t('unreadFilter')"
+        :aria-label="$t('Dashboard.AllDiaryEventsHeader.unreadFilter')"
+        :title="$t('Dashboard.AllDiaryEventsHeader.unreadFilter')"
         data-test="eventUnRealOnly"
         @click="toggleReadOnly"
       >
@@ -152,12 +152,3 @@ h1 {
   margin-left: 10px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "header": "Tous les événements",
-  "dashboard": "Tableau de bord",
-  "unreadFilter": "Filtrer les non lus",
-  "errorPlaceholder": "Oups, une erreur est survenue..."
-}
-</i18n>

@@ -14,12 +14,12 @@
     />
     <div
       v-if="error === true"
-      v-t="'errorPlaceholder'"
+      v-t="'Dashboard.DiaryWidget.errorPlaceholder'"
       class="placeholder"
     />
     <div
       v-else-if="eventList.length === 0 && !isFirstLoad"
-      v-t="unReadOnly ? 'unReadEmptyPlaceholder' : 'emptyPlaceholder'"
+      v-t="unReadOnly ? 'Dashboard.DiaryWidget.unReadEmptyPlaceholder' : 'Dashboard.DiaryWidget.emptyPlaceholder'"
       class="placeholder"
     />
     <div v-else>
@@ -153,11 +153,3 @@ section {
   margin-top: 4px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun événement à venir",
-  "unReadEmptyPlaceholder": "Aucun nouvel événement"
-}
-</i18n>

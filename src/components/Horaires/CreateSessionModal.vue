@@ -9,7 +9,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'Horaires.CreateSessionModal.title'" />
     </template>
 
     <template #body>
@@ -19,7 +19,7 @@
         <p
           class="datetime-firstlabel"
         >
-          {{ $t('the') }}
+          {{ $t('Horaires.CreateSessionModal.the') }}
         </p>
         <WeprodeDropdown
           v-model="selectedDay"
@@ -33,7 +33,7 @@
         <p
           class="datetime-label"
         >
-          {{ $t('in') }}
+          {{ $t('Horaires.CreateSessionModal.in') }}
         </p>
         <WeprodeDropdown
           v-model="selectedSlot"
@@ -56,12 +56,12 @@
       <div
         class="group"
       >
-        <span class="label">{{ $t('group') }}</span>
+        <span class="label">{{ $t('Horaires.CreateSessionModal.group') }}</span>
         <WeprodeDropdown
           v-model="selectedGroup"
           class="group-list"
           data-test="group-dropdown"
-          :placeholder="$t('group')"
+          :placeholder="$t('Horaires.CreateSessionModal.group')"
           :list="groupList"
           display-field="groupName"
         />
@@ -74,7 +74,7 @@
       <div
         class="subject"
       >
-        <span class="label">{{ $t('subject') }}</span>
+        <span class="label">{{ $t('Horaires.CreateSessionModal.subject') }}</span>
         <WeprodeDropdown
           v-model="subject"
           class="subject-list"
@@ -96,7 +96,7 @@
           :close-on-select="true"
           :completion-only="false"
           :min-length="1"
-          :placeholder="$t('teachersPlaceHolder')"
+          :placeholder="$t('Horaires.CreateSessionModal.teachersPlaceHolder')"
           display-field="fullName"
           id-field="userId"
           :list="teacherList"
@@ -114,7 +114,7 @@
         <WeprodeInput
           v-model="room"
           class="room-input"
-          :placeholder="$t('roomPlaceHolder')"
+          :placeholder="$t('Horaires.CreateSessionModal.roomPlaceHolder')"
         />
         <WeprodeErrorMessage
           :error-message="formErrorList.room"
@@ -128,14 +128,14 @@
           class="checkbox"
           label=""
         />
-        {{ $t('recurrence') }}
+        {{ $t('Horaires.CreateSessionModal.recurrence') }}
       </div>
     </template>
 
     <template #footer>
       <WeprodeButton
         form="createsessionform"
-        :label="$t('Create')"
+        :label="$t('Horaires.CreateSessionModal.Create')"
         @click="onCreate"
       />
     </template>
@@ -195,11 +195,11 @@ export default {
   computed: {
     formErrorList () {
       return {
-        day: (this.v$.selectedDay.$invalid && this.v$.selectedDay.$dirty) ? this.$t('day') : '',
-        group: (this.v$.selectedGroup.$invalid && this.v$.selectedGroup.$dirty) ? this.$t('groupError') : '',
-        selectedTeachers: (this.v$.selectedTeachers.$invalid && this.v$.selectedTeachers.$dirty) ? this.$t('teachers') : '',
-        subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('required') : '',
-        room: (this.v$.room.$invalid && this.v$.room.$dirty) ? this.$t('required') : ''
+        day: (this.v$.selectedDay.$invalid && this.v$.selectedDay.$dirty) ? this.$t('Horaires.CreateSessionModal.day') : '',
+        group: (this.v$.selectedGroup.$invalid && this.v$.selectedGroup.$dirty) ? this.$t('Horaires.CreateSessionModal.groupError') : '',
+        selectedTeachers: (this.v$.selectedTeachers.$invalid && this.v$.selectedTeachers.$dirty) ? this.$t('Horaires.CreateSessionModal.teachers') : '',
+        subject: (this.v$.subject.$invalid && this.v$.subject.$dirty) ? this.$t('Horaires.CreateSessionModal.required') : '',
+        room: (this.v$.room.$invalid && this.v$.room.$dirty) ? this.$t('Horaires.CreateSessionModal.required') : ''
       }
     }
   },
@@ -321,26 +321,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "title": "Création de séances",
-  "the": "Le",
-  "from": "de",
-  "to": "à",
-  "hour": "h",
-  "in": "au créneau",
-  "group": "Classe / Groupe",
-  "subject": "Discipline",
-  "teachersPlaceHolder" : "Enseignants",
-  "roomPlaceHolder": "Salle",
-  "recurrence": "Chaque semaine jusqu'à la fin de l'année scolaire",
-  "Create": "Créer",
-  "day": "Veuillez sélectionner le jour",
-  "time": "Veuillez saisir une plage d'horaires valide (hh:mm)",
-  "startBeforeAfter": "L'heure de début doit être antérieure à l'heure de fin",
-  "groupError": "Veuillez sélectionner un groupe",
-  "teachers" : "Veuillez sélectionner au moins un enseignant",
-  "required": "Champ requis"
-}
-</i18n>

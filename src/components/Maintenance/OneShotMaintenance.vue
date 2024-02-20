@@ -4,25 +4,25 @@
       class="round"
       @click="cleanupObsoleteFolders"
     >
-      <span>{{ $t('cleanupObsoleteFolders') }}</span>
+      <span>{{ $t('Maintenance.OneShotMaintenance.cleanupObsoleteFolders') }}</span>
     </WeprodeButton>
     <WeprodeButton
       class="round"
       @click="runDataFeed"
     >
-      <span>{{ $t('runDataFeed') }}</span>
+      <span>{{ $t('Maintenance.OneShotMaintenance.runDataFeed') }}</span>
     </WeprodeButton>
     <WeprodeButton
       class="round"
       @click="runPAuth"
     >
-      <span>{{ $t('pAuth') }}</span>
+      <span>{{ $t('Maintenance.OneShotMaintenance.pAuth') }}</span>
     </WeprodeButton>
     <WeprodeButton
       class="round"
       @click="setNewsPermissions"
     >
-      <span>{{ $t('setNewsPermissions') }}</span>
+      <span>{{ $t('Maintenance.OneShotMaintenance.setNewsPermissions') }}</span>
     </WeprodeButton>
     <div>
       <input
@@ -34,14 +34,14 @@
         class="round"
         @click="deleteFolders"
       >
-        <span>{{ $t('delete-folders') }}</span>
+        <span>{{ $t('Maintenance.OneShotMaintenance.delete-folders') }}</span>
       </WeprodeButton>
     </div>
     <WeprodeButton
       class="round"
       @click="setCoursePermissions"
     >
-      <span>{{ $t('setCoursePermissions') }}</span>
+      <span>{{ $t('Maintenance.OneShotMaintenance.setCoursePermissions') }}</span>
     </WeprodeButton>
   </div>
 </template>
@@ -67,9 +67,9 @@ export default {
       cleanupObsoleteFolders().then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.OneShotMaintenance.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.OneShotMaintenance.error'), type: 'error' })
           }
         }
       )
@@ -78,9 +78,9 @@ export default {
       setNewsPermissions().then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.OneShotMaintenance.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.OneShotMaintenance.error'), type: 'error' })
           }
         }
       )
@@ -95,9 +95,9 @@ export default {
       deleteFolders(this.files[0]).then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.OneShotMaintenance.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.OneShotMaintenance.error'), type: 'error' })
           }
         }
       )
@@ -106,9 +106,9 @@ export default {
       setCoursePermissions().then(
         (data) => {
           if (data.success) {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('success'), type: 'success' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.OneShotMaintenance.success'), type: 'success' })
           } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('error'), type: 'error' })
+            this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.OneShotMaintenance.error'), type: 'error' })
           }
         }
       )
@@ -128,16 +128,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "cleanupObsoleteFolders": "Nettoyage des dossiers obsoletes (tmp images et sending boxes)",
-  "success": "Opération terminée en succès",
-  "error": "Opération terminée en erreur",
-  "pAuth": "pAuth bidon",
-  "runDataFeed": "Alimentation des données (intégration uniquement)",
-  "setNewsPermissions": "Permissions des PJ de news",
-  "delete-folders": "Supprimer les dossiers",
-  "setCoursePermissions": "Permissions des supports de cours et devoirs"
-}
-</i18n>

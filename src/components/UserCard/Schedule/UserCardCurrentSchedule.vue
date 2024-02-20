@@ -9,7 +9,7 @@
         :icon-name="'icon-calendar'"
       />
       <span v-if="userDetails.currentCourse">{{ $t('currentlyClass', {startHour: formatedStartHour, endHour: formatedEndHour}) }}</span>
-      <span v-else>{{ $t('currently') }}</span>
+      <span v-else>{{ $t('UserCard.UserCardCurrentSchedule.currently') }}</span>
     </h2>
     <ScheduleItem
       v-if="userDetails.currentCourse"
@@ -23,7 +23,7 @@
       v-else
       class="placeholder"
     >
-      {{ $t('noClass') }}
+      {{ $t('UserCard.UserCardCurrentSchedule.noClass') }}
     </p>
   </section>
 </template>
@@ -88,11 +88,3 @@ export default {
   cursor: pointer;
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "currently": "Actuellement",
-    "currentlyClass": "Actuellement : de {startHour} à {endHour}",
-    "noClass": "pas de cours"
-  }
-</i18n>

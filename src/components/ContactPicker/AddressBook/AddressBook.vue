@@ -11,7 +11,7 @@
     </div>
     <div
       v-else-if="error"
-      v-t="'errorPlaceholder'"
+      v-t="'ContactPicker.AddressBook.errorPlaceholder'"
       class="placeholder"
     />
     <div v-else>
@@ -116,9 +116,3 @@ export default {
   font-size: 1.25em;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue..."
-}
-</i18n>

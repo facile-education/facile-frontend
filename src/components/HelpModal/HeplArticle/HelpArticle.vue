@@ -15,7 +15,7 @@
         </h2>
         <button
           v-if="isAdministrator"
-          v-t="'edit'"
+          v-t="'HelpModal.HelpArticle.edit'"
           class="admin-edit-button"
           @click="isEditTitleModalDisplayed=true"
         />
@@ -62,12 +62,12 @@
     </aside>
     <div
       v-if="!article && isLoadingArticleError"
-      v-t="'articleErrorPlaceholder'"
+      v-t="'HelpModal.HelpArticle.articleErrorPlaceholder'"
       class="placeholder"
     />
     <div
       v-else-if="!article"
-      v-t="'articlePlaceholder'"
+      v-t="'HelpModal.HelpArticle.articlePlaceholder'"
       class="placeholder"
     />
 
@@ -258,11 +258,3 @@ aside {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "articlePlaceholder": "Veuillez sélectionner un contenu d'aide",
-  "articleErrorPlaceholder": "Erreur lors du chargement de l'article",
-  "edit": "Éditer"
-}
-</i18n>

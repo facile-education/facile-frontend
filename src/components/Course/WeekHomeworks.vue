@@ -20,12 +20,12 @@
       />
       <div
         v-if="error === true"
-        v-t="'errorPlaceholder'"
+        v-t="'Course.WeekHomeworks.errorPlaceholder'"
         class="placeholder"
       />
       <div
         v-else-if="homeworks && homeworks.length === 0"
-        v-t="'emptyPlaceholder'"
+        v-t="'Course.WeekHomeworks.emptyPlaceholder'"
         class="placeholder"
       />
       <ul
@@ -117,7 +117,7 @@ export default {
         if (dayIndex !== -1) {
           homeworksByDay[dayIndex].homeworkList.push(homework)
         } else {
-          homeworksByDay.push({ dayId: homeworkDay, label: dayjs(homework.toDate).format(this.$t('for') + ' dddd DD MMM'), homeworkList: [homework] })
+          homeworksByDay.push({ dayId: homeworkDay, label: dayjs(homework.toDate).format(this.$t('Course.WeekHomeworks.for') + ' dddd DD MMM'), homeworkList: [homework] })
         }
       })
 
@@ -255,12 +255,3 @@ ul {
   list-style-type: none;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "for": "Pour ",
-  "emptyPlaceholder": "Aucun travail à faire",
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "works": "Aucun nouveau travail | {count} Travail | {count} Travaux"
-}
-</i18n>

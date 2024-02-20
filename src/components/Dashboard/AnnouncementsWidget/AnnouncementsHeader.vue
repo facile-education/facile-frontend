@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="left">
-      <h2 v-t="'announcements'" />
+      <h2 v-t="'Dashboard.AnnouncementsHeader.announcements'" />
       <Pellet
         v-if="nbNewAnnouncements > 0"
         class="header-pellet"
@@ -10,8 +10,8 @@
       />
       <button
         class="read-only-button"
-        :aria-label="$t('unreadFilter')"
-        :title="$t('unreadFilter')"
+        :aria-label="$t('Dashboard.AnnouncementsHeader.unreadFilter')"
+        :title="$t('Dashboard.AnnouncementsHeader.unreadFilter')"
         data-test="ReadOnlyAnnouncementButton"
         @click="toggleReadOnly"
       >
@@ -24,14 +24,14 @@
     </div>
     <div class="right">
       <button
-        v-t="'showMore'"
+        v-t="'Dashboard.AnnouncementsHeader.showMore'"
         class="show-more"
         @click="showMore"
       />
 
       <CreateButton
         v-if="canCreateAnnouncement"
-        :title="$t('create-annouce')"
+        :title="$t('Dashboard.AnnouncementsHeader.create-annouce')"
         data-test="buttonCreateAnnoucement"
         @click="isCreateModalDisplayed = true"
       />
@@ -182,12 +182,3 @@ header {
 }
 
 </style>
-
-<i18n locale="fr">
-{
-  "announcements": "Annonces",
-  "unreadFilter": "Filtrer les non lues",
-  "create-annouce": "Créer une annonce",
-  "showMore": "Voir plus"
-}
-</i18n>

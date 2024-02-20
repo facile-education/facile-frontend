@@ -4,7 +4,7 @@
     class="contact-picker-tooltip"
   >
     <div class="header">
-      <h2 v-t="'header'" />
+      <h2 v-t="'ContactPicker.ContactPickerToolTip.header'" />
     </div>
 
     <ContactPicker
@@ -143,9 +143,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "header": "Sélection de contact"
-}
-</i18n>

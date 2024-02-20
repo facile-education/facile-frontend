@@ -19,7 +19,7 @@
         :class="{'increase': isIncreasing, 'decrease': isDecreasing}"
       >
         <div
-          v-t="'evolution'"
+          v-t="'Dashboard.StatisticItem.evolution'"
           class="evolution-label"
         />
         <div class="evolution">
@@ -78,8 +78,8 @@ export default {
       }
     },
     title () {
-      return (this.evolution >= 0 ? '+ ' : '- ') + Math.abs(this.evolution) + this.$t('compareLabel') +
-        (this.statistic.type === 3 ? this.$t('activity-details') : '')
+      return (this.evolution >= 0 ? '+ ' : '- ') + Math.abs(this.evolution) + this.$t('Dashboard.StatisticItem.compareLabel') +
+        (this.statistic.type === 3 ? this.$t('Dashboard.StatisticItem.activity-details') : '')
     }
   }
 }
@@ -151,11 +151,3 @@ export default {
   margin-right: 0.5rem;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "compareLabel": " par rapport aux 7 derniers jours précedents",
-  "evolution": "Evolution",
-  "activity-details": ". Les activités comptent les informations, les créations de documents, les supports de cours et les devoirs"
-}
-</i18n>

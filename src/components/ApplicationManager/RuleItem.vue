@@ -6,7 +6,7 @@
     <div class="column">
       <WeprodeTagsInput
         :model-value="rule.roles"
-        :placeholder="$t('rolesPlaceholder') + '*'"
+        :placeholder="$t('ApplicationManager.RuleItem.rolesPlaceholder') + '*'"
         :list="roleList"
         display-field="displayText"
         :sort="false"
@@ -17,12 +17,12 @@
       <WeprodeErrorMessage :error-message="formErrorList.roles" />
     </div>
     &nbsp;
-    <p v-t="'fromLabel'" />
+    <p v-t="'ApplicationManager.RuleItem.fromLabel'" />
     &nbsp;
     <div class="column">
       <WeprodeTagsInput
         :model-value="rule.orgs"
-        :placeholder="$t('orgsPlaceholder') + '*'"
+        :placeholder="$t('ApplicationManager.RuleItem.orgsPlaceholder') + '*'"
         :list="classList"
         :sort="false"
         display-field="orgName"
@@ -98,7 +98,7 @@ export default {
         return undefined
       }
 
-      const classList = [{ orgId: 0, orgName: this.$t('all-school') }]
+      const classList = [{ orgId: 0, orgName: this.$t('ApplicationManager.RuleItem.all-school') }]
       classList.push(...this.$store.state.administration.classList)
       return classList
     },
@@ -199,12 +199,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "all-school": "Tout l'établissement",
-  "orgsPlaceholder": "Liste des classes",
-  "fromLabel": "de",
-  "rolesPlaceholder": "Liste des profils"
-}
-</i18n>

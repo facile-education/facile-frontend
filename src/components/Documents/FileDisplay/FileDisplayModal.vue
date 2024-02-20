@@ -44,24 +44,24 @@
               <img
                 v-if="isFullScreen"
                 src="@/assets/icons/collapse.svg"
-                :alt="$t('collapse')"
+                :alt="$t('Documents.FileDisplayModal.collapse')"
               >
               <img
                 v-show="!isFullScreen"
                 src="@/assets/icons/expand.svg"
-                :alt="$t('expand')"
+                :alt="$t('Documents.FileDisplayModal.expand')"
               >
             </button>
             <button
               class="header-option-item"
               data-test="closeModal"
-              :title="$t('close')"
-              :aria-label="$t('close')"
+              :title="$t('Documents.FileDisplayModal.close')"
+              :aria-label="$t('Documents.FileDisplayModal.close')"
               @click="wantsToCloseFile = true"
             >
               <img
                 src="@/assets/icons/cross.svg"
-                :alt="$t('close')"
+                :alt="$t('Documents.FileDisplayModal.close')"
               >
             </button>
           </div>
@@ -268,11 +268,3 @@ h1 {
   overflow: auto;
 }
 </style>
-
-<i18n locale="fr">
-  {
-    "collapse": "Réduire",
-    "expand": "Plein écran",
-    "close": "Fermer"
-  }
-</i18n>

@@ -8,7 +8,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'title'" />
+      <span v-t="'Course.StudentListModal.title'" />
     </template>
 
     <template #body>
@@ -18,21 +18,21 @@
         <WeprodeRadioButton
           v-model="isWholeClass"
           rb-value="true"
-          :label="$t('whole-class')"
+          :label="$t('Course.StudentListModal.whole-class')"
           class="radio"
         />
 
         <WeprodeRadioButton
           v-model="isWholeClass"
           rb-value="false"
-          :label="$t('specific')"
+          :label="$t('Course.StudentListModal.specific')"
           class="radio"
         />
       </div>
 
       <div
         v-if="sortedStudents.length === 0 && !isWholeClass"
-        v-t="'errorPlaceholder'"
+        v-t="'Course.StudentListModal.errorPlaceholder'"
         class="placeholder"
       />
       <ul v-else>
@@ -55,7 +55,7 @@
     <template #footer>
       <div class="footer">
         <WeprodeButton
-          :label="$t('save')"
+          :label="$t('Course.StudentListModal.save')"
           class="button"
           :disabled="isWholeClass!=='true' && selectedStudents.length === 0"
           @click="closeModal"
@@ -160,13 +160,3 @@ span {
   margin: 10px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "title": "Elèves destinataires",
-  "whole-class": "Toute la classe",
-  "specific": "Spécifique",
-  "save": "Enregistrer"
-}
-</i18n>

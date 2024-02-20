@@ -19,12 +19,12 @@
       </div>
       <div
         v-if="error === true"
-        v-t="'errorPlaceholder'"
+        v-t="'AllDiaryEvents.errorPlaceholder'"
         class="placeholder"
       />
       <div
         v-else-if="eventList.length === 0"
-        v-t="'emptyPlaceholder'"
+        v-t="'AllDiaryEvents.emptyPlaceholder'"
         class="placeholder"
       />
       <div
@@ -65,7 +65,7 @@
     />
     <div
       v-if="!selectedEvent && isDetailsPanelDisplayed"
-      v-t="'detailsPlaceholder'"
+      v-t="'AllDiaryEvents.detailsPlaceholder'"
       class="details-placeholder"
     />
   </div>
@@ -262,11 +262,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "errorPlaceholder": "Oups, une erreur est survenue...",
-  "emptyPlaceholder": "Aucun événement à venir",
-  "detailsPlaceholder": "Veuillez séléctionner un événement"
-}
-</i18n>

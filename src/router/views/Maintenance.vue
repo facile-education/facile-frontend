@@ -1,25 +1,25 @@
 <template>
   <WeprodeTabList class="tablist">
     <WeprodeTabItem
-      :title="$t('administration')"
+      :title="$t('Maintenance.administration')"
       class="tab"
     >
       <Administration />
     </WeprodeTabItem>
     <WeprodeTabItem
-      :title="$t('groups')"
+      :title="$t('Maintenance.groups')"
       class="tab"
     >
       <GroupsMaintenance />
     </WeprodeTabItem>
     <WeprodeTabItem
-      :title="$t('one-shot-tools')"
+      :title="$t('Maintenance.one-shot-tools')"
       class="tab"
     >
       <OneShotMaintenance />
     </WeprodeTabItem>
     <WeprodeTabItem
-      :title="$t('password-update')"
+      :title="$t('Maintenance.password-update')"
       class="tab"
     >
       <PasswordUpdate />
@@ -65,12 +65,3 @@ export default {
   margin-top: 30px;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "administration": "Administration",
-  "groups": "Groupes ",
-  "one-shot-tools": "Outils one-shot",
-  "password-update": "Codes de secours"
-}
-</i18n>

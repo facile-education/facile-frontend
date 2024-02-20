@@ -8,16 +8,16 @@
         src="@/assets/icons/history.svg"
         alt=""
       >
-      <span>{{ $t('history') }} </span>
+      <span>{{ $t('Search.QuickSearchPanelHeader.history') }} </span>
     </span>
-    <span v-else>{{ nbResults + ' ' + (nbResults > 1 ? $t('results') : $t('result')) }}</span>
+    <span v-else>{{ nbResults + ' ' + (nbResults > 1 ? $t('Search.QuickSearchPanelHeader.results') : $t('Search.QuickSearchPanelHeader.result')) }}</span>
     <!--    <button-->
     <!--      v-if="!isAlreadyInAdvancedSearchService"-->
     <!--      class="theme-text-color"-->
     <!--      @mousedown="displayAdvancedSearch"-->
     <!--      @click="displayAdvancedSearch"-->
     <!--    >-->
-    <!--      <span v-t="'advancedSearch'" />-->
+    <!--      <span v-t="'Search.QuickSearchPanelHeader.advancedSearch'" />-->
     <!--      <NeroIcon-->
     <!--        class="chevron"-->
     <!--        name="chevron-right"-->
@@ -123,12 +123,3 @@ button {
   }
 }
 </style>
-
-<i18n locale="fr">
-{
-  "advancedSearch": "Recherche avancée",
-  "history": "Recherché récemment...",
-  "result": "Résultat",
-  "results": "Résultats"
-}
-</i18n>

@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h2 v-t="'statistics'" />
+    <h2 v-t="'Dashboard.StatisticsHeader.statistics'" />
   </header>
 </template>
 
@@ -22,9 +22,3 @@ h2 {
   @extend %widget-h2;
 }
 </style>
-
-<i18n locale="fr">
-{
-  "statistics": "Statistiques"
-}
-</i18n>

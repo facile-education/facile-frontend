@@ -2,7 +2,7 @@
   <WeprodeInput
     ref="nameInput"
     v-model="categoryName"
-    :placeholder="!initialName ? $t('newCategory') : undefined"
+    :placeholder="!initialName ? $t('Accesses.AccessCategoryInput.newCategory') : undefined"
     @blur="$emit('submitName', categoryName)"
     @keyup.enter.stop="blurInput"
     @keyup.escape="$emit('close')"
@@ -66,9 +66,3 @@ export default {
 <style lang="scss" scoped>
 
 </style>
-
-<i18n locale="fr">
-{
-  "newCategory": "Nouvelle catégorie"
-}
-</i18n>
