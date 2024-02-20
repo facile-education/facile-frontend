@@ -49,10 +49,18 @@
           <div
             class="publication"
           >
-            {{ $t('at') + formattedPublicationDate + $t('by') }} <span
+            {{ $t('at') + formattedPublicationDate + $t('by') }}
+            <!-- <span
               class="toggle-user-card"
               @click.stop="openUserCardModal"
-            >{{ detailedNews.authorName }}</span>
+            >{{ detailedNews.authorName }}
+            </span> -->
+            <!-- TO DO: Delete this span for userCard patch  -->
+            <span
+              class="toggle-user-card"
+              @click.stop="openUserCardModal"
+            >{{ detailedNews.authorName }}
+            </span>
           </div>
         </div>
       </div>

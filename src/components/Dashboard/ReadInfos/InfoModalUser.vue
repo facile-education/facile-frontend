@@ -1,10 +1,13 @@
 <template>
   <div class="read-info-user">
     <div class="userName">
-      <span
+      <!-- <span
         class="toggle-user-card"
         @click.stop="openUserCardModal"
       >{{ fullName }}
+      </span> -->
+      <!-- TO DO: Delete this span for userCard patch  -->
+      <span>{{ fullName }}
       </span>
     </div>
     <div class="status">

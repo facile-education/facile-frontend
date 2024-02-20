@@ -49,10 +49,15 @@
           </div>
 
           <div class="author">
-            {{ $t('by') }} <span
+            {{ $t('by') }}
+            <!-- <span
               class="toggle-user-card"
               @click.stop="openUserCardModal"
-            >{{ detailedEvent.authorName }}</span>
+            >{{ detailedEvent.authorName }}
+            </span> -->
+            <!-- TO DO: Delete this span for userCard patch  -->
+            <span>{{ detailedEvent.authorName }}
+            </span>
           </div>
 
           <h2 v-if="!isInModal">

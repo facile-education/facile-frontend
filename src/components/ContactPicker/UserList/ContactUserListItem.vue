@@ -1,10 +1,14 @@
 <template>
   <div data-test="UserListItem">
     <button @click="toggleUser">
-      <span
+      <!-- <span
         class="toggle-user-card"
         @click.stop="openUserCardModal"
       >
+        {{ getFullName(user) }}
+      </span> -->
+      <!-- TO DO: Delete this span for userCard patch  -->
+      <span>
         {{ getFullName(user) }}
       </span>
       <div class="optionsContainer">

@@ -29,10 +29,14 @@
       <div class="header-main">
         <div class="header-line1">
           <p class="sender">
-            <span
+            <!-- <span
               class="toggle-user-card"
               @click.stop="openUserCardModal"
             >
+              {{ message.senderName }}
+            </span> -->
+            <!-- TO DO: Delete this span for userCard patch  -->
+            <span>
               {{ message.senderName }}
             </span>
           </p>
