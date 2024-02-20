@@ -29,7 +29,12 @@
       <div class="header-main">
         <div class="header-line1">
           <p class="sender">
-            {{ message.senderName }}
+            <span
+              class="toggle-user-card"
+              @click.stop="openUserCardModal"
+            >
+              {{ message.senderName }}
+            </span>
           </p>
           <p
             class="sent-date"
@@ -116,6 +121,11 @@ export default {
   methods: {
     formatSentDate () {
       return dayjs(this.message.sendDate, DATE_EXCHANGE_FORMAT).format('DD/MM/YYYY HH:mm')
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', {
+        userId: this.message.senderId
+      })
     }
   }
 }

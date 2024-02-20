@@ -30,12 +30,12 @@
             v-for="(child, index) in userDetails.children"
             :key="index"
           >
-            <a
-              class="theme-text-color"
+            <span
+              class="theme-text-color toggle-user-card"
               @click="updateUserCardModal(child)"
             >
               {{ `${child.firstName} ${child.lastName}` }}
-            </a>
+            </span>
             {{ `(${child.class})` }}
             <span v-if="index < userDetails.children.length - 1">, </span>
           </span>

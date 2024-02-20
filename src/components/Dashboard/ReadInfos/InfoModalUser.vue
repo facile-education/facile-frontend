@@ -1,7 +1,11 @@
 <template>
   <div class="read-info-user">
     <div class="userName">
-      {{ fullName }}
+      <span
+        class="toggle-user-card"
+        @click.stop="openUserCardModal"
+      >{{ fullName }}
+      </span>
     </div>
     <div class="status">
       {{ formattedStatus }}
@@ -39,6 +43,11 @@ export default {
       } else {
         return undefined
       }
+    }
+  },
+  methods: {
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', this.user)
     }
   }
 }

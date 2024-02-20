@@ -36,7 +36,7 @@
           {{ role }}
         </p>
         <p v-if="!userDetails.isParent">
-          {{ school }} - {{ userDetails.isStudent && userDetails.class }}
+          {{ school }} <span v-if="userDetails.isStudent">- {{ userDetails.class }}</span>
         </p>
         <p class="email">
           {{ userDetails.email }}
@@ -160,6 +160,9 @@ export default {
   p{
     @extend %font-medium-m;
     margin: 0;
+  }
+  .role{
+    width: 70%;
   }
   .email{
     margin: 0;

@@ -49,7 +49,10 @@
           </div>
 
           <div class="author">
-            {{ $t('by') + detailedEvent.authorName }}
+            {{ $t('by') }} <span
+              class="toggle-user-card"
+              @click.stop="openUserCardModal"
+            >{{ detailedEvent.authorName }}</span>
           </div>
 
           <h2 v-if="!isInModal">
@@ -221,6 +224,11 @@ export default {
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
+      })
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', {
+        userId: this.detailedEvent.authorId
       })
     }
   }

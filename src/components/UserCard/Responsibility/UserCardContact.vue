@@ -4,12 +4,12 @@
       class="top"
       :class="{'phone': mq.phone}"
     >
-      <a
-        class="theme-text-color"
+      <span
+        class="theme-text-color toggle-user-card"
         @click="updateUserCardModal(userInfos)"
       >
         {{ `${userInfos.firstName} ${userInfos.lastName}` }}
-      </a>
+      </span>
       <WeprodeButton
         v-if="userInfos.email"
         class="contact-button"

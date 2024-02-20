@@ -12,7 +12,12 @@
         :class="{'last-recipient' : index === computedRecipientList.length - 1}"
       >
         <div class="recipientName">
-          {{ recipient.text }}
+          <span
+            class="toggle-user-card"
+            @click.stop="openUserCardModal(recipient)"
+          >
+            {{ recipient.text }}
+          </span>
         </div>
         <BaseIcon
           v-if="recipient.hasRead === true"
@@ -95,6 +100,9 @@ export default {
       }
       return dayjs(readDate, DATE_EXCHANGE_FORMAT)
         .format('[ ' + this.$t('Moment.the') + '] DD/MM/YYYY [' + this.$t('Moment.at') + '] HH:mm')
+    },
+    openUserCardModal (recipient) {
+      this.$store.dispatch('userCard/initUserCard', recipient)
     }
   }
 }

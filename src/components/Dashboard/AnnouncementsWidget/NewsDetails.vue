@@ -49,7 +49,10 @@
           <div
             class="publication"
           >
-            {{ $t('at') + formattedPublicationDate + $t('by') + detailedNews.authorName }}
+            {{ $t('at') + formattedPublicationDate + $t('by') }} <span
+              class="toggle-user-card"
+              @click.stop="openUserCardModal"
+            >{{ detailedNews.authorName }}</span>
           </div>
         </div>
       </div>
@@ -205,6 +208,11 @@ export default {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
       })
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', {
+        userId: this.detailedNews.authorId
+      })
     }
   }
 }
@@ -288,6 +296,8 @@ h2 {
 }
 
 .publication {
+  position: relative;
+  z-index: 1;
   margin-top: 0.3rem;
   color: $color-new-light-text;
   text-align: right;
