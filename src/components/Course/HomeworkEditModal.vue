@@ -75,7 +75,7 @@
             class="target-students-button"
             @click="openStudentModal"
           >
-            <span v-t="homework.isWholeClass ? 'allStudents' : { path: 'someStudents', args: { count: homework.selectedStudents.length, total: availableStudents.length } }" />
+            <span v-t="homework.isWholeClass ? 'Course.HomeworkEditModal.allStudents' : { path: 'Course.HomeworkEditModal.someStudents', args: { count: homework.selectedStudents.length, total: availableStudents.length } }" />
             <img
               src="@assets/icons/chevron_right2.svg"
               alt=""

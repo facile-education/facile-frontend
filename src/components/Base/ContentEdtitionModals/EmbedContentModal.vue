@@ -45,7 +45,7 @@
         <WeprodeInput
           v-model="contentValue"
           :maxlength="2000"
-          :placeholder="$t(isH5P ? 'urlPlaceholder-h5p' : 'urlPlaceholder')"
+          :placeholder="$t(isH5P ? 'Base.EmbedContentModal.urlPlaceholder-h5p' : 'Base.EmbedContentModal.urlPlaceholder')"
           @keyup.enter.stop="submit"
         />
         <WeprodeErrorMessage
