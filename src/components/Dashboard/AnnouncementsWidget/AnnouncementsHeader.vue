@@ -46,7 +46,7 @@
           :disabled="!canScrollToLeft"
           @click="$emit('goPrevious')"
         >
-          <CustomIcon icon-name="icon-chevron-left" />
+          <CustomIcon icon-name="icon-chevron-right-s" />
         </button>
         <button
           class="arrow-button right-arrow"
@@ -54,7 +54,7 @@
           :disabled="!canScrollToRight"
           @click="$emit('goNext')"
         >
-          <CustomIcon icon-name="icon-chevron-left" />
+          <CustomIcon icon-name="icon-chevron-right-s" />
         </button>
       </div>
     </div>
@@ -171,9 +171,13 @@ header {
   border-radius: 0;
   padding: 0;
   border: none;
+
+  .icon-chevron-right-s {
+    font-size: 22px;
+  }
 }
 
-.right-arrow {
+.left-arrow {
   transform: rotate(180deg);
 }
 

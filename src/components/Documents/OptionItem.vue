@@ -22,15 +22,9 @@
         :src="option.icon"
         alt=""
       >
-      <div class="title">
+      <span class="title">
         {{ option.title }}
-      </div>
-      <img
-        v-if="option.subMenu"
-        class="arrow-down"
-        src="@assets/icons/chevron_down.svg"
-        alt=""
-      >
+      </span>
     </button>
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"

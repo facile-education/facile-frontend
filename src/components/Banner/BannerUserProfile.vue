@@ -22,13 +22,10 @@
       >
         {{ userName }}
       </span>
-      <img
+      <CustomIcon
         v-if="mq.desktop"
-        src="@assets/icons/chevron_up.svg"
-        alt=""
-        class="chevron"
-        :class="{'reverse': !isPopoverMenuDisplayed}"
-      >
+        :icon-name="'icon-chevron-right-s'"
+      />
     </button>
     <BannerPopoverMenu
       v-if="isPopoverMenuDisplayed"
@@ -39,6 +36,7 @@
 
 <script>
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import UserPicture from '@components/Base/UserPicture.vue'
 import { defineAsyncComponent } from 'vue'
 const BannerPopoverMenu = defineAsyncComponent(() => import('@/components/Banner/BannerPopoverMenu'))
@@ -47,6 +45,7 @@ const Pellet = defineAsyncComponent(() => import('@components/Base/Pellet.vue'))
 export default {
   name: 'BannerUserProfile',
   components: {
+    CustomIcon,
     UserPicture,
     Pellet,
     BannerPopoverMenu
@@ -123,13 +122,9 @@ button {
   @extend %font-regular-m;
 }
 
-.chevron {
-  width: 1rem;
+.icon-chevron-right-s {
+  font-size: 22px;
   margin-left: 1rem;
-  transition: transform .5s;
-
-  //&.reverse {
-    transform: rotate(-180deg);
-  //}
+  transform: rotate(90deg);
 }
 </style>

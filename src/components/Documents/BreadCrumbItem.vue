@@ -5,11 +5,7 @@
     data-test="back"
     @click="clickBack"
   >
-    <img
-      src="@assets/icons/chevron_left2.svg"
-      class="image"
-      :alt="$t('Documents.BreadCrumbItem.goBack')"
-    >
+    <CustomIcon :icon-name="'icon-chevron-right-s'" />
     <span class="previous-name">{{ (previousFolderName.length > 12) ? $t('Commons.back') : previousFolderName }}</span>
   </button>
   <button
@@ -77,6 +73,7 @@
 <script>
 
 import BaseIcon from '@components/Base/BaseIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { defineAsyncComponent } from 'vue'
 
@@ -85,7 +82,7 @@ const FolderNameModal = defineAsyncComponent(() => import('@components/Documents
 
 export default {
   name: 'BreadCrumbItem',
-  components: { FolderNameModal, ContextMenu, BaseIcon },
+  components: { CustomIcon, FolderNameModal, ContextMenu, BaseIcon },
   inject: ['mq'],
   props: {
     folder: {
@@ -246,8 +243,9 @@ export default {
     line-height: 100%;
   }
 
-  .image {
-    height: 12px;
+  .icon-chevron-right-s {
+    font-size: 20px;
+    transform: rotate(180deg);
   }
 }
 

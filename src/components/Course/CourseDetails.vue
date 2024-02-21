@@ -8,10 +8,7 @@
         class="back-button"
         @click="unselectCourse"
       >
-        <img
-          src="@assets/icons/chevron_right2.svg"
-          alt=""
-        >
+        <CustomIcon :icon-name="'icon-chevron-right-s'" />
         <span v-t="'Course.CourseDetails.back'" />
       </button>
       <h1>{{ course.groupName + ' - ' + course.subject }}</h1>
@@ -64,6 +61,7 @@
 
 <script>
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 
@@ -74,7 +72,7 @@ const SessionDetails = defineAsyncComponent(() => import('@components/Course/Ses
 
 export default {
   name: 'CourseDetails',
-  components: { SessionDetails, WeprodeSpinner },
+  components: { CustomIcon, SessionDetails, WeprodeSpinner },
   inject: ['mq'],
   props: {
     course: {
@@ -180,7 +178,7 @@ header {
   width: 154px;
   padding: 8px;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   cursor: pointer;
   border-radius: 6px;
   border: 1px solid $neutral-60;
@@ -192,7 +190,7 @@ header {
     @extend %font-regular-m;
   }
 
-  img {
+  .icon-chevron-right-s {
     transform: rotate(180deg);
   }
 

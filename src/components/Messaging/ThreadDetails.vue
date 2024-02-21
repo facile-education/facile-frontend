@@ -11,9 +11,9 @@
       <IconOption
         v-if="mq.phone || mq.tablet"
         class="header-icon back-arrow"
-        :icon="require('@assets/icons/chevron_right.svg')"
+        icon="icon-chevron-right-s"
         name="back"
-        icon-height="20px"
+        icon-height="28px"
         alt="back"
         @click="hideDetails"
       />

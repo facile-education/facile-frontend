@@ -89,11 +89,10 @@
               @click.stop="toggleThreadExtension"
             >
               <span>{{ thread.messages.length }}</span>
-              <img
+              <CustomIcon
                 :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
-                src="@assets/icons/chevron_down.svg"
-                alt="toggle thread"
-              >
+                :icon-name="'icon-chevron-right-m'"
+              />
             </button>
           </div>
 
@@ -130,6 +129,7 @@
 
 <script>
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import ThreadMessage from '@components/Messaging/ThreadMessage'
 import dayjs from 'dayjs'
 import _ from 'lodash'
@@ -142,6 +142,7 @@ import messagingUtils from '@/utils/messaging.utils'
 
 export default {
   components: {
+    CustomIcon,
     ThreadMessage
   },
   inject: ['mq'],
@@ -511,8 +512,10 @@ export default {
       .thread-toggle {
         display: flex;
         align-items: center;
+        justify-content: center;
+        gap: 4px;
         cursor: pointer;
-        border: 1px solid transparent;
+        border: none;
         margin: 0;
         padding: 0;
         background-color: transparent;
@@ -523,29 +526,22 @@ export default {
         }
 
         span {
-          margin-top: -2px;
-          margin-right: 3px;
-          padding-right: 3px;
           font-size: 0.75em;
           font-weight: 600;
           letter-spacing: 0;
           line-height: 19px;
         }
-        .arrow {
-          margin: auto;
-        }
 
         .collapse-thread, .extend-thread {
-          width: 10px;
           transition:  transform .3s;
         }
 
-        .expanded {
-          transform: rotate(0);
+        .extend-thread {
+          transform: rotate(90deg);
         }
 
         .collapse-thread {
-          transform: rotate(180deg);
+          transform: rotate(-90deg);
         }
       }
     }

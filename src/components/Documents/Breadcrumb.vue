@@ -24,22 +24,22 @@
         @change-dir="changeDir"
         @change-space="changeSpace"
       />
-      <img
-        v-show="(!mq.phone && !mq.tablet) && index < (displayableBreadcrumb.length - 1)"
+      <CustomIcon
+        v-if="(!mq.phone && !mq.tablet) && index < (displayableBreadcrumb.length - 1)"
         class="chevron"
-        src="@assets/icons/chevron_right3.svg"
-        alt="right arrow"
-      >
+        :icon-name="'icon-chevron-right-m'"
+      />
     </template>
   </div>
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import HiddenItems from '@components/Base/HiddenItems'
 import BreadCrumbItem from '@components/Documents/BreadCrumbItem'
 
 export default {
-  components: { HiddenItems, BreadCrumbItem },
+  components: { CustomIcon, HiddenItems, BreadCrumbItem },
   inject: ['mq'],
   props: {
     breadcrumb: {
@@ -107,8 +107,8 @@ export default {
 }
 
 .chevron {
-  width: 6px;
-  margin: 0 10px;
+  font-size: 20px;
+  color: $neutral-80;
 }
 
 </style>

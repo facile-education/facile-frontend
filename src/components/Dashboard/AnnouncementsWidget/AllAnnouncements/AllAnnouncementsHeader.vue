@@ -4,7 +4,9 @@
       <RouterLink
         class="back"
         :to="'/' + $t('Menu.route.dashboard')"
+        :title="$t('Dashboard.AllAnnouncementsHeader.dashboard')"
       >
+        <CustomIcon :icon-name="'icon-chevron-right-m'" />
         <img
           src="@assets/icons/chevron_left.svg"
           :alt="$t('Dashboard.AllAnnouncementsHeader.dashboard')"
@@ -137,10 +139,12 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  color: inherit;
 
-  img {
-    width: 20px;
-    height: 20px;
+  .icon-chevron-right-m {
+    font-size: 2rem;
+    transform: rotate(180deg);
   }
 }
 

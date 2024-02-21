@@ -76,10 +76,7 @@
             @click="openStudentModal"
           >
             <span v-t="homework.isWholeClass ? 'Course.HomeworkEditModal.allStudents' : { path: 'Course.HomeworkEditModal.someStudents', args: { count: homework.selectedStudents.length, total: availableStudents.length } }" />
-            <img
-              src="@assets/icons/chevron_right2.svg"
-              alt=""
-            >
+            <CustomIcon :icon-name="'icon-chevron-right-s'" />
           </button>
         </div>
 
@@ -170,6 +167,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeDropdownButton from '@components/Base/Weprode/WeprodeDropdownButton.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
@@ -198,6 +196,7 @@ const CourseContentItem = defineAsyncComponent(() => import('@components/Course/
 export default {
   name: 'HomeworkEditModal',
   components: {
+    CustomIcon,
     CustomDatePicker,
     ChoosePublicationDateModal,
     WeprodeDropdownButton,
@@ -631,7 +630,7 @@ label {
     flex: 1;
   }
 
-  img {
+  .icon-chevron-right-s {
     transform: rotate(90deg);
   }
 }

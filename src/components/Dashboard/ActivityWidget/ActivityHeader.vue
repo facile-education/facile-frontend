@@ -4,13 +4,10 @@
       <RouterLink
         v-if="displayAll"
         class="back"
+        :title="$t('Dashboard.ActivityHeader.dashboard')"
         :to="'/' + $t('Menu.route.dashboard')"
       >
-        <img
-          src="@assets/icons/chevron_left.svg"
-          :alt="$t('Dashboard.ActivityHeader.dashboard')"
-          :title="$t('Dashboard.ActivityHeader.dashboard')"
-        >
+        <CustomIcon :icon-name="'icon-chevron-right-m'" />
       </RouterLink>
       <h1
         v-if="displayAll"
@@ -59,6 +56,7 @@
 
 <script>
 import CreateButton from '@components/Base/CreateButton.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import Pellet from '@components/Base/Pellet.vue'
 import { defineAsyncComponent } from 'vue'
 
@@ -67,7 +65,7 @@ const SaveNewsModal = defineAsyncComponent(() => import('@components/Dashboard/A
 
 export default {
   name: 'ActivityHeader',
-  components: { SaveNewsModal, CreateButton, Pellet },
+  components: { CustomIcon, SaveNewsModal, CreateButton, Pellet },
   props: {
     nbNewActivities: {
       type: Number,
@@ -127,10 +125,12 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  color: inherit;
 
-  img {
-    width: 20px;
-    height: 20px;
+  .icon-chevron-right-m {
+    font-size: 2rem;
+    transform: rotate(180deg);
   }
 }
 

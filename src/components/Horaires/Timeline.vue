@@ -6,16 +6,12 @@
   >
     <button
       :disabled="disablePrevious"
-      class="nav-btn horizontal-timeline-left"
+      class="nav-btn horizontal-timeline-left reverse-icon"
       :title="$t('Horaires.Timeline.previous')"
       :aria-label="$t('Horaires.Timeline.previous')"
       @click="onClickPrevious()"
     >
-      <img
-        class="reverse-icon"
-        src="@assets/icons/chevron_right2.svg"
-        :alt="$t('Horaires.Timeline.previous')"
-      >
+      <CustomIcon :icon-name="'icon-chevron-right-s'" />
     </button>
 
     <ul class="horizontal-timeline-center">
@@ -38,15 +34,13 @@
       :aria-label="$t('Horaires.Timeline.next')"
       @click="onClickNext()"
     >
-      <img
-        src="@assets/icons/chevron_right2.svg"
-        :alt="$t('Horaires.Timeline.next')"
-      >
+      <CustomIcon :icon-name="'icon-chevron-right-s'" />
     </button>
   </div>
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import TimeLineWeekItem from '@components/Horaires/TimeLineWeekItem.vue'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
@@ -57,7 +51,7 @@ dayjs.extend(weekOfYear)
 
 export default {
   name: 'Timeline',
-  components: { TimeLineWeekItem },
+  components: { CustomIcon, TimeLineWeekItem },
   props: {
     nbWeeksAfterCurrent: {
       type: Number,
@@ -264,8 +258,11 @@ export default {
   padding: 0;
   border: none;
   background-color: $neutral-10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  .reverse-icon {
+  &.reverse-icon {
     transform: rotate(180deg);
   }
 

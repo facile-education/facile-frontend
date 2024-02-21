@@ -2,16 +2,18 @@
   <div class="member-pack">
     <div
       class="title"
+      tabindex="0"
+      :title="isCollapsed ? $t('Groups.MemberPack.unCollapse') : $t('Groups.MemberPack.collapse')"
+      :aria-label="isCollapsed ? $t('Groups.MemberPack.unCollapse') : $t('Groups.MemberPack.collapse')"
       @click="toggleCollapse"
+      @keyup.enter="toggleCollapse"
     >
       <span class="count">{{ memberList.length }}</span>
       <span>{{ ' ' + title }}</span>
-      <img
+      <CustomIcon
         :class="isCollapsed ? 'extend': 'collapse'"
-        src="@assets/icons/chevron_right.svg"
-        :alt="isCollapsed ? $t('Groups.MemberPack.unCollapse') : $t('Groups.MemberPack.collapse')"
-        :title="isCollapsed ? $t('Groups.MemberPack.unCollapse') : $t('Groups.MemberPack.collapse')"
-      >
+        :icon-name="'icon-chevron-right-s'"
+      />
     </div>
 
     <div
@@ -28,13 +30,14 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 const DetailsTabMember = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/DetailsTab/DetailsTabMember'))
 
 export default {
   name: 'MemberPack',
-  components: { DetailsTabMember },
+  components: { CustomIcon, DetailsTabMember },
   props: {
     title: {
       type: String,
@@ -90,6 +93,11 @@ span {
   transition:  transform .3s;
   cursor: pointer;
   margin-left: 5px;
+}
+
+.icon-chevron-right-s {
+  font-size: 1.12rem;
+  width: 1.12rem;
 }
 
 .extend {

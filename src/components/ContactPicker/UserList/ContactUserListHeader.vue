@@ -5,11 +5,10 @@
       data-test="backContactPicker"
       @click="closeMobileUserPanel"
     >
-      <img
+      <CustomIcon
         class="back-arrow"
-        src="@assets/icons/chevron_right.svg"
-        alt="back"
-      >
+        :icon-name="'icon-chevron-right-s'"
+      />
     </button>
 
     <WeprodeInput
@@ -99,7 +98,7 @@ button {
 }
 
 .back-arrow {
-  width: 13px;
+  font-size: 1.5rem;
   transform: rotate(180deg);
 }
 

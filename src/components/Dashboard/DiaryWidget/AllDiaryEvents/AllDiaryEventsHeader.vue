@@ -4,12 +4,9 @@
       <RouterLink
         class="back"
         :to="'/' + $t('Menu.route.dashboard')"
+        :title="$t('Dashboard.AllDiaryEventsHeader.dashboard')"
       >
-        <img
-          src="@assets/icons/chevron_left.svg"
-          :alt="$t('Dashboard.AllDiaryEventsHeader.dashboard')"
-          :title="$t('Dashboard.AllDiaryEventsHeader.dashboard')"
-        >
+        <CustomIcon :icon-name="'icon-chevron-right-m'" />
       </RouterLink>
       <h1
         v-t="'Dashboard.AllDiaryEventsHeader.header'"
@@ -137,10 +134,12 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  color: inherit;
 
-  img {
-    width: 20px;
-    height: 20px;
+  .icon-chevron-right-m {
+    font-size: 2rem;
+    transform: rotate(180deg);
   }
 }
 

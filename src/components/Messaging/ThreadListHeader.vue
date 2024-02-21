@@ -10,10 +10,10 @@
         class="open-menu"
         @click="toggleSideMenuPanel"
       >
-        <img
-          :src="require('@assets/icons/chevron_right.svg')"
-          alt="open menu"
-        >
+        <CustomIcon
+          class="back-arrow"
+          :icon-name="'icon-chevron-right-s'"
+        />
         <span v-t="'Messaging.boxes'" />
       </button>
       <div
@@ -50,11 +50,12 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import ThreadListOptions from '@components/Messaging/ThreadListOptions'
 
 export default {
   name: 'ThreadListHeader',
-  components: { ThreadListOptions },
+  components: { CustomIcon, ThreadListOptions },
   inject: ['mq'],
   data () {
     return {
@@ -176,12 +177,11 @@ export default {
         padding: 0;
         background-color: transparent;
         border: none;
+        margin-right: 5px;
 
-        img {
+        .icon-chevron-right-s {
           transform: rotate(180deg);
-          height: 14px;
-          width: 14px;
-          margin: 0 5px 0 0;
+          font-size: 22px;
         }
       }
 
