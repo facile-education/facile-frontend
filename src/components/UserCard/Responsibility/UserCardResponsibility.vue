@@ -6,7 +6,7 @@
     <h2 v-if="userDetails.isStudent">
       <CustomIcon
         class="legalGuardians-icon"
-        :icon-name="'icon-collab-workspace'"
+        :icon-name="'icon-users'"
       />
       <span>{{ $t('UserCard.UserCardResponsibility.relativeTitle') }} :</span>
     </h2>

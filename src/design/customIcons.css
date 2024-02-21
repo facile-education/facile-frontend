@@ -37,9 +37,6 @@
 .icon-logout:before {
   content: "\e91d";
 }
-.icon-trash:before {
-  content: "\e91e";
-}
 .icon-download:before {
   content: "\e917";
 }
@@ -48,6 +45,9 @@
 }
 .icon-stats:before {
   content: "\e916";
+}
+.icon-trash:before {
+  content: "\e91e";
 }
 .icon-burger:before {
   content: "\e914";
@@ -100,7 +100,7 @@
 .icon-seance:before {
   content: "\e910";
 }
-.icon-collab-workspace:before {
+.icon-users:before {
   content: "\e911";
 }
 .icon-user:before {
