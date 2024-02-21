@@ -8,10 +8,7 @@
       @keyup.enter="toggleSwatches(undefined)"
       @keydown.esc="onEscape"
     >
-      <FontAwesomeIcon
-        icon="chevron-down"
-        class="icon"
-      />
+      <CustomIcon icon-name="icon-chevron-right-s" />
     </div>
     <div
       v-if="areSwatchesDisplayed"
@@ -31,6 +28,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { defineAsyncComponent } from 'vue'
 
@@ -38,7 +36,7 @@ const ColorSwatches = defineAsyncComponent(() => import('@/components/Nero/Color
 
 export default {
   name: 'ColorPicker',
-  components: { ColorSwatches, FontAwesomeIcon },
+  components: { CustomIcon, ColorSwatches, FontAwesomeIcon },
   props: {
     colorList: {
       type: Array,
@@ -101,8 +99,10 @@ export default {
   }
 }
 
-.icon {
+.icon-chevron-right-s {
   color: $color-light-text;
+  font-size: 22px;
+  transform: rotate(90deg);
 }
 
 .popover {

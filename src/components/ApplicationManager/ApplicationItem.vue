@@ -31,10 +31,10 @@
         v-else
         class="default"
       >
-        <NeroIcon
-          name="image"
-          type="far"
-        />
+        <img
+          :src="require('@/assets/icons/file-image.svg')"
+          alt="default-icon"
+        >
       </div>
       <p class="name">
         {{ application.applicationName }}

@@ -6,10 +6,9 @@
 
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCalendarAlt, faImage } from '@fortawesome/free-regular-svg-icons'
 import {
-  faBars, faCaretDown, faCaretLeft, faCaretRight, faCaretUp,
-  faCheck, faChevronCircleLeft, faChevronCircleRight, faChevronDown, faChevronRight,
+  faCaretDown, faCaretLeft, faCaretRight, faCaretUp,
+  faChevronDown, faChevronRight,
   faCog, faExclamationTriangle, faGripLines, faList, faMicrophone, faPause,
   faPencilAlt, faPlay, faPlus, faPowerOff, faSearch, faSignOutAlt, faStop,
   faTimes, faTrash, faUndo, faUser, faUserPlus, faUsers
@@ -17,16 +16,10 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(
-  faCalendarAlt,
-  faImage,
-  faBars,
   faCaretDown,
   faCaretLeft,
   faCaretRight,
   faCaretUp,
-  faCheck,
-  faChevronCircleLeft,
-  faChevronCircleRight,
   faChevronDown,
   faChevronRight,
   faCog,
@@ -66,9 +59,6 @@ export default {
     }
   },
   computed: {
-    // camelizedName () {
-    //   return this.name[1].toUpperCase()
-    // },
     iconShortName () {
       return this.name.replace('fa-', '')
     }

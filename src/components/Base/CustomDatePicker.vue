@@ -21,11 +21,7 @@
         <span class="label">
           {{ selectedDateLabel }}
         </span>
-        <NeroIcon
-          name="fa-calendar-alt"
-          type="far"
-          class="icon"
-        />
+        <CustomIcon icon-name="icon-calendar" />
       </button>
     </template>
   </DatePicker>
@@ -34,14 +30,13 @@
 <script>
 import 'v-calendar/style.css'
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
 
-import NeroIcon from '@/components/Nero/NeroIcon.vue'
-
 export default {
   name: 'CustomDatePicker',
-  components: { DatePicker, NeroIcon },
+  components: { CustomIcon, DatePicker },
   props: {
     selectedDate: {
       type: Object,
@@ -116,30 +111,26 @@ export default {
 }
 
 button {
-  background-color: #f5f5f5;
+  background-color: transparent;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  cursor: pointer;
-  border: 1px solid $color-border;
+  border: 1px solid $neutral-60;
   border-radius: 6px;
+  padding: 4px;
 
   &:hover {
-    background-color: $color-hover-bg;
+    filter: brightness(115%);
+    @include transition(filter, 0.2s, linear);
   }
 }
 
 .label {
-  display: flex;
-  margin-top: 3px;
-  margin-right: 5px;
-  margin-left: 0.5em;
-  font-size: 14px;
-  font-weight: bold;
+  padding: 0 6px;
+  @extend %font-regular-m;
 }
 
-.icon {
-  font-size: 2.5rem;
-  padding: 0 0.5rem;
-  cursor: pointer;
+.icon-calendar {
+  font-size: 1rem;
 }
 </style>

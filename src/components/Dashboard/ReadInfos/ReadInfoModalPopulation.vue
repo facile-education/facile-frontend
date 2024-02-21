@@ -10,9 +10,9 @@
       <span>
         {{ populationReadMembers.length + '/' + population.members.length }}
       </span>
-      <BaseIcon
+      <CustomIcon
         :class="isExtended ? 'icon-extend': 'icon-collapse'"
-        name="chevron-up"
+        icon-name="icon-chevron-right-s"
       />
     </span>
   </button>
@@ -42,14 +42,14 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import InfoModalUser from '@components/Dashboard/ReadInfos/InfoModalUser.vue'
 import { getFullName } from '@utils/commons.util'
 import WeprodeUtils from '@utils/weprode.utils'
 
 export default {
   name: 'ReadInfoModalPopulation',
-  components: { InfoModalUser, BaseIcon },
+  components: { CustomIcon, InfoModalUser },
   props: {
     population: {
       type: Object,
@@ -103,6 +103,11 @@ ul {
   overflow-y: hidden;
 }
 
+.right {
+  display: flex;
+  align-items: center;
+}
+
 .population {
   width: 100%;
   height: 50px;
@@ -115,15 +120,19 @@ ul {
 
 .icon-collapse, .icon-extend {
   transition:  transform .4s;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
+}
+
+.icon-chevron-right-s {
+  font-size: 1.5rem;
 }
 
 .icon-extend {
-  transform: rotate(180deg);
+  transform: rotate(90deg);
 }
 
 .icon-collapse {
-  transform: rotate(90deg);
+  transform: rotate(0);
 }
 
 .slide-fade-enter-active {

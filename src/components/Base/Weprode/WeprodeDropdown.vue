@@ -18,10 +18,7 @@
       <span>
         {{ getCurrentDisplayValue() }}
       </span>
-      <NeroIcon
-        name="chevron-down"
-        class="icon"
-      />
+      <CustomIcon icon-name="icon-chevron-right-s" />
     </button>
     <WeprodeAutocomplete
       v-if="show"
@@ -40,15 +37,15 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 
 import WeprodeAutocomplete from '@/components/Base/Weprode/WeprodeAutocomplete.vue'
-import NeroIcon from '@/components/Nero/NeroIcon.vue'
 
 export default {
   name: 'WeprodeDropdown',
   components: {
-    NeroIcon,
+    CustomIcon,
     WeprodeAutocomplete
   },
   props: {
@@ -188,8 +185,8 @@ export default {
   }
 }
 
-.icon {
-  color: #646464;
-  margin-left: 1rem;
+.icon-chevron-right-s {
+  transform: rotate(90deg);
+  margin-left: 0.5rem;
 }
 </style>

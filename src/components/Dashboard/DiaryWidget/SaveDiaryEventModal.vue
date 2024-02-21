@@ -461,7 +461,6 @@ export default {
 }
 
 .start-date, .end-date {
-  color: $color-new-light-text;
   margin-bottom: 15px;
 }
 </style>

@@ -15,10 +15,7 @@
       @keydown.stop.enter="onEnter"
       @keydown.stop
     >
-      <NeroIcon
-        name="chevron-down"
-        class="icon"
-      />
+      <CustomIcon icon-name="icon-chevron-right-s" />
     </button>
 
     <WeprodeAutocomplete
@@ -35,12 +32,12 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeAutocomplete from '@components/Base/Weprode/WeprodeAutocomplete.vue'
-import NeroIcon from '@components/Nero/NeroIcon.vue'
 
 export default {
   name: 'WeprodeDropdownButton',
-  components: { NeroIcon, WeprodeAutocomplete },
+  components: { CustomIcon, WeprodeAutocomplete },
   props: {
     options: {
       type: Array,
@@ -110,6 +107,7 @@ export default {
 .dropdown-button {
   position: relative;
   text-align: left;
+  display: flex !important;
   padding: 0 !important;
 }
 
@@ -132,6 +130,7 @@ export default {
 }
 
 .toggle-options-list-button {
+  display: flex;
   border-left: 1px solid white;
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
@@ -139,6 +138,10 @@ export default {
 
 .option-list {
   text-align: left;
+}
+
+.icon-chevron-right-s {
+  transform: rotate(90deg);
 }
 
 </style>

@@ -136,6 +136,7 @@ $border-radius-nero: 6px;
   background-color: $dropdown-background-color;
   width: 100%;
   height: 100%;
+  display: flex !important;
 
   &:enabled:hover {
     background-color: $menu-selected-background-color;

@@ -18,10 +18,9 @@
     <!--      @click="displayAdvancedSearch"-->
     <!--    >-->
     <!--      <span v-t="'Search.QuickSearchPanelHeader.advancedSearch'" />-->
-    <!--      <NeroIcon-->
-    <!--        class="chevron"-->
-    <!--        name="chevron-right"-->
-    <!--      />-->
+    <!--    <CustomIcon-->
+    <!--      icon-name="icon-chevron-right-m"-->
+    <!--    />-->
     <!--    </button>-->
     <button
       class="close-option"
@@ -37,14 +36,12 @@
 </template>
 
 <script>
-// import NeroIcon from '@components/Nero/NeroIcon.vue'
 
 import CustomIcon from '@components/Base/CustomIcon.vue'
 
 export default {
   name: 'QuickSearchPanelHeader',
   components: { CustomIcon },
-  // components: { NeroIcon },
   props: {
     isSearchHistory: {
       type: Boolean,

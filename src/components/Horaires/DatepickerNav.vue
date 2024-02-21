@@ -13,11 +13,7 @@
         :title="$t('Horaires.DatepickerNav.selectDate')"
         @click="togglePopover()"
       >
-        <NeroIcon
-          name="fa-calendar-alt"
-          type="far"
-          class="icon"
-        />
+        <CustomIcon icon-name="icon-calendar" />
       </button>
     </template>
   </DatePicker>
@@ -26,16 +22,15 @@
 <script>
 import 'v-calendar/style.css'
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
-
-import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'DatepickerNav',
   components: {
-    DatePicker,
-    NeroIcon
+    CustomIcon,
+    DatePicker
   },
   props: {
     selectedDate: {
@@ -98,8 +93,8 @@ button {
   cursor: pointer;
 }
 
-.icon {
-  font-size: 2.5rem;
+.icon-calendar {
+  font-size: 1.7rem;
   padding: 0 0.5rem;
   cursor: pointer;
 }
