@@ -1,9 +1,6 @@
 <template>
   <button @click="displayReadInfoModal=true">
-    <BaseIcon
-      class="check-icon"
-      name="check"
-    />
+    <CustomIcon icon-name="icon-check" />
     <span> {{ $tc('Dashboard.ReadInfos.usersOn', allReadMembers.length, {n: allReadMembers.length, totalCount: allMembers.length}) }} </span>
   </button>
 
@@ -19,13 +16,13 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 const ReadInfoModal = defineAsyncComponent(() => import('@components/Dashboard/ReadInfos/ReadInfoModal.vue'))
 
 export default {
   name: 'ReadInfos',
-  components: { ReadInfoModal, BaseIcon },
+  components: { CustomIcon, ReadInfoModal },
   props: {
     readInfos: {
       type: Array,
@@ -67,11 +64,13 @@ button {
   padding: 0;
   margin: 0;
   border: none;
+  display: flex;
+  align-items: center;
   @extend %font-regular-m;
 }
 
-.check-icon {
-  color: green;
+.icon-check {
+  font-size: 1.5rem;
   margin-right: 5px;
 }
 </style>

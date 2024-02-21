@@ -16,6 +16,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-check:before {
+  content: "\e920";
+}
 .icon-chevron-right-m:before {
   content: "\e918";
 }

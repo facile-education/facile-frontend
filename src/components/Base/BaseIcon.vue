@@ -4,7 +4,7 @@ import { faFile, faFileArchive, faFileImage, faFilePdf, faTrashAlt } from '@fort
 import {
   faAddressBook, faAngleDoubleLeft, faAngleDoubleRight, faArrowDown,
   faArrowsAlt, faArrowUp, faCaretDown, faCaretLeft, faCaretRight,
-  faCaretUp, faChartBar, faCheck, faCheckDouble, faChevronDown,
+  faCaretUp, faChartBar, faChevronDown,
   faChevronRight, faChevronUp, faCircle, faCode, faCog,
   faCompress, faDatabase, faDownload, faEllipsisV, faExclamationTriangle, faExpand,
   faEye, faFile as regularFaFile, faFileAlt, faFileArchive as regularFaFileArchive, faFileImage as regularFaFileImage, faFilm, faFolder,
@@ -29,8 +29,6 @@ fontAwesomeIconLibrary.add(
   faCaretRight,
   faCaretUp,
   faChartBar,
-  faCheck,
-  faCheckDouble,
   faChevronDown,
   faChevronUp,
   faChevronRight,

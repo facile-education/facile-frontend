@@ -14,10 +14,9 @@
         <div class="recipientName">
           {{ recipient.text }}
         </div>
-        <BaseIcon
+        <CustomIcon
           v-if="recipient.hasRead === true"
-          class="has-read-icon"
-          name="check"
+          icon-name="icon-check"
           :title="$t('Messaging.hasRead') + formatReadDate(recipient.readDate)"
         />
         <div v-if="index !== computedRecipientList.length - 1">
@@ -43,14 +42,14 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export default {
   name: 'MessageRecipients',
-  components: { BaseIcon },
+  components: { CustomIcon },
   props: {
     recipients: {
       type: Array,
@@ -126,9 +125,9 @@ export default {
         margin-right: 0;
       }
 
-      .has-read-icon {
+      .icon-check {
         margin-left: 5px;
-        font-size: 0.8em;
+        font-size: 1.2rem;
         color: green;
       }
     }

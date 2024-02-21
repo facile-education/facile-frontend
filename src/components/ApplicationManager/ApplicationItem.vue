@@ -19,7 +19,7 @@
         class="check"
         :class="{ hidden: !application.isBroadcasted }"
       >
-        <NeroIcon name="check" />
+        <CustomIcon icon-name="icon-check" />
       </div>
       <img
         v-if="application.image"
@@ -50,18 +50,18 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 import { directive } from 'vue3-click-away'
 const ApplicationDetails = defineAsyncComponent(() => import('@/components/ApplicationManager/ApplicationDetails'))
 const ApplicationDetailsModal = defineAsyncComponent(() => import('@/components/ApplicationManager/ApplicationDetailsModal'))
-const NeroIcon = defineAsyncComponent(() => import('@/components/Nero/NeroIcon'))
 
 export default {
   name: 'ApplicationItem',
   components: {
+    CustomIcon,
     ApplicationDetails,
-    ApplicationDetailsModal,
-    NeroIcon
+    ApplicationDetailsModal
   },
   directives: {
     'click-outside': directive
@@ -149,6 +149,7 @@ export default {
 .check {
   background-color: $color-valid-bg;
   color: $color-light-text;
+  font-size: 1.3rem;
   position: absolute;
   top: -8px;
   right: -8px;

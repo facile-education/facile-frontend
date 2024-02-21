@@ -9,21 +9,20 @@
       @click="colorPicked(color)"
       @keyup.enter="colorPicked(color)"
     >
-      <FontAwesomeIcon
+      <CustomIcon
         v-if="color === modelValue"
-        icon="check"
-        class="icon"
+        icon-name="icon-check"
       />
     </span>
   </div>
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 
 export default {
   name: 'ColorSwatches',
-  components: { FontAwesomeIcon },
+  components: { CustomIcon },
   props: {
     colorList: {
       type: Array,
@@ -67,7 +66,8 @@ export default {
   }
 }
 
-.icon {
+.icon-check {
+  font-size: 1.5rem;
   color: $color-light-text;
 }
 </style>

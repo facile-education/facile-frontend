@@ -20,9 +20,9 @@
         v-if="option.hasCheckbox"
         class="checkbox"
       >
-        <BaseIcon
+        <CustomIcon
           v-if="option.isSelected"
-          name="check"
+          icon-name="icon-check"
         />
       </span>
       <span class="title">
@@ -43,10 +43,10 @@
           :icon-name="option.icon"
         />
       </span>
-      <BaseIcon
+      <CustomIcon
         v-if="hasSubMenu"
         class="sub-menu-chevron"
-        name="chevron-right"
+        icon-name="icon-chevron-right-s"
       />
     </button>
     <ContextMenu
@@ -299,7 +299,8 @@ button {
     text-align: center;
   }
 
-  .sub-menu-chevron{
+  .sub-menu-chevron {
+    font-size: 1.2rem;
     margin-left: 10px;
   }
 

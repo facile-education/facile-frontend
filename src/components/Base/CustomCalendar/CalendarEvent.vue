@@ -28,7 +28,7 @@
     <img
       v-if="showSelectionIcon && isSelected"
       class="selected-icon"
-      src="@assets/icons/check.svg"
+      src="@assets/icons/check2.svg"
       alt="selected icon"
     >
   </div>
