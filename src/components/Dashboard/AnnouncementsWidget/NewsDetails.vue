@@ -189,7 +189,7 @@ export default {
     },
     confirmDeleteNews () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.initNews.isSchoolNews ? this.$t('removalAnnouncementConfirmMessage', { target: this.initNews.title }) : this.$t('Dashboard.NewsDetails.removalGroupNewsConfirmMessage'),
+        text: this.initNews.isSchoolNews ? this.$t('Dashboard.NewsDetails.removalAnnouncementConfirmMessage', { target: this.initNews.title }) : this.$t('Dashboard.NewsDetails.removalGroupNewsConfirmMessage'),
         lastAction: { fct: this.deleteNews, params: [] }
       })
     },

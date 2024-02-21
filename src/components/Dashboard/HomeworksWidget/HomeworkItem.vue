@@ -42,7 +42,7 @@
           />
           <span
             v-else
-            v-t="homework.isDone ? 'done' : 'todo'"
+            v-t="homework.isDone ? 'Dashboard.HomeworkItem.done' : 'Dashboard.HomeworkItem.todo'"
           />
         </span>
 

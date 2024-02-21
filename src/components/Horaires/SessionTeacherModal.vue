@@ -9,7 +9,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="{ path: 'teacherManagement', args: { course: sessionEvent.groupName }}" />
+      <span v-t="{ path: 'Horaires.SessionTeacherModal.teacherManagement', args: { course: sessionEvent.groupName }}" />
     </template>
 
     <template #body>

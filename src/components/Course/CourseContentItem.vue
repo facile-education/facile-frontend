@@ -36,7 +36,7 @@
     </div>
     <div class="data">
       <div class="type">
-        {{ $t(typeLabel) }}
+        {{ $t('Course.CourseContentItem.' + typeLabel) }}
       </div>
       <strong class="name">
         {{ content.contentName }}

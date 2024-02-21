@@ -93,7 +93,7 @@ export default {
   methods: {
     confirmDeleteCategory () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('deleteCategoryWarning', { categoryName: this.category.categoryName }),
+        text: this.$t('Accesses.AccessCategoryItem.deleteCategoryWarning', { categoryName: this.category.categoryName }),
         lastAction: { fct: this.deleteCategory }
       })
     },
