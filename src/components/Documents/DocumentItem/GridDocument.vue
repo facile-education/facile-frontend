@@ -20,7 +20,7 @@
         v-if="displayFolderRootIcon"
         ref="docIcon"
         class="img-icon"
-        :data="require('@assets/icons/folder3.svg')"
+        :data="require('@assets/icons/folder.svg')"
         type="image/svg+xml"
       />
 
@@ -114,7 +114,7 @@ export default {
     },
     fileIconIsImage () {
       // TODO: find a better way to separate img and font-awesome icons
-      return this.documentIcon.includes('.') || this.documentIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
+      return this.documentIcon.includes('.') || this.documentIcon.includes(':') // if icon contains extension (like icon.svg) it's not a font-awesome
     },
     isModalOpen () {
       return this.$store.state.misc.nbOpenModals > 0

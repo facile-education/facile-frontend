@@ -19,9 +19,15 @@
       @click="handleClick"
     >
       <img
+        v-if="isIconImage"
         :src="option.icon"
         alt=""
       >
+      <CustomIcon
+        v-else
+        class="icon"
+        :icon-name="option.icon"
+      />
       <span class="title">
         {{ option.title }}
       </span>
@@ -37,13 +43,14 @@
 
 <script>
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import NeroIcon from '@/components/Nero/NeroIcon'
 export default {
   name: 'OptionItem',
-  components: { NeroIcon, ContextMenu, WeprodeButton },
+  components: { CustomIcon, NeroIcon, ContextMenu, WeprodeButton },
   inject: ['mq'],
   props: {
     option: {
@@ -63,6 +70,9 @@ export default {
     },
     isNew () {
       return this.option.name === 'new'
+    },
+    isIconImage () {
+      return this.option.icon?.indexOf('svg') !== -1
     }
   },
   mounted () {
@@ -126,6 +136,11 @@ export default {
 img {
   width: 28px;
   height: 28px;
+  padding: 5px;
+}
+
+.icon {
+  font-size: 24px;
   padding: 5px;
 }
 

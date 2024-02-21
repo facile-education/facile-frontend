@@ -60,7 +60,7 @@ export default {
       }
     },
     fileIconIsImage () {
-      return this.icon.includes('.') || this.icon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
+      return this.icon.includes('.') || this.icon.includes(':') // if icon contains extension (like icon.svg) it's not a font-awesome
     },
     iconPrefix () {
       return 'fas'

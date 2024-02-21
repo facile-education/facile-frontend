@@ -33,9 +33,15 @@
         class="icon"
       >
         <img
+          v-if="isIconImage"
           :src="option.icon"
           :alt="option.title"
         >
+        <CustomIcon
+          v-else
+          class="custom-icon"
+          :icon-name="option.icon"
+        />
       </span>
       <BaseIcon
         v-if="hasSubMenu"
@@ -58,12 +64,14 @@
 <script>
 
 import BaseIcon from '@components/Base/BaseIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu'))
 
 export default {
   name: 'ContextMenuItem',
   components: {
+    CustomIcon,
     BaseIcon,
     ContextMenu
   },
@@ -114,6 +122,9 @@ export default {
     },
     isThereInternDocumentDrag () {
       return this.$store.state.misc.isThereDocumentDrag
+    },
+    isIconImage () {
+      return this.option.icon?.indexOf('svg') !== -1
     }
   },
   watch: {
@@ -253,6 +264,10 @@ button {
     img {
       width: 15px;
       height: 18px;
+    }
+
+    .custom-icon {
+      font-size: 20px;
     }
   }
 

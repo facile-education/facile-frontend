@@ -67,11 +67,7 @@
             @dragover="isPersonalFoldersExpanded = true"
           >
             <div class="icon-container">
-              <img
-                src="@assets/icons/folder.svg"
-                alt=""
-                class="folder-icon"
-              >
+              <CustomIcon icon-name="icon-folder" />
             </div>
             {{ $t('Messaging.personalFolders') }}
             <button
@@ -120,6 +116,7 @@
 <script>
 
 import BaseIcon from '@components/Base/BaseIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import MenuFolder from '@components/Messaging/MenuFolder'
 import MenuRootFolder from '@components/Messaging/MenuRootFolder'
 import messagingUtils from '@utils/messaging.utils'
@@ -134,6 +131,7 @@ import constants from '@/constants/messagingConstants'
 export default {
   name: 'MessagingMenu',
   components: {
+    CustomIcon,
     MenuRootFolder,
     BaseIcon,
     MenuFolder,
@@ -339,8 +337,8 @@ hr {
       justify-content: center;
       margin-right: 10px;
 
-      .folder-icon {
-        width: 24px;
+      .icon-folder {
+        font-size: 1.5rem;
       }
     }
 

@@ -21,10 +21,7 @@
       <RouterLink
         :to="documentRoute"
       >
-        <img
-          src="@assets/icons/folder.svg"
-          alt="image"
-        >
+        <CustomIcon icon-name="icon-folder" />
         <span v-t="'Groups.GroupDetailsTab.accessToDocuments'" />
       </RouterLink>
     </div>
@@ -77,6 +74,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import MemberPack from '@components/Groups/GroupDetailsPanel/DetailsTab/MemberPack'
 import dayjs from 'dayjs'
 
@@ -86,7 +84,7 @@ import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'GroupDetailsTab',
-  components: { MemberPack, WeprodeSpinner },
+  components: { CustomIcon, MemberPack, WeprodeSpinner },
   inject: ['mq'],
   props: {
     group: {
@@ -190,11 +188,12 @@ export default {
     align-items: center;
     line-height: 10px;
     font-weight: 600;
+    text-decoration: none;
 
-    img {
+    .icon-folder {
       margin-right: 10px;
-      height: 30px;
-      width: 30px;
+      color: black;
+      font-size: 30px;
     }
   }
 }

@@ -118,13 +118,13 @@ export default {
         case searchConstants.TYPE_MESSAGE_FILE:
           return require('@assets/icons/file.svg')
         case searchConstants.TYPE_FOLDER:
-          return require('@assets/icons/folder3.svg')
+          return require('@assets/icons/folder.svg')
         case searchConstants.TYPE_FILE:
           return require('@assets/icons/file.svg')
         case searchConstants.TYPE_COLLABORATIVE_FILE:
           return require('@assets/icons/file.svg')
         case searchConstants.TYPE_COLLABORATIVE_FOLDER:
-          return require('@assets/icons/folder3.svg')
+          return require('@assets/icons/folder.svg')
         case searchConstants.TYPE_EVENT:
           return require('@assets/icons/file.svg')
         default:

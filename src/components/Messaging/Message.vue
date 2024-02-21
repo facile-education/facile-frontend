@@ -11,7 +11,13 @@
       v-if="message.folderName !== undefined"
       class="message-sourcefolder"
     >
+      <CustomIcon
+        v-if="folderIcon === 'customFolderIcon'"
+        icon-name="icon-folder"
+      />
+
       <img
+        v-else
         :src="folderIcon"
         alt=""
       >
@@ -67,6 +73,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import MessageRecipients from '@components/Messaging/MessageRecipients'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
@@ -77,6 +84,7 @@ const AttachedFiles = defineAsyncComponent(() => import('@components/AttachedFil
 export default {
   name: 'Message',
   components: {
+    CustomIcon,
     MessageRecipients,
     AttachedFiles
   },
@@ -103,7 +111,7 @@ export default {
         case 'Corbeille':
           return require('@/assets/icons/trash.svg')
         default:
-          return require('@assets/icons/folder.svg')
+          return 'customFolderIcon'
       }
     }
   },
@@ -149,6 +157,11 @@ export default {
     img {
       margin-right: 6px;
       height: 1em;
+    }
+
+    .icon-folder {
+      margin-right: 4px;
+      font-size: 1rem;
     }
   }
 

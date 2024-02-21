@@ -168,7 +168,7 @@ export default {
   computed: {
     fileIconIsImage () {
       // TODO: find a better way to separate img and font-awesome icons
-      return this.documentIcon.includes('.') || this.documentIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
+      return this.documentIcon.includes('.') || this.documentIcon.includes(':') // if icon contains extension (like icon.svg) it's not a font-awesome
     },
     selectedEntities () {
       return this.$store.state.documents.selectedEntities

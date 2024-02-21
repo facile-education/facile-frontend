@@ -52,7 +52,7 @@ export default {
     },
     fileIconIsImage () {
       // TODO: find a better way to separate img and font-awesome icons
-      return this.fileIcon.includes('.') || this.fileIcon.includes(':') // if icon contains extension (like folder.svg) it's not a font-awesome
+      return this.fileIcon.includes('.') || this.fileIcon.includes(':') // if icon contains extension (like icon.svg) it's not a font-awesome
     }
   }
 }

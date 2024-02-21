@@ -1,8 +1,8 @@
 // TODO not export all in one time to improve performances
 const icons = {
   file: require('@assets/icons/file.svg'),
-  folder: require('@assets/icons/folder3.svg'),
-  folderOpen: require('@assets/icons/folder3.svg'),
+  folder: require('@assets/icons/folder.svg'),
+  folderOpen: require('@assets/icons/folder.svg'),
   extensions: {
     ggb: require('@assets/icons/file_geogebra.svg'),
     gif: require('@assets/icons/file_image.svg'),
@@ -46,10 +46,10 @@ const icons = {
     move: require('@assets/icons/move.svg'),
     modify: require('@assets/icons/pen.svg'),
     new: require('@assets/icons/add2.svg'),
-    openFile: require('@assets/icons/folder.svg'),
+    openFile: 'icon-folder',
     paste: require('@assets/icons/duplicate.svg'),
     permissions: require('@assets/icons/lock.svg'),
-    save: require('@assets/icons/folder.svg'),
+    save: 'icon-folder',
     share: require('@assets/icons/share.svg'),
     rename: require('@assets/icons/pen.svg'),
     refresh: require('@assets/icons/refresh.svg'),

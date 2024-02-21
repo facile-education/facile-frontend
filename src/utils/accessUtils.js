@@ -20,7 +20,7 @@ function getThumbnailUrl (access, store) {
       case Types.TYPE_EXTERNAL_URL:
         return require('@assets/icons/link.svg')
       case Types.TYPE_COLLABORATIVE_FOLDER:
-        return require('@assets/icons/folder3.svg')
+        return require('@assets/icons/folder.svg')
       case Types.TYPE_SHARED_FILE:
         return require('@assets/icons/file.svg')
       default:
