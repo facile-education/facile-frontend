@@ -93,7 +93,7 @@ export default {
   methods: {
     runSearch () {
       if (this.selectedRole.roleId === 0 && this.selectedSchool.schoolId === 0 && this.searchQuery.length < 2) {
-        this.errorMessage = 'emptyRequest'
+        this.errorMessage = 'ContactPicker.ContactAdvancedSearch.emptyRequest'
       } else {
         this.errorMessage = ''
         this.$store.dispatch('contact/getUsersFromSearch', { query: this.searchQuery, roleId: this.selectedRole.roleId, schoolId: this.selectedSchool.schoolId })
