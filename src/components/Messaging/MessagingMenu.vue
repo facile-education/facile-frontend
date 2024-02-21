@@ -68,7 +68,7 @@
           >
             <div class="icon-container">
               <img
-                src="@assets/icons/folder5.svg"
+                src="@assets/icons/folder.svg"
                 alt=""
                 class="folder-icon"
               >
@@ -340,7 +340,7 @@ hr {
       margin-right: 10px;
 
       .folder-icon {
-        width: 19px;
+        width: 24px;
       }
     }
 

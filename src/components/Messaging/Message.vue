@@ -103,7 +103,7 @@ export default {
         case 'Corbeille':
           return require('@/assets/icons/trash.svg')
         default:
-          return require('@assets/icons/folder4.svg')
+          return require('@assets/icons/folder.svg')
       }
     }
   },
