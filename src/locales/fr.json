@@ -787,7 +787,9 @@
       "remove": "Retirer"
     },
     "WeprodeWindow": {
-      "close": "Fermer"
+      "close": "Fermer",
+      "collapse": "Réduire",
+      "expand": "Plein écran"
     }
   },
   "ContactPicker": {
@@ -1231,7 +1233,8 @@
       "switchHelp": "Cette option permet de notifier les destinataires et l'évènement sera considéré comme non lu",
       "confirmClosure": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
       "creationSuccess": "Évènement créé",
-      "updateSuccess": "Évènement modifié"
+      "updateSuccess": "Évènement modifié",
+      "popupError": "Une erreur est survenue. Merci de réessayer"
     },
     "AllDiaryEventsHeader": {
       "header": "Tous les événements",

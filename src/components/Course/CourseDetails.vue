@@ -98,7 +98,7 @@ export default {
       if (this.course.teachers.length === 2) {
         return this.course.teachers[1].firstName + ' ' + this.course.teachers[1].lastName
       } else {
-        return this.$t('andOthers', { nbRemaining: this.course.teachers.length - 1 })
+        return this.$t('Course.CourseDetails.andOthers', { nbRemaining: this.course.teachers.length - 1 })
       }
     },
     sortedCourseSessions () {

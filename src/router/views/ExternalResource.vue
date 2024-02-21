@@ -6,7 +6,7 @@
         src="@/assets/images/icon-external-service.png"
         alt=""
       >
-      <h3 v-t="{path: 'noConfigLabel', args: {resourceName:serviceName}}" />
+      <h3 v-t="{path: 'ExternalResource.noConfigLabel', args: {resourceName:serviceName}}" />
       <I18n
         keypath="contactLabel"
         tag="p"
@@ -37,7 +37,7 @@
           src="../../assets/images/icon-external-service.png"
           alt=""
         >
-        <h3>{{ $t('newTabLabel', {resourceName: serviceName}) }}</h3>
+        <h3>{{ $t('ExternalResource.newTabLabel', {resourceName: serviceName}) }}</h3>
         <I18n
           keypath="openAgainLabel"
           tag="p"

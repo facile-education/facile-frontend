@@ -1,6 +1,6 @@
 <template>
   <div
-    :title="$t('viewFile', {target: attachedFile.name})"
+    :title="$t('AttachedFiles.AttachedFile.viewFile', {target: attachedFile.name})"
     class="attached-file theme-hover-border-color"
     data-test="attached-file"
     :class="{'phone': mq.phone || mq.tablet, 'has-remove-button': !readOnly}"

@@ -361,18 +361,18 @@ export default {
       this.isProcessingSave = false
       if (data.success) {
         if (this.startDate.isAfter(dayjs())) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t(isCreation ? 'creationSuccess' : 'updateSuccess'), type: 'success' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t(isCreation ? 'Dashboard.SaveDiaryEventModal.creationSuccess' : 'Dashboard.SaveDiaryEventModal.updateSuccess'), type: 'success' })
         }
         this.$emit(isCreation ? 'createEvent' : 'updateEvent')
         this.onClose()
       } else {
-        this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+        this.$store.dispatch('popups/pushPopup', { message: this.$t('popupError'), type: 'error' })
       }
     },
     handleWSError (err) {
       this.isProcessingSave = false
       console.error(err)
-      this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
+      this.$store.dispatch('popups/pushPopup', { message: this.$t('popupError'), type: 'error' })
     },
     confirmClosure () {
       const actualForm = {

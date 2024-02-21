@@ -40,8 +40,8 @@
               v-if="resizable && !mq.phone"
               class="header-option-item"
               data-test="toggleFullScreen"
-              :aria-label="$t(isFullScreen ? 'collapse' : 'expand')"
-              :title="$t(isFullScreen ? 'collapse' : 'expand')"
+              :aria-label="$t(isFullScreen ? 'Base.WeprodeWindow.collapse' : 'Base.WeprodeWindow.expand')"
+              :title="$t(isFullScreen ? 'Base.WeprodeWindow.collapse' : 'Base.WeprodeWindow.expand')"
               @click="toggleFullScreen"
             >
               <img

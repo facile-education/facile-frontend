@@ -298,7 +298,7 @@ export default {
     },
     confirmDeleteAnnouncement () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('removalConfirmMessage', { target: this.announcement.title }),
+        text: this.$t('Dashboard.AnnouncementItem.removalConfirmMessage', { target: this.announcement.title }),
         lastAction: { fct: this.deleteAnnouncement, params: [] }
       })
     },

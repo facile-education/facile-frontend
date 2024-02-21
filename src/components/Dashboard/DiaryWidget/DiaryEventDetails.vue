@@ -210,7 +210,7 @@ export default {
     },
     confirmDeleteEvent () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('removalConfirmMessage', { target: this.initEvent.title }),
+        text: this.$t('Dashboard.DiaryEventDetails.removalConfirmMessage', { target: this.initEvent.title }),
         lastAction: { fct: this.deleteEvent, params: [] }
       })
     },

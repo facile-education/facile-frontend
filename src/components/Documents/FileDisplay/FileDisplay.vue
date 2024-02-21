@@ -211,7 +211,7 @@ export default {
           } else {
             // Handle error message
             if (data.userName !== undefined) {
-              const message = this.$t('lockWarningUser', { userName: data.userName })
+              const message = this.$t('Documents.FileDisplay.lockWarningUser', { userName: data.userName })
               this.$store.dispatch('popups/pushPopup', { message, type: 'warning' })
             } else if (data.isWritable !== undefined) {
               const message = this.$t('Documents.FileDisplay.lockWarning')

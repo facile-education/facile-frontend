@@ -49,7 +49,7 @@
             class="recipients"
             :class="device"
             :max-tags-to-display="2"
-            :others-label-template="(nbOthers) => {return $t('othersLabel', {'nbOthers': nbOthers})}"
+            :others-label-template="(nbOthers) => {return $t('Messaging.CreateMessageModal.othersLabel', {'nbOthers': nbOthers})}"
             @input="searchTimeOut"
           />
           <WeprodeButton

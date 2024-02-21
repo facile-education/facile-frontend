@@ -72,7 +72,7 @@ export default {
   computed: {
     modalTitle () {
       if (this.concernedRole) {
-        return this.$t('AccessesOf', { roleLabel: this.concernedRole.displayText.toLowerCase() })
+        return this.$t('Accesses.AccessModal.AccessesOf', { roleLabel: this.concernedRole.displayText.toLowerCase() })
       } else {
         return this.$t('Accesses.AccessModal.myAccesses')
       }

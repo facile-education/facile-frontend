@@ -8,7 +8,7 @@
         class="calendar-icon"
         :icon-name="'icon-calendar'"
       />
-      <span v-if="userDetails.currentCourse">{{ $t('currentlyClass', {startHour: formatedStartHour, endHour: formatedEndHour}) }}</span>
+      <span v-if="userDetails.currentCourse">{{ $t('UserCard.UserCardCurrentSchedule.currentlyClass', {startHour: formatedStartHour, endHour: formatedEndHour}) }}</span>
       <span v-else>{{ $t('UserCard.UserCardCurrentSchedule.currently') }}</span>
     </h2>
     <ScheduleItem

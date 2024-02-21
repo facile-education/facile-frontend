@@ -37,8 +37,8 @@
               v-if="!mq.phone"
               class="header-option-item"
               data-test="toggleFullScreen"
-              :aria-label="$t(isFullScreen ? 'collapse' : 'expand')"
-              :title="$t(isFullScreen ? 'collapse' : 'expand')"
+              :aria-label="$t(isFullScreen ? 'Documents.FileDisplayModal.collapse' : 'Documents.FileDisplayModal.expand')"
+              :title="$t(isFullScreen ? 'Documents.FileDisplayModal.collapse' : 'Documents.FileDisplayModal.expand')"
               @click="setFullScreen(!isFullScreen)"
             >
               <img

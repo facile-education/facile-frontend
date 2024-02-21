@@ -78,7 +78,7 @@ export default {
     },
     confirmGroupReactivation () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('reactivationConfirmMessage', { groupName: this.activity.groupName }),
+        text: this.$t('Dashboard.ExpiredGroupActivity.reactivationConfirmMessage', { groupName: this.activity.groupName }),
         lastAction: { fct: this.reactivateGroup, params: [] }
       })
     },

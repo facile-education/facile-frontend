@@ -13,7 +13,7 @@
             icon-name="icon-devoirs"
             class="icon-homework theme-text-color"
           />
-          {{ homeworkType === 'givenHomework' ? $t('givenHomework', {targetDate: formattedToDate}) : $t(homeworkType) }}
+          {{ homeworkType === 'givenHomework' ? $t('Course.Homework.givenHomework', {targetDate: formattedToDate}) : $t('Course.Homework.' + homeworkType) }}
         </div>
         <div class="header-first-line">
           <h3>{{ homework.title }}</h3>

@@ -171,7 +171,7 @@ export default {
     },
     confirmDeleteAccess () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('deleteAccessWarning', { accessName: this.access.title }),
+        text: this.$t('Accesses.AccessItem.deleteAccessWarning', { accessName: this.access.title }),
         lastAction: { fct: this.deleteAccess }
       })
     },
