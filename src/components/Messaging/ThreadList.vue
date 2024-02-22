@@ -38,7 +38,7 @@
         v-else-if="threads && threads.length === 0 && !isLoadingThreads"
         class="placeholder"
       >
-        <div v-t="currentFolder.type === 1 ? (isReadOnlyToggled ? 'noNewMessage' : 'noMessage') : 'emptyFolder'" />
+        <div v-t="'Messaging.ThreadList.' + (currentFolder.type === 1 ? (isReadOnlyToggled ? 'noNewMessage' : 'noMessage') : 'emptyFolder')" />
         <img
           src="@/assets/icons/messaging_placeholder.svg"
           alt=""
