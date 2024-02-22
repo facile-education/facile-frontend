@@ -70,7 +70,8 @@ button {
 }
 
 .icon-check {
-  font-size: 1.5rem;
+  color: green;
+  font-size: 1.3rem;
   margin-right: 5px;
 }
 </style>
