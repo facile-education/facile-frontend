@@ -73,9 +73,10 @@ export default {
     },
     lastActivityDate () {
       if (this.lastActivity) {
-        return dayjs(this.lastActivity.modificationDate, DATE_EXCHANGE_FORMAT)
-      } else { // if no activity, return the currentDate
-        return dayjs()
+        return this.lastActivity.modificationDate
+      } else {
+        // If no activity, return '-1'
+        return '-1'
       }
     }
   },
@@ -100,7 +101,7 @@ export default {
     getActivities () {
       if (this.group.isGroupRootFolder) {
         this.activitiesLoading = true
-        documentsService.getDocumentGroupActivity(this.group.groupId, this.lastActivityDate.format(DATE_EXCHANGE_FORMAT), allActivitiesPaginationSize).then((data) => {
+        documentsService.getDocumentGroupActivity(this.group.groupId, this.lastActivityDate, allActivitiesPaginationSize).then((data) => {
           this.activitiesLoading = false
           if (data.success) {
             if (data.activities.length < allActivitiesPaginationSize) {
@@ -111,7 +112,7 @@ export default {
         })
       } else {
         this.activitiesLoading = true
-        getGroupActivity(this.group.groupId, this.lastActivityDate.format(DATE_EXCHANGE_FORMAT), allActivitiesPaginationSize).then((data) => {
+        getGroupActivity(this.group.groupId, this.lastActivityDate, allActivitiesPaginationSize).then((data) => {
           this.activitiesLoading = false
           if (data.success) {
             if (data.activities.length < allActivitiesPaginationSize) {
