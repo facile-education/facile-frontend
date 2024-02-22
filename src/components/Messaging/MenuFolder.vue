@@ -52,9 +52,9 @@
           data-test="add"
           @click.stop="toggleNewFolderInput"
         >
-          <BaseIcon
-            name="plus"
+          <CustomIcon
             class="folder-action add"
+            icon-name="icon-plus"
           />
         </button>
         <button
@@ -62,11 +62,10 @@
           data-test="delete"
           @click.stop="askToConfirmFolderDeletion"
         >
-          <img
-            src="@/assets/icons/trash.svg"
-            alt="delete folder"
+          <CustomIcon
             class="folder-action delete"
-          >
+            icon-name="icon-trash"
+          />
         </button>
       </span>
     </button>
@@ -114,6 +113,7 @@
 
 <script>
 import BaseIcon from '@components/Base/BaseIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import messagingUtils from '@utils/messaging.utils'
 import _ from 'lodash'
 import { nextTick } from 'vue'
@@ -126,6 +126,7 @@ import { MESSAGING } from '@/constants/appConstants'
 export default {
   name: 'MenuFolder',
   components: {
+    CustomIcon,
     BaseIcon,
     WeprodeInput
   },
@@ -405,7 +406,7 @@ button {
       }
 
       .add, .delete {
-        width: 16px;
+        font-size: 1.25rem;
       }
     }
   }

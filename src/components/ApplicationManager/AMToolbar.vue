@@ -6,8 +6,8 @@
       :class="{'phone': mq.phone}"
       @click="onAddApplication"
     >
-      <NeroIcon name="plus" />
-      NOUVEAU
+      <CustomIcon icon-name="icon-plus" />
+      <span>NOUVEAU</span>
     </WeprodeButton>
     <WeprodeDropdown
       v-if="managedSchoolList"
@@ -23,19 +23,18 @@
 
 <script>
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeUtils from '@utils/weprode.utils'
-import { defineAsyncComponent } from 'vue'
 
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
-const NeroIcon = defineAsyncComponent(() => import('@/components/Nero/NeroIcon'))
 
 export default {
   name: 'AMToolbar',
   components: {
-    NeroIcon,
+    CustomIcon,
     NeroToolbar,
     WeprodeButton,
     WeprodeDropdown,
@@ -89,6 +88,12 @@ export default {
 
 .create-button{
   @extend %create-button;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.icon-plus {
+  font-size: 1.25rem;
 }
 
 .school-dropdown {

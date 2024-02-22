@@ -36,10 +36,10 @@
             alt="application_icon"
             class="logo"
           >
-          <NeroIcon
+          <CustomIcon
             v-else
-            name="plus"
             class="logo-fallback"
+            icon-name="icon-plus"
           />
         </div>
 
@@ -204,11 +204,10 @@ import WeprodeRadioButton from '@/components/Base/Weprode/WeprodeRadioButton.vue
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import ImagePicker from '@/components/Nero/ImagePicker'
-import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'ApplicationEditionModal',
-  components: { CustomIcon, ImagePicker, NeroIcon, WeprodeAutocomplete, WeprodeButton, WeprodeCheckbox, WeprodeErrorMessage, WeprodeInput, WeprodeRadioButton, WeprodeTagsInput, WeprodeWindow },
+  components: { CustomIcon, ImagePicker, WeprodeAutocomplete, WeprodeButton, WeprodeCheckbox, WeprodeErrorMessage, WeprodeInput, WeprodeRadioButton, WeprodeTagsInput, WeprodeWindow },
   inject: ['mq'],
   setup: () => ({ v$: useVuelidate() }),
   data () {

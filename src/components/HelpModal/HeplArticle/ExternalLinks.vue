@@ -2,10 +2,10 @@
   <div v-if="isAdministrator || links.length > 0">
     <h3>
       {{ $t('HelpModal.ExternalLinks.external-links') }}
-      <BaseIcon
+      <CustomIcon
         v-if="isAdministrator"
-        class="add-icon"
-        name="plus"
+        data-test="admin-create-category-button"
+        icon-name="icon-plus"
         @click="isCreateExternalLinkModalDisplayed=true"
       />
     </h3>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteLink } from '@/api/help.service'
@@ -46,7 +46,7 @@ const CreateExternalLinkModal = defineAsyncComponent(() => import('@components/H
 
 export default {
   name: 'ExternalLinks',
-  components: { CreateExternalLinkModal, BaseIcon },
+  components: { CustomIcon, CreateExternalLinkModal },
   props: {
     links: {
       type: Array,
@@ -99,13 +99,14 @@ h3 {
   align-items: center;
 
   &:hover {
-    .add-icon {
+    .icon-plus {
       cursor: pointer;
       opacity: 100%;
     }
   }
 
-  .add-icon {
+  .icon-plus {
+    font-size: 1.25rem;
     opacity: 0;
   }
 }

@@ -2,10 +2,9 @@
   <div v-if="isAdministrator || relatedArticles.length > 0">
     <h3>
       {{ $t('HelpModal.RelatedItems.related-articles') }}
-      <BaseIcon
+      <CustomIcon
         v-if="isAdministrator"
-        class="add-icon"
-        name="plus"
+        icon-name="icon-plus"
         @click="isCreateRelatedItemModalDisplayed=true"
       />
     </h3>
@@ -39,7 +38,7 @@
 
 <script>
 
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 
 import { deleteRelation } from '@/api/help.service'
@@ -47,7 +46,7 @@ const CreateRelatedItemModal = defineAsyncComponent(() => import('@components/He
 
 export default {
   name: 'RelatedItems',
-  components: { BaseIcon, CreateRelatedItemModal },
+  components: { CustomIcon, CreateRelatedItemModal },
   props: {
     relatedArticles: {
       type: Array,
@@ -103,13 +102,14 @@ h3 {
   align-items: center;
 
   &:hover {
-    .add-icon {
+    .icon-plus {
       cursor: pointer;
       opacity: 100%;
     }
   }
 
-  .add-icon {
+  .icon-plus {
+    font-size: 1.25rem;
     opacity: 0;
   }
 }

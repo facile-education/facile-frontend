@@ -78,9 +78,9 @@
               :title="$t('Messaging.addFolder')"
               @click.stop="toggleNewFolderInput"
             >
-              <BaseIcon
-                name="plus"
+              <CustomIcon
                 class="fa-lg folder-action"
+                icon-name="icon-plus"
               />
             </button>
           </div>
@@ -115,7 +115,6 @@
 
 <script>
 
-import BaseIcon from '@components/Base/BaseIcon'
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import MenuFolder from '@components/Messaging/MenuFolder'
 import MenuRootFolder from '@components/Messaging/MenuRootFolder'
@@ -133,7 +132,6 @@ export default {
   components: {
     CustomIcon,
     MenuRootFolder,
-    BaseIcon,
     MenuFolder,
     WeprodeInput
   },

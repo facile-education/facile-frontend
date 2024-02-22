@@ -4,11 +4,11 @@ import { faFile, faFileArchive, faFileImage, faFilePdf, faTrashAlt } from '@fort
 import {
   faAddressBook, faAngleDoubleLeft, faAngleDoubleRight, faArrowDown,
   faArrowsAlt, faArrowUp, faCaretDown, faCaretLeft, faCaretRight,
-  faCaretUp, faChartBar, faCircle, faCode, faCog,
+  faCaretUp, faChartBar, faCircle, faCode,
   faCompress, faDatabase, faDownload, faEllipsisV, faExclamationTriangle, faExpand,
   faEye, faFile as regularFaFile, faFileAlt, faFileArchive as regularFaFileArchive, faFileImage as regularFaFileImage, faFilm, faFolder,
   faFolderOpen, faFolderPlus, faGlobe, faHome, faInfoCircle, faMusic,
-  faNewspaper, faPaperclip, faPaperPlane, faPlus, faPowerOff, faShare, faShareAlt,
+  faNewspaper, faPaperclip, faPaperPlane, faPowerOff, faShare, faShareAlt,
   faSyncAlt, faThumbsUp, faTimes, faUnlock, faUser, faUsers
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -31,7 +31,6 @@ fontAwesomeIconLibrary.add(
   faCircle,
   faCode,
   faCompress,
-  faCog,
   faDatabase,
   faDownload,
   faEllipsisV,
@@ -52,7 +51,6 @@ fontAwesomeIconLibrary.add(
   faMusic,
   faNewspaper,
   faPaperPlane,
-  faPlus,
   faPowerOff,
   faShare,
   faShareAlt,
