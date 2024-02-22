@@ -3,7 +3,7 @@
     class="body"
     :class="{'authenticated': isAuthenticated}"
   >
-    <header class="theme-background-color">
+    <header>
       <div>ENT République et Canton de Genève</div>
       <div class="store-icons">
         <i class="fa fa-apple" />
@@ -24,7 +24,7 @@
 
     <slot />
 
-    <footer class="bottom-bar theme-background-color">
+    <footer class="bottom-bar">
       <div>École en ligne</div>
     </footer>
   </div>
@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'GVELayout',
+  name: 'PublicLayout',
   computed: {
     isAuthenticated () {
       return this.$store.state.user.userId && this.$store.state.user.userId !== 0
@@ -49,12 +49,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  &:not(.authenticated) {
-    header, footer {
-      background-color: rgba(0,0,0,0.6);
-    }
-  }
 }
 
 header, footer {

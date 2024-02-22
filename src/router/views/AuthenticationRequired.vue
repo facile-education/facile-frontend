@@ -20,7 +20,7 @@ export default {
   components: { CustomIcon, WeprodeSpinner },
   emits: ['update:layout'],
   beforeCreate () {
-    this.$emit('update:layout', 'GVELayout')
+    this.$emit('update:layout', 'PublicLayout')
   },
   created () {
     let redirectPath = this.$router.options.history.state.back // The previous route

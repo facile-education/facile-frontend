@@ -64,7 +64,7 @@ export default {
   },
   beforeCreate () {
     if (this.$route.path === '/' || this.$route.path === '/login') {
-      this.$store.commit('theme/setLayout', 'GVELayout')
+      this.$store.commit('theme/setLayout', 'PublicLayout')
     }
   },
   methods: {

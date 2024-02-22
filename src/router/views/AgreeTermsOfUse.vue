@@ -39,7 +39,7 @@ export default {
     }
   },
   beforeCreate () {
-    this.$emit('update:layout', 'GVELayout')
+    this.$emit('update:layout', 'PublicLayout')
   },
   created () {
     axios.get('chart.html').then(response => {

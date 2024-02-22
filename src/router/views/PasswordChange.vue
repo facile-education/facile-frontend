@@ -109,7 +109,7 @@ export default {
     }
   },
   beforeCreate () {
-    this.$emit('update:layout', 'GVELayout')
+    this.$emit('update:layout', 'PublicLayout')
   },
   created () {
     if (window.location.href.includes('ticketKey')) {

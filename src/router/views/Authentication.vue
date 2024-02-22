@@ -220,7 +220,7 @@ export default {
     }
   },
   beforeCreate () {
-    this.$emit('update:layout', 'GVELayout')
+    this.$emit('update:layout', 'PublicLayout')
   },
   created () {
     const { cookies } = useCookies()

@@ -2,7 +2,6 @@ import './registerServiceWorker'
 
 import BannerLayout from '@layouts/BannerLayout.vue'
 import EmptyLayout from '@layouts/EmptyLayout.vue'
-import GVELayout from '@layouts/GVELayout.vue'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
@@ -17,6 +16,8 @@ import router from '@/router'
 import store from '@/store'
 
 import App from './Nero.vue'
+
+const PublicLayout = (await import(`@layouts/${import.meta.env.VITE_CLIENT}PublicLayout.vue`)).default;
 
 const app = createApp(App)
   .use(store)
@@ -47,7 +48,7 @@ const app = createApp(App)
   })
 
 app.component('BannerLayout', BannerLayout)
-app.component('GVELayout', GVELayout)
+app.component('PublicLayout', PublicLayout)
 app.component('EmptyLayout', EmptyLayout)
 
 const calendar = require('dayjs/plugin/calendar')
