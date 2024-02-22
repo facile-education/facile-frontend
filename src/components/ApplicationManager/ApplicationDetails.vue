@@ -85,7 +85,9 @@
       type="circle"
       @click="toggleBroadcastModal"
     >
-      <NeroIcon name="cog" />
+      <CustomIcon
+        icon-name="icon-admin"
+      />
     </WeprodeButton>
     <WeprodeButton
       v-if="isAdministrator && isAdministratorMode"
@@ -261,6 +263,10 @@ p {
 
 .broadcast {
   margin-bottom: 10px;
+}
+
+.icon-admin {
+  font-size: 1.3rem;
 }
 
 .list-rules {

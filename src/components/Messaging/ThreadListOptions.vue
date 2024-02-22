@@ -19,10 +19,10 @@
       <li v-if="!mq.tablet && !mq.phone">
         <IconOption
           class="button"
-          :icon="require('@assets/icons/parameters.svg')"
+          :icon="'icon-admin'"
           :title="$t('Messaging.Parameters.header')"
           name="toggleParameters"
-          icon-height="18px"
+          icon-height="24px"
           alt="parameters"
           @click="openParametersModal"
         />
