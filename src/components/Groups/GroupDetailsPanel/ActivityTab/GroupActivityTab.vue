@@ -35,9 +35,7 @@
 
 <script>
 import ActivityItem from '@components/Dashboard/ActivityWidget/ActivityItem.vue'
-import dayjs from 'dayjs'
 
-import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import documentsService from '@/api/documents/documents.service'
 import { getGroupActivity } from '@/api/groups.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
