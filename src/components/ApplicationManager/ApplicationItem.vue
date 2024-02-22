@@ -32,7 +32,7 @@
         class="default"
       >
         <img
-          :src="require('@/assets/icons/file-image.svg')"
+          :src="require('@/assets/icons/file_image.svg')"
           alt="default-icon"
         >
       </div>
