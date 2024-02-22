@@ -7,11 +7,6 @@
         :title="$t('Dashboard.AllAnnouncementsHeader.dashboard')"
       >
         <CustomIcon :icon-name="'icon-chevron-right-m'" />
-        <img
-          src="@assets/icons/chevron_left.svg"
-          :alt="$t('Dashboard.AllAnnouncementsHeader.dashboard')"
-          :title="$t('Dashboard.AllAnnouncementsHeader.dashboard')"
-        >
       </RouterLink>
       <h1
         v-t="'Dashboard.AllAnnouncementsHeader.header'"
