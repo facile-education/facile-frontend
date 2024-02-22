@@ -9,21 +9,17 @@
       </div>
 
       <div class="right-section">
-        <div
+        <button
           class="collapse"
+          :title="$t('Documents.UploadProgression.' + (isCollapsed? 'extend' : 'collapse'))"
+          :aria-label="$t('Documents.UploadProgression.' + (isCollapsed? 'extend' : 'collapse'))"
           @click="isCollapsed=!isCollapsed"
         >
-          <BaseIcon
-            v-if="!isCollapsed"
-            class="icon"
-            name="chevron-down"
+          <CustomIcon
+            :class="{'collapsed': isCollapsed}"
+            icon-name="icon-chevron-right-s"
           />
-          <BaseIcon
-            v-else
-            class="icon"
-            name="chevron-up"
-          />
-        </div>
+        </button>
         <button
           v-if="!isUploadFinished && !cancelStatus"
           v-t="'Documents.UploadProgression.cancel'"
@@ -59,12 +55,13 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon'
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import UploadProgressionItem from '@components/Documents/UploadProgressionItem'
+
+import { uploadProgressionTimeAfterFinish } from '@/constants/appConstants.js'
 export default {
   name: 'UploadProgression',
-  components: { CustomIcon, UploadProgressionItem, BaseIcon },
+  components: { CustomIcon, UploadProgressionItem },
   data () {
     return {
       isCollapsed: false
@@ -102,7 +99,7 @@ export default {
       if (value && this.listOfFailedUploadFiles.length === 0) {
         setTimeout(() => {
           this.close()
-        }, 5000)
+        }, uploadProgressionTimeAfterFinish)
       }
     }
   },
@@ -147,10 +144,23 @@ export default {
       .collapse {
         margin-right: 20px;
         cursor: pointer;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        align-items: center;
       }
 
       .cancel-button {
         color: #E74B3B;
+      }
+
+      .icon-chevron-right-s {
+        transform: rotate(90deg);
+        font-size: 1.3rem;
+
+        &.collapsed {
+          transform: rotate(-90deg);
+        }
       }
 
       .close-button, .cancel-button {

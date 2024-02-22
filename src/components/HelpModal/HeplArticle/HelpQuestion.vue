@@ -12,10 +12,10 @@
         alt="delete"
         @click.stop="confirmQuestionRemoval"
       >
-      <BaseIcon
+      <CustomIcon
         class="icon"
         :class="isExtended ? 'extend': 'collapse'"
-        name="chevron-up"
+        :icon-name="'icon-chevron-right-s'"
       />
     </span>
   </button>
@@ -28,11 +28,11 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 
 export default {
   name: 'HelpQuestion',
-  components: { BaseIcon },
+  components: { CustomIcon },
   props: {
     question: {
       type: Object,
@@ -93,16 +93,24 @@ button {
   font-weight: lighter;
   font-size: 1em;
 
+  span {
+    display: flex;
+  }
+
+  .icon {
+    font-size: 1.3rem;
+  }
+
   .collapse, .extend {
     transition:  transform .6s;
   }
 
   .extend {
-    transform: rotate(0);
+    transform: rotate(90deg);
   }
 
   .collapse {
-    transform: rotate(180deg);
+    transform: rotate(0);
   }
 
   .admin-trash-icon {

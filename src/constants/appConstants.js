@@ -40,6 +40,7 @@ const slotLabelList = {
 const popupDurationTime = 3500
 const mobilePopupDurationTime = 2000
 const fileAutoSaveTime = 60000
+const uploadProgressionTimeAfterFinish = 5000
 
 const entityNameMaxSize = 255
 const ckMaxSize = 63206
@@ -47,6 +48,7 @@ const ckMaxSize = 63206
 export {
   nbCharBeforeCompletion,
   timeBeforeCompletion,
+  uploadProgressionTimeAfterFinish,
   slotLabelList,
   popupDurationTime,
   mobilePopupDurationTime,

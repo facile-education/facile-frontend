@@ -46,10 +46,10 @@
         class="toggle-aside-button"
         @click="isAsideExtended = !isAsideExtended"
       >
-        <BaseIcon
+        <CustomIcon
           class="icon"
           :class="isAsideExtended ? 'extend': 'collapse'"
-          name="chevron-down"
+          :icon-name="'icon-chevron-right-s'"
         />
       </button>
       <div
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import ExternalLinks from '@components/HelpModal/HeplArticle/ExternalLinks.vue'
 import HelpFAQSection from '@components/HelpModal/HeplArticle/HelpFAQSection.vue'
 import HelpManualSection from '@components/HelpModal/HeplArticle/HelpManualSection.vue'
@@ -97,7 +97,7 @@ import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 const EditArticleTitleModal = defineAsyncComponent(() => import('@components/HelpModal/CreationModals/EditArticleTitleModal.vue'))
 export default {
   name: 'HelpArticle',
-  components: { EditArticleTitleModal, BaseIcon, HelpFAQSection, HelpManualSection, HelpVideoSection, ExternalLinks, RelatedItems, WeprodeSpinner },
+  components: { CustomIcon, EditArticleTitleModal, HelpFAQSection, HelpManualSection, HelpVideoSection, ExternalLinks, RelatedItems, WeprodeSpinner },
   inject: ['mq'],
   data () {
     return {
@@ -216,21 +216,23 @@ aside {
     box-shadow: -1px 2px 4px rgba(0, 0, 0, 0.2);
 
     .toggle-aside-button {
-      display: inline-block;
+      display: flex;
       position: absolute;
       top: 0;
       left: 0;
+      padding: 0 4px;
       transform: translateX(-100%);
 
       .icon {
         transition:  transform .6s;
+        font-size: 1.3rem;
 
         &.extend {
-          transform: rotate(-90deg);
+          transform: rotate(180deg);
         }
 
         &.collapse {
-          transform: rotate(90deg);
+          transform: rotate(0);
         }
       }
     }

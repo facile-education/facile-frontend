@@ -33,19 +33,13 @@
         v-if="field.sort.type !== 'lastModifiedDate' || currentSort.type === 'lastModifiedDate'"
         class="icon-container"
       >
-        <BaseIcon
-          v-if="currentSort.type === field.sort.type && currentSort.isOrderAsc"
+        <CustomIcon
+          v-if="currentSort.type === field.sort.type"
+          :class="{'reverse': !currentSort.isOrderAsc}"
           class="icon"
-          name="chevron-up"
+          :icon-name="'icon-chevron-right-s'"
           :title="$t('Documents.FilesFields.ascending')"
           :aria-label="$t('Documents.FilesFields.ascending')"
-        />
-        <BaseIcon
-          v-if="currentSort.type === field.sort.type && !currentSort.isOrderAsc"
-          class="icon"
-          name="chevron-down"
-          :title="$t('Documents.FilesFields.descending')"
-          :aria-label="$t('Documents.FilesFields.descending')"
         />
       </div>
     </div>
@@ -54,11 +48,11 @@
 
 <script>
 
-import BaseIcon from '@components/Base/BaseIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 
 export default {
   name: 'FilesFields',
-  components: { BaseIcon },
+  components: { CustomIcon },
   inject: ['mq'],
   props: {
     currentSort: {
@@ -165,7 +159,12 @@ export default {
     justify-content: center;
 
     .icon {
-      font-size: 12px;
+      transform: rotate(-90deg);
+      font-size: 16px;
+
+      &.reverse {
+        transform: rotate(90deg);
+      }
     }
   }
 }

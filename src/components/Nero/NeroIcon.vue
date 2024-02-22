@@ -8,7 +8,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faCaretDown, faCaretLeft, faCaretRight, faCaretUp,
-  faChevronDown, faChevronRight,
   faCog, faExclamationTriangle, faGripLines, faList, faMicrophone, faPause,
   faPencilAlt, faPlay, faPlus, faPowerOff, faSearch, faSignOutAlt, faStop,
   faTimes, faTrash, faUndo, faUser, faUserPlus, faUsers
@@ -20,8 +19,6 @@ library.add(
   faCaretLeft,
   faCaretRight,
   faCaretUp,
-  faChevronDown,
-  faChevronRight,
   faCog,
   faExclamationTriangle,
   faGripLines,

@@ -22,10 +22,11 @@
         v-else-if="status!=='not-uploaded'"
         class="icon-container"
       >
-        <BaseIcon
-          :data-test="status==='uploaded' ? 'check-icon' : 'cross-icon'"
+        <CustomIcon
+          class="icon"
           :class="status==='uploaded'? 'uploaded' : 'error'"
-          :name="status==='uploaded' ? 'check' : 'times'"
+          :data-test="status==='uploaded' ? 'check-icon' : 'cross-icon'"
+          :icon-name="status==='uploaded' ? 'icon-check' : 'icon-cross-M'"
         />
       </div>
       <div v-else />
@@ -34,10 +35,10 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 export default {
   name: 'UploadProgressionItem',
-  components: { BaseIcon },
+  components: { CustomIcon },
   props: {
     document: {
       type: Object,

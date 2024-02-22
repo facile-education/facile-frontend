@@ -164,6 +164,8 @@
     "UploadProgression": {
       "cancel": "Annuler",
       "close": "Fermer",
+      "collapse": "Réduire",
+      "extend": "Étendre",
       "uploadOn": "{done} chargement sur {total} | {done} chargement sur {total} | {done} chargements sur {total}",
       "uploadfinished": "{nb} chargement terminé | {nb} chargement terminé | {nb} chargements terminés"
     },

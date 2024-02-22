@@ -16,11 +16,10 @@
           {{ title }}
         </span>
       </span>
-      <BaseIcon
+      <CustomIcon
         v-if="!isLeaf"
-        class="extend-icon"
         :class="isExtended ? 'extend': 'collapse'"
-        name="chevron-up"
+        icon-name="icon-chevron-right-s"
       />
       <button
         v-else-if="isASelectableLeaf"
@@ -54,11 +53,11 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 
 export default {
   name: 'AddressBookItem',
-  components: { BaseIcon },
+  components: { CustomIcon },
   props: {
     title: {
       type: String,
@@ -191,8 +190,9 @@ button {
     }
   }
 
-  .extend-icon {
-    margin-right: 2px;
+  .icon-chevron-right-s {
+    font-size: 1.2rem;
+    line-height: 1.2rem;
   }
 }
 
@@ -201,11 +201,11 @@ button {
 }
 
 .extend {
-  transform: rotate(0);
+  transform: rotate(-90deg);
 }
 
 .collapse {
-  transform: rotate(180deg);
+  transform: rotate(90deg);
 }
 
 .sub-tree {

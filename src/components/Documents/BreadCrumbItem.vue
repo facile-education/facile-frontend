@@ -5,7 +5,10 @@
     data-test="back"
     @click="clickBack"
   >
-    <CustomIcon :icon-name="'icon-chevron-right-s'" />
+    <CustomIcon
+      class="back-icon"
+      :icon-name="'icon-chevron-right-s'"
+    />
     <span class="previous-name">{{ (previousFolderName.length > 12) ? $t('Commons.back') : previousFolderName }}</span>
   </button>
   <button
@@ -19,7 +22,7 @@
     @drop="dropFile"
     @click.stop="changeDir"
   >
-    <div class="name">
+    <span class="name">
       <span>
         {{ folder.name }}
       </span>
@@ -35,21 +38,21 @@
         data-test="show-options"
         @click.stop="toggleContextMenu"
       >
-        <BaseIcon
+        <CustomIcon
           class="icon"
-          name="chevron-down"
+          :icon-name="'icon-chevron-right-s'"
         />
       </button>
-      <div
+      <span
         v-else-if="currentOptions.length > 0"
         class="current-folder-options"
       >
-        <BaseIcon
+        <CustomIcon
           class="icon"
-          name="chevron-down"
+          :icon-name="'icon-chevron-right-s'"
         />
-      </div>
-    </div>
+      </span>
+    </span>
 
     <ContextMenu
       v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
@@ -72,7 +75,6 @@
 
 <script>
 
-import BaseIcon from '@components/Base/BaseIcon'
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 import { defineAsyncComponent } from 'vue'
@@ -82,7 +84,7 @@ const FolderNameModal = defineAsyncComponent(() => import('@components/Documents
 
 export default {
   name: 'BreadCrumbItem',
-  components: { CustomIcon, FolderNameModal, ContextMenu, BaseIcon },
+  components: { CustomIcon, FolderNameModal, ContextMenu },
   inject: ['mq'],
   props: {
     folder: {
@@ -243,7 +245,7 @@ export default {
     line-height: 100%;
   }
 
-  .icon-chevron-right-s {
+  .back-icon {
     font-size: 20px;
     transform: rotate(180deg);
   }
@@ -313,23 +315,22 @@ export default {
 .first-folder-options {
   position: relative;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 5px;
   padding: 0;
   border: none;
   background-color: white;
+  display: flex;
+}
 
-  .icon {
-    font-size: 12px;
-  }
+.icon {
+  transform: rotate(90deg);
+  font-size: 20px;
 }
 
 .current-folder-options {
-  margin-left: 10px;
+  margin-left: 5px;
+  display: flex;
   position: relative;
-
-  .icon {
-    font-size: 12px;
-  }
 
   .img-container {
     height: 33px;
@@ -375,17 +376,5 @@ export default {
     }
   }
 }
-
-//.slide-fade-enter-active {
-//  transition: all .3s ease;
-//}
-//.slide-fade-leave-active {
-//  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-//}
-//.slide-fade-enter-from, .slide-fade-leave-to
-//  /* TODO hide the overflow when translating*/ {
-//  transform: translateY(-100%);
-//  opacity: 0.5;
-//}
 
 </style>
