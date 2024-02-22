@@ -63,7 +63,6 @@
 
 <script>
 
-import BaseIcon from '@components/Base/BaseIcon'
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu'))
@@ -72,7 +71,6 @@ export default {
   name: 'ContextMenuItem',
   components: {
     CustomIcon,
-    BaseIcon,
     ContextMenu
   },
   inject: ['mq'],
