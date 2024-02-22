@@ -9,16 +9,16 @@
     >
       {{ category.categoryName }}
       <span v-if="isAdministrator && isHovering">
-        <BaseIcon
+        <CustomIcon
           data-test="admin-create-category-button"
-          name="plus"
+          icon-name="icon-plus"
           @click.stop="isCreateArticleModalDisplayed=true"
         />
-        <img
-          src="@/assets/icons/trash.svg"
-          alt="delete"
+        <CustomIcon
+          data-test="admin-delete-category-button"
+          icon-name="icon-trash"
           @click.stop="confirmCategoryRemoval"
-        >
+        />
       </span>
     </button>
     <nav
@@ -31,6 +31,8 @@
         >
           <HelpMenuItem
             :item="item"
+            :is-first="index===0"
+            :is-last="index===category.items.length - 1"
             @update-item-position="updateItemPosition"
           />
         </li>
@@ -50,7 +52,7 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import HelpMenuItem from '@components/HelpModal/HelpMenuItem.vue'
 import { defineAsyncComponent } from 'vue'
 
@@ -58,7 +60,7 @@ import { deleteCategory, saveHelpItemPosition } from '@/api/help.service'
 const CreateArticleModal = defineAsyncComponent(() => import('@components/HelpModal/CreationModals/CreateArticleModal.vue'))
 export default {
   name: 'HelpMenuCategory',
-  components: { CreateArticleModal, BaseIcon, HelpMenuItem },
+  components: { CustomIcon, CreateArticleModal, HelpMenuItem },
   props: {
     category: {
       type: Object,
@@ -174,6 +176,13 @@ button {
 
   &:hover {
     background-color: $color-hover-bg;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    gap: 8px;
   }
 
   img {

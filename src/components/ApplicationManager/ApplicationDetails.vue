@@ -85,9 +85,7 @@
       type="circle"
       @click="toggleBroadcastModal"
     >
-      <CustomIcon
-        icon-name="icon-admin"
-      />
+      <CustomIcon icon-name="icon-admin" />
     </WeprodeButton>
     <WeprodeButton
       v-if="isAdministrator && isAdministratorMode"

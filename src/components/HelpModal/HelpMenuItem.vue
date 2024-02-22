@@ -10,38 +10,47 @@
       @click="selectItem"
     >{{ item.itemName }}
       <span v-if="isAdministrator && isHovering">
-        <BaseIcon
-          class="arrow-up"
-          name="arrow-up"
+        <!-- todo: replace by arrow icon-->
+        <CustomIcon
+          v-if="!isFirst"
+          icon-name="icon-chevron-right-s arrow-up"
           @click.stop="updateItemPosition('up')"
         />
-        <BaseIcon
-          class="arrow-down"
-          name="arrow-down"
+        <CustomIcon
+          v-if="!isLast"
+          icon-name="icon-chevron-right-s arrow-down"
+          class="reverse"
           @click.stop="updateItemPosition('down')"
         />
-        <img
-          src="@/assets/icons/trash.svg"
-          alt="delete"
+        <CustomIcon
+          icon-name="icon-trash"
           @click.stop="confirmItemRemoval"
-        >
+        />
       </span>
     </a>
   </div>
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 
 import { deleteItem } from '@/api/help.service'
 
 export default {
   name: 'HelpMenuItem',
-  components: { BaseIcon },
+  components: { CustomIcon },
   props: {
     item: {
       type: Object,
       required: true
+    },
+    isFirst: {
+      type: Boolean,
+      default: false
+    },
+    isLast: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['updateItemPosition'],
@@ -117,20 +126,20 @@ a {
     background-color: $color-hover-bg;
   }
 
-  .arrow-up, .arrow-down {
-    margin-right: 5px;
-  }
-}
+  span {
+    color: black;
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    gap: 4px;
 
-.menu-item:first-child {
-  .arrow-up {
-    display: none;
-  }
-}
+    .icon-chevron-right-s {
+      transform: rotate(-90deg);
 
-.menu-item:last-child {
-  .arrow-down {
-    display: none;
+      &.reverse {
+        transform: rotate(90deg);
+      }
+    }
   }
 }
 

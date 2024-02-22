@@ -4,7 +4,7 @@
     class="icon"
     :class="{'pulse': isRecording}"
   >
-    <NeroIcon name="microphone" />
+    <CustomIcon icon-name="icon-record" />
   </div>
 
   <p
@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import RecordRTC from 'recordrtc'
 import WaveSurfer from 'wavesurfer.js'
@@ -72,7 +73,7 @@ import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'AudioRecorder',
-  components: { NeroIcon, WeprodeButton, WeprodeErrorMessage },
+  components: { CustomIcon, NeroIcon, WeprodeButton, WeprodeErrorMessage },
   props: {
     duration: {
       type: Number,
@@ -254,7 +255,7 @@ $red: rgb(230, 109, 109);
 .icon {
   height: 60px;
   width: 60px;
-  font-size: 1.7rem;
+  font-size: 2rem;
   color: $color;
   border: 1px solid rgba($red, 0.8);
   border-radius: 50%;

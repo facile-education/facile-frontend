@@ -5,6 +5,10 @@
     :style="'background-color: ' + backgroundColor + ';'"
   >
     <div class="icon">
+      <CustomIcon
+        v-if="iconName==='icon-check'"
+        :icon-name="iconName"
+      />
       <BaseIcon
         class="fa-icon"
         :name="iconName"
@@ -75,7 +79,7 @@ export default {
     iconName () {
       switch (this.type) {
         case 'success':
-          return 'check'
+          return 'icon-check'
         case 'info':
           return 'info-circle'
         case 'warning':
@@ -128,7 +132,7 @@ export default {
     align-items: center;
     justify-content: center;
 
-    .fa-icon {
+    .fa-icon, .icon-check {
       font-size: 1.25rem;
     }
   }
