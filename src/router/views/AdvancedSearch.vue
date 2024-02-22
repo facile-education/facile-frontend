@@ -1,16 +1,19 @@
 <template>
-  <h1 :aria-label="$t('AdvancedSearch.serviceTitle')" />
-  <WeprodeInput
-    v-model="searchInput"
-    :placeholder="$t('AdvancedSearch.searchPlaceholder')"
-    :maxlength="75"
-  />
-  <WeprodeButton
-    :label="$t('AdvancedSearch.search')"
-    class="confirm-button"
-    :disabled="searchInput === ''"
-    @click="runSearch"
-  />
+  <ServicesWrapper
+    :is-title-visible="false"
+  >
+    <WeprodeInput
+      v-model="searchInput"
+      :placeholder="$t('AdvancedSearch.searchPlaceholder')"
+      :maxlength="75"
+    />
+    <WeprodeButton
+      :label="$t('AdvancedSearch.search')"
+      class="confirm-button"
+      :disabled="searchInput === ''"
+      @click="runSearch"
+    />
+  </ServicesWrapper>
 </template>
 
 <script>

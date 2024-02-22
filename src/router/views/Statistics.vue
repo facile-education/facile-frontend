@@ -1,119 +1,124 @@
 <template>
-  <div v-if="selectedSchool">
-    <div class="statistics">
-      <h1 :aria-label="$t('Statistics.serviceTitle')" />
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('Statistics.serviceTitle')"
+  >
+    <div v-if="selectedSchool">
+      <div class="statistics">
+        <h1 :aria-label="$t('Statistics.serviceTitle')" />
 
-      <div>
-        <div
-          v-if="managedSchoolList.length > 1"
-          class="school-container"
-        >
-          <WeprodeDropdown
-            v-model="selectedSchool"
-            class="school-dropdown"
-            :list="managedSchoolList"
-            display-field="schoolName"
-            :sort="!isGlobalAdmin"
-          />
+        <div>
+          <div
+            v-if="managedSchoolList.length > 1"
+            class="school-container"
+          >
+            <WeprodeDropdown
+              v-model="selectedSchool"
+              class="school-dropdown"
+              :list="managedSchoolList"
+              display-field="schoolName"
+              :sort="!isGlobalAdmin"
+            />
+          </div>
+          <div class="toolbar">
+            <StatsActivesUsers
+              v-if="!(mq.phone || mq.tablet)"
+              :start-time="selectedStartDate"
+              :end-time="selectedEndDate"
+              :selected-school="selectedSchool"
+            />
+            <DateRangePicker
+              v-if="minDate !== undefined"
+              :initial-range="{start: selectedStartDate, end: selectedEndDate}"
+              :max-date="maxDate"
+              :min-date="minDate"
+              class="range-picker"
+              @update-dates="updateDates"
+            />
+          </div>
         </div>
-        <div class="toolbar">
+
+        <div class="stats">
           <StatsActivesUsers
-            v-if="!(mq.phone || mq.tablet)"
+            v-if="mq.phone || mq.tablet"
             :start-time="selectedStartDate"
             :end-time="selectedEndDate"
             :selected-school="selectedSchool"
+            class="stat"
           />
-          <DateRangePicker
-            v-if="minDate !== undefined"
-            :initial-range="{start: selectedStartDate, end: selectedEndDate}"
-            :max-date="maxDate"
-            :min-date="minDate"
-            class="range-picker"
-            @update-dates="updateDates"
-          />
-        </div>
-      </div>
 
-      <div class="stats">
-        <StatsActivesUsers
-          v-if="mq.phone || mq.tablet"
-          :start-time="selectedStartDate"
-          :end-time="selectedEndDate"
-          :selected-school="selectedSchool"
-          class="stat"
-        />
-
-        <VisitsChart
-          :start-time="selectedStartDate"
-          :end-time="selectedEndDate"
-          :selected-school="selectedSchool"
-          comparator="profile"
-          class="stat"
-        />
-
-        <ActionsChart
-          :start-time="selectedStartDate"
-          :end-time="selectedEndDate"
-          :selected-school="selectedSchool"
-          comparator="profile"
-          class="stat"
-        />
-
-        <div class="doughnuts">
-          <StatsDoughnut
-            class="doughnut stat"
+          <VisitsChart
             :start-time="selectedStartDate"
             :end-time="selectedEndDate"
             :selected-school="selectedSchool"
-            service="documents"
+            comparator="profile"
+            class="stat"
           />
 
-          <StatsDoughnut
-            class="doughnut stat"
+          <ActionsChart
             :start-time="selectedStartDate"
             :end-time="selectedEndDate"
             :selected-school="selectedSchool"
-            service="homeworks"
+            comparator="profile"
+            class="stat"
           />
 
-          <StatsDoughnut
-            class="doughnut stat"
-            :start-time="selectedStartDate"
-            :end-time="selectedEndDate"
-            :selected-school="selectedSchool"
-            service="schoolLife"
-          />
-        </div>
+          <div class="doughnuts">
+            <StatsDoughnut
+              class="doughnut stat"
+              :start-time="selectedStartDate"
+              :end-time="selectedEndDate"
+              :selected-school="selectedSchool"
+              service="documents"
+            />
 
-        <div class="general-stats">
-          <GlobalStat
-            class="general-stat stat"
-            :start-time="selectedStartDate"
-            :end-time="selectedEndDate"
-            :selected-school="selectedSchool"
-            service="messaging"
-            color="#E74C3C"
-          />
-          <GlobalStat
-            class="general-stat stat"
-            :start-time="selectedStartDate"
-            :end-time="selectedEndDate"
-            :selected-school="selectedSchool"
-            service="schoolNews"
-            color="#306CD3"
-          />
-          <GlobalStat
-            class="general-stat stat"
-            :start-time="selectedStartDate"
-            :end-time="selectedEndDate"
-            :selected-school="selectedSchool"
-            service="news"
-            color="#306CD3"
-          />
+            <StatsDoughnut
+              class="doughnut stat"
+              :start-time="selectedStartDate"
+              :end-time="selectedEndDate"
+              :selected-school="selectedSchool"
+              service="homeworks"
+            />
+
+            <StatsDoughnut
+              class="doughnut stat"
+              :start-time="selectedStartDate"
+              :end-time="selectedEndDate"
+              :selected-school="selectedSchool"
+              service="schoolLife"
+            />
+          </div>
+
+          <div class="general-stats">
+            <GlobalStat
+              class="general-stat stat"
+              :start-time="selectedStartDate"
+              :end-time="selectedEndDate"
+              :selected-school="selectedSchool"
+              service="messaging"
+              color="#E74C3C"
+            />
+            <GlobalStat
+              class="general-stat stat"
+              :start-time="selectedStartDate"
+              :end-time="selectedEndDate"
+              :selected-school="selectedSchool"
+              service="schoolNews"
+              color="#306CD3"
+            />
+            <GlobalStat
+              class="general-stat stat"
+              :start-time="selectedStartDate"
+              :end-time="selectedEndDate"
+              :selected-school="selectedSchool"
+              service="news"
+              color="#306CD3"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -128,9 +133,11 @@ import dayjs from 'dayjs'
 import { getGlobalConfiguration } from '@/api/schedule.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 export default {
   name: 'Statistics',
-  components: { DateRangePicker, VisitsChart, ActionsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, WeprodeDropdown },
+  components: { DateRangePicker, VisitsChart, ActionsChart, StatsActivesUsers, StatsDoughnut, GlobalStat, WeprodeDropdown, ServicesWrapper },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {

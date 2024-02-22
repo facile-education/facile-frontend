@@ -1,19 +1,24 @@
 <template>
-  <div class="authentication-required">
-    <div class="error">
-      <img
-        src="@/assets/icons/alert.svg"
-        alt=""
-      >
-      <h1 v-t="'NotAllowed.notAllowed'" />
-      <div v-t="'NotAllowed.useOthersServicesPlease'" />
+  <ServicesWrapper :is-title-visible="false">
+    <div class="authentication-required">
+      <div class="error">
+        <img
+          src="@/assets/icons/alert.svg"
+          alt=""
+        >
+        <h1 v-t="'NotAllowed.notAllowed'" />
+        <div v-t="'NotAllowed.useOthersServicesPlease'" />
+      </div>
     </div>
-  </div>
+  </ServicesWrapper>
 </template>
 
 <script>
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 export default {
-  name: 'NotAllowed'
+  name: 'NotAllowed',
+  components: { ServicesWrapper }
 }
 </script>
 

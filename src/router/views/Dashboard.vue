@@ -1,82 +1,86 @@
 <template>
-  <h1 :aria-label="$t('Dashboard.serviceTitle')" />
-  <div class="dashboard-panel">
-    <div class="administration-widgets">
-      <DiaryWidget
-        v-if="hasDiaryWidget"
-        class="diary"
-      />
-      <AnnouncementsWidget
-        v-if="hasSchoolNewsWidget"
-        class="announcements"
-      />
-    </div>
-
-    <div
-      class="personal-widgets"
-      :class="{'has-user-selection-widgets': hasEDTWidget || hasHomeworkWidget}"
-    >
-      <ActivityWidget
-        v-if="hasActivityThreadWidget"
-        class="activities"
-      />
-
-      <StatisticWidget
-        v-if="hasStatisticWidget"
-        class="statistics"
-      />
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('Dashboard.serviceTitle')"
+  >
+    <div class="dashboard-panel">
+      <div class="administration-widgets">
+        <DiaryWidget
+          v-if="hasDiaryWidget"
+          class="diary"
+        />
+        <AnnouncementsWidget
+          v-if="hasSchoolNewsWidget"
+          class="announcements"
+        />
+      </div>
 
       <div
-        v-if="hasEDTWidget || hasHomeworkWidget"
-        class="user-selection"
-        :class="{'has-homework-widget': hasHomeworkWidget && selectedUser}"
+        class="personal-widgets"
+        :class="{'has-user-selection-widgets': hasEDTWidget || hasHomeworkWidget}"
       >
+        <ActivityWidget
+          v-if="hasActivityThreadWidget"
+          class="activities"
+        />
+
+        <StatisticWidget
+          v-if="hasStatisticWidget"
+          class="statistics"
+        />
+
         <div
-          v-if="childList.length > 1"
-          class="first-line"
+          v-if="hasEDTWidget || hasHomeworkWidget"
+          class="user-selection"
+          :class="{'has-homework-widget': hasHomeworkWidget && selectedUser}"
         >
-          <WeprodeDropdown
-            v-model="selectedChild"
-            :list="childList"
-            :sort="false"
-            display-field="firstName"
-            class="child-selector"
-          />
-          <div class="line" />
-        </div>
-        <div class="selected-user-widgets">
-          <ScheduleWidget
-            v-if="hasEDTWidget && selectedUser"
-            :user-id="selectedUser.userId"
-            class="schedule"
-          />
-          <HomeworkWidget
-            v-if="hasHomeworkWidget && selectedUser"
-            :user-id="selectedUser.userId"
-            class="homework"
-          />
+          <div
+            v-if="childList.length > 1"
+            class="first-line"
+          >
+            <WeprodeDropdown
+              v-model="selectedChild"
+              :list="childList"
+              :sort="false"
+              display-field="firstName"
+              class="child-selector"
+            />
+            <div class="line" />
+          </div>
+          <div class="selected-user-widgets">
+            <ScheduleWidget
+              v-if="hasEDTWidget && selectedUser"
+              :user-id="selectedUser.userId"
+              class="schedule"
+            />
+            <HomeworkWidget
+              v-if="hasHomeworkWidget && selectedUser"
+              :user-id="selectedUser.userId"
+              class="homework"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <teleport
-    v-if="isNewsDisplayed && announcement !== undefined"
-    to="body"
-  >
-    <NewsDetailsModal
-      :init-news="announcement"
-      @close="isNewsDisplayed = false"
-    />
-  </teleport>
-  <teleport
-    v-if="isEventDisplayed && event !== undefined"
-    to="body"
-  >
-    <DiaryEventDetailsModal
-      :init-event="event"
-      @close="isEventDisplayed = false"
-    />
-  </teleport>
+    <teleport
+      v-if="isNewsDisplayed && announcement !== undefined"
+      to="body"
+    >
+      <NewsDetailsModal
+        :init-news="announcement"
+        @close="isNewsDisplayed = false"
+      />
+    </teleport>
+    <teleport
+      v-if="isEventDisplayed && event !== undefined"
+      to="body"
+    >
+      <DiaryEventDetailsModal
+        :init-event="event"
+        @close="isEventDisplayed = false"
+      />
+    </teleport>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -86,6 +90,8 @@ import { checkDashboardParameter } from '@/api/dashboard.service'
 import { getEventDetails, setEventRead } from '@/api/dashboard/agenda.service'
 import { getNewsDetails, setNewsRead } from '@/api/dashboard/news.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
+
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 const AnnouncementsWidget = defineAsyncComponent(() => import('@components/Dashboard/AnnouncementsWidget/AnnouncementsWidget.vue'))
 const DiaryWidget = defineAsyncComponent(() => import('@components/Dashboard/DiaryWidget/DiaryWidget.vue'))
 const ScheduleWidget = defineAsyncComponent(() => import('@components/Dashboard/ScheduleWidget/ScheduleWidget'))
@@ -97,7 +103,7 @@ const DiaryEventDetailsModal = defineAsyncComponent(() => import('@components/Da
 
 export default {
   name: 'Dashboard',
-  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, ActivityWidget, NewsDetailsModal, DiaryEventDetailsModal, WeprodeDropdown },
+  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, ActivityWidget, NewsDetailsModal, DiaryEventDetailsModal, WeprodeDropdown, ServicesWrapper },
   emits: ['update:layout'],
   data () {
     return {

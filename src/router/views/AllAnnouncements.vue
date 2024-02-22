@@ -1,66 +1,70 @@
 <template>
-  <AllAnnouncementsHeader
-    :nb-new-announcements="nbNewAnnouncements"
-    :un-read-only="unReadOnly"
-    @toggle-read-only="toggleReadOnly"
-    @create-announcement="refresh"
-  />
-
-  <div
-    class="body"
-    :class="{'details-display' : isDetailsPanelDisplayed}"
+  <ServicesWrapper
+    :is-title-visible="false"
   >
-    <div class="announcements-list">
-      <div
-        v-if="isLoading"
-        class="placeholder"
-      >
-        <WeprodeSpinner />
-      </div>
-      <div
-        v-if="error === true"
-        v-t="'AllAnnouncements.errorPlaceholder'"
-        class="placeholder"
-      />
-      <div
-        v-else-if="announcementsList.length === 0"
-        v-t="'AllAnnouncements.emptyPlaceholder'"
-        class="placeholder"
-      />
-      <div
-        v-else
-        ref="scroll"
-        class="scroll"
-        @scroll="handleScroll"
-      >
-        <AnnouncementItem
-          v-for="announcement in announcementsList"
-          :key="announcement.newsId"
-          :announcement="announcement"
-          :is-selection-mode="isDetailsPanelDisplayed"
-          :is-selected="selectedAnnouncement && selectedAnnouncement.newsId === announcement.newsId"
-          :is-last="isLastDisplayed(announcement)"
-          @update-announcement="refresh"
-          @delete-announcement="refresh"
-          @select="selectedAnnouncement=announcement"
-          @mark-as-read="markAnnouncementAsRead(announcement)"
-          @get-next-announcements="loadAnnouncements"
-        />
-      </div>
-    </div>
+    <AllAnnouncementsHeader
+      :nb-new-announcements="nbNewAnnouncements"
+      :un-read-only="unReadOnly"
+      @toggle-read-only="toggleReadOnly"
+      @create-announcement="refresh"
+    />
 
-    <NewsDetails
-      v-if="selectedAnnouncement && isDetailsPanelDisplayed"
-      :init-news="selectedAnnouncement"
-      @update="refresh"
-      @delete="deleteAnnouncement"
-    />
     <div
-      v-if="!selectedAnnouncement && isDetailsPanelDisplayed"
-      v-t="'AllAnnouncements.detailsPlaceholder'"
-      class="details-placeholder"
-    />
-  </div>
+      class="body"
+      :class="{'details-display' : isDetailsPanelDisplayed}"
+    >
+      <div class="announcements-list">
+        <div
+          v-if="isLoading"
+          class="placeholder"
+        >
+          <WeprodeSpinner />
+        </div>
+        <div
+          v-if="error === true"
+          v-t="'AllAnnouncements.errorPlaceholder'"
+          class="placeholder"
+        />
+        <div
+          v-else-if="announcementsList.length === 0"
+          v-t="'AllAnnouncements.emptyPlaceholder'"
+          class="placeholder"
+        />
+        <div
+          v-else
+          ref="scroll"
+          class="scroll"
+          @scroll="handleScroll"
+        >
+          <AnnouncementItem
+            v-for="announcement in announcementsList"
+            :key="announcement.newsId"
+            :announcement="announcement"
+            :is-selection-mode="isDetailsPanelDisplayed"
+            :is-selected="selectedAnnouncement && selectedAnnouncement.newsId === announcement.newsId"
+            :is-last="isLastDisplayed(announcement)"
+            @update-announcement="refresh"
+            @delete-announcement="refresh"
+            @select="selectedAnnouncement=announcement"
+            @mark-as-read="markAnnouncementAsRead(announcement)"
+            @get-next-announcements="loadAnnouncements"
+          />
+        </div>
+      </div>
+
+      <NewsDetails
+        v-if="selectedAnnouncement && isDetailsPanelDisplayed"
+        :init-news="selectedAnnouncement"
+        @update="refresh"
+        @delete="deleteAnnouncement"
+      />
+      <div
+        v-if="!selectedAnnouncement && isDetailsPanelDisplayed"
+        v-t="'AllAnnouncements.detailsPlaceholder'"
+        class="details-placeholder"
+      />
+    </div>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -72,11 +76,13 @@ import dayjs from 'dayjs'
 import { getSchoolNews } from '@/api/dashboard/news.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { allAnnouncementsPaginationSize } from '@/constants/dashboardConstants'
+
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 let oldScrollTop = 0
 
 export default {
   name: 'AllAnnouncements',
-  components: { NewsDetails, AllAnnouncementsHeader, AnnouncementItem, WeprodeSpinner },
+  components: { NewsDetails, AllAnnouncementsHeader, AnnouncementItem, WeprodeSpinner, ServicesWrapper },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {

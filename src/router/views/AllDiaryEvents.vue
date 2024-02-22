@@ -1,74 +1,78 @@
 <template>
-  <AllDiaryEventsHeader
-    :nb-new-events="nbNewEvents"
-    :un-read-only="unReadOnly"
-    @toggle-read-only="toggleReadOnly"
-    @create-event="refresh"
-  />
-
-  <div
-    class="body"
-    :class="{'details-display' : isDetailsPanelDisplayed}"
+  <ServicesWrapper
+    :is-title-visible="false"
   >
-    <div class="event-list">
-      <div
-        v-if="isLoading"
-        class="placeholder"
-      >
-        <WeprodeSpinner />
-      </div>
-      <div
-        v-if="error === true"
-        v-t="'AllDiaryEvents.errorPlaceholder'"
-        class="placeholder"
-      />
-      <div
-        v-else-if="eventList.length === 0"
-        v-t="'AllDiaryEvents.emptyPlaceholder'"
-        class="placeholder"
-      />
-      <div
-        v-else
-        ref="scroll"
-        class="scroll"
-        @scroll="handleScroll"
-      >
+    <AllDiaryEventsHeader
+      :nb-new-events="nbNewEvents"
+      :un-read-only="unReadOnly"
+      @toggle-read-only="toggleReadOnly"
+      @create-event="refresh"
+    />
+
+    <div
+      class="body"
+      :class="{'details-display' : isDetailsPanelDisplayed}"
+    >
+      <div class="event-list">
         <div
-          v-for="(month, index) in eventsByMonth"
-          :key="index"
+          v-if="isLoading"
+          class="placeholder"
         >
-          <div class="period">
-            {{ month.monthName }}
+          <WeprodeSpinner />
+        </div>
+        <div
+          v-if="error === true"
+          v-t="'AllDiaryEvents.errorPlaceholder'"
+          class="placeholder"
+        />
+        <div
+          v-else-if="eventList.length === 0"
+          v-t="'AllDiaryEvents.emptyPlaceholder'"
+          class="placeholder"
+        />
+        <div
+          v-else
+          ref="scroll"
+          class="scroll"
+          @scroll="handleScroll"
+        >
+          <div
+            v-for="(month, index) in eventsByMonth"
+            :key="index"
+          >
+            <div class="period">
+              {{ month.monthName }}
+            </div>
+            <DiaryEventItem
+              v-for="event in month.eventList"
+              :key="event.eventId"
+              :event="event"
+              :is-selection-mode="isDetailsPanelDisplayed"
+              :is-selected="selectedEvent && selectedEvent.eventId === event.eventId"
+              :is-last="isLastDisplayed(event)"
+              @select="selectedEvent=event"
+              @mark-as-read="markEventAsRead(event)"
+              @update-event="updateList"
+              @delete-event="updateList"
+              @get-next-events="loadDiaryEvents"
+            />
           </div>
-          <DiaryEventItem
-            v-for="event in month.eventList"
-            :key="event.eventId"
-            :event="event"
-            :is-selection-mode="isDetailsPanelDisplayed"
-            :is-selected="selectedEvent && selectedEvent.eventId === event.eventId"
-            :is-last="isLastDisplayed(event)"
-            @select="selectedEvent=event"
-            @mark-as-read="markEventAsRead(event)"
-            @update-event="updateList"
-            @delete-event="updateList"
-            @get-next-events="loadDiaryEvents"
-          />
         </div>
       </div>
-    </div>
 
-    <DiaryEventDetails
-      v-if="selectedEvent && isDetailsPanelDisplayed"
-      :init-event="selectedEvent"
-      @update="refresh"
-      @delete="deleteEvent"
-    />
-    <div
-      v-if="!selectedEvent && isDetailsPanelDisplayed"
-      v-t="'AllDiaryEvents.detailsPlaceholder'"
-      class="details-placeholder"
-    />
-  </div>
+      <DiaryEventDetails
+        v-if="selectedEvent && isDetailsPanelDisplayed"
+        :init-event="selectedEvent"
+        @update="refresh"
+        @delete="deleteEvent"
+      />
+      <div
+        v-if="!selectedEvent && isDetailsPanelDisplayed"
+        v-t="'AllDiaryEvents.detailsPlaceholder'"
+        class="details-placeholder"
+      />
+    </div>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -80,11 +84,13 @@ import dayjs from 'dayjs'
 import { getEvents } from '@/api/dashboard/agenda.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { allDiaryEventsPaginationSize } from '@/constants/dashboardConstants'
+
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 let oldScrollTop = 0
 
 export default {
   name: 'AllDiaryEvents',
-  components: { DiaryEventDetails, AllDiaryEventsHeader, DiaryEventItem, WeprodeSpinner },
+  components: { DiaryEventDetails, AllDiaryEventsHeader, DiaryEventItem, WeprodeSpinner, ServicesWrapper },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {

@@ -1,18 +1,22 @@
 <template>
-  <WeprodeSpinner v-if="areActionsInProgress" />
+  <ServicesWrapper
+    :is-title-visible="false"
+  >
+    <WeprodeSpinner v-if="areActionsInProgress" />
 
-  <GroupToolbar />
+    <GroupToolbar />
 
-  <div class="body">
-    <GroupList />
-    <GroupDetails
-      v-if="isPanelDisplayed && !mq.phone"
-    />
-  </div>
+    <div class="body">
+      <GroupList />
+      <GroupDetails
+        v-if="isPanelDisplayed && !mq.phone"
+      />
+    </div>
 
-  <teleport to="body">
-    <GroupDetailsModal v-if="isPanelDisplayed && mq.phone" />
-  </teleport>
+    <teleport to="body">
+      <GroupDetailsModal v-if="isPanelDisplayed && mq.phone" />
+    </teleport>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -21,6 +25,8 @@ import { defineAsyncComponent } from 'vue'
 
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import GroupList from '@/components/Groups/GroupList'
+
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 
 const GroupDetails = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetails'))
 const GroupDetailsModal = defineAsyncComponent(() => import('@components/Groups/GroupDetailsPanel/GroupDetailsModal'))
@@ -32,7 +38,8 @@ export default {
     GroupToolbar,
     GroupList,
     GroupDetailsModal,
-    WeprodeSpinner
+    WeprodeSpinner,
+    ServicesWrapper
   },
   inject: ['mq'],
   emits: ['update:layout'],

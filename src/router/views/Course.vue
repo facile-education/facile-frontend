@@ -1,46 +1,13 @@
 <template>
-  <h1 :aria-label="$t('Course.serviceTitle')" />
-  <WeprodeTabList v-if="isTeacher">
-    <WeprodeTabItem
-      :title="$t('Course.schedule')"
-    >
-      <ScheduleTab />
-    </WeprodeTabItem>
-    <WeprodeTabItem
-      :title="$t('Course.course')"
-      class="course-tab-content"
-    >
-      <CourseTab :user-id="selectedUser.userId" />
-    </WeprodeTabItem>
-    <!--            <WeprodeTabItem-->
-    <!--              :title="$t('Course.toCorrect')"-->
-    <!--            >-->
-    <!--              <TeacherHomeworkTab />-->
-  </WeprodeTabList>
-  <div
-    v-else
-    style="height: 100%"
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('Course.serviceTitle')"
   >
-    <div
-      v-if="childList.length > 1"
-      class="first-line"
-    >
-      <WeprodeDropdown
-        v-model="selectedChild"
-        :list="childList"
-        :sort="false"
-        display-field="firstName"
-        class="child-selector"
-        @update:model-value="changeStudent"
-      />
-    </div>
-
-    <WeprodeTabList ref="tabList">
+    <WeprodeTabList v-if="isTeacher">
       <WeprodeTabItem
-        :title="$t('Course.homework')"
-        :nb-notification="nbUndoneHomeworks"
+        :title="$t('Course.schedule')"
       >
-        <HomeworkTab :user-id="selectedUser.userId" />
+        <ScheduleTab />
       </WeprodeTabItem>
       <WeprodeTabItem
         :title="$t('Course.course')"
@@ -48,8 +15,45 @@
       >
         <CourseTab :user-id="selectedUser.userId" />
       </WeprodeTabItem>
+    <!--            <WeprodeTabItem-->
+    <!--              :title="$t('Course.toCorrect')"-->
+    <!--            >-->
+    <!--              <TeacherHomeworkTab />-->
     </WeprodeTabList>
-  </div>
+    <div
+      v-else
+      style="height: 100%"
+    >
+      <div
+        v-if="childList.length > 1"
+        class="first-line"
+      >
+        <WeprodeDropdown
+          v-model="selectedChild"
+          :list="childList"
+          :sort="false"
+          display-field="firstName"
+          class="child-selector"
+          @update:model-value="changeStudent"
+        />
+      </div>
+
+      <WeprodeTabList ref="tabList">
+        <WeprodeTabItem
+          :title="$t('Course.homework')"
+          :nb-notification="nbUndoneHomeworks"
+        >
+          <HomeworkTab :user-id="selectedUser.userId" />
+        </WeprodeTabItem>
+        <WeprodeTabItem
+          :title="$t('Course.course')"
+          class="course-tab-content"
+        >
+          <CourseTab :user-id="selectedUser.userId" />
+        </WeprodeTabItem>
+      </WeprodeTabList>
+    </div>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -61,6 +65,8 @@ import CourseTab from '@/components/Course/CourseTab.vue' // TODO: async
 import HomeworkTab from '@/components/Course/HomeworkTab.vue'
 import ScheduleTab from '@/components/Course/ScheduleTab.vue'
 
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 export default {
   name: 'Course',
   components: {
@@ -69,8 +75,9 @@ export default {
     ScheduleTab,
     WeprodeTabList,
     WeprodeTabItem,
-    WeprodeDropdown
-    // TeacherHomeworkTab
+    WeprodeDropdown, // TeacherHomeworkTab
+
+    ServicesWrapper
   },
   inject: ['mq'],
   emits: ['update:layout'],

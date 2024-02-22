@@ -8,10 +8,10 @@
     <Banner class="nero-header theme-background-color" />
 
     <LayoutMenu class="nero-menu" />
-
     <section
       class="nero-body"
       data-test="body"
+      @scroll="handleScroll"
     >
       <NotAllowed v-if="!isAllowed && !user.isAdministrator" />
       <slot v-else />
@@ -327,7 +327,7 @@ export default {
     grid-template-columns: 100%;
     grid-template-areas:
     "header"
-    "main  ";
+    "main";
   }
 }
 
@@ -342,7 +342,6 @@ export default {
   grid-area: main;
   height: 100%;
   overflow: auto;
-  padding: 10px;
   position: relative;
   //padding: 2rem 40px;
 }

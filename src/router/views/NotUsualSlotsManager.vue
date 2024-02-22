@@ -1,62 +1,66 @@
 <template>
-  <h1 :aria-label="$t('NotUsualSlotsManager.serviceTitle')" />
-  <div
-    v-if="currentUser.userId !== 0 && currentUser.schoolList.length !== 0"
-    class="non-classical-slots"
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('NotUsualSlotsManager.serviceTitle')"
   >
-    <SelectedSchool />
     <div
-      v-if="mq.desktop || currentSlotType === undefined"
-      class="slot-type-selection"
-      :class="{'mobile': !mq.desktop}"
+      v-if="currentUser.userId !== 0 && currentUser.schoolList.length !== 0"
+      class="non-classical-slots"
     >
-      <SlotTypeItem
-        v-for="(slotType, index) in slotTypes"
-        :key="index"
-        class="slot-type"
-        :slot-type="slotType"
-      />
-    </div>
-    <div
-      v-if="mq.desktop"
-      class="filters"
-    >
-      <WeprodeDropdown
-        v-if="currentUser.selectedSchool && currentSlotType && currentSlotType.type === 5"
-        v-model="selectedClass"
-        :placeholder="$t('NotUsualSlotsManager.groupFilter')"
-        :list="classList"
-        display-field="orgName"
-        class="class-dropdown"
-      />
-      <UserCompletion
+      <SelectedSchool />
+      <div
+        v-if="mq.desktop || currentSlotType === undefined"
+        class="slot-type-selection"
+        :class="{'mobile': !mq.desktop}"
+      >
+        <SlotTypeItem
+          v-for="(slotType, index) in slotTypes"
+          :key="index"
+          class="slot-type"
+          :slot-type="slotType"
+        />
+      </div>
+      <div
+        v-if="mq.desktop"
+        class="filters"
+      >
+        <WeprodeDropdown
+          v-if="currentUser.selectedSchool && currentSlotType && currentSlotType.type === 5"
+          v-model="selectedClass"
+          :placeholder="$t('NotUsualSlotsManager.groupFilter')"
+          :list="classList"
+          display-field="orgName"
+          class="class-dropdown"
+        />
+        <UserCompletion
+          v-if="currentSlotType"
+          user-type="student"
+          :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
+          :model-value="queriedUser ? [queriedUser] : []"
+          class="user-completion"
+          @update:model-value="getUserSlots"
+        />
+      </div>
+      <HHCCalendar
         v-if="currentSlotType"
-        user-type="student"
-        :placeholder="$t('NotUsualSlots.studentNamePlaceHolder')"
-        :model-value="queriedUser ? [queriedUser] : []"
-        class="user-completion"
-        @update:model-value="getUserSlots"
+        :current-slot-type="currentSlotType"
       />
-    </div>
-    <HHCCalendar
-      v-if="currentSlotType"
-      :current-slot-type="currentSlotType"
-    />
 
-    <!-- global modals -->
-    <template v-if="pendingFirings.length > 0">
-      <PendingFiringModal
-        v-for="(pendingFiring, index) in pendingFirings"
-        :key="index"
-        :pending-firing="pendingFiring"
-        :full-screen="mq.phone"
-        :closable="false"
-      />
-    </template>
-  </div>
-  <div v-else>
-    <WeprodeSpinner v-if="areActionsInProgress" />
-  </div>
+      <!-- global modals -->
+      <template v-if="pendingFirings.length > 0">
+        <PendingFiringModal
+          v-for="(pendingFiring, index) in pendingFirings"
+          :key="index"
+          :pending-firing="pendingFiring"
+          :full-screen="mq.phone"
+          :closable="false"
+        />
+      </template>
+    </div>
+    <div v-else>
+      <WeprodeSpinner v-if="areActionsInProgress" />
+    </div>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -71,12 +75,14 @@ import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
 import SlotTypeItem from '@/components/NotUsualSlotManager/SlotTypeItem'
 import notUsualSlotConstants from '@/constants/notUsualSlots'
 
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 const PendingFiringModal = defineAsyncComponent(() => import('@/components/NotUsualSlotManager/PendingFiringModal/PendingFiringModal'))
 const UserCompletion = defineAsyncComponent(() => import('@/components/NotUsualSlotManager/UserCompletion'))
 
 export default {
   name: 'NotUsualSlotManager',
-  components: { PendingFiringModal, SelectedSchool, UserCompletion, HHCCalendar, SlotTypeItem, WeprodeDropdown, WeprodeSpinner },
+  components: { PendingFiringModal, SelectedSchool, UserCompletion, HHCCalendar, SlotTypeItem, WeprodeDropdown, WeprodeSpinner, ServicesWrapper },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {

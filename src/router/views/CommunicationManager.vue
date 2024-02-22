@@ -1,10 +1,14 @@
 <template>
-  <h1 :aria-label="$t('CommunicationManager.serviceTitle')" />
-  <CMToolbar />
-  <div class="rules">
-    <InternalRightList />
-    <ExternalRightList />
-  </div>
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('CommunicationManager.serviceTitle')"
+  >
+    <CMToolbar />
+    <div class="rules">
+      <InternalRightList />
+      <ExternalRightList />
+    </div>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -13,12 +17,15 @@ import CMToolbar from '@/components/CommunicationManager/CMToolbar'
 import ExternalRightList from '@/components/CommunicationManager/ExternalRightList'
 import InternalRightList from '@/components/CommunicationManager/InternalRightList'
 
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 export default {
   name: 'CommunicationManager',
   components: {
     CMToolbar,
     ExternalRightList,
-    InternalRightList
+    InternalRightList,
+    ServicesWrapper
   },
   emits: ['update:layout'],
   beforeCreate () {

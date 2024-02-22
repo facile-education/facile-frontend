@@ -1,38 +1,41 @@
 <template>
-  <h1 :aria-label="$t('UserManagement.serviceTitle')" />
-
-  <div
-    v-if="schoolList.length > 1"
-    class="header"
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('UserManagement.serviceTitle')"
   >
-    <WeprodeDropdown
-      v-model="selectedSchool"
-      class="dropdown"
-      :list="schoolList"
-      display-field="schoolName"
-    />
-  </div>
+    <div
+      v-if="schoolList.length > 1"
+      class="header"
+    >
+      <WeprodeDropdown
+        v-model="selectedSchool"
+        class="dropdown"
+        :list="schoolList"
+        display-field="schoolName"
+      />
+    </div>
 
-  <WeprodeTabList>
-    <WeprodeTabItem
-      :title="$t('UserManagement.manual-users')"
-      class="tab"
-    >
-      <ManualUsers />
-    </WeprodeTabItem>
-    <WeprodeTabItem
-      :title="$t('UserManagement.delegations')"
-      class="tab"
-    >
-      <Delegations />
-    </WeprodeTabItem>
-    <WeprodeTabItem
-      :title="$t('UserManagement.affectations')"
-      class="tab"
-    >
-      <Affectations />
-    </WeprodeTabItem>
-  </WeprodeTabList>
+    <WeprodeTabList>
+      <WeprodeTabItem
+        :title="$t('UserManagement.manual-users')"
+        class="tab"
+      >
+        <ManualUsers />
+      </WeprodeTabItem>
+      <WeprodeTabItem
+        :title="$t('UserManagement.delegations')"
+        class="tab"
+      >
+        <Delegations />
+      </WeprodeTabItem>
+      <WeprodeTabItem
+        :title="$t('UserManagement.affectations')"
+        class="tab"
+      >
+        <Affectations />
+      </WeprodeTabItem>
+    </WeprodeTabList>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -42,6 +45,8 @@ import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
 import Affectations from '@/components/UserManagement/Affectations.vue'
 import Delegations from '@/components/UserManagement/Delegations'
 import ManualUsers from '@/components/UserManagement/ManualUsers'
+
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 export default {
   name: 'UserManagement',
   components: {
@@ -50,7 +55,8 @@ export default {
     Affectations,
     WeprodeTabList,
     WeprodeTabItem,
-    WeprodeDropdown
+    WeprodeDropdown,
+    ServicesWrapper
   },
   emits: ['update:layout'],
   computed: {

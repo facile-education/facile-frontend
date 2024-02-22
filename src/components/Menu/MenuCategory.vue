@@ -142,10 +142,10 @@ button {
 }
 
 .slide-fade-enter-active {
-  transition: all .3s ease-in;
+  transition: all .2s ease-in;
 }
 .slide-fade-leave-active {
-  transition: all .3s ease-out;
+  transition: all .2s ease-out;
 }
 
 .slide-fade-enter-from, .slide-fade-leave-to {

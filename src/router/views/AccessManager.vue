@@ -1,59 +1,62 @@
 <template>
-  <h1 :aria-label="$t('AccessManager.serviceTitle')" />
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('AccessManager.serviceTitle')"
+  >
+    <div v-if="roleList && roleList.length > 0">
+      <SchoolSelector class="school-selector" />
 
-  <div v-if="roleList && roleList.length > 0">
-    <SchoolSelector class="school-selector" />
+      <div class="first-line">
+        <AccessCreateButton
+          @create-category="isCreateCategoryInputDisplayed=true"
+          @create-access="isSaveAccessModalDisplayed=true"
+        />
 
-    <div class="first-line">
-      <AccessCreateButton
+        <SeeAccessesAs />
+      </div>
+
+      <WeprodeSpinner
+        v-if="isLoading"
+        style="z-index: 1"
+      />
+      <div
+        v-if="error === true"
+        v-t="'AccessManager.errorPlaceholder'"
+        class="placeholder"
+      />
+      <CategoriesPlaceholder
+        v-else-if="categoryList && categoryList.length === 0 && !isCreateCategoryInputDisplayed"
         @create-category="isCreateCategoryInputDisplayed=true"
-        @create-access="isSaveAccessModalDisplayed=true"
       />
 
-      <SeeAccessesAs />
-    </div>
+      <AccessCategoryList
+        v-else-if="categoryList"
+        :category-list="sortedCategoryList"
+      />
 
-    <WeprodeSpinner
-      v-if="isLoading"
-      style="z-index: 1"
-    />
+      <AccessCategoryInput
+        v-if="isCreateCategoryInputDisplayed"
+        class="category-input"
+        data-test="category-input"
+        @submit-name="createCategory"
+        @close="isCreateCategoryInputDisplayed = false"
+      />
+    </div>
     <div
-      v-if="error === true"
-      v-t="'AccessManager.errorPlaceholder'"
+      v-else-if="roleList && roleList.length === 0"
+      v-t="'AccessManager.noRolePlaceholder'"
       class="placeholder"
     />
-    <CategoriesPlaceholder
-      v-else-if="categoryList && categoryList.length === 0 && !isCreateCategoryInputDisplayed"
-      @create-category="isCreateCategoryInputDisplayed=true"
-    />
 
-    <AccessCategoryList
-      v-else-if="categoryList"
-      :category-list="sortedCategoryList"
-    />
-
-    <AccessCategoryInput
-      v-if="isCreateCategoryInputDisplayed"
-      class="category-input"
-      data-test="category-input"
-      @submit-name="createCategory"
-      @close="isCreateCategoryInputDisplayed = false"
-    />
-  </div>
-  <div
-    v-else-if="roleList && roleList.length === 0"
-    v-t="'AccessManager.noRolePlaceholder'"
-    class="placeholder"
-  />
-
-  <teleport
-    v-if="isSaveAccessModalDisplayed"
-    to="body"
-  >
-    <SaveAccessModal
-      @close="isSaveAccessModalDisplayed=false"
-    />
-  </teleport>
+    <teleport
+      v-if="isSaveAccessModalDisplayed"
+      to="body"
+    >
+      <SaveAccessModal
+        @close="isSaveAccessModalDisplayed=false"
+      />
+    </teleport>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -69,6 +72,8 @@ import { defineAsyncComponent } from 'vue'
 import { saveSchoolCategory } from '@/api/access.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/AccessManager/SaveAccessModal.vue'))
 
 export default {
@@ -81,7 +86,8 @@ export default {
     AccessCreateButton,
     SaveAccessModal,
     AccessCategoryList,
-    WeprodeSpinner
+    WeprodeSpinner,
+    ServicesWrapper
   },
   data () {
     return {

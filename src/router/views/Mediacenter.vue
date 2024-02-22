@@ -1,15 +1,19 @@
 <template>
-  <h1 :aria-label="$t('Mediacenter.serviceTitle')" />
-  <NeroToolbar v-if="(schoolList && schoolList.length > 1)">
-    <WeprodeDropdown
-      v-model="selectedSchool"
-      :list="schoolList"
-      display-field="schoolName"
-      @update:model-value="onSelectSchool"
-    />
-  </NeroToolbar>
+  <ServicesWrapper
+    :is-title-visible="false"
+    :title="$t('Mediacenter.serviceTitle')"
+  >
+    <NeroToolbar v-if="(schoolList && schoolList.length > 1)">
+      <WeprodeDropdown
+        v-model="selectedSchool"
+        :list="schoolList"
+        display-field="schoolName"
+        @update:model-value="onSelectSchool"
+      />
+    </NeroToolbar>
 
-  <CategoryList />
+    <CategoryList />
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -17,12 +21,15 @@ import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import CategoryList from '@/components/Mediacenter/CategoryList'
 import NeroToolbar from '@/components/Nero/NeroToolbar'
 
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 export default {
   name: 'Mediacenter',
   components: {
     CategoryList,
     NeroToolbar,
-    WeprodeDropdown
+    WeprodeDropdown,
+    ServicesWrapper
   },
   emits: ['update:layout'],
   data () {

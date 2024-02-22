@@ -1,30 +1,34 @@
 <template>
-  <WeprodeTabList class="tablist">
-    <WeprodeTabItem
-      :title="$t('Maintenance.administration')"
-      class="tab"
-    >
-      <Administration />
-    </WeprodeTabItem>
-    <WeprodeTabItem
-      :title="$t('Maintenance.groups')"
-      class="tab"
-    >
-      <GroupsMaintenance />
-    </WeprodeTabItem>
-    <WeprodeTabItem
-      :title="$t('Maintenance.one-shot-tools')"
-      class="tab"
-    >
-      <OneShotMaintenance />
-    </WeprodeTabItem>
-    <WeprodeTabItem
-      :title="$t('Maintenance.password-update')"
-      class="tab"
-    >
-      <PasswordUpdate />
-    </WeprodeTabItem>
-  </WeprodeTabList>
+  <ServicesWrapper
+    :is-title-visible="false"
+  >
+    <WeprodeTabList class="tablist">
+      <WeprodeTabItem
+        :title="$t('Maintenance.administration')"
+        class="tab"
+      >
+        <Administration />
+      </WeprodeTabItem>
+      <WeprodeTabItem
+        :title="$t('Maintenance.groups')"
+        class="tab"
+      >
+        <GroupsMaintenance />
+      </WeprodeTabItem>
+      <WeprodeTabItem
+        :title="$t('Maintenance.one-shot-tools')"
+        class="tab"
+      >
+        <OneShotMaintenance />
+      </WeprodeTabItem>
+      <WeprodeTabItem
+        :title="$t('Maintenance.password-update')"
+        class="tab"
+      >
+        <PasswordUpdate />
+      </WeprodeTabItem>
+    </WeprodeTabList>
+  </ServicesWrapper>
 </template>
 
 <script>

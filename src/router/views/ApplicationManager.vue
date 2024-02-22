@@ -1,15 +1,19 @@
 <template>
-  <h1 :aria-label="$t('ApplicationManager.serviceTitle')" />
-  <AMToolbar />
-  <CategoryList />
-  <div class="filler" />
-  <teleport
-    v-if="showBroadcastModal || showEditionModal"
-    to="body"
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('ApplicationManager.serviceTitle')"
   >
-    <BroadcastScopeModal v-if="showBroadcastModal" />
-    <ApplicationEditionModal v-if="showEditionModal" />
-  </teleport>
+    <AMToolbar />
+    <CategoryList />
+    <div class="filler" />
+    <teleport
+      v-if="showBroadcastModal || showEditionModal"
+      to="body"
+    >
+      <BroadcastScopeModal v-if="showBroadcastModal" />
+      <ApplicationEditionModal v-if="showEditionModal" />
+    </teleport>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -19,13 +23,16 @@ import ApplicationEditionModal from '@/components/ApplicationManager/Application
 import BroadcastScopeModal from '@/components/ApplicationManager/BroadcastScopeModal'
 import CategoryList from '@/components/ApplicationManager/CategoryList'
 
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 export default {
   name: 'ApplicationManager',
   components: {
     AMToolbar,
     ApplicationEditionModal,
     BroadcastScopeModal,
-    CategoryList
+    CategoryList,
+    ServicesWrapper
   },
   emits: ['update:layout'],
   computed: {

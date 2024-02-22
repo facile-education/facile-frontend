@@ -1,38 +1,42 @@
 <template>
-  <h1 :aria-label="$t('Horaires.serviceTitle')" />
-  <HorairesToolbar
-    v-if="!$store.state.user.isStudent || mq.phone"
-    @update-sessions="getSessions"
-  />
-
-  <Timeline
-    v-if="!mq.phone"
-    :initial-date="selectedDate"
-    @select-week="onSelectWeek"
-  />
-
-  <CustomCalendar
-    :display-date="selectedDate"
-    :events="eventList"
-    @select-date="onSelectDate"
-    @event-option-clicked="handleEventOption"
-  />
-
-  <WeprodeSpinner v-if="isLoading" />
-
-  <teleport to="body">
-    <SessionTeacherModal
-      v-if="isEditModalDisplayed"
-      :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
-      :session-event="updatedSession"
-      @close="closeEditModalDisplay"
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('Horaires.serviceTitle')"
+  >
+    <HorairesToolbar
+      v-if="!$store.state.user.isStudent || mq.phone"
+      @update-sessions="getSessions"
     />
-    <CreateSessionModal
-      v-if="isCreateSessionModalDisplayed"
-      :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
-      @close="closeCreateSessionModal"
+
+    <Timeline
+      v-if="!mq.phone"
+      :initial-date="selectedDate"
+      @select-week="onSelectWeek"
     />
-  </teleport>
+
+    <CustomCalendar
+      :display-date="selectedDate"
+      :events="eventList"
+      @select-date="onSelectDate"
+      @event-option-clicked="handleEventOption"
+    />
+
+    <WeprodeSpinner v-if="isLoading" />
+
+    <teleport to="body">
+      <SessionTeacherModal
+        v-if="isEditModalDisplayed"
+        :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
+        :session-event="updatedSession"
+        @close="closeEditModalDisplay"
+      />
+      <CreateSessionModal
+        v-if="isCreateSessionModalDisplayed"
+        :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
+        @close="closeCreateSessionModal"
+      />
+    </teleport>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -44,6 +48,8 @@ import { defineAsyncComponent } from 'vue'
 
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import HorairesToolbar from '@/components/Horaires/HorairesToolbar'
+
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 const SessionTeacherModal = defineAsyncComponent(() => import('@/components/Horaires/SessionTeacherModal'))
 const CreateSessionModal = defineAsyncComponent(() => import('@/components/Horaires/CreateSessionModal'))
@@ -58,7 +64,8 @@ export default {
     SessionTeacherModal,
     CreateSessionModal,
     Timeline,
-    WeprodeSpinner
+    WeprodeSpinner,
+    ServicesWrapper
   },
   inject: ['mq'],
   emits: ['update:layout'],

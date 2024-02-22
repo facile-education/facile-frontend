@@ -1,18 +1,24 @@
 <template>
-  <h1 :aria-label="$t('NotFound.serviceTitle')" />
-  <WeprodeSpinner v-if="menu === undefined" />
-  <h2
-    v-else-if="showMessage"
-    v-t="'NotFound.message'"
-  />
+  <ServicesWrapper
+    :is-title-visible="false"
+    :title="$t('NotFound.serviceTitle')"
+  >
+    <WeprodeSpinner v-if="menu === undefined" />
+    <h2
+      v-else-if="showMessage"
+      v-t="'NotFound.message'"
+    />
+  </ServicesWrapper>
 </template>
 
 <script>
 
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 export default {
   name: 'NotFound',
-  components: { WeprodeSpinner },
+  components: { WeprodeSpinner, ServicesWrapper },
   emits: ['update:layout'],
   data () {
     return {

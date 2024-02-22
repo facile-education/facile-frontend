@@ -1,88 +1,92 @@
 <template>
-  <div class="external-resource">
-    <div v-if="serviceSchoolUrls.length == 0 && selectedUrl === undefined">
-      <img
-        class="icon"
-        src="@/assets/images/icon-external-service.png"
-        alt=""
-      >
-      <h3 v-t="{path: 'ExternalResource.noConfigLabel', args: {resourceName:serviceName}}" />
-      <I18n
-        keypath="contactLabel"
-        tag="p"
-        class="content"
-      >
-        <a
-          v-t="'ExternalResource.clickHereLabel'"
-          place="link"
-          class="link"
-          @click="onClickShowIncidents()"
-        />
-      </I18n>
-    </div>
-
-    <div v-else>
-      <div v-if="serviceSchoolUrls.length > 1">
-        <WeprodeDropdown
-          v-model="selectedSchool"
-          :list="serviceSchoolUrls"
-          display-field="schoolName"
-          @update:model-value="selectSchool"
-        />
-      </div>
-
-      <div v-if="!isHttps">
+  <ServicesWrapper
+    :is-title-visible="false"
+  >
+    <div class="external-resource">
+      <div v-if="serviceSchoolUrls.length == 0 && selectedUrl === undefined">
         <img
           class="icon"
-          src="../../assets/images/icon-external-service.png"
+          src="@/assets/images/icon-external-service.png"
           alt=""
         >
-        <h3>{{ $t('ExternalResource.newTabLabel', {resourceName: serviceName}) }}</h3>
+        <h3 v-t="{path: 'ExternalResource.noConfigLabel', args: {resourceName:serviceName}}" />
         <I18n
-          keypath="openAgainLabel"
+          keypath="contactLabel"
           tag="p"
-          class="description"
+          class="content"
         >
           <a
             v-t="'ExternalResource.clickHereLabel'"
             place="link"
             class="link"
-            @click="openInNewTab"
+            @click="onClickShowIncidents()"
           />
         </I18n>
-        <div class="nero-separator" />
-        <p class="content">
-          {{ $t('ExternalResource.popupIssueLabel') }}
-        </p>
       </div>
 
       <div v-else>
-        <I18n
-          keypath="openInTabLabel"
-          tag="p"
-          class="description"
-        >
-          <a
-            v-t="'ExternalResource.clickHereLabel'"
-            place="link"
-            class="link"
-            @click="openInNewTab"
+        <div v-if="serviceSchoolUrls.length > 1">
+          <WeprodeDropdown
+            v-model="selectedSchool"
+            :list="serviceSchoolUrls"
+            display-field="schoolName"
+            @update:model-value="selectSchool"
           />
-        </I18n>
-        <iframe
-          :src="selectedUrl"
-          title="external resource"
-          class="frame"
-        />
+        </div>
+
+        <div v-if="!isHttps">
+          <img
+            class="icon"
+            src="../../assets/images/icon-external-service.png"
+            alt=""
+          >
+          <h3>{{ $t('ExternalResource.newTabLabel', {resourceName: serviceName}) }}</h3>
+          <I18n
+            keypath="openAgainLabel"
+            tag="p"
+            class="description"
+          >
+            <a
+              v-t="'ExternalResource.clickHereLabel'"
+              place="link"
+              class="link"
+              @click="openInNewTab"
+            />
+          </I18n>
+          <div class="nero-separator" />
+          <p class="content">
+            {{ $t('ExternalResource.popupIssueLabel') }}
+          </p>
+        </div>
+
+        <div v-else>
+          <I18n
+            keypath="openInTabLabel"
+            tag="p"
+            class="description"
+          >
+            <a
+              v-t="'ExternalResource.clickHereLabel'"
+              place="link"
+              class="link"
+              @click="openInNewTab"
+            />
+          </I18n>
+          <iframe
+            :src="selectedUrl"
+            title="external resource"
+            class="frame"
+          />
+        </div>
       </div>
     </div>
-  </div>
-  <teleport to="body">
-    <AssistanceModal
-      v-if="isSupportModalDisplayed"
-      @close="isSupportModalDisplayed = false"
-    />
-  </teleport>
+    <teleport to="body">
+      <AssistanceModal
+        v-if="isSupportModalDisplayed"
+        @close="isSupportModalDisplayed = false"
+      />
+    </teleport>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -92,6 +96,8 @@ import { Translation as I18n } from 'vue-i18n'
 import { getResourceUrls } from '@/api/applicationManager.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 const AssistanceModal = defineAsyncComponent(() => import('@/components/Assistance/AssistanceModal'))
 
 export default {
@@ -99,7 +105,8 @@ export default {
   components: {
     AssistanceModal,
     I18n,
-    WeprodeDropdown
+    WeprodeDropdown,
+    ServicesWrapper
   },
   props: {
     resourceKey: {

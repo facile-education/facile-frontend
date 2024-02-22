@@ -1,94 +1,98 @@
 <template>
-  <h1 :aria-label="$t('Documents.serviceTitle')" />
-  <div
-    v-if="currentUser.userId !== 0"
-    ref="documents"
-    class="documents"
-    :class="{'mobile': mq.phone}"
-    @click.right.prevent
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('Documents.serviceTitle')"
   >
-    <CurrentOptions
-      class="currents-options"
-      :options="currentOptions"
-      @option-clicked="handleOption"
-    />
-
-    <Breadcrumb
-      class="breadCrumb"
-      :breadcrumb="breadcrumb"
-      @change-dir="changeDir"
-      @change-space="changeSpace"
-    />
-
-    <div class="body">
-      <WeprodeSpinner
-        v-if="areActionsInProgress"
-        class="spinner"
+    <div
+      v-if="currentUser.userId !== 0"
+      ref="documents"
+      class="documents"
+      :class="{'mobile': mq.phone}"
+      @click.right.prevent
+    >
+      <CurrentOptions
+        class="currents-options"
+        :options="currentOptions"
+        @option-clicked="handleOption"
       />
-      <FilePickerArea
-        class="file-picker-area"
-        :disabled="isLoadDocumentsError || !canUploadFilesInCurrentFolder"
-        @file-added="importDocument"
-        @click.right.prevent="openContextMenu"
-      >
-        <div
-          class="scroll"
-          @click="clickOnScrollDiv"
-          @click.right.prevent="rightClickOnScrollDiv"
+
+      <Breadcrumb
+        class="breadCrumb"
+        :breadcrumb="breadcrumb"
+        @change-dir="changeDir"
+        @change-space="changeSpace"
+      />
+
+      <div class="body">
+        <WeprodeSpinner
+          v-if="areActionsInProgress"
+          class="spinner"
+        />
+        <FilePickerArea
+          class="file-picker-area"
+          :disabled="isLoadDocumentsError || !canUploadFilesInCurrentFolder"
+          @file-added="importDocument"
+          @click.right.prevent="openContextMenu"
         >
-          <DocumentList @open-context-menu="openContextMenu" />
-        </div>
-      </FilePickerArea>
-      <DocumentDetails
-        v-if="isDocumentPanelDisplayed && !mq.phone"
-        class="document-details"
-      />
-      <DocumentDetailsModal
-        v-if="isDocumentPanelDisplayed && mq.phone"
-      />
+          <div
+            class="scroll"
+            @click="clickOnScrollDiv"
+            @click.right.prevent="rightClickOnScrollDiv"
+          >
+            <DocumentList @open-context-menu="openContextMenu" />
+          </div>
+        </FilePickerArea>
+        <DocumentDetails
+          v-if="isDocumentPanelDisplayed && !mq.phone"
+          class="document-details"
+        />
+        <DocumentDetailsModal
+          v-if="isDocumentPanelDisplayed && mq.phone"
+        />
+      </div>
     </div>
-  </div>
-  <div v-else>
-    <WeprodeSpinner />
-  </div>
+    <div v-else>
+      <WeprodeSpinner />
+    </div>
 
-  <ContextMenu
-    v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
-    @choose-option="handleOption"
-    @close="isContextMenuDisplayed=false"
-  />
+    <ContextMenu
+      v-if="isContextMenuDisplayed && isAContextMenuDisplayed"
+      @choose-option="handleOption"
+      @close="isContextMenuDisplayed=false"
+    />
 
-  <teleport to="body">
-    <FilePickerModal
-      v-if="isFilePickerModalDisplayed"
-      :folder-selection="true"
-      :init-in-current-folder="false"
-      @chosen-folder="doSelectFolderAction"
-      @close="isFilePickerModalDisplayed = false"
-    />
-    <FolderNameModal
-      v-if="isFolderNameModalDisplayed"
-      :submit-action="modalSubmitAction"
-      :current-folder="currentFolder"
-      :folder-to-rename="documentToRename"
-      @create-folder="refreshCurrentFolder"
-      @rename-folder="refreshCurrentFolder"
-      @close="isFolderNameModalDisplayed = false"
-    />
-    <FileNameModal
-      v-if="isFileNameModalDisplayed"
-      :submit-action="modalSubmitAction"
-      :init-file="documentToRename"
-      @open-file="openFile"
-      @close="isFileNameModalDisplayed=false"
-    />
-    <PermissionsModal
-      v-if="isPermissionModalDisplayed"
-      :document="selectedDocuments[0] || currentFolder"
-      @save-entity-permissions="refreshCurrentFolder"
-      @close="isPermissionModalDisplayed=false"
-    />
-  </teleport>
+    <teleport to="body">
+      <FilePickerModal
+        v-if="isFilePickerModalDisplayed"
+        :folder-selection="true"
+        :init-in-current-folder="false"
+        @chosen-folder="doSelectFolderAction"
+        @close="isFilePickerModalDisplayed = false"
+      />
+      <FolderNameModal
+        v-if="isFolderNameModalDisplayed"
+        :submit-action="modalSubmitAction"
+        :current-folder="currentFolder"
+        :folder-to-rename="documentToRename"
+        @create-folder="refreshCurrentFolder"
+        @rename-folder="refreshCurrentFolder"
+        @close="isFolderNameModalDisplayed = false"
+      />
+      <FileNameModal
+        v-if="isFileNameModalDisplayed"
+        :submit-action="modalSubmitAction"
+        :init-file="documentToRename"
+        @open-file="openFile"
+        @close="isFileNameModalDisplayed=false"
+      />
+      <PermissionsModal
+        v-if="isPermissionModalDisplayed"
+        :document="selectedDocuments[0] || currentFolder"
+        @save-entity-permissions="refreshCurrentFolder"
+        @close="isPermissionModalDisplayed=false"
+      />
+    </teleport>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -107,6 +111,8 @@ import { defaultFields, fieldsWithoutSize } from '@/constants/documentsConstants
 import { documentSpaceOptions, groupOptions, mobileDocumentSpaceOptions } from '@/constants/options'
 import { removeMenuOptionIfExist } from '@/utils/commons.util'
 
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 const FolderNameModal = defineAsyncComponent(() => import('@components/Documents/Modals/FolderNameModal.vue'))
 const FileNameModal = defineAsyncComponent(() => import('@components/Documents/Modals/FileNameModal.vue'))
 const PermissionsModal = defineAsyncComponent(() => import('@components/Documents/Modals/PermissionModal/PermissionsModal'))
@@ -116,7 +122,7 @@ const DocumentDetailsModal = defineAsyncComponent(() => import('@components/Docu
 
 export default {
   name: 'Documents',
-  components: { PermissionsModal, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, WeprodeSpinner },
+  components: { PermissionsModal, DocumentDetailsModal, FilePickerModal, FileNameModal, FolderNameModal, FilePickerArea, ContextMenu, DocumentDetails, DocumentList, Breadcrumb, CurrentOptions, WeprodeSpinner, ServicesWrapper },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {

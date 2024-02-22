@@ -1,64 +1,68 @@
 <template>
-  <h1 :aria-label="$t('Messaging.serviceTitle')" />
-  <div
-    class="messaging-body"
-    :class="{'mobile': mq.phone || mq.tablet, 'tablet': mq.tablet}"
+  <ServicesWrapper
+    :is-title-visible="true"
+    :title="$t('Messaging.serviceTitle')"
   >
     <div
-      v-if="!mq.phone && !mq.tablet"
-      class="desktop-display"
+      class="messaging-body"
+      :class="{'mobile': mq.phone || mq.tablet, 'tablet': mq.tablet}"
     >
       <div
-        class="left"
-        :class="{'menu-displayed': isMenuPanelDisplayed}"
+        v-if="!mq.phone && !mq.tablet"
+        class="desktop-display"
       >
-        <MessagingMenu
-          data-test="messaging-menu"
-          class="menu-panel"
-          :class="{'menu-collapsed': !isMenuPanelDisplayed}"
-          :is-displayed="isMenuPanelDisplayed"
-        />
+        <div
+          class="left"
+          :class="{'menu-displayed': isMenuPanelDisplayed}"
+        >
+          <MessagingMenu
+            data-test="messaging-menu"
+            class="menu-panel"
+            :class="{'menu-collapsed': !isMenuPanelDisplayed}"
+            :is-displayed="isMenuPanelDisplayed"
+          />
 
-        <ThreadList class="thread-list" />
+          <ThreadList class="thread-list" />
+        </div>
+
+        <ThreadDetails class="thread-details" />
       </div>
 
-      <ThreadDetails class="thread-details" />
-    </div>
+      <div v-else>
+        <ThreadList />
+        <Transition name="slide-details">
+          <ThreadDetails
+            v-if="isMobileDetailsPanelDisplayed"
+            class="thread-display"
+          />
+        </Transition>
+        <Transition name="slide-menu">
+          <MessagingMenu
+            v-show="isMenuPanelDisplayed"
+            data-test="messaging-menu"
+            class="menu-panel"
+            :is-displayed="isMenuPanelDisplayed"
+          />
+        </Transition>
 
-    <div v-else>
-      <ThreadList />
-      <Transition name="slide-details">
-        <ThreadDetails
-          v-if="isMobileDetailsPanelDisplayed"
-          class="thread-display"
+        <CreateButton
+          v-if="!isMobileDetailsPanelDisplayed"
+          class="create-button"
+          data-test="createMessageButton"
+          :title="$t('Messaging.new')"
+          @click="createNewMessage"
         />
-      </Transition>
-      <Transition name="slide-menu">
-        <MessagingMenu
-          v-show="isMenuPanelDisplayed"
-          data-test="messaging-menu"
-          class="menu-panel"
-          :is-displayed="isMenuPanelDisplayed"
+      </div>
+
+      <teleport to="body">
+        <PreferencesModal
+          v-if="isParametersModalDisplayed"
+          tab="messaging"
         />
-      </Transition>
-
-      <CreateButton
-        v-if="!isMobileDetailsPanelDisplayed"
-        class="create-button"
-        data-test="createMessageButton"
-        :title="$t('Messaging.new')"
-        @click="createNewMessage"
-      />
+        <CreateMessageModal v-if="isCreateMessageModalDisplayed" />
+      </teleport>
     </div>
-
-    <teleport to="body">
-      <PreferencesModal
-        v-if="isParametersModalDisplayed"
-        tab="messaging"
-      />
-      <CreateMessageModal v-if="isCreateMessageModalDisplayed" />
-    </teleport>
-  </div>
+  </ServicesWrapper>
 </template>
 
 <script>
@@ -72,6 +76,8 @@ import { defineAsyncComponent } from 'vue'
 import configurationService from '@/api/messaging/configuration.service'
 import messagingUtils from '@/utils/messaging.utils'
 
+import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+
 const CreateMessageModal = defineAsyncComponent(() => import('@components/Messaging/CreateMessageModal'))
 const PreferencesModal = defineAsyncComponent(() => import('@components/Preferences/PreferencesModal'))
 
@@ -84,7 +90,8 @@ export default {
     ThreadDetails,
     PreferencesModal,
     // ParametersModal,
-    CreateMessageModal
+    CreateMessageModal,
+    ServicesWrapper
   },
   inject: ['mq'],
   emits: ['update:layout'],
