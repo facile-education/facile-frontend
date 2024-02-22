@@ -38,8 +38,8 @@
           :class="{'reverse': !currentSort.isOrderAsc}"
           class="icon"
           :icon-name="'icon-chevron-right-s'"
-          :title="$t('Documents.FilesFields.ascending')"
-          :aria-label="$t('Documents.FilesFields.ascending')"
+          :title="getSortTitle"
+          :aria-label="getSortTitle"
         />
       </div>
     </div>
@@ -83,6 +83,9 @@ export default {
         }
       }
       return fieldsToDisplay
+    },
+    getSortTitle () {
+      return this.currentSort.isOrderAsc ? this.$t('Documents.FilesFields.ascending') : this.$t('Documents.FilesFields.descending')
     }
   },
   methods: {

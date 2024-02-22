@@ -3,6 +3,7 @@
     v-if="isCurrentFolder && (mq.phone || mq.tablet) && !isFirstElement"
     class="return-back"
     data-test="back"
+    :alt="$t('Commons.back')"
     @click="clickBack"
   >
     <CustomIcon
