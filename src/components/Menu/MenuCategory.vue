@@ -25,23 +25,25 @@
       />
     </button>
 
-    <nav
-      v-if="menuCategory.showSubMenu"
-      class="sub-menu"
-    >
-      <ul>
-        <li
-          v-for="menuEntry in menuCategory.menu"
-          :key="menuEntry.i18nKey"
-        >
-          <MenuEntry
-            class="category-item"
-            :menu-entry="menuEntry"
-            :is-sub-menu="true"
-          />
-        </li>
-      </ul>
-    </nav>
+    <Transition name="slide-fade">
+      <nav
+        v-if="menuCategory.showSubMenu"
+        class="sub-menu"
+      >
+        <ul>
+          <li
+            v-for="menuEntry in menuCategory.menu"
+            :key="menuEntry.i18nKey"
+          >
+            <MenuEntry
+              class="category-item"
+              :menu-entry="menuEntry"
+              :is-sub-menu="true"
+            />
+          </li>
+        </ul>
+      </nav>
+    </Transition>
   </div>
 </template>
 
@@ -131,11 +133,27 @@ button {
 .sub-menu {
   position: relative;
   padding-bottom: 0.5rem;
+  overflow-y: hidden;
 
   &::after {
     @extend %menu-separator;
     bottom: 0;
   }
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease-in;
+}
+.slide-fade-leave-active {
+  transition: all .3s ease-out;
+}
+
+.slide-fade-enter-from, .slide-fade-leave-to {
+  max-height: 0;
+}
+.slide-fade-enter-to, .slide-fade-leave-from {
+  /* TODO: make max-height adaptive to content height */
+  max-height: 140px;
 }
 
 </style>
