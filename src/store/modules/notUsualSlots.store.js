@@ -21,12 +21,12 @@ const formatNonUsualSlot = (sessions) => {
       event.options.push({
         name: 'updateSlot',
         label: i18n.global.t('CalendarEventOptions.update'),
-        icon: require('@assets/icons/pen.svg')
+        icon: 'icon-edit'
       })
       event.options.push({
         name: 'deleteSlot',
         label: i18n.global.t('CalendarEventOptions.delete'),
-        icon: require('@assets/icons/trash.svg')
+        icon: 'icon-trash'
       })
     }
   })

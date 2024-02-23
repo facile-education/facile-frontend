@@ -17,13 +17,11 @@
           href="#"
           @click="selectItem(relatedArticleItem)"
         >{{ relatedArticleItem.relatedItemName }}</a>
-        <img
+        <CustomIcon
           v-if="isAdministrator"
-          src="@/assets/icons/trash.svg"
-          class="icon-admin"
-          alt="delete"
+          icon-name="icon-trash"
           @click="confirmRelationRemoval(relatedArticleItem)"
-        >
+        />
       </li>
     </ul>
   </div>
@@ -128,7 +126,7 @@ li {
   &:hover {
     background-color: $color-hover-bg;
 
-    .icon-admin {
+    .icon-trash {
       opacity: 100%;
       cursor: pointer;
     }
@@ -147,7 +145,7 @@ a {
   line-height: 1;
 }
 
-.icon-admin {
+.icon-trash {
   opacity: 0;
 }
 </style>

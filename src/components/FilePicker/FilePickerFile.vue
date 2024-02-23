@@ -11,7 +11,7 @@
         :src="icon"
         alt="document icon"
       >
-      <BaseIcon
+      <FAIcon
         v-else
         class="icon"
         :class="{'selected': isSelected}"
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon'
+import FAIcon from '@components/Base/FAIcon.vue'
 
 import { icons } from '@/constants/icons'
 
 export default {
   name: 'FilePickerFile',
-  components: { BaseIcon },
+  components: { FAIcon },
   props: {
     file: {
       type: Object,

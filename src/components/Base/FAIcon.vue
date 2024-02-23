@@ -1,66 +1,33 @@
 <script>
 import { library as fontAwesomeIconLibrary } from '@fortawesome/fontawesome-svg-core'
-import { faFile, faFileArchive, faFileImage, faFilePdf, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+import { faFileArchive } from '@fortawesome/free-regular-svg-icons'
 import {
-  faAddressBook, faAngleDoubleLeft, faAngleDoubleRight, faArrowDown,
-  faArrowsAlt, faArrowUp, faCaretDown, faCaretLeft, faCaretRight,
-  faCaretUp, faChartBar, faCircle, faCode,
-  faCompress, faDatabase, faDownload, faEllipsisV, faExclamationTriangle, faExpand,
-  faEye, faFile as regularFaFile, faFileAlt, faFileArchive as regularFaFileArchive, faFileImage as regularFaFileImage, faFilm, faFolder,
-  faFolderOpen, faFolderPlus, faGlobe, faHome, faInfoCircle, faMusic,
-  faNewspaper, faPaperclip, faPaperPlane, faPowerOff, faShare, faShareAlt,
-  faSyncAlt, faThumbsUp, faTimes, faUnlock, faUser, faUsers
+  faCaretDown, faCaretLeft, faCaretRight, faCaretUp,
+  faExclamationTriangle,
+  faFolderOpen,
+  faGripLines,
+  faPause,
+  faPlay,
+  faStop,
+  faUndo
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import camelCase from 'lodash/camelCase'
 
 // https://fontawesome.com/icons
 fontAwesomeIconLibrary.add(
-  faFile, faFileImage, faFileArchive, faFilePdf, faTrashAlt,
-  faAddressBook,
-  faAngleDoubleLeft,
-  faAngleDoubleRight,
-  faArrowDown,
-  faArrowUp,
-  faArrowsAlt,
   faCaretDown,
   faCaretLeft,
   faCaretRight,
   faCaretUp,
-  faChartBar,
-  faCircle,
-  faCode,
-  faCompress,
-  faDatabase,
-  faDownload,
-  faEllipsisV,
   faExclamationTriangle,
-  faExpand,
-  faEye,
-  regularFaFile,
-  faFileAlt,
-  regularFaFileArchive,
-  regularFaFileImage,
-  faFilm,
-  faFolder,
+  faFileArchive,
   faFolderOpen,
-  faFolderPlus,
-  faGlobe,
-  faHome,
-  faInfoCircle,
-  faMusic,
-  faNewspaper,
-  faPaperPlane,
-  faPowerOff,
-  faShare,
-  faShareAlt,
-  faSyncAlt,
-  faThumbsUp,
-  faTimes,
-  faPaperclip,
-  faUnlock,
-  faUser,
-  faUsers
+  faGripLines,
+  faPause,
+  faPlay,
+  faStop,
+  faUndo
 )
 
 export default {

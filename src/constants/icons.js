@@ -36,26 +36,25 @@ const icons = {
   },
   options: {
     copyUrl: require('@assets/icons/duplicate.svg'),
-    download: require('@assets/icons/download.svg'),
-    delete: require('@/assets/icons/trash.svg'),
-    deleteDefinitely: require('@/assets/icons/trash.svg'),
+    download: 'icon-download',
+    delete: 'icon-trash',
     details: require('@assets/icons/details.svg'),
     duplicate: require('@assets/icons/duplicate.svg'),
     forward: require('@assets/icons/share.svg'),
     markAsRead: require('@assets/icons/unread_filter.svg'),
     move: require('@assets/icons/move.svg'),
-    modify: require('@assets/icons/pen.svg'),
+    modify: 'icon-edit',
     new: require('@assets/icons/add2.svg'),
     openFile: 'icon-folder',
     paste: require('@assets/icons/duplicate.svg'),
     permissions: require('@assets/icons/lock.svg'),
     save: 'icon-folder',
     share: require('@assets/icons/share.svg'),
-    rename: require('@assets/icons/pen.svg'),
+    rename: 'icon-edit',
     refresh: require('@assets/icons/refresh.svg'),
     reply: require('@assets/icons/answer.svg'),
     replyAll: require('@assets/icons/answer_all.svg'),
-    upload: require('@assets/icons/upload.svg')
+    upload: 'icon-upload'
   }
 }
 

@@ -3,7 +3,7 @@
     v-if="isErrorDisplayed"
     class="error-message"
   >
-    <NeroIcon
+    <FAIcon
       name="exclamation-triangle"
       class="icon"
     />
@@ -13,11 +13,11 @@
 
 <script>
 
-import NeroIcon from '@/components/Nero/NeroIcon.vue'
+import FAIcon from '@components/Base/FAIcon.vue'
 
 export default {
   name: 'WeprodeErrorMessage',
-  components: { NeroIcon },
+  components: { FAIcon },
   props: {
     errorMessage: {
       type: String,

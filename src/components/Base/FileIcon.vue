@@ -7,7 +7,7 @@
       alt="document icon"
       :style="'width: ' + width + ';min-width:' + width + ';height: ' + height"
     >
-    <BaseIcon
+    <FAIcon
       v-else
       class="base-icon"
       :name="['fas', fileIcon]"
@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon'
+import FAIcon from '@components/Base/FAIcon.vue'
 
 import { icons } from '@/constants/icons'
 
 export default {
   components: {
-    BaseIcon
+    FAIcon
   },
   myIcons: icons,
   props: {

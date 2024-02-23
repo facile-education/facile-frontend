@@ -63,7 +63,7 @@
               :title="$t('Base.WeprodeWindow.close')"
               @click="$emit('close')"
             >
-              <NeroIcon name="times" />
+              <CustomIcon icon-name="icon-cross-M" />
             </button>
           </div>
         </header>
@@ -90,13 +90,12 @@
 
 <script>
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import VueResizable from 'vue-resizable'
-
-import NeroIcon from '@/components/Nero/NeroIcon.vue'
 
 export default {
   name: 'WeprodeWindow',
-  components: { NeroIcon, VueResizable },
+  components: { CustomIcon, VueResizable },
   inject: ['mq'],
   props: {
     closable: {
@@ -333,6 +332,11 @@ $modal-padding: 25px;
 
           &.expand {
             font-size: 1.125rem;
+          }
+
+          .icon-cross-M {
+            font-weight: bold;
+            font-size: 1.3rem;
           }
         }
       }

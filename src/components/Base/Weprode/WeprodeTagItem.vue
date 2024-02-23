@@ -7,11 +7,11 @@
     <button
       :aria-label="$t('Base.WeprodeTagItem.remove')"
       :title="$t('Base.WeprodeTagItem.remove')"
+      @click="onRemove"
     >
-      <NeroIcon
-        name="times"
+      <CustomIcon
         class="icon"
-        @click="onRemove"
+        icon-name="icon-cross-s"
       />
     </button>
   </div>
@@ -19,12 +19,12 @@
 
 <script>
 
-import NeroIcon from '@/components/Nero/NeroIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 
 export default {
   name: 'WeprodeTagItem',
   components: {
-    NeroIcon
+    CustomIcon
   },
   props: {
     tag: {
@@ -74,6 +74,8 @@ export default {
     color: white;
 
     .icon {
+      font-size: 1rem;
+      font-weight: bold;
       margin-left: 5px;
       cursor: pointer;
     }

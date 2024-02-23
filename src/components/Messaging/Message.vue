@@ -109,7 +109,7 @@ export default {
         case 'Envoyés':
           return require('@assets/icons/sent.svg')
         case 'Corbeille':
-          return require('@/assets/icons/trash.svg')
+          return require('@assets/icons/trashMessaging.svg')
         default:
           return 'customFolderIcon'
       }

@@ -38,11 +38,7 @@
               :title="$t('Groups.GroupDetails.edit')"
               @click="editGroup"
             >
-              <img
-                class="button"
-                src="@assets/icons/pen.svg"
-                :alt="$t('Groups.GroupDetails.edit')"
-              >
+              <CustomIcon icon-name="icon-edit" />
             </button>
             <button
               class="option"

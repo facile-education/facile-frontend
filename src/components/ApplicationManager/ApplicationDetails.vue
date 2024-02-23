@@ -77,7 +77,7 @@
       type="circle"
       @click="toggleEditionModal"
     >
-      <NeroIcon name="pencil-alt" />
+      <CustomIcon icon-name="icon-edit" />
     </WeprodeButton>
     <WeprodeButton
       v-if="!isAdministratorMode"
@@ -110,13 +110,11 @@ import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import WeprodeToggleSwitch from '@/components/Base/Weprode/WeprodeToggleSwitch.vue'
-import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'ApplicationDetails',
   components: {
     CustomIcon,
-    NeroIcon,
     RuleLabel,
     WeprodeButton,
     WeprodeDropdown,

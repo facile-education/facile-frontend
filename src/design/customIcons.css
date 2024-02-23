@@ -40,6 +40,9 @@
 .icon-logout:before {
   content: "\e91d";
 }
+.icon-alert:before {
+  content: "\e921";
+}
 .icon-download:before {
   content: "\e917";
 }
@@ -48,6 +51,9 @@
 }
 .icon-stats:before {
   content: "\e916";
+}
+.icon-edit:before {
+  content: "\e922";
 }
 .icon-trash:before {
   content: "\e91e";
@@ -97,7 +103,7 @@
 .icon-play:before {
   content: "\e90e";
 }
-.icon-devoirs:before {
+.icon-homework:before {
   content: "\e90f";
 }
 .icon-seance:before {
@@ -109,7 +115,7 @@
 .icon-user:before {
   content: "\e91f";
 }
-.icon-double-arrow:before {
+.icon-double-chevron-left:before {
   content: "\e912";
 }
 .icon-school-life:before {

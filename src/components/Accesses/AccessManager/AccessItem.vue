@@ -12,7 +12,7 @@
     <hr class="drag-placeholder theme-border-color">
 
     <div class="content-move">
-      <NeroIcon
+      <FAIcon
         name="grip-lines"
         class="icon"
       />
@@ -39,20 +39,14 @@
         data-test="editAccess"
         @click.stop="isUpdateModalDisplayed = true"
       >
-        <img
-          src="@assets/icons/pen.svg"
-          alt="edit"
-        >
+        <CustomIcon icon-name="icon-edit" />
       </button>
       <button
         class="option theme-hover-extra-light-background-color"
         data-test="deleteAccess"
         @click.stop="confirmDeleteAccess"
       >
-        <img
-          src="@/assets/icons/trash.svg"
-          alt="edit"
-        >
+        <CustomIcon icon-name="icon-trash" />
       </button>
     </div>
   </div>
@@ -71,7 +65,8 @@
 </template>
 
 <script>
-import NeroIcon from '@components/Nero/NeroIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
+import FAIcon from '@components/Base/FAIcon.vue'
 import { getThumbnailUrl } from '@utils/accessUtils'
 import { defineAsyncComponent } from 'vue'
 
@@ -80,7 +75,7 @@ const SaveAccessModal = defineAsyncComponent(() => import('@components/Accesses/
 
 export default {
   name: 'AccessItem',
-  components: { NeroIcon, SaveAccessModal },
+  components: { CustomIcon, FAIcon, SaveAccessModal },
   props: {
     access: {
       type: Object,
@@ -214,6 +209,7 @@ h3 {
 
       .option {
         width: 40px;
+        font-size: 1.2rem;
       }
     }
 

@@ -2,10 +2,7 @@
   <ServicesWrapper :is-title-visible="false">
     <div class="authentication-required">
       <div class="error">
-        <img
-          src="@/assets/icons/alert.svg"
-          alt=""
-        >
+        <CustomIcon icon-name="icon-alert" />
         <h1 v-t="'NotAllowed.notAllowed'" />
         <div v-t="'NotAllowed.useOthersServicesPlease'" />
       </div>
@@ -14,11 +11,13 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 
 export default {
   name: 'NotAllowed',
-  components: { ServicesWrapper }
+  components: { CustomIcon, ServicesWrapper }
 }
 </script>
 
@@ -42,7 +41,7 @@ div {
   @extend %font-regular-l;
 }
 
-img {
-  height: 24px;
+.icon-alert {
+  font-size: 1.5rem;
 }
 </style>

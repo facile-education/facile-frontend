@@ -6,19 +6,19 @@
     :style="popupStyle"
   >
     <template v-if="selectedEvent">
-      <NeroIcon
+      <FAIcon
         v-if="isPopupTop"
         name="fa-caret-down"
         class="caret-down theme-text-color"
         :style="`color:${selectedEvent.event.backgroundColor}77;`"
       />
-      <NeroIcon
+      <FAIcon
         v-else-if="!isPopupLeft"
         name="fa-caret-left"
         class="caret-left theme-text-color"
         :style="`color:${selectedEvent.event.backgroundColor}77;`"
       />
-      <NeroIcon
+      <FAIcon
         v-else
         name="fa-caret-right"
         class="caret-right theme-text-color"
@@ -45,9 +45,15 @@
                 @click="$emit('optionClicked', option)"
               >
                 <img
+                  v-if="isIconImage(option.icon)"
                   :src="option.icon"
                   :alt="option.label"
                 >
+                <CustomIcon
+                  v-else
+                  class="custom-icon"
+                  :icon-name="option.icon"
+                />
               </button>
             </li>
           </ul>
@@ -83,14 +89,14 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+import FAIcon from '@components/Base/FAIcon.vue'
 import { getTeachersLabel } from '@utils/commons.util'
 import dayjs from 'dayjs'
 
-import NeroIcon from '@/components/Nero/NeroIcon'
-
 export default {
   name: 'CalendarEventPopover',
-  components: { NeroIcon },
+  components: { CustomIcon, FAIcon },
   inject: ['mq'],
   props: {
     selectedEvent: {
@@ -145,6 +151,9 @@ export default {
     window.removeEventListener('click', this.clickOutside)
   },
   methods: {
+    isIconImage (iconName) {
+      return iconName.indexOf('svg') !== -1
+    },
     clickOutside (e) {
       const self = this
       if (self.$el && !self.$el.contains(e.target)) {

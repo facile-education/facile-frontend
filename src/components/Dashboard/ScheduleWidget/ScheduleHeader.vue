@@ -14,22 +14,19 @@
       class="redirect-button"
       @click="$emit('redirect')"
     >
-      <img
-        src="@/assets/icons/calendar.svg"
-        alt=""
-      >
+      <CustomIcon icon-name="icon-calendar" />
       <span v-t="'Dashboard.ScheduleHeader.redirect'" />
     </button>
   </header>
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import DayNavigation from '@components/Dashboard/ScheduleWidget/DayNavigation.vue'
-import dayjs from 'dayjs'
 
 export default {
   name: 'ScheduleHeader',
-  components: { DayNavigation },
+  components: { CustomIcon, DayNavigation },
   props: {
     currentDate: {
       type: Object,
@@ -38,9 +35,6 @@ export default {
   },
   emits: ['goBefore', 'goAfter', 'redirect', 'selectDate'],
   computed: {
-    isToday () {
-      return this.currentDate.isSame(dayjs(), 'day')
-    },
     formattedDate () {
       return this.currentDate.format('ddd DD/MM')
     }
@@ -88,9 +82,11 @@ button:not(.redirect-button){
   align-self: stretch;
   border-radius: 6px;
   border: 1px solid $color-border;
+  line-height: 1.3rem;
 
-  img {
+  .icon-calendar {
     margin-right: 1rem;
+    font-size: 1.3rem;
   }
 }
 

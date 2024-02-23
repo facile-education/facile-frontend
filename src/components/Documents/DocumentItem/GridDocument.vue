@@ -31,7 +31,7 @@
         :src="documentIcon"
         alt="document icon"
       >
-      <BaseIcon
+      <FAIcon
         v-else
         class="base-icon"
         :name="['fas', documentIcon]"
@@ -82,11 +82,11 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
-const BaseIcon = defineAsyncComponent(() => import('@components/Base/BaseIcon'))
+const FAIcon = defineAsyncComponent(() => import('@components/Base/FAIcon.vue'))
 
 export default {
   name: 'GridDocument',
-  components: { BaseIcon },
+  components: { FAIcon },
   inject: ['mq'],
   props: {
     document: {

@@ -10,7 +10,7 @@
         :title="$t('Viewer.close')"
         @click="back"
       >
-        <BaseIcon name="times" />
+        <CustomIcon icon-name="icon-cross-M" />
       </button>
     </header>
 
@@ -23,14 +23,14 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 
-import BaseIcon from '@/components/Base/BaseIcon'
 const FileDisplay = defineAsyncComponent(() => import('@/components/Documents/FileDisplay/FileDisplay'))
 
 export default {
   name: 'Viewer',
-  components: { BaseIcon, FileDisplay },
+  components: { CustomIcon, FileDisplay },
   emits: ['update:layout'],
   data () {
     return {
@@ -94,5 +94,9 @@ h1 {
   font-size: 1.3rem;
   padding: 0;
   cursor: pointer;
+
+  .icon-cross-M {
+    font-weight: bold;
+  }
 }
 </style>

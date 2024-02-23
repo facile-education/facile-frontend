@@ -13,8 +13,8 @@
 
     <template #body>
       <div class="body">
-        <NeroIcon
-          name="fa-exclamation-triangle"
+        <FAIcon
+          name="exclamation-triangle"
           class="icon"
         />
         <p
@@ -52,14 +52,15 @@
 </template>
 
 <script>
+import FAIcon from '@components/Base/FAIcon.vue'
+
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
-import NeroIcon from '@/components/Nero/NeroIcon'
 import { conflicts } from '@/constants/documentsConstants'
 
 export default {
   name: 'ConflictModal',
-  components: { NeroIcon, WeprodeButton, WeprodeWindow },
+  components: { FAIcon, WeprodeButton, WeprodeWindow },
   computed: {
     modes () {
       return {

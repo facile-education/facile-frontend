@@ -9,10 +9,7 @@
       alt="thumbnail"
     >
     <span class="update-icon-container">
-      <img
-        src="@assets/icons/pen.svg"
-        alt=""
-      >
+      <CustomIcon icon-name="icon-edit" />
     </span>
   </button>
 
@@ -29,13 +26,14 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 
 const ImagePicker = defineAsyncComponent(() => import('@components/Nero/ImagePicker.vue'))
 
 export default {
   name: 'ThumbnailSelector',
-  components: { ImagePicker },
+  components: { CustomIcon, ImagePicker },
   props: {
     thumbnailUrl: {
       type: String,
@@ -89,8 +87,8 @@ button {
   align-items: center;
   justify-content: center;
 
-  img {
-    height: 13px;
+  .icon-edit {
+    font-size: 15px;
   }
 }
 </style>

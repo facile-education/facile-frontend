@@ -19,9 +19,7 @@
         class="create-button"
         @click="openCreateVersionNoteModal"
       >
-        <NeroIcon
-          name="fa-plus"
-        />
+        <CustomIcon icon-name="icon-plus" />
         <span>{{ $t('VersionNotes.VersionNotesModal.new') }}</span>
       </WeprodeButton>
 
@@ -61,8 +59,8 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
-import NeroIcon from '@components/Nero/NeroIcon.vue'
 import VersionNoteSelector from '@components/VersionNotes/VersionNoteSelector.vue'
 import { defineAsyncComponent } from 'vue'
 
@@ -72,7 +70,7 @@ const SaveVersionNoteModal = defineAsyncComponent(() => import('@components/Vers
 
 export default {
   name: 'VersionNotesModal',
-  components: { WeprodeButton, SaveVersionNoteModal, VersionNoteSelector, NeroIcon, WeprodeSpinner, WeprodeWindow },
+  components: { CustomIcon, WeprodeButton, SaveVersionNoteModal, VersionNoteSelector, WeprodeSpinner, WeprodeWindow },
   inject: ['mq'],
   emits: ['close'],
   data () {

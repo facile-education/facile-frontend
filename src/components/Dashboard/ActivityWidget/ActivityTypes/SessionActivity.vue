@@ -1,18 +1,16 @@
 <template>
   <div class="course-activity">
     <div class="icon">
-      <img
+      <CustomIcon
         v-if="isCourse"
         class="img-icon"
-        src="@assets/icons/course_content.svg"
-        alt="group icon"
-      >
-      <img
+        icon-name="icon-seance"
+      />
+      <CustomIcon
         v-else
         class="img-icon"
-        src="@assets/icons/homework.svg"
-        alt="group icon"
-      >
+        icon-name="icon-homework"
+      />
     </div>
 
     <div
@@ -40,6 +38,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
@@ -48,6 +47,7 @@ import { COURSES } from '@/constants/appConstants'
 
 export default {
   name: 'SessionActivity',
+  components: { CustomIcon },
   props: {
     activity: {
       type: Object,
@@ -115,6 +115,9 @@ export default {
 }
 
 .img-icon {
-  width: 35px;
+  width: 30px;
+  text-align: center;
+  color: #316CD4;
+  font-size: 1.5rem;
 }
 </style>

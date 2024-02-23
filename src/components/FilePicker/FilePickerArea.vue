@@ -12,7 +12,7 @@
     >
       <div class="message">
         <span class="text">
-          <BaseIcon name="folder-open" />
+          <FAIcon name="folder-open" />
           {{ $t('FilePicker.FilePickerArea.dropZoneLabel') }}
         </span>
       </div>
@@ -24,13 +24,13 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon'
+import FAIcon from '@components/Base/FAIcon.vue'
 
 import { returnAddedFiles } from '@/utils/upload.util'
 
 export default {
   name: 'FilePickerArea',
-  components: { BaseIcon },
+  components: { FAIcon },
   inject: ['mq'],
   props: {
     accept: {

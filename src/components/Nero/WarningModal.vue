@@ -13,8 +13,8 @@
 
     <template #body>
       <div class="body">
-        <NeroIcon
-          name="fa-exclamation-triangle"
+        <FAIcon
+          name="exclamation-triangle"
           class="icon"
         />
         <p
@@ -48,11 +48,10 @@
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
-import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'WarningModal',
-  components: { WeprodeButton, NeroIcon, WeprodeWindow },
+  components: { WeprodeButton, WeprodeWindow },
   computed: {
     warning () {
       return this.$store.getters['warningModal/firstWarning']

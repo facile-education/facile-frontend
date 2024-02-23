@@ -63,10 +63,10 @@
           @click.stop="isUpdateModalDisplayed = true"
           @keyup.stop
         >
-          <img
-            src="@assets/icons/pen.svg"
-            alt="edit"
-          >
+          <CustomIcon
+            class="icon"
+            icon-name="icon-edit"
+          />
         </button>
         <button
           v-if="event.isDeletable"
@@ -77,10 +77,10 @@
           @click.stop="confirmDeleteEvent"
           @keyup.stop
         >
-          <img
-            src="@/assets/icons/trash.svg"
-            alt="edit"
-          >
+          <CustomIcon
+            class="icon"
+            icon-name="icon-trash"
+          />
         </button>
       </div>
     </div>
@@ -121,6 +121,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
@@ -133,7 +134,7 @@ const DiaryEventDetailsModal = defineAsyncComponent(() => import('@components/Da
 
 export default {
   name: 'DiaryEventItem',
-  components: { ContextMenu, DiaryEventDetailsModal, SaveDiaryEventModal },
+  components: { CustomIcon, ContextMenu, DiaryEventDetailsModal, SaveDiaryEventModal },
   inject: ['mq'],
   props: {
     event: {
@@ -404,8 +405,9 @@ export default {
     cursor: pointer;
     background-color: $neutral-20;
 
-    img {
-      height: 15px;
+    .icon {
+      font-size: 1rem;
+      color: black;
     }
 
     &:hover {

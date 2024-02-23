@@ -46,7 +46,7 @@
             v-if="hasAttachFiles"
             class="icon attached-file-icon"
             :src="require('@assets/icons/paperclip.svg')"
-            alt="has attached files"
+            alt="paperclip"
             :title="$t('Messaging.hasAttachedFiles')"
           >
           <img

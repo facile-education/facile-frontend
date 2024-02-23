@@ -41,12 +41,13 @@
             <span>{{ announcementDay }}</span>
             <span>{{ $t('Dashboard.AnnouncementItem.by') + announcement.authorName }}</span>
           </span>
-          <BaseIcon
+          <img
             v-if="announcement.hasAttachedFiles"
             data-test="fileIcon"
             class="paper-clip"
-            name="paperclip"
-          />
+            :src="require('@assets/icons/paperclip.svg')"
+            alt="paperclip"
+          >
           <button
             v-if="haveOptions && (mq.phone || mq.tablet)"
             class="options-button"
@@ -77,10 +78,10 @@
           @click.stop="isUpdateModalDisplayed = true"
           @keyup.stop
         >
-          <img
-            src="@assets/icons/pen.svg"
-            alt="edit"
-          >
+          <CustomIcon
+            class="icon"
+            icon-name="icon-edit"
+          />
         </button>
         <button
           v-if="announcement.isDeletable"
@@ -91,10 +92,10 @@
           @click.stop="confirmDeleteAnnouncement"
           @keyup.stop
         >
-          <img
-            src="@/assets/icons/trash.svg"
-            alt="edit"
-          >
+          <CustomIcon
+            class="icon"
+            icon-name="icon-trash"
+          />
         </button>
       </div>
     </div>
@@ -136,7 +137,7 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { isInViewport } from '@utils/commons.util'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
@@ -149,7 +150,7 @@ const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/
 
 export default {
   name: 'AnnouncementItem',
-  components: { ContextMenu, NewsActivityDetailsModal, BaseIcon, SaveNewsModal },
+  components: { CustomIcon, ContextMenu, NewsActivityDetailsModal, SaveNewsModal },
   inject: ['mq'],
   props: {
     announcement: {
@@ -429,7 +430,10 @@ export default {
   }
 
   .paper-clip {
-    margin-left: 1em;
+    margin-left: 6px;
+    width: 1rem;
+    height: 1rem;
+    transform: rotate(45deg);
   }
 }
 
@@ -457,8 +461,8 @@ export default {
     cursor: pointer;
     background-color: $neutral-20;
 
-    img {
-      height: 15px;
+    .icon {
+      font-size: 1rem;
     }
 
     &:hover {

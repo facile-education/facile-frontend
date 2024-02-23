@@ -22,10 +22,10 @@
           <IconOption
             v-if="isActionEnabled"
             class="header-icon trash-icon"
-            :icon="require('@assets/icons/trash.svg')"
+            icon="icon-trash"
             :title="$t('Messaging.deleteMessage')"
             name="trash"
-            icon-height="18px"
+            icon-height="20px"
             alt="delete item"
             @click="deleteItem"
           />
@@ -82,10 +82,10 @@
           <IconOption
             v-if="isDraftEditionEnabled && isDraft"
             class="header-icon"
-            :icon="require('@assets/icons/pen.svg')"
+            icon="icon-edit"
             :title="$t('Messaging.editDraft')"
             name="editDraft"
-            icon-height="18px"
+            icon-height="19px"
             alt="edit draft"
             @click="editDraft"
           />
@@ -97,9 +97,7 @@
         data-test="createMessageButton"
         @click="createNewMessage"
       >
-        <NeroIcon
-          name="fa-plus"
-        />
+        <CustomIcon icon-name="icon-plus" />
         <span v-t="'Messaging.new'" />
       </WeprodeButton>
     </div>
@@ -161,13 +159,12 @@
 
 <script>
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import IconOption from '@components/Base/IconOption'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import Message from '@components/Messaging/Message'
-import NeroIcon from '@components/Nero/NeroIcon.vue'
 import _ from 'lodash'
 
-import messageService from '@/api/messaging/message.service'
 import { MESSAGING } from '@/constants/appConstants'
 import messagingConstants from '@/constants/messagingConstants'
 import messagingUtils from '@/utils/messaging.utils'
@@ -175,7 +172,7 @@ import messagingUtils from '@/utils/messaging.utils'
 export default {
   name: 'ThreadDetails',
   components: {
-    NeroIcon,
+    CustomIcon,
     IconOption,
     Message,
     WeprodeButton
@@ -229,16 +226,13 @@ export default {
     messageListWithoutSelfMessages () {
       const listWithoutSelfMessages = []
 
-      for (let i = 0; i < this.messageList.length; ++i) {
-        const message = this.messageList[i]
+      for (const message of this.messageList) {
         if (this.currentFolder.type !== messagingConstants.messagingSentFolderType) {
           if (message.recipients.map(recipient => recipient.userId).indexOf(this.currentUser.userId) === -1 || message.folderName !== 'Envoyés') { // TODO based on folder type and not label
             listWithoutSelfMessages.push(message)
           }
-        } else {
-          if (message.senderId !== this.currentUser.userId || message.folderName === undefined) {
-            listWithoutSelfMessages.push(message)
-          }
+        } else if (message.senderId !== this.currentUser.userId || message.folderName === undefined) {
+          listWithoutSelfMessages.push(message)
         }
       }
 
@@ -316,13 +310,6 @@ export default {
     },
     forward () {
       messagingUtils.forward()
-    },
-    runSearch () {
-      messageService.searchMessages(this.$store.state.messaging.currentFolder.folderId, this.search, this.$store.state.messaging.startIndex, this.$store.state.messaging.nbDisplayed, this.$store.state.messaging.unreadOnly).then((data) => {
-        if (data.success) {
-          this.$store.dispatch('messaging/setThreadList', data.threads)
-        }
-      })
     }
   }
 }

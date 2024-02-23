@@ -44,10 +44,7 @@
         :aria-label="$t('Groups.GroupItem.edit')"
         @click.stop="editGroup()"
       >
-        <img
-          src="@assets/icons/pen.svg"
-          :alt="$t('edit')"
-        >
+        <CustomIcon icon-name="icon-edit" />
       </button>
       <div
         v-if="hasEditionRights"

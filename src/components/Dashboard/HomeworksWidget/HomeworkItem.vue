@@ -47,17 +47,16 @@
         </span>
 
         <span
-          v-else-if="homework.isSent"
           class="right-section"
         >
           {{ $t('Dashboard.HomeworkItem.returned') }}
-          <BaseIcon
+          <img
             class="paper-clip"
-            name="paperclip"
-          />
+            :src="require('@assets/icons/paperclip.svg')"
+            alt="paperclip"
+          >
         </span>
         <span
-          v-else
           v-t="'Dashboard.HomeworkItem.toReturn'"
           class="right-section"
         />
@@ -67,7 +66,6 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
 import { getHomeworkTeacherName } from '@utils/commons.util'
 import dayjs from 'dayjs'
 
@@ -79,7 +77,7 @@ import { COURSES } from '@/constants/appConstants'
 import { homeworksTypes } from '@/constants/dashboardConstants'
 export default {
   name: 'HomeworkItem',
-  components: { BaseIcon, WeprodeCheckbox, WeprodeSpinner },
+  components: { WeprodeCheckbox, WeprodeSpinner },
   props: {
     homework: {
       type: Object,
@@ -206,6 +204,8 @@ button {
   margin-left: 1rem;
   white-space: nowrap;
   font-size: 0.8rem;
+  display: flex;
+  align-items: center;
 }
 
 .first-line {
@@ -233,7 +233,10 @@ button {
 }
 
 .paper-clip {
-  margin-left: 0.5rem;
+  margin-left: 6px;
+  width: 1rem;
+  height: 1rem;
+  transform: rotate(45deg);
 }
 
 </style>

@@ -59,10 +59,7 @@
             data-test="openContactPicker"
             @click="toggleContactsPicker"
           >
-            <NeroIcon
-              name="fa-plus"
-              class="icon"
-            />
+            <CustomIcon icon-name="icon-plus" />
           </WeprodeButton>
         </div>
         <div class="error-container">
@@ -164,6 +161,7 @@
 
 <script>
 import AttachedFiles from '@components/AttachedFiles/AttachedFiles.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import TextContent from '@components/Base/TextContent.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import ContactPickerToolTip from '@components/ContactPicker/ContactPickerToolTip.vue'
@@ -179,17 +177,16 @@ import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.v
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
-import NeroIcon from '@/components/Nero/NeroIcon'
 import constants from '@/constants/messagingConstants'
 import messagingUtils from '@/utils/messaging.utils'
 const ContactPickerModal = defineAsyncComponent(() => import('@components/ContactPicker/ContactPickerModal.vue'))
 
 const isRecipientsValid = (str) => {
-  return !(str.length > 0) // A recipient at least
+  return str.length <= 0 // A recipient at least
 }
 
 const isSubjectValid = (str) => {
-  return !(str.trim() === '') // Subject must not contain only spaces
+  return str.trim() !== '' // Subject must not contain only spaces
 }
 
 let timeout
@@ -197,11 +194,11 @@ let timeout
 export default {
   name: 'CreateMessageModal',
   components: {
+    CustomIcon,
     ContactPickerToolTip,
     ContactPickerModal,
     TextContent,
     AttachedFiles,
-    NeroIcon,
     WeprodeButton,
     WeprodeErrorMessage,
     WeprodeInput,
@@ -285,15 +282,12 @@ export default {
         if (this.messageParameters.isDraft) {
           // Draft
           this.originMessage = { messageId: this.messageParameters.draftMessageId }
-        } else {
-          // Reply, replyAll, Forward
-          if (this.$store.state.messaging.selectedMessages.length === 1) {
-            // Message is selected -> use it
-            this.originMessage = { ...this.$store.state.messaging.selectedMessages[0] }
-          } else if (this.$store.state.messaging.selectedThreads.length === 1) {
-            // Thread is selected -> pick last message
-            this.originMessage = { ...messagingUtils.getThreadLastMessage(this.$store.state.messaging.selectedThreads[0]) }
-          }
+        } else if (this.$store.state.messaging.selectedMessages.length === 1) {
+          // Message is selected -> use it
+          this.originMessage = { ...this.$store.state.messaging.selectedMessages[0] }
+        } else if (this.$store.state.messaging.selectedThreads.length === 1) {
+          // Thread is selected -> pick last message
+          this.originMessage = { ...messagingUtils.getThreadLastMessage(this.$store.state.messaging.selectedThreads[0]) }
         }
         messageService.getMessageAnswerForwardInfos(
           this.originMessage.messageId,
@@ -470,11 +464,8 @@ export default {
                 break
               }
             }
-          } else {
-            // Thread is selected
-            if (this.$store.state.messaging.lastSelectedThread !== undefined) {
-              messagingUtils.reloadThread(this.$store.state.messaging.lastSelectedThread)
-            }
+          } else if (this.$store.state.messaging.lastSelectedThread !== undefined) { // Thread is selected
+            messagingUtils.reloadThread(this.$store.state.messaging.lastSelectedThread)
           }
           messagingUtils.refresh() // Useless because of the running thread in backend
         }

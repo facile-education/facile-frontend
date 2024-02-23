@@ -28,7 +28,7 @@
         data-test="play"
         @click="toggleAudio"
       >
-        <NeroIcon
+        <FAIcon
           :name="isAudioPlaying ? 'pause' : 'play'"
         />
         <span>{{ isAudioPlaying ? $t('Nero.AudioRecorder.pause') : $t('Nero.AudioRecorder.listen') }}</span>
@@ -37,13 +37,13 @@
         cls="cancel"
         @click="restartRecording"
       >
-        <NeroIcon name="undo" />
+        <FAIcon name="undo" />
         <span>{{ $t('Nero.AudioRecorder.restart') }}</span>
       </WeprodeButton>
     </template>
     <template v-else>
       <WeprodeButton @click="toggleRecording">
-        <NeroIcon :name="isRecording ? 'pause' : 'play'" />
+        <FAIcon :name="isRecording ? 'pause' : 'play'" />
         <span>{{ isPaused ? $t('Nero.AudioRecorder.continue') : isRecording ? $t('Nero.AudioRecorder.pause') : $t('Nero.AudioRecorder.start') }}</span>
       </WeprodeButton>
       <WeprodeButton
@@ -52,7 +52,7 @@
         data-test="stop"
         @click="stopRecording"
       >
-        <NeroIcon
+        <FAIcon
           name="stop"
         />
         <span>{{ $t('Nero.AudioRecorder.stop') }}</span>
@@ -64,16 +64,16 @@
 
 <script>
 import CustomIcon from '@components/Base/CustomIcon.vue'
+import FAIcon from '@components/Base/FAIcon.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import RecordRTC from 'recordrtc'
 import WaveSurfer from 'wavesurfer.js'
 
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
-import NeroIcon from '@/components/Nero/NeroIcon'
 
 export default {
   name: 'AudioRecorder',
-  components: { CustomIcon, NeroIcon, WeprodeButton, WeprodeErrorMessage },
+  components: { FAIcon, CustomIcon, WeprodeButton, WeprodeErrorMessage },
   props: {
     duration: {
       type: Number,

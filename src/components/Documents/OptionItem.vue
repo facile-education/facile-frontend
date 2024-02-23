@@ -6,9 +6,7 @@
       class="create-button"
       @click="handleClick"
     >
-      <NeroIcon
-        name="fa-plus"
-      />
+      <CustomIcon icon-name="icon-plus" />
       <span>{{ $t('Documents.OptionItem.new') }}</span>
     </WeprodeButton>
     <button
@@ -47,10 +45,9 @@ import CustomIcon from '@components/Base/CustomIcon.vue'
 import ContextMenu from '@components/ContextMenu/ContextMenu'
 
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
-import NeroIcon from '@/components/Nero/NeroIcon'
 export default {
   name: 'OptionItem',
-  components: { CustomIcon, NeroIcon, ContextMenu, WeprodeButton },
+  components: { CustomIcon, ContextMenu, WeprodeButton },
   inject: ['mq'],
   props: {
     option: {
@@ -140,7 +137,7 @@ img {
 }
 
 .icon {
-  font-size: 24px;
+  font-size: 20px;
   padding: 5px;
 }
 

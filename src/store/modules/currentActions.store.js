@@ -114,11 +114,6 @@ export const getters = {
     return state.currentActionsList.length !== 0
   },
   isInProgress: (state) => (actionName) => {
-    for (let i = 0; i < state.currentActionsList.length; ++i) {
-      if (state.currentActionsList[i].name === actionName) {
-        return true
-      }
-    }
-    return false
+    return state.currentActionsList.find(action => action.name === actionName)
   }
 }

@@ -18,10 +18,7 @@
         class="back-button"
         @click="unselectSession"
       >
-        <img
-          src="@/assets/icons/calendar.svg"
-          alt=""
-        >
+        <CustomIcon icon-name="icon-calendar" />
         <span v-t="'Course.ScheduleTab.back'" />
       </button>
 
@@ -31,12 +28,14 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import CourseSchedule from '@components/Course/CourseSchedule.vue'
 import SessionDetails from '@components/Course/SessionDetails.vue'
 
 export default {
   name: 'ScheduleTab',
   components: {
+    CustomIcon,
     SessionDetails,
     CourseSchedule
   },
@@ -125,8 +124,9 @@ export default {
   border-radius: 6px;
   border: 1px solid $color-border;
 
-  img {
+  .icon-calendar {
     margin-right: 1rem;
+    font-size: 1.3rem;
   }
 }
 

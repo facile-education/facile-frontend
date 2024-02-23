@@ -43,7 +43,7 @@
           :src="documentIcon"
           alt="document icon"
         >
-        <BaseIcon
+        <FAIcon
           v-else
           class="base-icon"
           :name="[iconPrefix, documentIcon]"
@@ -88,7 +88,7 @@
           v-if="quickOptionsDisplayed"
           class="options"
         >
-          <BaseIcon
+          <FAIcon
             v-for="option in quickOptions"
             :key="option"
             class="option"
@@ -123,7 +123,7 @@
 
 <script>
 
-import BaseIcon from '@components/Base/BaseIcon'
+import FAIcon from '@components/Base/FAIcon.vue'
 import { formatSize } from '@utils/commons.util'
 import dayjs from 'dayjs'
 
@@ -131,7 +131,7 @@ import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export default {
   name: 'ListDocument',
-  components: { BaseIcon },
+  components: { FAIcon },
   inject: ['mq'],
   props: {
     document: {

@@ -5,9 +5,7 @@
       data-test="createAccessButton"
       @click="clickNew"
     >
-      <NeroIcon
-        name="fa-plus"
-      />
+      <CustomIcon icon-name="icon-plus" />
       <span v-t="'Accesses.AccessCreateButton.new'" />
     </WeprodeButton>
 
@@ -22,14 +20,14 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import ContextMenu from '@components/ContextMenu/ContextMenu.vue'
-import NeroIcon from '@components/Nero/NeroIcon.vue'
 
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 
 export default {
   name: 'AccessCreateButton',
-  components: { ContextMenu, NeroIcon, WeprodeButton },
+  components: { CustomIcon, ContextMenu, WeprodeButton },
   emits: ['createCategory', 'createAccess'],
   data () {
     return {

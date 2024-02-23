@@ -16,7 +16,7 @@
         v-if="message.hasAttachFiles"
         class="icon attached-file-icon"
         :src="require('@assets/icons/paperclip.svg')"
-        alt="has attached files"
+        alt="paperclip"
         :title="$t('Messaging.hasAttachedFiles')"
       >
       <img
@@ -137,7 +137,6 @@ export default {
   }
 
   .icons {
-    //margin-left: 15px;
     padding-top: 17px;
     padding-bottom: 10px;
     width: 35px;
@@ -167,9 +166,6 @@ export default {
     flex-grow: 1;
     padding: 10px 10px 10px 0;
     border-top: 1px solid $color-border-menu;
-    &.first {
-      //border-top: none;
-    }
 
     p {
       margin: 0;

@@ -10,9 +10,7 @@
       :class="{'phone': mq.phone}"
       @click="openCreateSessionModal"
     >
-      <NeroIcon
-        name="fa-plus"
-      />
+      <CustomIcon icon-name="icon-plus" />
       <span>{{ $t('Horaires.HorairesToolbar.add') }}</span>
     </WeprodeButton>
 
@@ -25,7 +23,7 @@
         class="toggle-group-filter-button"
         @click="toggleSelection"
       >
-        <NeroIcon
+        <FAIcon
           :name="iconClass"
           class="selection"
         />
@@ -103,6 +101,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import dayjs from 'dayjs'
@@ -112,14 +111,13 @@ import groupService from '@/api/groups.service'
 import { getSchoolUsers } from '@/api/userSearch.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
-import NeroIcon from '@/components/Nero/NeroIcon'
 const DatepickerNav = defineAsyncComponent(() => import('@/components/Horaires/DatepickerNav'))
 
 export default {
   name: 'HorairesToolbar',
   components: {
+    CustomIcon,
     DatepickerNav,
-    NeroIcon,
     WeprodeButton,
     WeprodeDropdown,
     WeprodeTagsInput

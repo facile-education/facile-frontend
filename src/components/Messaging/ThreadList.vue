@@ -28,8 +28,8 @@
         class="placeholder"
       >
         <div v-t="loadingThreadsError === 'PermissionException' ? 'permissionError' : 'loadingError'" />
-        <NeroIcon
-          name="fa-exclamation-triangle"
+        <FAIcon
+          name="exclamation-triangle"
           class="icon"
           style="margin-top: 40px; font-size: 40px;"
         />
@@ -81,10 +81,10 @@
 
 <script>
 
+import FAIcon from '@components/Base/FAIcon.vue'
 import IconOption from '@components/Base/IconOption'
 import Thread from '@components/Messaging/Thread'
 import ThreadListHeader from '@components/Messaging/ThreadListHeader'
-import NeroIcon from '@components/Nero/NeroIcon.vue'
 import { removeMenuOptionIfExist } from '@utils/commons.util'
 
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
@@ -101,7 +101,7 @@ let refrechTimeout
 export default {
   name: 'ThreadList',
   components: {
-    NeroIcon,
+    FAIcon,
     IconOption,
     ThreadListHeader,
     Thread,

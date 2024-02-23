@@ -12,10 +12,7 @@
         <span class="label">
           {{ formattedStartDate + ' - ' + formattedEndDate }}
         </span>
-        <img
-          src="@assets/icons/calendar.svg"
-          alt=""
-        >
+        <CustomIcon icon-name="icon-calendar" />
       </button>
     </template>
   </DatePicker>
@@ -24,12 +21,13 @@
 <script>
 import 'v-calendar/style.css'
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import { DatePicker } from 'v-calendar'
 
 export default {
   name: 'DateRangePicker',
-  components: { DatePicker },
+  components: { CustomIcon, DatePicker },
   props: {
     initialRange: {
       type: Object,
@@ -102,6 +100,10 @@ button {
   &:hover {
     transition: .2s background-color linear;
     background-color: #c5c5c5;
+  }
+
+  .icon-calendar  {
+    font-size: 1.3rem;
   }
 }
 

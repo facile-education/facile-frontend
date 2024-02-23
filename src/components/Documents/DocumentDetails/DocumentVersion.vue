@@ -26,9 +26,9 @@
           :title="$t('Documents.documentFields.downloadCount')"
         >
           <div>{{ version.downloadCount }}</div>
-          <BaseIcon
+          <CustomIcon
             class="icon"
-            name="download"
+            icon-name="icon-download"
           />
         </div>
       </div>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
@@ -79,7 +79,7 @@ import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 
 export default {
   name: 'DocumentVersion',
-  components: { BaseIcon, WeprodeButton },
+  components: { CustomIcon, WeprodeButton },
   props: {
     document: {
       type: Object,
@@ -151,6 +151,10 @@ export default {
         .icon {
           margin-left: 5px;
         }
+        .icon-download {
+          font-size: 1.3rem;
+        }
+
       }
     }
 

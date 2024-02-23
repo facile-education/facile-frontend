@@ -32,10 +32,7 @@
         :aria-label="$t('AttachedFiles.remove')"
         @click.stop="removeAttachedFile"
       >
-        <img
-          :src="require('@/assets/icons/trash.svg')"
-          alt="options"
-        >
+        <CustomIcon icon-name="icon-trash" />
       </button>
 
       <button
@@ -283,9 +280,8 @@ button {
   align-items: center;
   justify-content: center;
 
-  img {
-    width: 20px;
-    height: 20px;
+  .icon-trash {
+    font-size: 21px;
   }
 }
 

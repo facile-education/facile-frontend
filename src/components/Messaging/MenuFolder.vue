@@ -14,13 +14,13 @@
       @click="handleClick"
     >
       <span class="icon-container">
-        <BaseIcon
+        <FAIcon
           v-if="!isExpanded && folder.subFolders.length > 0"
           name="caret-right"
           class="fa-lg folder-icon"
           @click.stop="isExpanded = true"
         />
-        <BaseIcon
+        <FAIcon
           v-if="isExpanded && folder.subFolders.length > 0"
           name="caret-down"
           class="fa-lg folder-icon"
@@ -41,11 +41,10 @@
           data-test="rename"
           @click.stop="toggleFolderNameInput"
         >
-          <img
-            src="@assets/icons/pen.svg"
-            alt="edit folder"
+          <CustomIcon
             class="folder-action edit"
-          >
+            icon-name="icon-edit"
+          />
         </button>
         <button
           :title="$t('Messaging.addSubFolder')"
@@ -112,8 +111,8 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon'
 import CustomIcon from '@components/Base/CustomIcon.vue'
+import FAIcon from '@components/Base/FAIcon.vue'
 import messagingUtils from '@utils/messaging.utils'
 import _ from 'lodash'
 import { nextTick } from 'vue'
@@ -127,7 +126,7 @@ export default {
   name: 'MenuFolder',
   components: {
     CustomIcon,
-    BaseIcon,
+    FAIcon,
     WeprodeInput
   },
   inject: ['mq'],

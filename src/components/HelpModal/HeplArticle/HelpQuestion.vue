@@ -5,13 +5,12 @@
   >
     {{ question.question }}
     <span>
-      <img
+      <CustomIcon
         v-if="isAdministrator"
         class="admin-trash-icon"
-        src="@/assets/icons/trash.svg"
-        alt="delete"
+        icon-name="icon-trash"
         @click.stop="confirmQuestionRemoval"
-      >
+      />
       <CustomIcon
         class="icon"
         :class="isExtended ? 'extend': 'collapse'"
@@ -95,6 +94,7 @@ button {
 
   span {
     display: flex;
+    align-items: center;
   }
 
   .icon {
@@ -115,6 +115,7 @@ button {
 
   .admin-trash-icon {
     margin-right: 10px;
+    font-size: 1.2rem;
     display: none;
   }
 

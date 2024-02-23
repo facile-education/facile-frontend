@@ -16,7 +16,7 @@
       <CustomIcon
         class="arrow-icon"
         :class="{'rotated': !expanded}"
-        icon-name="icon-double-arrow"
+        icon-name="icon-double-chevron-left"
       />
     </button>
   </section>

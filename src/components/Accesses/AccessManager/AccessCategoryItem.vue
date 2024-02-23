@@ -25,14 +25,13 @@
         class="delete-button"
         data-test="deleteCategory"
         cls="cancel"
+        :title="$t('Accesses.AccessCategoryItem.delete')"
+        :aria-label="$t('Accesses.AccessCategoryItem.delete')"
         @click="confirmDeleteCategory"
       >
-        <img
-          class="trash-icon"
-          src="@/assets/icons/trash.svg"
-          :alt="$t('Accesses.AccessCategoryItem.delete')"
-          :title="$t('Accesses.AccessCategoryItem.delete')"
-        >
+        <CustomIcon
+          icon-name="icon-trash"
+        />
         <span v-t="'Accesses.AccessCategoryItem.delete'" />
       </WeprodeButton>
     </div>
@@ -60,6 +59,7 @@
 import AccessCategoryInput from '@components/Accesses/AccessManager/AccessCategoryInput.vue'
 import AccessesPlaceholder from '@components/Accesses/AccessManager/AccessesPlaceholder.vue'
 import AccessItem from '@components/Accesses/AccessManager/AccessItem.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import _ from 'lodash'
 
 import { removeSchoolCategory, saveSchoolCategory } from '@/api/access.service'
@@ -67,7 +67,7 @@ import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 
 export default {
   name: 'AccessCategoryItem',
-  components: { AccessesPlaceholder, AccessCategoryInput, AccessItem, WeprodeButton },
+  components: { CustomIcon, AccessesPlaceholder, AccessCategoryInput, AccessItem, WeprodeButton },
   props: {
     category: {
       type: Object,
@@ -177,9 +177,8 @@ ul {
     margin-left: 12px;
   }
 
-  .trash-icon {
-    width: 20px;
-    height: 20px;
+  .icon-trash {
+    font-size: 18px;
   }
 }
 </style>

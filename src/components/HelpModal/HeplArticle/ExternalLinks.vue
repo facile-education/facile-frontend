@@ -18,13 +18,11 @@
           :href="link.linkUrl"
           target="_blank"
         >{{ link.linkName }}</a>
-        <img
+        <CustomIcon
           v-if="isAdministrator"
-          src="@/assets/icons/trash.svg"
-          class="icon-admin"
-          alt="delete"
+          icon-name="icon-trash"
           @click="confirmLinkRemoval(link)"
-        >
+        />
       </li>
     </ul>
   </div>
@@ -125,7 +123,7 @@ li {
   &:hover {
     background-color: $color-hover-bg;
 
-    .icon-admin {
+    .icon-trash {
       opacity: 100%;
       cursor: pointer;
     }
@@ -144,7 +142,7 @@ a {
   line-height: 1;
 }
 
-.icon-admin {
+.icon-trash {
   opacity: 0;
 }
 </style>

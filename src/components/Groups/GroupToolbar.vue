@@ -7,9 +7,7 @@
       :class="{'phone': mq.phone}"
       @click="toggleEditGroupModal"
     >
-      <NeroIcon
-        name="fa-plus"
-      />
+      <CustomIcon icon-name="icon-plus" />
       <span>{{ $t('Groups.GroupToolbar.add') }}</span>
     </WeprodeButton>
 
@@ -42,7 +40,7 @@
 </template>
 
 <script>
-import NeroIcon from '@components/Nero/NeroIcon'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import NeroToolbar from '@components/Nero/NeroToolbar'
 import { defineAsyncComponent } from 'vue'
 
@@ -53,7 +51,7 @@ const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/Edi
 
 export default {
   name: 'GroupToolbar',
-  components: { NeroIcon, NeroToolbar, EditGroupModal, WeprodeButton, WeprodeDropdown, WeprodeInput },
+  components: { CustomIcon, NeroToolbar, EditGroupModal, WeprodeButton, WeprodeDropdown, WeprodeInput },
   inject: ['mq'],
   data () {
     return {

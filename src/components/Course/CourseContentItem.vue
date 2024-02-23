@@ -61,10 +61,7 @@
       class="remove-button"
       @click.stop="$emit('delete')"
     >
-      <img
-        :src="require('@/assets/icons/trash.svg')"
-        alt="options"
-      >
+      <CustomIcon icon-name="icon-trash" />
     </button>
 
     <teleport to="body">
@@ -107,6 +104,7 @@
 
 <script>
 import AttachedFile from '@components/AttachedFiles/AttachedFile.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import TextContent from '@components/Base/TextContent.vue'
 import { downloadDocuments } from '@utils/documents.util'
 import { defineAsyncComponent } from 'vue'
@@ -121,6 +119,7 @@ const EmbedContentModal = defineAsyncComponent(() => import('@components/Base/Co
 export default {
   name: 'CourseContentItem',
   components: {
+    CustomIcon,
     AttachedFile,
     FilePickerModal,
     EmbedContentModal,
@@ -388,9 +387,8 @@ button {
   align-items: center;
   justify-content: center;
 
-  img {
-    width: 20px;
-    height: 20px;
+  .icon-trash {
+    font-size: 21px;
   }
 }
 </style>

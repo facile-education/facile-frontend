@@ -25,10 +25,7 @@
       class="display-whole-week-button"
       @click="unselectSession"
     >
-      <img
-        src="@/assets/icons/calendar.svg"
-        alt=""
-      >
+      <CustomIcon icon-name="icon-calendar" />
       <span v-t="'Course.CourseSchedule.displayWholeWeek'" />
     </button>
 
@@ -49,6 +46,7 @@
 import 'v-calendar/style.css'
 
 import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
@@ -61,6 +59,7 @@ const DayNavigation = defineAsyncComponent(() => import('@components/Dashboard/S
 export default {
   name: 'CourseSchedule',
   components: {
+    CustomIcon,
     DayNavigation,
     Timeline,
     CustomCalendar
@@ -186,8 +185,9 @@ export default {
   border-radius: 6px;
   border: 1px solid $color-border;
 
-  img {
+  .icon-calendar {
     margin-right: 1rem;
+    font-size: 1.3rem;
   }
 }
 

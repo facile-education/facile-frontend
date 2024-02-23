@@ -66,10 +66,7 @@
         data-test="logout"
         @click="doLogout"
       >
-        <img
-          src="@/assets/icons/logout.svg"
-          alt=""
-        >
+        <CustomIcon icon-name="icon-logout" />
         <span>{{ $t('Banner.BannerPopoverMenu.logout') }}</span>
       </a>
     </div>
@@ -97,6 +94,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 
 import constants from '@/api/constants'
@@ -110,6 +108,7 @@ const Pellet = defineAsyncComponent(() => import('@components/Base/Pellet.vue'))
 export default {
   name: 'BannerPopoverMenu',
   components: {
+    CustomIcon,
     Pellet,
     VersionNotesModal,
     AssistanceModal,
@@ -238,6 +237,10 @@ ul {
 
 .logout-container {
   padding: 1rem 1rem 0 1rem;
+
+  .icon-logout {
+    font-size: 1rem;
+  }
 }
 
 a.logout-link {

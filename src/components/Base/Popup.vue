@@ -9,7 +9,7 @@
         v-if="iconName==='icon-check'"
         :icon-name="iconName"
       />
-      <BaseIcon
+      <FAIcon
         class="fa-icon"
         :name="iconName"
       />
@@ -40,11 +40,11 @@
 
 <script>
 
-import BaseIcon from '@components/Base/BaseIcon'
 import CustomIcon from '@components/Base/CustomIcon.vue'
+import FAIcon from '@components/Base/FAIcon.vue'
 export default {
   name: 'Popup',
-  components: { CustomIcon, BaseIcon },
+  components: { CustomIcon, FAIcon },
   props: {
     message: {
       type: String,

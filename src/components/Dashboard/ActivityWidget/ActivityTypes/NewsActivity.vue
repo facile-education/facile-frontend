@@ -26,12 +26,13 @@
           <span class="text">
             {{ (news.isSchoolNews ? $t('Dashboard.NewsActivity.hasPublishedAnnounce') : $t('Dashboard.NewsActivity.hasPublishedInfo')) + news.title }}
           </span>
-          <BaseIcon
+          <img
             v-if="news.hasAttachedFiles"
             data-test="fileIcon"
             class="paper-clip"
-            name="paperclip"
-          />
+            :src="require('@assets/icons/paperclip.svg')"
+            alt="paperclip"
+          >
         </div>
       </div>
     </div>
@@ -78,10 +79,10 @@
         @click.stop="isUpdateModalDisplayed = true"
         @keyup.stop
       >
-        <img
-          src="@assets/icons/pen.svg"
-          alt="edit"
-        >
+        <CustomIcon
+          class="icon"
+          icon-name="icon-edit"
+        />
       </button>
       <button
         class="option"
@@ -91,10 +92,10 @@
         @click.stop="confirmNewsDeletion"
         @keyup.stop
       >
-        <img
-          src="@/assets/icons/trash.svg"
-          alt="delete"
-        >
+        <CustomIcon
+          class="icon"
+          icon-name="icon-trash"
+        />
       </button>
     </div>
   </div>
@@ -134,7 +135,7 @@
 </template>
 
 <script>
-import BaseIcon from '@components/Base/BaseIcon.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { updateDeleteContextMenu } from '@utils/contextMenus'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
@@ -148,7 +149,7 @@ const NewsActivityDetailsModal = defineAsyncComponent(() => import('@components/
 
 export default {
   name: 'NewsActivity',
-  components: { BaseIcon, SaveNewsModal, NewsActivityDetailsModal, ContextMenu },
+  components: { CustomIcon, SaveNewsModal, NewsActivityDetailsModal, ContextMenu },
   inject: ['mq'],
   props: {
     news: {
@@ -272,8 +273,10 @@ button {
   }
 
   .paper-clip {
-    color: $color-new-light-text;
-    margin: 0 0.5rem;
+    margin-left: 6px;
+    width: 1rem;
+    height: 1rem;
+    transform: rotate(45deg);
   }
 
   i {
@@ -327,8 +330,10 @@ button {
       cursor: pointer;
       background-color: $neutral-20;
 
-      img {
-        height: 15px;
+      .icon {
+        font-size: 1rem;
+        color: black;
+        text-decoration: none;
       }
 
       &:hover {

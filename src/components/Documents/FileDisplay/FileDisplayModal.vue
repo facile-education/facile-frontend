@@ -59,10 +59,7 @@
               :aria-label="$t('Documents.FileDisplayModal.close')"
               @click="wantsToCloseFile = true"
             >
-              <img
-                src="@/assets/icons/cross.svg"
-                :alt="$t('Documents.FileDisplayModal.close')"
-              >
+              <CustomIcon icon-name="icon-cross-M" />
             </button>
           </div>
         </div>
@@ -82,12 +79,13 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import FileDisplay from '@components/Documents/FileDisplay/FileDisplay'
 import VueResizable from 'vue-resizable'
 
 export default {
   name: 'FileDisplayModal',
-  components: { FileDisplay, VueResizable },
+  components: { CustomIcon, FileDisplay, VueResizable },
   inject: ['mq'],
   props: {
     file: {
@@ -256,6 +254,11 @@ h1 {
     img {
       width: 1.5rem;
       height: 1.5rem;
+    }
+
+    .icon-cross-M {
+      font-size: 1.5rem;
+      font-weight: bold;
     }
   }
 }
