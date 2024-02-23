@@ -26,12 +26,6 @@
           <span class="text">
             {{ (news.isSchoolNews ? $t('hasPublishedAnnounce') : $t('hasPublishedInfo')) + news.title }}
           </span>
-          <BaseIcon
-            v-if="news.hasAttachedFiles"
-            data-test="fileIcon"
-            class="paper-clip"
-            name="paperclip"
-          />
         </div>
       </div>
     </div>
@@ -40,15 +34,23 @@
       class="date"
       :title="formattedDateLong"
     >
-      {{ formattedDate }}
-      <button
-        v-if="!news.hasRead"
-        v-t="'show'"
-        class="show"
-        :aria-label="$t('show')"
-        :title="$t('show')"
-        @click="showDetails"
+      <BaseIcon
+        v-if="news.hasAttachedFiles"
+        data-test="fileIcon"
+        class="paper-clip"
+        name="paperclip"
       />
+      <div class="right">
+        {{ formattedDate }}
+        <button
+          v-if="!news.hasRead"
+          v-t="'show'"
+          class="show"
+          :aria-label="$t('show')"
+          :title="$t('show')"
+          @click="showDetails"
+        />
+      </div>
     </div>
 
     <button
@@ -242,6 +244,7 @@ button {
   @extend %activity-item;
   cursor: pointer;
   position: relative;
+  padding-right: 0;
 
   &:hover, &:focus-within {
     .options {
@@ -338,7 +341,16 @@ button {
   }
 
   .date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin: auto;
+    margin-right: 16px;
+    .right{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
   }
   .show {
     @extend %show-more-button;
@@ -360,6 +372,6 @@ button {
   "selectToConsult": "Consulter",
   "hasPublishedInfo": "a publié ",
   "hasPublishedAnnounce": "a publié l'annonce ",
-  "show": "Voir"
+  "show": "Voir plus"
 }
 </i18n>
