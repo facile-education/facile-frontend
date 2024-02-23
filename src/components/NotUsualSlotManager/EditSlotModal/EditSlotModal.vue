@@ -287,7 +287,7 @@ export default {
       }
     },
     updateSlotDates (range) {
-      this.newEvent.firstSessionDate = dayjs(range.start)
+      this.newEvent.firstSessionDate = dayjs(range.start).hour(5)
       this.newEvent.lastSessionDate = dayjs(range.end)
     },
     updateTeacher (value) {

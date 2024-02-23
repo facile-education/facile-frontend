@@ -13,11 +13,11 @@
       </span>
       <span
         v-else-if="isCreation"
-        v-t="isH5P? 'creation-title-h5p' : 'creation-title'"
+        v-t="isH5P? 'Base.EmbedContentModal.creation-title-h5p' : 'Base.EmbedContentModal.creation-title'"
       />
       <span
         v-else
-        v-t="isH5P? 'edition-title-h5p' : 'edition-title'"
+        v-t="isH5P? 'Base.EmbedContentModal.edition-title-h5p' : 'Base.EmbedContentModal.edition-title'"
       />
     </template>
 
