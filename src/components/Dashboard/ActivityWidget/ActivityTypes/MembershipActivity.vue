@@ -104,7 +104,7 @@ export default {
       }
     },
     nbUsers () {
-      return this.$t('nb-users', { nbUsers: this.activity.users.length })
+      return this.$t('Dashboard.MembershipActivity.nb-users', { nbUsers: this.activity.users.length })
     },
     description2 () {
       switch (this.activity.type) {

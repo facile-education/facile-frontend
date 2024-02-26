@@ -6,6 +6,7 @@
       <div> {{ fullName }}</div>
       <button
         v-if="!isCurrentMember && isCurrentGroupAdmin"
+        data-test="removeUser"
         @click="removeUser"
       >
         <CustomIcon

@@ -69,11 +69,13 @@
               v-model="selectedRole"
               :list="roleList"
               display-field="label"
+              data-test="profile"
               :sort="false"
               @update:model-value="getCompletion"
             />
             <WeprodeDropdown
               v-model="selectedSchool"
+              data-test="school"
               :list="schoolList"
               :sort="false"
               display-field="schoolName"
