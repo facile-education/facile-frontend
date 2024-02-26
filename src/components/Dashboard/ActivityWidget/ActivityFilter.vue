@@ -65,6 +65,7 @@ export default {
   emits: ['updateFilter'],
   data () {
     return {
+      allGroups: { groupId: 0, groupName: this.$t('Dashboard.ActivityFilter.allGroups') },
       filter: undefined,
       availableActivityTypes: ['news', 'docs', 'schoolLife', 'sessions'],
       groupList: [],
@@ -83,10 +84,9 @@ export default {
       getUserCommunities(this.$store.state.user.userId, { label: '', isCommunityActive: false, isInstitutionalActive: false, isPedagogicalActive: false }).then((data) => {
         this.isLoadingGroups = false
         if (data.success) {
-          const allGroupObject = { groupId: 0, groupName: this.$t('Dashboard.ActivityFilter.allGroups') }
           this.groupList = data.groups
-          this.groupList.unshift(allGroupObject)
-          this.filter.selectedGroup = allGroupObject
+          this.groupList.unshift(this.allGroups)
+          this.filter.selectedGroup = this.allGroups
         }
       })
     },
