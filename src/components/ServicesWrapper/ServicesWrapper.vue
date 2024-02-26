@@ -6,12 +6,9 @@
     <h1 :aria-label="title" />
     <div
       v-if="mq.phone && isTitleVisible"
-      class="menu-entry-title-mobile"
-      :class="[isEntryTitleVisible ? 'visible' : 'hidden', 'theme-background-color']"
+      class="services-title-mobile"
+      :class="[isEntryTitleVisible ? 'visible' : 'hidden']"
     >
-      <CustomIcon
-        :class="icon"
-      />
       <span>{{ title }}</span>
     </div>
     <div class="containerSlot">
@@ -21,18 +18,12 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
-const CustomIcon = defineAsyncComponent(() => import('@components/Base/CustomIcon.vue'))
 
 export default {
   name: 'ServicesWrapper',
-  components: {
-    CustomIcon
-  },
   inject: ['mq'],
   props: {
     isTitleVisible: Boolean,
-    icon: String,
     title: String
   },
   data () {
@@ -58,7 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+@import "@design";
 .services-wrapper{
     height: 100%;
     overflow: auto;
@@ -69,25 +60,19 @@ export default {
   padding: 10px;
 }
 
-.menu-entry-title-mobile{
+.services-title-mobile{
   grid-area: title;
   position: sticky;
   top: 0;
   height: fit-content;
-  z-index: 1;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
+  z-index: 5;
   width: 100%;
-  padding: 10px;
-  border-top: solid 1px;
+  padding: 16px 10px 6px 10px;
   transition: all .3s ease;
+  background-color: white;
   span{
-    font-size: 1.2rem;
-  }
-  i{
     font-size: 1.5rem;
+    font-weight: 500;
   }
   &.visible{
     top: 0;
