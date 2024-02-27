@@ -1,6 +1,6 @@
 @import 'common';
 
-// Nero colors
+// Facile colors
 $text-color-light: #fff;
 $text-color-fallback: #b7b7b7;
 $text-disabled-color: #666666;
@@ -15,17 +15,17 @@ $dropdown-background-color: $background-grey-color;
 $input-background-color: $background-grey-color;
 
 // Border
-$border-nero: 1px solid #f4f4f4;
-$border-radius-nero: 6px;
+$border-facile: 1px solid #f4f4f4;
+$border-radius-facile: 6px;
 
 // Global classes extends
 %item-shadow {
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
 }
 
-%nero-btn-like {
+%facile-btn-like {
   font-family: inherit;
-  border-radius: $border-radius-nero;
+  border-radius: $border-radius-facile;
   padding: 15px 15px;
   text-align: center;
   border: none;
@@ -33,7 +33,7 @@ $border-radius-nero: 6px;
   display: inline-block;
 }
 
-%nero-input {
+%facile-input {
   font-family: inherit;
   font-size: inherit;
   background-image: none;
@@ -45,11 +45,11 @@ $border-radius-nero: 6px;
   padding: 14px 16px;
 
   &:disabled {
-    @extend %nero-disable;
+    @extend %facile-disable;
   }
 }
 
-%nero-disable {
+%facile-disable {
   cursor: not-allowed;
   box-shadow: none;
   background-color: $disabled-background-color;
@@ -61,33 +61,33 @@ $border-radius-nero: 6px;
 }
 
 .disabled {
-  @extend %nero-disable;
+  @extend %facile-disable;
 }
 
 // Autocomplete
 .base-autocomplete {
-  border: $border-nero;
-  border-radius: $border-radius-nero;
+  border: $border-facile;
+  border-radius: $border-radius-facile;
 
   @extend %item-shadow;
 
   .filter {
-    border-bottom: $border-nero;
+    border-bottom: $border-facile;
   }
 }
 
 // Button
 .base-button {
   &:disabled {
-    @extend %nero-disable;
+    @extend %facile-disable;
   }
 
   &.button {
-    @extend %nero-btn-like;
+    @extend %facile-btn-like;
   }
 
   &.circle {
-    @extend %nero-btn-like;
+    @extend %facile-btn-like;
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -120,7 +120,7 @@ $border-radius-nero: 6px;
 // Checkbox
 .base-checkbox {
   .checkmark {
-    border-radius: $border-radius-nero;
+    border-radius: $border-radius-facile;
 
     &.disabled {
       background-color: $disabled-background-color
@@ -132,7 +132,7 @@ $border-radius-nero: 6px;
 
 // Dropdown
 .base-dropdown .button {
-  @extend %nero-btn-like;
+  @extend %facile-btn-like;
   background-color: $dropdown-background-color;
   width: 100%;
   height: 100%;
@@ -144,13 +144,13 @@ $border-radius-nero: 6px;
   }
 
   &:disabled {
-    @extend %nero-disable;
+    @extend %facile-disable;
   }
 }
 
 // Input
 .base-input {
-  @extend %nero-input;
+  @extend %facile-input;
 }
 
 // Popup
@@ -164,13 +164,13 @@ $border-radius-nero: 6px;
 .base-tab {
 
   &.disabled {
-    @extend %nero-disable;
+    @extend %facile-disable;
   }
 }
 
 // Tags input
 .base-tags-input {
-  @extend %nero-input;
+  @extend %facile-input;
 }
 
 // Toggle switch

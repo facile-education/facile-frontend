@@ -6,7 +6,7 @@
     @close="onClose"
   >
     <template #header>
-      <span v-t="'Nero.ImagePicker.header'" />
+      <span v-t="'Facile.ImagePicker.header'" />
     </template>
 
     <template #body>
@@ -58,7 +58,7 @@
         </div>
 
         <SelectFilesButtons
-          :label="$t('Nero.ImagePicker.changePictureLabel')"
+          :label="$t('Facile.ImagePicker.changePictureLabel')"
           :images-only="true"
           @load="loadImage"
           @select-files="selectImageFromApp"
@@ -69,7 +69,7 @@
     <template #footer>
       <WeprodeButton
         v-if="result.image !== null"
-        :label="$t('Nero.ImagePicker.saveButton')"
+        :label="$t('Facile.ImagePicker.saveButton')"
         @click="onConfirm"
       />
     </template>
@@ -80,12 +80,12 @@
 import 'vue-advanced-cropper/dist/style.css'
 
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+import WeprodeSpinner from '@components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeWindow from '@components/Base/Weprode/WeprodeWindow.vue'
 import SelectFilesButtons from '@components/FilePicker/SelectFilesButtons.vue'
 import { Cropper, Preview } from 'vue-advanced-cropper'
 
-import { getResource, uploadTmpFile } from '@/api/documents/file.service'
-import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
-import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
+import { getResource, uploadTmpFile } from '@/api/documents/file.service.js'
 
 export default {
   name: 'ImagePickerModal',

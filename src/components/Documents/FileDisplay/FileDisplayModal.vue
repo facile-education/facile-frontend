@@ -209,7 +209,7 @@ $header-height: 50px;
   flex-direction: column;
 
   &:not(.full-screen) {
-    border-radius: $border-radius-nero;
+    border-radius: $border-radius-facile;
   }
 }
 

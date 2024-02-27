@@ -1,5 +1,5 @@
 <template>
-  <NeroToolbar class="toolbar">
+  <FacileToolbar class="toolbar">
     <WeprodeButton
       v-if="!mq.phone && canCreateGroup"
       data-test="createGroupButton"
@@ -36,12 +36,12 @@
         @close="isEditGroupModalDisplayed=false"
       />
     </teleport>
-  </NeroToolbar>
+  </FacileToolbar>
 </template>
 
 <script>
 import CustomIcon from '@components/Base/CustomIcon.vue'
-import NeroToolbar from '@components/Nero/NeroToolbar'
+import FacileToolbar from '@components/Facile/FacileToolbar'
 import { defineAsyncComponent } from 'vue'
 
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
@@ -51,7 +51,7 @@ const EditGroupModal = defineAsyncComponent(() => import('@components/Groups/Edi
 
 export default {
   name: 'GroupToolbar',
-  components: { CustomIcon, NeroToolbar, EditGroupModal, WeprodeButton, WeprodeDropdown, WeprodeInput },
+  components: { CustomIcon, FacileToolbar, EditGroupModal, WeprodeButton, WeprodeDropdown, WeprodeInput },
   inject: ['mq'],
   data () {
     return {

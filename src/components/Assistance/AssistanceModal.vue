@@ -219,7 +219,7 @@ export default {
   font-size: 0.9em;
 }
 
-h5, .NeroDropDown {
+h5 {
   display: inline;
 }
 

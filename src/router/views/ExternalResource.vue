@@ -37,7 +37,7 @@
         <div v-if="!isHttps">
           <img
             class="icon"
-            src="../../assets/images/icon-external-service.png"
+            src="@assets/images/icon-external-service.png"
             alt=""
           >
           <h3>{{ $t('ExternalResource.newTabLabel', {resourceName: serviceName}) }}</h3>
@@ -53,7 +53,6 @@
               @click="openInNewTab"
             />
           </I18n>
-          <div class="nero-separator" />
           <p class="content">
             {{ $t('ExternalResource.popupIssueLabel') }}
           </p>

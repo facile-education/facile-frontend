@@ -1,4 +1,4 @@
-import neroService from '@/api/nero.service'
+import menuService from '@/api/menu.service.js'
 import { updateSideMenuState } from '@/api/user.service'
 import i18n from '@/i18n'
 import router from '@/router'
@@ -72,7 +72,7 @@ export const mutations = {
 export const actions = {
   initUserMenu ({ commit }) {
     commit('setIsLoadingMenu', true)
-    return neroService.getUserMenu().then((data) => {
+    return menuService.getUserMenu().then((data) => {
       commit('setIsLoadingMenu', false)
       if (data.success) {
         commit('setMenuError', false)

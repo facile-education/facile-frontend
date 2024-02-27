@@ -29,7 +29,7 @@
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import { defineAsyncComponent } from 'vue'
 
-const ImagePicker = defineAsyncComponent(() => import('@components/Nero/ImagePicker.vue'))
+const ImagePicker = defineAsyncComponent(() => import('@components/Base/ImagePicker.vue'))
 
 export default {
   name: 'ThumbnailSelector',

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'NeroToolbar'
+  name: 'FacileToolbar'
 }
 </script>
 
@@ -17,10 +17,7 @@ export default {
   margin-bottom: 20px;
   display: flex;
   gap: 0.8rem;
-  /* white-space: nowrap;
-  overflow-x: auto; */
   z-index: $toolbar-z-index;
   align-items: center;
-  // @extend %object-shadow;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <NeroToolbar v-if="show">
+  <FacileToolbar v-if="show">
     <WeprodeButton
       v-if="isAdministrator"
       class="create-button"
@@ -18,24 +18,24 @@
       @update:model-value="onSchoolSelect"
     />
     <WeprodeSpinner v-else />
-  </NeroToolbar>
+  </FacileToolbar>
 </template>
 
 <script>
 
 import CustomIcon from '@components/Base/CustomIcon.vue'
+import FacileToolbar from '@components/Facile/FacileToolbar'
 import WeprodeUtils from '@utils/weprode.utils'
 
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
-import NeroToolbar from '@/components/Nero/NeroToolbar'
 
 export default {
   name: 'AMToolbar',
   components: {
     CustomIcon,
-    NeroToolbar,
+    FacileToolbar,
     WeprodeButton,
     WeprodeDropdown,
     WeprodeSpinner

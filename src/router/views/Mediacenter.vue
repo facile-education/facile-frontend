@@ -3,23 +3,24 @@
     :is-title-visible="false"
     :title="$t('Mediacenter.serviceTitle')"
   >
-    <NeroToolbar v-if="(schoolList && schoolList.length > 1)">
+    <FacileToolbar v-if="(schoolList && schoolList.length > 1)">
       <WeprodeDropdown
         v-model="selectedSchool"
         :list="schoolList"
         display-field="schoolName"
         @update:model-value="onSelectSchool"
       />
-    </NeroToolbar>
+    </FacileToolbar>
 
     <CategoryList />
   </ServicesWrapper>
 </template>
 
 <script>
+import FacileToolbar from '@components/Facile/FacileToolbar'
+
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import CategoryList from '@/components/Mediacenter/CategoryList'
-import NeroToolbar from '@/components/Nero/NeroToolbar'
 
 import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 
@@ -27,7 +28,7 @@ export default {
   name: 'Mediacenter',
   components: {
     CategoryList,
-    NeroToolbar,
+    FacileToolbar,
     WeprodeDropdown,
     ServicesWrapper
   },

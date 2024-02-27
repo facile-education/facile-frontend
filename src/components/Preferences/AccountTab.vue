@@ -82,13 +82,13 @@
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import UserPicture from '@components/Base/UserPicture.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
-import ColorPicker from '@components/Nero/ColorPicker'
+import ColorPicker from '@components/Preferences/ColorPicker.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { defineAsyncComponent } from 'vue'
 
 import userService from '@/api/user.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
-const ImagePickerModal = defineAsyncComponent(() => import('@/components/Nero/ImagePicker'))
+const ImagePickerModal = defineAsyncComponent(() => import('@components/Base/ImagePicker.vue'))
 
 export default {
   name: 'AccountTab',

@@ -2,16 +2,15 @@
   <WeprodeSpinner v-if="userId === undefined" />
   <div
     v-else
-    class="nero"
-    :class="neroClasses"
+    class="layout"
+    :class="layoutClasses"
   >
-    <Banner class="nero-header theme-background-color" />
+    <Banner class="facile-header theme-background-color" />
 
-    <LayoutMenu class="nero-menu" />
+    <LayoutMenu class="facile-menu" />
     <section
-      class="nero-body"
+      class="facile-body"
       data-test="body"
-      @scroll="handleScroll"
     >
       <NotAllowed v-if="!isAllowed && !user.isAdministrator" />
       <slot v-else />
@@ -103,8 +102,8 @@
 </template>
 
 <script>
-import CookiesAgreement from '@components/Nero/CookiesAgreement.vue'
-import SessionEndAdvertising from '@components/Nero/SessionEndAdvertising.vue'
+import CookiesAgreement from '@components/Facile/CookiesAgreement.vue'
+import SessionEndAdvertising from '@components/Facile/SessionEndAdvertising.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
@@ -125,7 +124,7 @@ const Popup = defineAsyncComponent(() => import('@components/Base/Popup'))
 const QuickSearchPanel = defineAsyncComponent(() => import('@components/Search/QuickSearchPanel'))
 const LayoutMenu = defineAsyncComponent(() => import('@/components/Menu/LayoutMenu'))
 const UploadProgression = defineAsyncComponent(() => import('@components/Documents/UploadProgression'))
-const WarningModal = defineAsyncComponent(() => import('@/components/Nero/WarningModal'))
+const WarningModal = defineAsyncComponent(() => import('@components/WarningModal/WarningModal.vue'))
 
 export default {
   name: 'BannerLayout',
@@ -190,7 +189,7 @@ export default {
     menuExpanded () {
       return this.$store.state.menu.menuExpanded
     },
-    neroClasses () {
+    layoutClasses () {
       const phoneDisplay = this.mq.phone || this.mq.tablet
       return {
         mobile: phoneDisplay,
@@ -302,7 +301,7 @@ export default {
 <style lang="scss" scoped>
 @import "@design";
 
-.nero {
+.layout {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -331,14 +330,14 @@ export default {
   }
 }
 
-.nero-header {
+.facile-header {
   grid-area: header;
   border: 0;
   top: 0;
   z-index: $banner-z-index;
 }
 
-.nero-body {
+.facile-body {
   grid-area: main;
   height: 100%;
   overflow: auto;
@@ -346,7 +345,7 @@ export default {
   //padding: 2rem 40px;
 }
 
-.nero-menu {
+.facile-menu {
   grid-area: side;
 }
 

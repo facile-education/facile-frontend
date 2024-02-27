@@ -191,6 +191,7 @@
 
 <script>
 import CustomIcon from '@components/Base/CustomIcon.vue'
+import ImagePicker from '@components/Base/ImagePicker.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
@@ -203,7 +204,6 @@ import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import WeprodeRadioButton from '@/components/Base/Weprode/WeprodeRadioButton.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
-import ImagePicker from '@/components/Nero/ImagePicker'
 
 export default {
   name: 'ApplicationEditionModal',

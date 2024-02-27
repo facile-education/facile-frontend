@@ -1,5 +1,5 @@
 <template>
-  <NeroToolbar v-if="show">
+  <FacileToolbar v-if="show">
     <Transition
       appear
       name="fade"
@@ -13,18 +13,19 @@
       />
       <WeprodeSpinner v-else />
     </Transition>
-  </NeroToolbar>
+  </FacileToolbar>
 </template>
 
 <script>
+import FacileToolbar from '@components/Facile/FacileToolbar'
+
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
-import NeroToolbar from '@/components/Nero/NeroToolbar'
 
 export default {
   name: 'CMToolbar',
   components: {
-    NeroToolbar,
+    FacileToolbar,
     WeprodeDropdown,
     WeprodeSpinner
   },

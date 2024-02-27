@@ -2,18 +2,18 @@
   <section class="cookie-agreement theme-background-color">
     <div class="text">
       <div
-        v-t="'Nero.CookiesAgreement.cookiesPolicy'"
+        v-t="'Facile.CookiesAgreement.cookiesPolicy'"
         class="cookie-policy"
       />
       <button
-        v-t="'Nero.CookiesAgreement.moreDetails'"
+        v-t="'Facile.CookiesAgreement.moreDetails'"
         class="more-details"
         @click="openTermsOfUse"
       />
     </div>
 
     <button
-      v-t="'Nero.CookiesAgreement.IAgree'"
+      v-t="'Facile.CookiesAgreement.IAgree'"
       class="agree-button"
       @click="agreeToCookies"
     />

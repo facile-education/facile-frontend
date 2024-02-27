@@ -32,7 +32,7 @@ import CustomIcon from '@components/Base/CustomIcon.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { defineAsyncComponent } from 'vue'
 
-const ColorSwatches = defineAsyncComponent(() => import('@/components/Nero/ColorSwatches'))
+const ColorSwatches = defineAsyncComponent(() => import('@components/Preferences/ColorSwatches.vue'))
 
 export default {
   name: 'ColorPicker',
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/design';
+@import '@design';
 
 .picker {
   display: inline-block;

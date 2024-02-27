@@ -10,12 +10,12 @@
   >
     <template #body>
       <div class="text">
-        {{ $t('Nero.SessionEndAdvertising.sessionExpiresIn') + formattedRemainingTime }}
+        {{ $t('Facile.SessionEndAdvertising.sessionExpiresIn') + formattedRemainingTime }}
       </div>
 
       <div class="button-container">
         <WeprodeButton
-          v-t="('Nero.SessionEndAdvertising.keepSessionAlive')"
+          v-t="('Facile.SessionEndAdvertising.keepSessionAlive')"
           class="extend-session-button"
           @click="extendSession"
         />

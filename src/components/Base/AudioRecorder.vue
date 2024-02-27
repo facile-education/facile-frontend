@@ -8,7 +8,7 @@
   </div>
 
   <p
-    v-t="'Nero.AudioRecorder.recording'"
+    v-t="'Facile.AudioRecorder.recording'"
     class="state"
     :class="{'recording': isRecording}"
   />
@@ -31,20 +31,20 @@
         <FAIcon
           :name="isAudioPlaying ? 'pause' : 'play'"
         />
-        <span>{{ isAudioPlaying ? $t('Nero.AudioRecorder.pause') : $t('Nero.AudioRecorder.listen') }}</span>
+        <span>{{ isAudioPlaying ? $t('Facile.AudioRecorder.pause') : $t('Facile.AudioRecorder.listen') }}</span>
       </WeprodeButton>
       <WeprodeButton
         cls="cancel"
         @click="restartRecording"
       >
         <FAIcon name="undo" />
-        <span>{{ $t('Nero.AudioRecorder.restart') }}</span>
+        <span>{{ $t('Facile.AudioRecorder.restart') }}</span>
       </WeprodeButton>
     </template>
     <template v-else>
       <WeprodeButton @click="toggleRecording">
         <FAIcon :name="isRecording ? 'pause' : 'play'" />
-        <span>{{ isPaused ? $t('Nero.AudioRecorder.continue') : isRecording ? $t('Nero.AudioRecorder.pause') : $t('Nero.AudioRecorder.start') }}</span>
+        <span>{{ isPaused ? $t('Facile.AudioRecorder.continue') : isRecording ? $t('Facile.AudioRecorder.pause') : $t('Facile.AudioRecorder.start') }}</span>
       </WeprodeButton>
       <WeprodeButton
         cls="cancel"
@@ -55,7 +55,7 @@
         <FAIcon
           name="stop"
         />
-        <span>{{ $t('Nero.AudioRecorder.stop') }}</span>
+        <span>{{ $t('Facile.AudioRecorder.stop') }}</span>
       </WeprodeButton>
     </template>
     <WeprodeErrorMessage :error-message="errorMessage" />
@@ -66,10 +66,9 @@
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import FAIcon from '@components/Base/FAIcon.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+import WeprodeErrorMessage from '@components/Base/Weprode/WeprodeErrorMessage.vue'
 import RecordRTC from 'recordrtc'
 import WaveSurfer from 'wavesurfer.js'
-
-import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 
 export default {
   name: 'AudioRecorder',
@@ -132,10 +131,10 @@ export default {
         navigator.mediaDevices.getUserMedia({ audio: true })
           .then(this.startRecording,
             () => {
-              this.errorMessage = this.$t('Nero.AudioRecorder.deniedError')
+              this.errorMessage = this.$t('Facile.AudioRecorder.deniedError')
             })
       } else {
-        this.errorMessage = this.$t('Nero.AudioRecorder.browserError')
+        this.errorMessage = this.$t('Facile.AudioRecorder.browserError')
       }
     },
     displayStream () {

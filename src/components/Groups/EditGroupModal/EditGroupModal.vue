@@ -147,6 +147,7 @@
 <script>
 import GroupUserItem from '@components/Groups/EditGroupModal/GroupUserItem'
 import SelectedGroupMemberItem from '@components/Groups/EditGroupModal/SelectedGroupMemberItem'
+import ColorPicker from '@components/Preferences/ColorPicker.vue'
 import WeprodeUtils from '@utils/weprode.utils'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
@@ -172,7 +173,6 @@ import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeTextArea from '@/components/Base/Weprode/WeprodeTextArea.vue'
 import WeprodeToggleSwitch from '@/components/Base/Weprode/WeprodeToggleSwitch.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
-import ColorPicker from '@/components/Nero/ColorPicker'
 
 export default {
   name: 'EditGroupModal',

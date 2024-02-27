@@ -24,11 +24,9 @@
       </div>
 
       <div class="links">
-        <!--a v-t="'resourceAccessLabel'" :href="resource.url" class="nero-text" target="_blank" /-->
         <a
           v-t="'Mediacenter.ResourceItem.details'"
           href="javascript:void(0);"
-          class="nero-text"
           @click="toggleDetails"
         />
       </div>

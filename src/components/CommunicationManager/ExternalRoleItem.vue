@@ -1,7 +1,7 @@
 <template>
   <div class="role">
     <label
-      v-t="'Nero.roles.' + role.roleCode"
+      v-t="'Facile.roles.' + role.roleCode"
       class="role-label"
     />
     <WeprodeRadioButton

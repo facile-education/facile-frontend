@@ -15,7 +15,7 @@ import i18n from '@/i18n'
 import router from '@/router'
 import store from '@/store'
 
-import App from './Nero.vue'
+import App from './Facile.vue'
 
 const PublicLayout = defineAsyncComponent(() => import(`@layouts/${import.meta.env.VITE_CLIENT}PublicLayout.vue`))
 
