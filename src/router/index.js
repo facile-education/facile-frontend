@@ -12,7 +12,7 @@ const routes = [
   {
     path: '/login',
     name: 'Authentication',
-    component: () => import('@/router/views/Authentication'),
+    component: () => import(`@/router/views/${import.meta.env.VITE_CLIENT}Authentication`),
     props: route => ({ redirect: route.query.redirect })
   },
   {

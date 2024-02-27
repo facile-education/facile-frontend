@@ -1,32 +1,27 @@
 <template>
   <h1 :aria-label="$t('Authentication.title')" />
   <div class="wrapper">
+    <img
+      src="@assets/images/gva/logo_eel.png"
+      :alt="$t('Authentication.eelImg')"
+      class="eel-img"
+    >
     <a
       id="academic"
-      href="https://www.edulog.ch/"
+      v-t="'Authentication.studentTeacher'"
+      :href="ssoUrl"
       :title="$t('Authentication.entLogin')"
       class="btn"
-    >
-      <img
-        src="@assets/images/authentication/logo_edulog.jpeg"
-        :alt="$t('Authentication.edulogImg')"
-        class="login-img"
-      >
-    </a>
+    />
     <div
       class="guest"
     >
       <span
+        v-t="'Authentication.parentOther'"
         tabindex="0"
         @click="toggleGuestForm"
         @keyup.enter="toggleGuestForm"
-      >
-        <img
-          src="@assets/images/authentication/logo_facile.png"
-          :alt="$t('Authentication.facileImg')"
-          class="login-img"
-        >
-      </span>
+      />
 
       <Transition name="expand">
         <div v-if="isGuestFormDisplayed">
@@ -152,14 +147,22 @@
         </div>
       </Transition>
     </div>
+    <img
+      src="@assets/images/gva/geneve-logo.png"
+      :alt="$t('Authentication.gvaImg')"
+      width="140"
+      height="108"
+      class="gva-img"
+    >
   </div>
 </template>
 
 <script>
 import authComponent from '@/components/Renderless/AuthenticationSetup'
+import { ref } from 'vue'
 
 export default {
-  name: 'Authentication',
+  name: 'GVAAuthentication',
   props: {
     redirect: {
       type: String,
@@ -172,8 +175,11 @@ export default {
 
     const authSetup = authComponent();
 
+    const ssoUrl = ref('/Shibboleth.sso/Login?entityID=https://ssoeel.geneveid.ch/ginasso/gina/fed/ent&target=' + encodeURIComponent(window.location.origin + '/login' + (authSetup.isMobileApp.value ? '?mobile_app=true' : '')))
+
     return {
-      ...authSetup
+      ...authSetup,
+      ssoUrl
     }
   }
 }
@@ -181,6 +187,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
+$eel-blue: #2c7bb8;
 
 .wrapper {
   position: relative;
@@ -193,31 +201,37 @@ export default {
   flex-direction: column;
 }
 
-.login-img {
+.eel-img {
+  margin-bottom: 1.5rem;
   width: 100%;
-  height: 60px;
+}
+
+.gva-img {
+  margin: 1.5rem auto 0 auto;
 }
 
 .guest {
-  border: 1px solid #CCC;
-  border-radius: 5px;
+  color: $eel-blue;
+  border: 2px solid $eel-blue;
   background: $color-body-bg;
   width: 100%;
-  margin: 10px 0;
 
   span {
     cursor: pointer;
     display: inline-block;
     width: 100%;
+    margin: -10px;
+    padding: 10px;
   }
 }
 
 .btn {
-  width: 300px;
-  border-radius: 5px;
+  background: $eel-blue;
+  color: $color-body-bg;
+  border-radius: 0;
   width: 100%;
   margin: 10px 0;
-  border: 1px solid #CCC;
+  border: 1px solid transparent;
   text-decoration: none;
   cursor: pointer;
   &.disabled {
@@ -244,10 +258,6 @@ export default {
   font-size: 1rem;
   line-height: 1.25;
   overflow: hidden;
-
-  &:hover {
-    border-color: #888;
-  }
 }
 
 .input-container {

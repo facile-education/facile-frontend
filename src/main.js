@@ -5,7 +5,7 @@ import EmptyLayout from '@layouts/EmptyLayout.vue'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import fr from 'dayjs/locale/fr'
-import { createApp } from 'vue'
+import { createApp, defineAsyncComponent } from 'vue'
 import VueMatomo from 'vue-matomo'
 import { Vue3Mq } from 'vue3-mq'
 import Vue3TouchEvents from 'vue3-touch-events'
@@ -17,7 +17,7 @@ import store from '@/store'
 
 import App from './Nero.vue'
 
-const PublicLayout = (await import(`@layouts/${import.meta.env.VITE_CLIENT}PublicLayout.vue`)).default;
+const PublicLayout = defineAsyncComponent(() => import(`@layouts/${import.meta.env.VITE_CLIENT}PublicLayout.vue`));
 
 const app = createApp(App)
   .use(store)
