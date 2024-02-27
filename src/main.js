@@ -17,7 +17,7 @@ import store from '@/store'
 
 import App from './Nero.vue'
 
-const PublicLayout = defineAsyncComponent(() => import(`@layouts/${import.meta.env.VITE_CLIENT}PublicLayout.vue`));
+const PublicLayout = defineAsyncComponent(() => import(`@layouts/${import.meta.env.VITE_CLIENT}PublicLayout.vue`))
 
 const app = createApp(App)
   .use(store)

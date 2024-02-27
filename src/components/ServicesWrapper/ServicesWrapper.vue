@@ -23,8 +23,14 @@ export default {
   name: 'ServicesWrapper',
   inject: ['mq'],
   props: {
-    isTitleVisible: Boolean,
-    title: String
+    isTitleVisible: {
+      type: Boolean,
+      default: false
+    },
+    title: {
+      type: String,
+      default: ''
+    }
   },
   data () {
     return {
@@ -35,7 +41,6 @@ export default {
   },
   methods: {
     handleScroll (event) {
-      console.log('services wrapper:', event.target.scrollTop)
       this.scrollPosition = event.target.scrollTop
       if (this.scrollPosition < this.lastScroll) {
         this.isEntryTitleVisible = true

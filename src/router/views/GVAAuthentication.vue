@@ -158,8 +158,9 @@
 </template>
 
 <script>
-import authComponent from '@/components/Renderless/AuthenticationSetup'
 import { ref } from 'vue'
+
+import authComponent from '@/components/Renderless/AuthenticationSetup'
 
 export default {
   name: 'GVAAuthentication',
@@ -170,10 +171,10 @@ export default {
     }
   },
   emits: ['update:layout'],
-  setup(_props, { emit }) {
+  setup (_props, { emit }) {
     emit('update:layout', 'PublicLayout')
 
-    const authSetup = authComponent();
+    const authSetup = authComponent()
 
     const ssoUrl = ref('/Shibboleth.sso/Login?entityID=https://ssoeel.geneveid.ch/ginasso/gina/fed/ent&target=' + encodeURIComponent(window.location.origin + '/login' + (authSetup.isMobileApp.value ? '?mobile_app=true' : '')))
 

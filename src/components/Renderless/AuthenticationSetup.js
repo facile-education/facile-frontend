@@ -1,5 +1,6 @@
 import WeprodeUtils from '@utils/weprode.utils'
 import axios from 'axios'
+import { computed, onBeforeMount, ref } from 'vue'
 import { useCookies } from 'vue3-cookies'
 
 import authenticationService from '@/api/authentication.service'
@@ -10,8 +11,6 @@ import { DASHBOARD } from '@/constants/appConstants'
 import router from '@/router'
 import store from '@/store'
 
-import { ref, computed, onBeforeMount } from 'vue'
-
 export default () => {
   // Data
   const isLoading = ref(false)
@@ -19,7 +18,7 @@ export default () => {
   const login = ref('')
   const password = ref('')
   const passwordInputType = ref('password')
-  const p_auth = ref('')
+  const pAuth = ref('')
   const isError = ref(false)
   const isLocked = ref(false)
   const lockoutDuration = ref(0)
@@ -80,12 +79,12 @@ export default () => {
         // Fetch p_auth because login changed it
         fetch(constants.P_AUTH_URL).then(response => { if (response.status === 200) { return response.text() } }).then(response => {
           if (response !== undefined) {
-            p_auth.value = response.trim()
+            pAuth.value = response.trim()
 
             // Fetch logged user
-            fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + p_auth.value).then(response => {
+            fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + pAuth.value).then(response => {
               if (response.status === 200) {
-                store.commit('user/setPAuth', p_auth.value)
+                store.commit('user/setPAuth', pAuth.value)
                 response.json().then(data => {
                   const redirectUrl = DASHBOARD
                   if (isMobileApp.value) {
@@ -213,12 +212,12 @@ export default () => {
     // This authenticates through Shibboleth and MobileApplication
     fetch(constants.P_AUTH_URL).then(response => { if (response.status === 200) { return response.text() } }).then(response => {
       if (response !== undefined) {
-        p_auth.value = response.trim()
+        pAuth.value = response.trim()
 
         // Check if already authenticated
-        fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + p_auth.value).then(response => {
+        fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + pAuth.value).then(response => {
           if (response.status === 200) {
-            store.commit('user/setPAuth', p_auth.value)
+            store.commit('user/setPAuth', pAuth.value)
 
             if (isMobileAppLoading.value) {
               // Manage mobile token
@@ -249,7 +248,7 @@ export default () => {
     login,
     password,
     passwordInputType,
-    p_auth,
+    pAuth,
     isError,
     isLocked,
     lockoutDuration,

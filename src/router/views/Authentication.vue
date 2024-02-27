@@ -167,10 +167,10 @@ export default {
     }
   },
   emits: ['update:layout'],
-  setup(_props, { emit }) {
+  setup (_props, { emit }) {
     emit('update:layout', 'PublicLayout')
 
-    const authSetup = authComponent();
+    const authSetup = authComponent()
 
     return {
       ...authSetup
