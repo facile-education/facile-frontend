@@ -233,7 +233,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/design/index';
+@import "@design";
 
 button {
   padding: 0
