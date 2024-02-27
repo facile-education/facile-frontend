@@ -63,10 +63,7 @@
           class="work-load-button"
           @click="displayWorkLoadModal = true"
         >
-          <img
-            src="@/assets/icons/stats.svg"
-            alt=""
-          >
+          <CustomIcon :icon-name="'icon-stats'" />
           <span v-t="'Course.HomeworkEditModal.workLoad'" />
         </button>
         <div class="target-students">

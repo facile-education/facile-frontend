@@ -41,7 +41,7 @@ const icons = {
     details: require('@assets/icons/details.svg'),
     duplicate: require('@assets/icons/duplicate.svg'),
     forward: require('@assets/icons/share.svg'),
-    markAsRead: require('@assets/icons/unread_filter.svg'),
+    markAsRead: 'icon-filter',
     move: require('@assets/icons/move.svg'),
     modify: 'icon-edit',
     new: require('@assets/icons/add2.svg'),
