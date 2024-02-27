@@ -9,10 +9,16 @@
   >
     <span class="img-container">
       <img
+        v-if="isIconImage"
         :style="`width: ${iconWidth};`"
         :src="icon"
         :alt="alt"
       >
+      <CustomIcon
+        v-else
+        class="font-icon"
+        :icon-name="icon"
+      />
     </span>
     {{ folder.folderName }}
     <span
@@ -25,11 +31,14 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 import messageService from '@/api/messaging/message.service'
 import { MESSAGING } from '@/constants/appConstants'
 
 export default {
   name: 'MenuRootFolder',
+  components: { CustomIcon },
   inject: ['mq'],
   props: {
     folder: {
@@ -59,6 +68,9 @@ export default {
     }
   },
   computed: {
+    isIconImage () {
+      return this.icon?.indexOf('svg') !== -1
+    },
     currentFolderId () {
       return this.$store.state.messaging.currentFolder.folderId
     },
@@ -150,6 +162,10 @@ button {
     align-items: center;
     justify-content: center;
     margin-right: 10px;
+
+    .font-icon {
+      font-size: 1.2rem;
+    }
   }
 
   img {

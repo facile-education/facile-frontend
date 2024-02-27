@@ -11,16 +11,16 @@
       v-if="message.folderName !== undefined"
       class="message-sourcefolder"
     >
-      <CustomIcon
-        v-if="folderIcon === 'customFolderIcon'"
-        icon-name="icon-folder"
-      />
-
       <img
-        v-else
+        v-if="isFolderIconImage"
         :src="folderIcon"
         alt=""
       >
+      <CustomIcon
+        v-else
+        class="custom-icon"
+        :icon-name="folderIcon"
+      />
       <span>
         {{ $t('Messaging.findInFolder') + ' ' + message.folderName }}
       </span>
@@ -109,10 +109,13 @@ export default {
         case 'Envoyés':
           return require('@assets/icons/sent.svg')
         case 'Corbeille':
-          return require('@assets/icons/trashMessaging.svg')
+          return 'icon-trash'
         default:
-          return 'customFolderIcon'
+          return 'icon-folder'
       }
+    },
+    isFolderIconImage () {
+      return this.folderIcon?.indexOf('svg') !== -1
     }
   },
   mounted () {
@@ -159,7 +162,7 @@ export default {
       height: 1em;
     }
 
-    .icon-folder {
+    .custom-icon {
       margin-right: 4px;
       font-size: 1rem;
     }

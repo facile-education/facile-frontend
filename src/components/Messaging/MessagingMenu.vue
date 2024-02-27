@@ -54,7 +54,7 @@
           <MenuRootFolder
             class="base-folder"
             :folder="trashFolder"
-            :icon="require('@assets/icons/trashMessaging.svg')"
+            :icon="'icon-trash'"
             :drop-allowed="true"
             icon-width="18px"
             alt="icon trash"
@@ -171,9 +171,9 @@ export default {
       return WeprodeUtils.sortArrayWithString(this.folderList.filter(folder => folder.type === constants.messagingPersonalFolderType), false, 'folderName')
     },
     isAPersonalFolderSelected () {
-      for (let i = 0; i < this.personalFolders.length; i++) {
+      for (const personalFolder of this.personalFolders) {
         const selectedFolderId = this.$store.state.messaging.currentFolder.folderId
-        if (messagingUtils.getFolderFromId(this.personalFolders[i].subFolders, selectedFolderId) !== undefined) {
+        if (messagingUtils.getFolderFromId(personalFolder.subFolders, selectedFolderId) !== undefined) {
           return true
         }
       }
