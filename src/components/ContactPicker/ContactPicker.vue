@@ -10,7 +10,7 @@
       <WeprodeTabList v-if="hasAdvancedSearchPanel">
         <WeprodeTabItem
           :title="$t('ContactPicker.addressBook')"
-          :icon="require('@assets/icons/users.svg')"
+          icon="icon-users"
           class="tab-item"
         >
           <AddressBook

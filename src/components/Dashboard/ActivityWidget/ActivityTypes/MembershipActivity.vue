@@ -1,11 +1,7 @@
 <template>
   <div class="membership-activity">
     <div class="icon">
-      <img
-        class="img-icon"
-        src="@/assets/icons/users.svg"
-        alt="group icon"
-      >
+      <CustomIcon icon-name="icon-users" />
     </div>
 
     <div class="content">
@@ -67,6 +63,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
@@ -75,6 +72,7 @@ import { GROUPS } from '@/constants/appConstants'
 
 export default {
   name: 'MembershipActivity',
+  components: { CustomIcon },
   props: {
     activity: {
       type: Object,
@@ -160,7 +158,13 @@ export default {
   @extend %activity-item;
 }
 
-.img-icon {
+.icon {
   width: 30px;
+
+  .icon-users {
+    font-size: 30px;
+    color: black;
+    text-decoration: none !important;
+  }
 }
 </style>

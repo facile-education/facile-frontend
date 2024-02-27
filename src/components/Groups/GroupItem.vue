@@ -26,11 +26,10 @@
     <div class="buttons">
       <div class="members">
         <span>{{ group.nbMembers }}</span>
-        <img
-          src="@assets/icons/users.svg"
+        <CustomIcon
+          icon-name="icon-users"
           :title="$tc('Groups.GroupItem.members', group.nbMembers)"
-          :alt="$tc('Groups.GroupItem.members', group.nbMembers)"
-        >
+        />
       </div>
       <div
         v-if="hasEditionRights"
@@ -271,8 +270,9 @@ export default {
       font-size: 0.875rem;
     }
 
-    img {
+    .icon-users {
       margin: 0 4px;
+      font-size: 26px;
     }
   }
 

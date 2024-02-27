@@ -43,12 +43,11 @@
           class="members"
         >
           <span>{{ document.nbMembers }}</span>
-          <img
+          <CustomIcon
             class="members-icon"
-            src="@assets/icons/users.svg"
+            icon-name="icon-users"
             :title="$t('Documents.GridDocument.members')"
-            alt=""
-          >
+          />
         </div>
         <img
           v-if="mq.phone || mq.tablet || hoverSelection"
@@ -78,6 +77,7 @@
 
 <script>
 
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
@@ -86,7 +86,7 @@ const FAIcon = defineAsyncComponent(() => import('@components/Base/FAIcon.vue'))
 
 export default {
   name: 'GridDocument',
-  components: { FAIcon },
+  components: { CustomIcon, FAIcon },
   inject: ['mq'],
   props: {
     document: {
@@ -235,8 +235,10 @@ export default {
         align-items: center;
 
         .members-icon {
-          width: 25px;
-          height: 25px;
+          margin-left: 2px;
+          width: 26px;
+          height: 26px;
+          font-size: 26px;
         }
       }
 

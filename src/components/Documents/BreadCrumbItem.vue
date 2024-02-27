@@ -27,12 +27,11 @@
       <span>
         {{ folder.name }}
       </span>
-      <img
+      <CustomIcon
         v-if="!isFirstElement && isCurrentFolder && folder.isGroupDirectory"
         class="collaborative"
-        src="@assets/icons/users.svg"
-        alt=""
-      >
+        icon-name="icon-users"
+      />
       <button
         v-if="currentOptions.length > 0 && isFirstElement"
         class="first-folder-options"
@@ -310,7 +309,8 @@ export default {
 }
 
 .collaborative {
-  margin-left: 10px;
+  margin-left: 4px;
+  font-size: 1.5rem;
 }
 
 .first-folder-options {

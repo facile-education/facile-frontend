@@ -33,10 +33,7 @@
       <WeprodeSpinner v-if="memberLoading" />
       <div v-else>
         <div class="member-list-header">
-          <img
-            src="@assets/icons/users.svg"
-            alt="icon_commu"
-          >
+          <CustomIcon icon-name="icon-users" />
           <span>
             {{ $tc('Groups.GroupDetailsTab.members', members.length) }}
           </span>
@@ -220,10 +217,9 @@ export default {
   align-items: center;
   margin-bottom: 3px;
 
-  img {
-    margin-right: 10px;
-    height: 30px;
-    width: 30px;
+  .icon-users {
+    margin-right: 6px;
+    font-size: 30px;
   }
 }
 

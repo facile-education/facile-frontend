@@ -8,10 +8,15 @@
     >
       <span class="left">
         <img
-          v-if="icon"
+          v-if="icon && isIconImage"
           :src="icon"
           alt=""
         >
+        <CustomIcon
+          v-else-if="icon"
+          class="font-icon"
+          :icon-name="icon"
+        />
         <span>
           {{ title }}
         </span>
@@ -96,6 +101,11 @@ export default {
       clickDelayPassed: true
     }
   },
+  computed: {
+    isIconImage () {
+      return this.icon?.indexOf('svg') !== -1
+    }
+  },
   mounted () {
     this.isExtended = this.beginExtended
   },
@@ -173,6 +183,11 @@ button {
 
     img {
       margin-right: 0.5em;
+    }
+
+    .font-icon {
+      margin-right: 0.3em;
+      font-size: 1.6rem;
     }
 
     span {

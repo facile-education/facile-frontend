@@ -1,7 +1,7 @@
 <template>
   <AddressBookItem
     :title="$t('ContactPicker.AddressBookCommunities.communities')"
-    :icon="require('@assets/icons/users.svg')"
+    icon="icon-users"
   >
     <AddressBookItem
       v-for="community in sortedCommunities"

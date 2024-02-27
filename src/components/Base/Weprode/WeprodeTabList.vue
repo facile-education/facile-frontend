@@ -14,10 +14,15 @@
     >
       <div class="title">
         <img
-          v-if="tab.icon"
+          v-if="tab.icon && isTabIconImage(tab)"
           :src="tab.icon"
           alt=""
         >
+        <CustomIcon
+          v-else-if="tab.icon"
+          class="font-icon"
+          :icon-name="tab.icon"
+        />
         <span>
           {{ tab.title }}
         </span>
@@ -38,8 +43,11 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
+
 export default {
   name: 'WeprodeTabList',
+  components: { CustomIcon },
   props: {
     spaceUnderTab: {
       type: String,
@@ -79,6 +87,9 @@ export default {
       if (index > -1) {
         this.tabList.splice(index, 1)
       }
+    },
+    isTabIconImage (tab) {
+      return tab.icon?.indexOf('svg') !== -1
     }
   }
 }
@@ -121,13 +132,18 @@ export default {
 .title {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   padding: 0 1rem;
   height: 1.5rem;
   margin-bottom: 8px;
 
   img {
     height: 20px;
+    margin-right: 0.5rem;
+  }
+
+  .font-icon {
+    font-size: 1.5rem;
+    margin-right: 0.3rem;
   }
 }
 </style>

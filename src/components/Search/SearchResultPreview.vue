@@ -20,11 +20,10 @@
     <div class="content">
       <div class="header">
         {{ searchResult.title }}
-        <img
+        <CustomIcon
           v-if="isCollaborative"
-          src="@assets/icons/users.svg"
-          alt="collaborative"
-        >
+          icon-name="icon-users"
+        />
       </div>
       <div
         v-if="resultDetails"
@@ -94,6 +93,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import { formatSize } from '@utils/commons.util'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
@@ -106,7 +106,7 @@ const FileIcon = defineAsyncComponent(() => import('@components/Base/FileIcon'))
 
 export default {
   name: 'SearchResultPreview',
-  components: { FileIcon },
+  components: { CustomIcon, FileIcon },
   props: {
     searchResult: {
       type: Object,
@@ -234,6 +234,11 @@ export default {
     img {
       margin-left: 7px;
       height: 22px;
+    }
+
+    .icon-users {
+      margin-left: 4px;
+      font-size: 26px;
     }
   }
 
