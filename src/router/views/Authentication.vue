@@ -213,7 +213,6 @@ export default {
 }
 
 .btn {
-  width: 300px;
   border-radius: 5px;
   width: 100%;
   margin: 10px 0;
