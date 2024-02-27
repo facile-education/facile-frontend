@@ -59,7 +59,10 @@
             data-test="openContactPicker"
             @click="toggleContactsPicker"
           >
-            <CustomIcon icon-name="icon-plus" />
+            <CustomIcon
+              class="custom-icon"
+              icon-name="icon-plus"
+            />
           </WeprodeButton>
         </div>
         <div class="error-container">
@@ -560,9 +563,16 @@ export default {
 
   .create-button {
     margin-left: 1em;
+    display: flex;
+
+    .custom-icon {
+      font-weight: bold;
+      transition: all 0.1s ease-in-out !important;
+      transform: rotate(0);
+    }
 
     &.close-contact {
-      .icon {
+      .custom-icon {
         transform: rotate(45deg);
       }
     }
