@@ -244,7 +244,7 @@ button {
   @extend %activity-item;
   cursor: pointer;
   position: relative;
-  padding-right: 0;
+  padding-right: 16px;
 
   &:hover, &:focus-within {
     .options {
@@ -344,8 +344,6 @@ button {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: auto;
-    margin-right: 16px;
     .right{
       display: flex;
       flex-direction: column;
@@ -354,7 +352,6 @@ button {
   }
   .show {
     @extend %show-more-button;
-    margin: auto;
   }
 }
 
@@ -372,6 +369,6 @@ button {
   "selectToConsult": "Consulter",
   "hasPublishedInfo": "a publié ",
   "hasPublishedAnnounce": "a publié l'annonce ",
-  "show": "Voir plus"
+  "show": "Voir"
 }
 </i18n>
