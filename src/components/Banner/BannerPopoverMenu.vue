@@ -251,12 +251,11 @@ a.logout-link {
   padding: 6px 6px;
   color: white;
   text-decoration: none;
-  background-color: $color-logout-button;
+  background-color: $color-logout-button !important;
   border-radius: 6px;
 
-  &:hover {
+  &:hover > span {
     text-decoration: underline;
-    background-color: $color-logout-button;
   }
 
   span {
