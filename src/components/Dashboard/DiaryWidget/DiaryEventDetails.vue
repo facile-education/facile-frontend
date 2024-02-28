@@ -50,13 +50,11 @@
 
           <div class="author">
             {{ $t('by') }}
-            <!-- <span
+            <span
               class="toggle-user-card"
               @click.stop="openUserCardModal"
-            >{{ detailedEvent.authorName }}
-            </span> -->
-            <!-- TO DO: Delete this span for userCard patch  -->
-            <span>{{ detailedEvent.authorName }}
+            >
+              {{ detailedEvent.authorName }}
             </span>
           </div>
 

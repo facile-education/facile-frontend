@@ -12,14 +12,10 @@
         :class="{'last-recipient' : index === computedRecipientList.length - 1}"
       >
         <div class="recipientName">
-          <!-- <span
+          <span
             class="toggle-user-card"
             @click.stop="openUserCardModal(recipient)"
           >
-            {{ recipient.text }}
-          </span> -->
-          <!-- TO DO: Delete this span for userCard patch  -->
-          <span>
             {{ recipient.text }}
           </span>
         </div>

@@ -50,16 +50,11 @@
             class="publication"
           >
             {{ $t('at') + formattedPublicationDate + $t('by') }}
-            <!-- <span
-              class="toggle-user-card"
-              @click.stop="openUserCardModal"
-            >{{ detailedNews.authorName }}
-            </span> -->
-            <!-- TO DO: Delete this span for userCard patch  -->
             <span
               class="toggle-user-card"
               @click.stop="openUserCardModal"
-            >{{ detailedNews.authorName }}
+            >
+              {{ detailedNews.authorName }}
             </span>
           </div>
         </div>
