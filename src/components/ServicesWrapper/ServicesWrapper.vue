@@ -11,7 +11,7 @@
     >
       <span>{{ title }}</span>
     </div>
-    <div class="containerSlot">
+    <div :class="mq.phone ? 'containerSlot-mobile' : 'containerSlot'">
       <slot />
     </div>
   </section>
@@ -61,6 +61,11 @@ export default {
 }
 
 .containerSlot{
+  height: 100%;
+  padding: 10px;
+}
+
+.containerSlot-mobile{
   height: calc(100% - 48px);
   padding: 10px;
 }
