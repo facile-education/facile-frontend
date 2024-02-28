@@ -376,6 +376,5 @@ button {
   "hasPublishedInfo": "a publié ",
   "hasPublishedAnnounce": "a publié l'annonce ",
   "show": "Voir"
-  "show": "Voir"
 }
 </i18n>
