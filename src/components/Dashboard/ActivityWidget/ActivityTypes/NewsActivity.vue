@@ -32,6 +32,7 @@
 
     <div
       class="date"
+      :class="news.isEditable && !mq.phone && 'active-on-hover'"
       :title="formattedDateLong"
     >
       <BaseIcon
@@ -245,12 +246,16 @@ button {
   cursor: pointer;
   position: relative;
   padding-right: 16px;
+  padding-right: 16px;
 
   &:hover, &:focus-within {
     .options {
       opacity: 100%;
       right: 8px;
       transform: translateX(0);
+    }
+    .active-on-hover{
+      transform: translateX(-32px);
     }
   }
 
@@ -344,6 +349,7 @@ button {
     display: flex;
     align-items: center;
     gap: 10px;
+    transition: all .4s ease;
     .right{
       display: flex;
       flex-direction: column;
@@ -369,6 +375,7 @@ button {
   "selectToConsult": "Consulter",
   "hasPublishedInfo": "a publié ",
   "hasPublishedAnnounce": "a publié l'annonce ",
+  "show": "Voir"
   "show": "Voir"
 }
 </i18n>
