@@ -8,7 +8,7 @@
         class="legalGuardians-icon"
         :icon-name="'icon-collab-workspace'"
       />
-      <span>{{ $t('relativeTitle') }} :</span>
+      <span>{{ $t('relativeTitle') }}</span>
     </h2>
     <div class="content">
       <template v-if="userDetails.parents && userDetails.parents.length > 0">
@@ -45,7 +45,7 @@
   </section>
   <teleport to="body">
     <CreateMessageModal
-      v-if="isCreateMessageModalDisplayed && isMessagingModalDisplayed"
+      v-if="isMessagingModalDisplayed"
       @close="closeModal"
     />
   </teleport>

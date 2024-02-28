@@ -11,7 +11,7 @@
         {{ `${userInfos.firstName} ${userInfos.lastName}` }}
       </span>
       <WeprodeButton
-        v-if="userInfos.email"
+        v-if="!isCreateMessageModalDisplayed && userInfos.email"
         class="contact-button"
         data-test="SendMessage"
         :cls="''"
@@ -59,6 +59,11 @@ export default {
     }
   },
   emits: ['contact'],
+  computed: {
+    isCreateMessageModalDisplayed () {
+      return this.$store.state.messaging.isCreateMessageModalDisplayed
+    }
+  },
   methods: {
     updateUserCardModal (user) {
       this.$store.dispatch('userCard/initUserCard', user)

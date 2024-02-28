@@ -8,7 +8,7 @@
         class="hhc-icon"
         :icon-name="'icon-clock'"
       />
-      <span>{{ $t('hhcTitle') }} :</span>
+      <span>{{ $t('hhcTitle') }}</span>
     </h2>
     <ul class="content">
       <li

@@ -17,6 +17,7 @@
         >
           <h2>{{ `${userDetails.firstName} ${userDetails.lastName}` }}</h2>
           <WeprodeButton
+            v-if="!isCreateMessageModalDisplayed"
             class="contact-button"
             data-test="SendMessage"
             :class="{'phone': mq.phone}"
@@ -64,7 +65,7 @@
   </section>
   <teleport to="body">
     <CreateMessageModal
-      v-if="isCreateMessageModalDisplayed && isMessagingModalDisplayed"
+      v-if="isMessagingModalDisplayed"
       @close="closeModal"
     />
   </teleport>
