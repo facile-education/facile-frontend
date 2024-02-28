@@ -93,6 +93,6 @@ export default {
   {
     "currently": "Actuellement",
     "currentlyClass": "Actuellement : de {startHour} à {endHour}",
-    "noClass": "pas de cours"
+    "noClass": "Pas de cours"
   }
 </i18n>
