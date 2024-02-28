@@ -1,9 +1,9 @@
 <script>
 import { library as fontAwesomeIconLibrary } from '@fortawesome/fontawesome-svg-core'
-import { faFileArchive } from '@fortawesome/free-regular-svg-icons'
 import {
   faCaretDown, faCaretLeft, faCaretRight, faCaretUp,
   faExclamationTriangle,
+  faFileZipper,
   faFolderOpen,
   faGripLines,
   faPause,
@@ -21,7 +21,7 @@ fontAwesomeIconLibrary.add(
   faCaretRight,
   faCaretUp,
   faExclamationTriangle,
-  faFileArchive,
+  faFileZipper,
   faFolderOpen,
   faGripLines,
   faPause,

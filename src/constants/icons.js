@@ -32,7 +32,7 @@ const icons = {
     png: require('@assets/icons/file_image.svg'),
     sb3: require('@assets/icons/file_scratch.svg'),
     wav: require('@assets/icons/file_audio.svg'),
-    zip: 'file-archive'
+    zip: 'file-zipper'
   },
   options: {
     copyUrl: require('@assets/icons/duplicate.svg'),

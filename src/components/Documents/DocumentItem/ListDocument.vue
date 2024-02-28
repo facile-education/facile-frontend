@@ -296,7 +296,7 @@ export default {
       }
 
       .base-icon {
-        font-size: 23px;
+        font-size: 28px;
         color: #777777;
       }
     }
