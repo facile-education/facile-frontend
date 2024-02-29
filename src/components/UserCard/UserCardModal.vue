@@ -6,6 +6,7 @@
     :width="500"
     class="userCardModal"
     @close="onClose"
+    @click.stop
   >
     <template #body>
       <UserCard />

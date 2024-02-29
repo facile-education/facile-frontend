@@ -92,7 +92,7 @@ export default {
     },
     clickOutside (e) {
       const self = this
-      if (self.$el && !self.$el.contains(e.target) && !this.isUserCardModalDisplayed && this.createButton.$el && !this.createButton.$el.contains(e.target) && e.target.parentNode !== null) {
+      if (self.$el && !self.$el.contains(e.target) && this.createButton.$el && !this.createButton.$el.contains(e.target) && e.target.parentNode !== null) {
         this.onClose()
       }
     },
