@@ -47,9 +47,6 @@ export default {
   computed: {
     hasAdvancedSearchPanel () {
       return !this.$store.state.user.isStudent && !this.$store.state.user.isParent
-    },
-    isUserCardModalDisplayed () {
-      return this.$store.state.userCard.userToDisplay
     }
   },
   created () {
