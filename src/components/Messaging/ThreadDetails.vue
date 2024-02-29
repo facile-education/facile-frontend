@@ -166,7 +166,7 @@ import Message from '@components/Messaging/Message'
 import _ from 'lodash'
 
 import { MESSAGING } from '@/constants/appConstants'
-import messagingConstants from '@/constants/messagingConstants'
+import messagingConstants, { messagingSentFolderType } from '@/constants/messagingConstants'
 import messagingUtils from '@/utils/messaging.utils'
 
 export default {
@@ -228,10 +228,10 @@ export default {
 
       for (const message of this.messageList) {
         if (this.currentFolder.type !== messagingConstants.messagingSentFolderType) {
-          if (message.recipients.map(recipient => recipient.userId).indexOf(this.currentUser.userId) === -1 || message.folderName !== 'Envoyés') { // TODO based on folder type and not label
+          if (message.recipients.map(recipient => recipient.userId).indexOf(this.currentUser.userId) === -1 || message.messagingFolder.type !== messagingSentFolderType) {
             listWithoutSelfMessages.push(message)
           }
-        } else if (message.senderId !== this.currentUser.userId || message.folderName === undefined) {
+        } else if (message.senderId !== this.currentUser.userId || message.isInCurrentFolder) {
           listWithoutSelfMessages.push(message)
         }
       }

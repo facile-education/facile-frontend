@@ -20,7 +20,7 @@
         :icon-name="icon"
       />
     </span>
-    {{ folder.folderName }}
+    {{ folderName }}
     <span
       v-if="nbUnread > 0"
       class="nb-new-messages"
@@ -32,6 +32,7 @@
 
 <script>
 import CustomIcon from '@components/Base/CustomIcon.vue'
+import MessagingUtils from '@utils/messaging.utils.js'
 
 import messageService from '@/api/messaging/message.service'
 import { MESSAGING } from '@/constants/appConstants'
@@ -68,6 +69,9 @@ export default {
     }
   },
   computed: {
+    folderName () {
+      return MessagingUtils.getMessagingFolderName(this.folder)
+    },
     isIconImage () {
       return this.icon?.indexOf('svg') !== -1
     },

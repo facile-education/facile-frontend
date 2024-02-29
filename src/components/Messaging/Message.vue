@@ -8,7 +8,7 @@
   >
     <!-- Source folder -->
     <div
-      v-if="message.folderName !== undefined"
+      v-if="!message.isInCurrentFolder"
       class="message-sourcefolder"
     >
       <img
@@ -22,7 +22,7 @@
         :icon-name="folderIcon"
       />
       <span>
-        {{ $t('Messaging.findInFolder') + ' ' + message.folderName }}
+        {{ $t('Messaging.findInFolder') + ' ' + folderName }}
       </span>
     </div>
 
@@ -75,10 +75,17 @@
 <script>
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import MessageRecipients from '@components/Messaging/MessageRecipients'
+import MessagingUtils from '@utils/messaging.utils.js'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+import {
+  messagingDraftFolderType,
+  messagingInboxFolderType,
+  messagingSentFolderType,
+  messagingTrashFolderType
+} from '@/constants/messagingConstants.js'
 const AttachedFiles = defineAsyncComponent(() => import('@components/AttachedFiles/AttachedFiles.vue'))
 
 export default {
@@ -101,18 +108,21 @@ export default {
   },
   computed: {
     folderIcon () {
-      switch (this.message.folderName) { // TODO use a kee which deserve this name
-        case 'Boîte de réception':
+      switch (this.message.messagingFolder?.type) {
+        case messagingInboxFolderType:
           return require('@assets/icons/inbox.svg')
-        case 'Brouillons':
+        case messagingDraftFolderType:
           return require('@assets/icons/draft.svg')
-        case 'Envoyés':
+        case messagingSentFolderType:
           return require('@assets/icons/sent.svg')
-        case 'Corbeille':
+        case messagingTrashFolderType:
           return 'icon-trash'
         default:
           return 'icon-folder'
       }
+    },
+    folderName () {
+      return MessagingUtils.getMessagingFolderName(this.message.messagingFolder)
     },
     isFolderIconImage () {
       return this.folderIcon?.indexOf('svg') !== -1

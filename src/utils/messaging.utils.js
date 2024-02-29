@@ -1,10 +1,30 @@
 import store from '@store/index.js'
 
 import messageService from '@/api/messaging/message.service'
-import messagingConstants from '@/constants/messagingConstants'
+import messagingConstants, {
+  messagingDraftFolderType,
+  messagingInboxFolderType,
+  messagingSentFolderType,
+  messagingTrashFolderType
+} from '@/constants/messagingConstants'
 import i18n from '@/i18n'
 
 const MessagingUtils = {
+  getMessagingFolderName (messagingFolder) {
+    switch (messagingFolder.type) {
+      case messagingInboxFolderType:
+        return i18n.global.t('Messaging.inbox')
+      case messagingDraftFolderType:
+        return i18n.global.t('Messaging.draft')
+      case messagingSentFolderType:
+        return i18n.global.t('Messaging.sent')
+      case messagingTrashFolderType:
+        return i18n.global.t('Messaging.trash')
+      default:
+        return messagingFolder.folderName
+    }
+  },
+
   formatContact (contact) {
     if (contact.type === messagingConstants.CONTACT_TYPE_USER) {
       contact.id = contact.userId
