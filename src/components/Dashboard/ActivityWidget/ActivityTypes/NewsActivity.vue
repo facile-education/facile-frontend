@@ -247,7 +247,6 @@ button {
   cursor: pointer;
   position: relative;
   padding-right: 16px;
-  padding-right: 16px;
 
   &:hover, &:focus-within {
     .options {
