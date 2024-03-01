@@ -8,14 +8,19 @@
         class="hhc-icon"
         :icon-name="'icon-clock'"
       />
-      <span>{{ $t('hhcTitle') }}</span>
+      <span>{{ $t('hhcTitle') }} <span v-if="isUserSchoolLifeStatsEmpty">: Aucun</span></span>
     </h2>
-    <ul class="content">
+    <ul
+      class="content"
+      :class="{ 'mobile': mq.phone}"
+    >
       <li
-        v-for="(item, index) in userSchoolLifeStats"
+        v-for="(item, index) in filteredUserSchoolLifeStats"
         :key="index"
+        :class="{ 'inactive': item.number === 0 }"
       >
-        {{ item.number }} {{ slotType(item.type).label }}
+        <span>{{ item.number }}</span>
+        {{ slotType(item.type).label }}
       </li>
     </ul>
   </section>
@@ -31,10 +36,19 @@ export default {
   components: {
     CustomIcon
   },
+  inject: ['mq'],
   props: {
     userSchoolLifeStats: {
       type: Array,
       required: true
+    }
+  },
+  computed: {
+    filteredUserSchoolLifeStats () {
+      return this.userSchoolLifeStats.filter(item => item.type !== 5)
+    },
+    isUserSchoolLifeStatsEmpty () {
+      return this.filteredUserSchoolLifeStats.every(item => item.number === 0)
     }
   },
   methods: {
@@ -64,12 +78,26 @@ export default {
   }
 }
 .content {
-  margin-left: 16px;
+  margin: 16px;
+  display: flex;
+  justify-content: space-between;
   padding: 0;
+  &.mobile{
+    margin: 16px 0;
+  }
   li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     list-style: none;
-    @extend %font-regular-m;
+    @extend %font-regular-l;
     margin-bottom: 5px;
+    &.inactive{
+      opacity: 40%;
+    }
+    span{
+      @extend %font-medium-s;
+    }
   }
 }
 </style>
