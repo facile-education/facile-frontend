@@ -18,7 +18,12 @@
     <div class="content">
       <div class="author">
         <span>
-          {{ news.groupName + ' - ' + news.authorName }}
+          {{ news.groupName }} -
+          <a
+            href="#"
+            class="user-card-link-new-light toggle-user-card"
+            @click.stop="openUserCardModal"
+          >{{ news.authorName }}</a>
         </span>
       </div>
       <div class="description">
@@ -229,6 +234,11 @@ export default {
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
         }
+      })
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', {
+        userId: this.news.authorId
       })
     }
   }

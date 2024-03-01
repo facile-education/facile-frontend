@@ -28,7 +28,16 @@
         class="student"
       >
         <span v-t="'NotUsualSlots.StudentRegistrationModal.student'" />
-        <span>{{ formattedStudent }}</span>
+        <span><a
+          href="#"
+          style="color: black;"
+          class="toggle-user-card"
+          @click.stop="openUserCardModal"
+        >
+          {{ student.firstName + ' ' + student.lastName }}
+        </a>
+          - {{ student.className }}
+        </span>
       </div>
       <div
         v-else
@@ -200,9 +209,6 @@ export default {
   computed: {
     slotType () {
       return notUsualSlotsConstants.getSlotTypeByNumber(this.event.type)
-    },
-    formattedStudent () {
-      return this.student.firstName + ' ' + this.student.lastName + ' - ' + this.student.className
     },
     formattedSlot () {
       return this.$t('Moment.the') + ' ' + dayjs(this.event.startDate).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
@@ -384,6 +390,9 @@ export default {
     },
     closeModal () {
       this.$emit('close')
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', this.student)
     }
   }
 }

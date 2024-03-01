@@ -116,8 +116,10 @@ export default {
   background-color: $neutral-20;
 }
 .legalGuardians-container{
-  margin-bottom: 16px;
   margin-left: 16px;
+  &:not(:last-child){
+    margin-bottom: 16px;
+  }
 
   h3{
     @extend %font-bold-s;

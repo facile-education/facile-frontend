@@ -16,7 +16,9 @@
         >
           <WeprodeTagItem
             :tag="getDisplayValue(tag)"
+            :is-clickable="isTagClickable(tag)"
             @remove="removeTag"
+            @open="isTagClickable(tag) && openUserCardModal(tag.userId)"
           />
         </li>
 
@@ -86,7 +88,8 @@ export default {
     sort: { type: Boolean, default: true },
     sortField: { type: String, default: undefined },
     maxTagsToDisplay: { type: Number, default: -1 },
-    othersLabelTemplate: { type: Function, default: (nbOthers) => { return 'and ' + nbOthers + ' others' } }
+    othersLabelTemplate: { type: Function, default: (nbOthers) => { return 'and ' + nbOthers + ' others' } },
+    isTagClickable: { type: Function, default: () => { return false } }
   },
   emits: ['blur', 'update:modelValue', 'inputChange'],
   data () {
@@ -251,6 +254,11 @@ export default {
         return (vm.getDisplayValue(item) !== tagLabel)
       })
       this.$emit('update:modelValue', tags)
+    },
+    openUserCardModal (userId) {
+      this.$store.dispatch('userCard/initUserCard', {
+        userId
+      })
     }
   }
 }

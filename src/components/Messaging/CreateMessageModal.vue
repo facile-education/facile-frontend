@@ -43,6 +43,7 @@
             :completion-only="true"
             :min-length="1"
             :placeholder="$t('Messaging.CreateMessageModal.recipientsPlaceHolder')"
+            :is-tag-clickable="(item) => item.type === contactTypeUser"
             display-field="text"
             id-field="id"
             :list="autocompleteItems"
@@ -254,6 +255,9 @@ export default {
     },
     messageParameters () {
       return this.$store.state.messaging.createMessageParameters
+    },
+    contactTypeUser () {
+      return constants.CONTACT_TYPE_USER
     }
   },
   created () {

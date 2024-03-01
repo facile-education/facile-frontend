@@ -3,11 +3,13 @@
     class="student"
     data-test="student-list-item"
   >
-    <span
+    <a
+      href="#"
+      style="color: black;"
       class="name toggle-user-card"
       @click.stop="openUserCardModal"
     > {{ formattedStudent }}
-    </span>
+    </a>
     <span
       v-if="student.subject"
       v-t="formattedSubject"

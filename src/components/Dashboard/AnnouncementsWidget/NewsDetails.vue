@@ -50,12 +50,13 @@
             class="publication"
           >
             {{ $t('Dashboard.NewsDetails.at') + formattedPublicationDate + $t('Dashboard.NewsDetails.by') }}
-            <span
-              class="toggle-user-card"
+            <a
+              href="#"
+              class="toggle-user-card user-card-link-color"
               @click.stop="openUserCardModal"
             >
               {{ detailedNews.authorName }}
-            </span>
+            </a>
           </div>
         </div>
       </div>
@@ -353,5 +354,9 @@ h2 {
   .first-line {
     height: 88px;
   }
+}
+
+.user-card-link-color {
+  color: $color-new-light-text;
 }
 </style>

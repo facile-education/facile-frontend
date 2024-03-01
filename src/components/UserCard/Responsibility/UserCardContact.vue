@@ -4,12 +4,13 @@
       class="top"
       :class="{'phone': mq.phone}"
     >
-      <span
+      <a
+        href="#"
         class="theme-text-color toggle-user-card"
         @click="updateUserCardModal(userInfos)"
       >
         {{ `${userInfos.firstName} ${userInfos.lastName}` }}
-      </span>
+      </a>
       <WeprodeButton
         v-if="!isCreateMessageModalDisplayed && userInfos.email"
         class="contact-button"
@@ -86,7 +87,6 @@ export default {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    text-decoration-line: underline;
     cursor: pointer;
   }
   .contact-button {

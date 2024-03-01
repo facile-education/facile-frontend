@@ -13,7 +13,16 @@
         @update:model-value="toggleUserSelection"
       />
     </td>
-    <td>{{ fullName }}</td>
+    <td>
+      <a
+        href="#"
+        style="color: black;"
+        class="toggle-user-card"
+        @click.stop="openUserCardModal"
+      >
+        {{ fullName }}
+      </a>
+    </td>
     <td>{{ user.roles }}</td>
     <td>{{ user.schoolName }}</td>
   </tr>
@@ -43,6 +52,9 @@ export default {
   methods: {
     toggleUserSelection () {
       this.$emit('toggleUserSelection')
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', this.user)
     }
   }
 }

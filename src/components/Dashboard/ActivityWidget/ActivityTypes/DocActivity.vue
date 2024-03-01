@@ -16,7 +16,14 @@
 
     <div class="content">
       <div class="author">
-        {{ getHeader(activity) }}
+        {{ isDashboard ? activity.groupName + ' - ' : '' }}
+        <a
+          href="#"
+          class="user-card-link-new-light toggle-user-card"
+          @click.stop="openUserCardModal"
+        >
+          {{ activity.author }}
+        </a>
       </div>
       <div class="description">
         <span>
@@ -121,6 +128,11 @@ export default {
     },
     getHeader (activity) {
       return (this.isDashboard ? activity.groupName + ' - ' : '') + activity.author
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', {
+        userId: this.activity.userId
+      })
     }
   }
 }

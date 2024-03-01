@@ -4,7 +4,14 @@
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
   >
-    <span class="member-name"> {{ member.lastName }} {{ member.firstName }}</span>
+    <a
+      href="#"
+      style="color: black;"
+      class="toggle-user-card"
+      @click.stop="openUserCardModal"
+    >
+      {{ member.lastName }} {{ member.firstName }}
+    </a>
     <img
       v-if="isHovering"
       data-test="send-message"
@@ -56,6 +63,9 @@ export default {
     },
     closeModal () {
       this.isMessagingModalDisplayed = false
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', this.member)
     }
   }
 }

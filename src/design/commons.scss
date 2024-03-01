@@ -128,9 +128,14 @@ h1 {
 }
 
 .toggle-user-card{
+  text-decoration: none;
   &:hover{
     text-decoration: underline;
     cursor: pointer;
   }
+}
+
+.user-card-link-new-light {
+  color: $color-new-light-text;
 }
 

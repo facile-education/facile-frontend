@@ -1,12 +1,14 @@
 <template>
   <div class="read-info-user">
     <div class="userName">
-      <span
+      <a
+        href="#"
         class="toggle-user-card"
+        style="color: black;"
         @click.stop="openUserCardModal"
       >
         {{ fullName }}
-      </span>
+      </a>
     </div>
     <div class="status">
       {{ formattedStatus }}

@@ -22,6 +22,7 @@
           :close-on-select="true"
           :completion-only="true"
           :min-length="3"
+          :is-tag-clickable="(item) => item.type === contactTypeUser"
           :placeholder="$t('UserManagement.AddDelegationModal.completionPlaceholder')"
           display-field="fullName"
           id-field="userId"

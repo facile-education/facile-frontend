@@ -50,12 +50,13 @@
 
           <div class="author">
             {{ $t('Dashboard.DiaryEventDetails.by') }}
-            <span
-              class="toggle-user-card"
+            <a
+              href="#"
+              class="toggle-user-card user-card-link-color"
               @click.stop="openUserCardModal"
             >
               {{ detailedEvent.authorName }}
-            </span>
+            </a>
           </div>
 
           <h2 v-if="!isInModal">
@@ -368,5 +369,9 @@ h2 {
   .footer-button {
     margin-left: 15px;
   }
+}
+
+.user-card-link-color {
+  color: $color-new-light-text;
 }
 </style>

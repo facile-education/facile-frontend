@@ -3,7 +3,14 @@
     class="tag-item theme-background-color"
     data-test="tag-item"
   >
-    <span class="label">{{ tag }}</span>
+    <a
+      v-if="isClickable"
+      class="label toggle-user-card"
+      href="#"
+      style="color: white;"
+      @click.stop="$emit('open')"
+    >{{ tag }}</a>
+    <span v-else>{{ tag }}</span>
     <button
       :aria-label="$t('Base.WeprodeTagItem.remove')"
       :title="$t('Base.WeprodeTagItem.remove')"
@@ -30,12 +37,20 @@ export default {
     tag: {
       type: String,
       required: true
+    },
+    isClickable: {
+      type: Boolean,
+      required: true
     }
   },
-  emits: ['remove'],
+  emits: ['remove', 'open'],
   methods: {
     onRemove () {
       this.$emit('remove', this.tag)
+    },
+    openUserCardModal () {
+      console.log(this.tag)
+      this.$store.dispatch('userCard/initUserCard', this.student)
     }
   }
 }
