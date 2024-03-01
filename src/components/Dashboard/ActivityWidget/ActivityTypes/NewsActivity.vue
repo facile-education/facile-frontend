@@ -26,30 +26,33 @@
           <span class="text">
             {{ (news.isSchoolNews ? $t('Dashboard.NewsActivity.hasPublishedAnnounce') : $t('Dashboard.NewsActivity.hasPublishedInfo')) + news.title }}
           </span>
-          <img
-            v-if="news.hasAttachedFiles"
-            data-test="fileIcon"
-            class="paper-clip"
-            :src="require('@assets/icons/paperclip.svg')"
-            alt="paperclip"
-          >
         </div>
       </div>
     </div>
 
     <div
       class="date"
+      :class="news.isEditable && !mq.phone && 'active-on-hover'"
       :title="formattedDateLong"
     >
-      {{ formattedDate }}
-      <button
-        v-if="!news.hasRead"
-        v-t="'Dashboard.NewsActivity.show'"
-        class="show"
-        :aria-label="$t('Dashboard.NewsActivity.show')"
-        :title="$t('Dashboard.NewsActivity.show')"
-        @click="showDetails"
-      />
+      <img
+        v-if="news.hasAttachedFiles"
+        data-test="fileIcon"
+        class="paper-clip"
+        :src="require('@assets/icons/paperclip.svg')"
+        alt="paperclip"
+      >
+      <div class="right">
+        {{ formattedDate }}
+        <button
+          v-if="!news.hasRead"
+          v-t="'Dashboard.NewsActivity.show'"
+          class="show"
+          :aria-label="$t('Dashboard.NewsActivity.show')"
+          :title="$t('Dashboard.NewsActivity.show')"
+          @click="showDetails"
+        />
+      </div>
     </div>
 
     <button
@@ -243,12 +246,17 @@ button {
   @extend %activity-item;
   cursor: pointer;
   position: relative;
+  padding-right: 16px;
+  padding-right: 16px;
 
   &:hover, &:focus-within {
     .options {
       opacity: 100%;
       right: 8px;
       transform: translateX(0);
+    }
+    .active-on-hover{
+      transform: translateX(-32px);
     }
   }
 
@@ -343,11 +351,18 @@ button {
   }
 
   .date {
-    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all .4s ease;
+    .right{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
   }
   .show {
     @extend %show-more-button;
-    margin: auto;
   }
 }
 

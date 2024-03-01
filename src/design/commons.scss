@@ -127,3 +127,10 @@ h1 {
   @extend %font-regular-l;
 }
 
+.toggle-user-card{
+  &:hover{
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+

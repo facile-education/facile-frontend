@@ -206,12 +206,7 @@ export default {
 
   .field {
     margin-left: 1rem;
-    flex: 1;
   }
-}
-
-button {
-  margin-left: auto;
 }
 
 </style>

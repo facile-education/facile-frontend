@@ -62,6 +62,7 @@ export default {
   .name {
     flex: 1;
     margin-left: 1rem;
+    margin-right: 1rem;
   }
 }
 

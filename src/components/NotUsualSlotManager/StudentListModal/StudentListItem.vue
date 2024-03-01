@@ -3,7 +3,11 @@
     class="student"
     data-test="student-list-item"
   >
-    <span class="name"> {{ formattedStudent }} </span>
+    <span
+      class="name toggle-user-card"
+      @click.stop="openUserCardModal"
+    > {{ formattedStudent }}
+    </span>
     <span
       v-if="student.subject"
       v-t="formattedSubject"
@@ -126,6 +130,11 @@ export default {
     },
     handleCheck (check) {
       this.$emit('update:isPresent', { student: this.student, isPresent: check })
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', {
+        userId: this.student.studentId
+      })
     }
   }
 }
@@ -134,12 +143,9 @@ export default {
 <style lang="scss" scoped>
 .student {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin: 10px 0;
-}
-
-.name {
-  flex: 2;
 }
 
 .subject {

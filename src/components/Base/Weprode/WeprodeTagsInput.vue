@@ -279,10 +279,13 @@ export default {
 .tag-list {
   margin: 0;
   padding: 0;
-  display: inline-block;
   list-style-type: none;
   vertical-align: top;
   max-width: 100%;
+
+  li {
+    display: inline-block;
+  }
 }
 
 .base-input {

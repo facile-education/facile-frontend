@@ -8,7 +8,7 @@
         class="legalGuardians-icon"
         :icon-name="'icon-users'"
       />
-      <span>{{ $t('UserCard.UserCardResponsibility.relativeTitle') }} :</span>
+      <span>{{ $t('UserCard.UserCardResponsibility.relativeTitle') }}</span>
     </h2>
     <div class="content">
       <template v-if="userDetails.parents && userDetails.parents.length > 0">
@@ -30,12 +30,12 @@
             v-for="(child, index) in userDetails.children"
             :key="index"
           >
-            <a
-              class="theme-text-color"
+            <span
+              class="theme-text-color toggle-user-card"
               @click="updateUserCardModal(child)"
             >
               {{ `${child.firstName} ${child.lastName}` }}
-            </a>
+            </span>
             {{ `(${child.class})` }}
             <span v-if="index < userDetails.children.length - 1">, </span>
           </span>
@@ -45,7 +45,7 @@
   </section>
   <teleport to="body">
     <CreateMessageModal
-      v-if="isCreateMessageModalDisplayed && isMessagingModalDisplayed"
+      v-if="isMessagingModalDisplayed"
       @close="closeModal"
     />
   </teleport>

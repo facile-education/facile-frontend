@@ -47,9 +47,6 @@ export default {
   computed: {
     hasAdvancedSearchPanel () {
       return !this.$store.state.user.isStudent && !this.$store.state.user.isParent
-    },
-    isUserCardModalDisplayed () {
-      return this.$store.state.userCard.userToDisplay
     }
   },
   created () {
@@ -92,7 +89,7 @@ export default {
     },
     clickOutside (e) {
       const self = this
-      if (self.$el && !self.$el.contains(e.target) && !this.isUserCardModalDisplayed && this.createButton.$el && !this.createButton.$el.contains(e.target) && e.target.parentNode !== null) {
+      if (self.$el && !self.$el.contains(e.target) && this.createButton.$el && !this.createButton.$el.contains(e.target) && e.target.parentNode !== null) {
         this.onClose()
       }
     },

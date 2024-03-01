@@ -1,16 +1,13 @@
 <template>
   <div data-test="UserListItem">
     <button @click="toggleUser">
-      <span>
+      <span
+        class="toggle-user-card"
+        @click.stop="openUserCardModal"
+      >
         {{ getFullName(user) }}
       </span>
       <div class="optionsContainer">
-        <button
-          data-test="openUserCard"
-          @click.stop="openUserCardModal"
-        >
-          UserCard
-        </button>
         <img
           v-if="!isSelected"
           src="@/assets/icons/add.svg"

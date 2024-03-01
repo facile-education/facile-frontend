@@ -20,6 +20,10 @@
       v-if="userDetails && (userDetails.isTeacher || userDetails.isStudent)"
       :user-details="userDetails"
     />
+    <UserCardHHC
+      v-if="userDetails && userDetails.isStudent"
+      :user-school-life-stats="userDetails.userSchoollifeStats"
+    />
     <div
       v-if="error === true"
       v-t="'UserCard.errorPlaceholder'"
@@ -37,10 +41,11 @@ const UserCardClasses = defineAsyncComponent(() => import('@/components/UserCard
 const UserCardMain = defineAsyncComponent(() => import('@/components/UserCard/Main/UserCardMain.vue'))
 const UserCardResponsibility = defineAsyncComponent(() => import('@/components/UserCard/Responsibility/UserCardResponsibility.vue'))
 const UserCardCurrentSchedule = defineAsyncComponent(() => import('@/components/UserCard/Schedule/UserCardCurrentSchedule.vue'))
+const UserCardHHC = defineAsyncComponent(() => import('@/components/UserCard/UserCardHHC.vue'))
 
 export default {
   name: 'UserCard',
-  components: { UserCardMain, WeprodeSpinner, UserCardResponsibility, UserCardCurrentSchedule, UserCardClasses },
+  components: { UserCardMain, WeprodeSpinner, UserCardResponsibility, UserCardCurrentSchedule, UserCardClasses, UserCardHHC },
   data () {
     return {
       userDetails: undefined,
