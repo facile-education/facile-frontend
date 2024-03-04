@@ -22,7 +22,16 @@
         :class="{'undone': !homework.isDone && !homework.isSent}"
       >
         <span class="left">
-          <span class="first-line">{{ homework.subject }} · {{ teacherName }} · {{ 'P' + homework.targetSlotNumber }}</span>
+          <span class="first-line">{{ homework.subject }} ·
+            <a
+              href="#"
+              style="color: black;"
+              class="toggle-user-card"
+              @click.stop="openUserCardModal"
+            >
+              {{ teacherName }}
+            </a> ·
+            {{ 'P' + homework.targetSlotNumber }}</span>
           <strong class="title">{{ homework.title }}</strong>
           <span class="description">{{ description }}</span>
         </span>
@@ -131,6 +140,9 @@ export default {
           this.isDoneSwitchStatus = !this.isDoneSwitchStatus // Reset initial switch state
         }
       })
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', this.homework.teacher)
     }
   }
 }

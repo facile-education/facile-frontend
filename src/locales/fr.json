@@ -380,6 +380,7 @@
     "trash": "Corbeille",
     "noObjectWarning": "Vous vous apprétez à envoyer un message sans objet",
     "confirmFolderDeletionWarning": "Les messages du dossier supprimé seront déplacés dans la Corbeille",
+    "userDelete": "{user} (utilisateur supprimé)",
     "Parameters": {
       "header": "Paramètres de messagerie",
       "submitButton": "Enregistrer",
@@ -1933,7 +1934,8 @@
       "update-password": "Changer le mot de passe",
       "password-policy": "Le mot de passe doit contenir au moins 8 caractères dont une majuscule, un chiffre et un caractère spécial",
       "success": "Mot de passe changé",
-      "error": "Erreur lors du changement de mot de passe"
+      "error": "Erreur lors du changement de mot de passe",
+      "relative": "Responsable légal de"
     },
     "ManualUsers": {
       "action": "Editer",

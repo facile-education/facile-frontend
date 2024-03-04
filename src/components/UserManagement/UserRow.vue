@@ -31,14 +31,29 @@
         {{ user[field] }}
       </span>
     </div>
+    <a
+      href="#"
+      style="color: black;"
+      class="toggle-user-card"
+      @click.stop="openUserCardModal"
+    >
+      <CustomIcon
+        class=".icon-user"
+        :icon-name="'icon-user'"
+      />
+    </a>
   </div>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+
 import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
+
+const CustomIcon = defineAsyncComponent(() => import('@components/Base/CustomIcon.vue'))
 export default {
   name: 'UserRow',
-  components: { WeprodeCheckbox },
+  components: { WeprodeCheckbox, CustomIcon },
   props: {
     fields: {
       type: Array,
@@ -68,6 +83,9 @@ export default {
     },
     toggleNewsDelegate () {
       this.$emit('toggleNewsDelegate')
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', this.user)
     }
   }
 }
@@ -94,6 +112,19 @@ export default {
   .field {
     flex: 1;
     margin: auto;
+  }
+  .toggle-user-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 1.4rem;
+    border: solid 1px;
+    padding: 2px;
+    border-radius: 5px;
+    &:hover{
+      text-decoration: none;
+    }
   }
 }
 </style>

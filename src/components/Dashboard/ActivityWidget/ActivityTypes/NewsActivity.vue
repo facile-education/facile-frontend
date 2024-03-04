@@ -23,7 +23,7 @@
             href="#"
             class="user-card-link-new-light toggle-user-card"
             @click.stop="openUserCardModal"
-          >{{ news.authorName }}</a>
+          >{{ news.author.user }}</a>
         </span>
       </div>
       <div class="description">
@@ -238,7 +238,7 @@ export default {
     },
     openUserCardModal () {
       this.$store.dispatch('userCard/initUserCard', {
-        userId: this.news.authorId
+        userId: this.news.author.userId
       })
     }
   }

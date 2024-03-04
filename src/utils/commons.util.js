@@ -84,14 +84,17 @@ function getFullName (user) {
 }
 
 function getTeachersLabel (teacherList) {
-  let label = ''
+  const labels = []
   if (teacherList !== undefined) {
     for (let index = 0; index < teacherList.length; ++index) {
-      const name = teacherList[index].firstName.substring(0, 1) + '. ' + teacherList[index].lastName
-      label += (label === '') ? name : ', ' + name
+      const teacher = {
+        name: teacherList[index].firstName.substring(0, 1) + '. ' + teacherList[index].lastName,
+        userId: teacherList[index].userId
+      }
+      labels.push(teacher)
     }
   }
-  return label
+  return labels
 }
 
 function formatSlot (slot) {

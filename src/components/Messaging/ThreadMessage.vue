@@ -44,7 +44,7 @@
       <!-- Line 1 : recipients + date -->
       <div class="line1">
         <p class="sender">
-          {{ message.senderName }}
+          {{ message.sender.userName }}
         </p>
         <p class="sendDate">
           {{ formatSentDate() }}

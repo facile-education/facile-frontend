@@ -44,7 +44,20 @@
           v-else
           class="metadata teacher"
         >
-          {{ teacherLabel }}
+          <span
+            v-for="(teacher, index) in teachers"
+            :key="index"
+          >
+            <a
+              href="#"
+              style="color: black;"
+              class="toggle-user-card"
+              @click.stop="openUserCardModal(teacher)"
+            >
+              {{ teacher.name }}
+            </a>
+            <span v-if="index < teachers.length - 1">, </span>
+          </span>
         </div>
       </div>
     </div>
@@ -75,13 +88,16 @@ export default {
     sessionTitle () {
       return this.session.sessionId !== undefined ? this.session.groupName : this.session.title
     },
-    teacherLabel () {
+    teachers () {
       return getTeachersLabel(this.session.teachers)
     }
   },
   methods: {
     formatHour (date) {
       return dayjs(date).format('HH:mm')
+    },
+    openUserCardModal (teacher) {
+      this.$store.dispatch('userCard/initUserCard', teacher)
     }
   }
 }

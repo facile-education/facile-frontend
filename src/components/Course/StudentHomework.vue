@@ -10,7 +10,17 @@
     />
     <header>
       <div class="left">
-        <span class="subject">{{ homework.subject }} · {{ homework.cours }} · {{ teacherName }} · {{ 'P' + homework.targetSlotNumber }}</span>
+        <span class="subject">{{ homework.subject }} · {{ homework.cours }} ·
+          <a
+            href="#"
+            style="color: black;"
+            class="toggle-user-card"
+            @click.stop="openUserCardModal()"
+          >
+            {{ teacherName }}
+          </a> ·
+          {{ 'P' + homework.targetSlotNumber }}
+        </span>
         <div class="title">
           <h3>{{ homework.title }}</h3>
           <span
@@ -120,6 +130,11 @@ export default {
   mounted () {
     if (this.$route.query.homeworkId && (this.$route.query.homeworkId === this.homework.homeworkId.toString())) {
       this.$el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  },
+  methods: {
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', this.homework.teacher)
     }
   }
 }

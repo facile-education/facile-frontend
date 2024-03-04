@@ -19,7 +19,14 @@
       @keyup.enter="redirect"
     >
       <div class="author">
-        {{ getHeader(activity) }}
+        {{ isDashboard ? activity.groupName + ' - ' : '' }}
+        <a
+          href="#"
+          class="toggle-user-card user-card-link-new-light"
+          @click.stop="openUserCardModal"
+        >
+          {{ activity.author.user }}
+        </a>
       </div>
       <div class="description">
         <span>
@@ -99,8 +106,8 @@ export default {
         })
       }
     },
-    getHeader (activity) {
-      return (this.isDashboard ? activity.groupName + ' - ' : '') + activity.author
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', this.activity.author)
     }
   }
 }

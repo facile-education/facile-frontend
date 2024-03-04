@@ -231,7 +231,7 @@ export default {
           if (message.recipients.map(recipient => recipient.userId).indexOf(this.currentUser.userId) === -1 || message.messagingFolder.type !== messagingSentFolderType) {
             listWithoutSelfMessages.push(message)
           }
-        } else if (message.senderId !== this.currentUser.userId || message.isInCurrentFolder) {
+        } else if (message.sender.userId !== this.currentUser.userId || message.isInCurrentFolder) {
           listWithoutSelfMessages.push(message)
         }
       }

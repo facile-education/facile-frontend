@@ -22,7 +22,14 @@
           {{ activity.groupName }}
         </i>
         <span>
-          {{ ' - ' + activity.author }}
+          -
+          <a
+            href="#"
+            class="toggle-user-card user-card-link-new-light"
+            @click.stop="openUserCardModal"
+          >
+            {{ activity.author }}
+          </a>
         </span>
       </div>
       <!-- Dashboard only lists the activity of the user himself -->
@@ -146,6 +153,11 @@ export default {
   methods: {
     redirect () {
       this.$router.push({ name: GROUPS, params: { groupId: this.activity.groupId } })
+    },
+    openUserCardModal () {
+      this.$store.dispatch('userCard/initUserCard', {
+        userId: this.activity.actionUserId
+      })
     }
   }
 }

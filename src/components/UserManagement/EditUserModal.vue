@@ -88,7 +88,22 @@
       <p
         v-if="!isCreation && isParent"
       >
-        {{ parentInfos }}
+        {{ $t('UserManagement.EditUserModal.relative') }}
+        <span
+          v-for="(children, index) in parentInfos.children"
+          :key="index"
+          style="margin: 0;"
+        >
+          <a
+            href="#"
+            style="color: black;"
+            class="toggle-user-card"
+            @click.stop="openUserCardModal(children)"
+          >
+            {{ children.firstName + children.lastName }}
+          </a>
+          ({{ children.class }}){{ index < parentInfos.children.length - 1 ? ', ' : '' }}
+        </span>
       </p>
 
       <!-- Screen name -->
@@ -239,7 +254,7 @@ export default {
     if (this.editedUser.isParent) {
       userService.getParentInfos(this.editedUser.userId).then((data) => {
         if (data.success) {
-          this.parentInfos = data.infos
+          this.parentInfos = data
         }
       })
     }
@@ -323,6 +338,9 @@ export default {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('UserManagement.EditUserModal.error'), type: 'error' })
         }
       })
+    },
+    openUserCardModal (user) {
+      this.$store.dispatch('userCard/initUserCard', user)
     }
   }
 }

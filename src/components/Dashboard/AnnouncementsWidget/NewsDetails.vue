@@ -55,7 +55,7 @@
               class="toggle-user-card user-card-link-color"
               @click.stop="openUserCardModal"
             >
-              {{ detailedNews.authorName }}
+              {{ detailedNews.author.user }}
             </a>
           </div>
         </div>
@@ -215,7 +215,7 @@ export default {
     },
     openUserCardModal () {
       this.$store.dispatch('userCard/initUserCard', {
-        userId: this.detailedNews.authorId
+        userId: this.detailedNews.author.userId
       })
     }
   }

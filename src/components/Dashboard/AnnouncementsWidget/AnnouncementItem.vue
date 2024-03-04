@@ -39,7 +39,7 @@
         <div class="meta-data">
           <span class="text">
             <span>{{ announcementDay }}</span>
-            <span>{{ $t('Dashboard.AnnouncementItem.by') + announcement.authorName }}</span>
+            <span>{{ $t('Dashboard.AnnouncementItem.by') + announcement.author.user }}</span>
           </span>
           <img
             v-if="announcement.hasAttachedFiles"

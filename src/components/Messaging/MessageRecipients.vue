@@ -12,12 +12,14 @@
         :class="{'last-recipient' : index === computedRecipientList.length - 1}"
       >
         <div class="recipientName">
-          <span
+          <a
+            href="#"
+            style="color: black;"
             class="toggle-user-card"
-            @click.stop="openUserCardModal(recipient)"
+            @click.prevent="openUserCardModal(recipient)"
           >
             {{ recipient.text }}
-          </span>
+          </a>
         </div>
         <CustomIcon
           v-if="recipient.hasRead === true"

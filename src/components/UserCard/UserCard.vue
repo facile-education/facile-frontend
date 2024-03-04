@@ -21,7 +21,7 @@
       :user-details="userDetails"
     />
     <UserCardHHC
-      v-if="userDetails && userDetails.isStudent"
+      v-if="userDetails && userDetails.isStudent && userDetails.userSchoollifeStats"
       :user-school-life-stats="userDetails.userSchoollifeStats"
     />
     <div

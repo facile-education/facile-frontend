@@ -17,7 +17,15 @@
 
     <div class="content">
       <div class="author">
-        {{ isPendingFiring ? $t('Dashboard.HHCActivity.setFiringReason') : activity.author }}
+        <span v-if="isPendingFiring">{{ $t('Dashboard.HHCActivity.setFiringReason') }}</span>
+        <a
+          v-else
+          href="#"
+          class="toggle-user-card user-card-link-new-light"
+          @click.stop="openUserCardModal(activity.teacherId)"
+        >
+          {{ activity.author }}
+        </a>
       </div>
       <div class="description">
         <span>
@@ -63,13 +71,22 @@ export default {
     description () {
       switch (this.activity.type) {
         case activityConstants.TYPE_PENDING_RENVOI:
-          return this.$t('Dashboard.HHCActivity.TYPE_PENDING_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionName, courseDate: this.formatDate(this.activity.sessionDate) })
+          return this.$t('Dashboard.HHCActivity.TYPE_PENDING_RENVOI', {
+            firedUser: this.activity.target,
+            courseName: this.activity.sessionName,
+            courseDate: this.formatDate(this.activity.sessionDate)
+          })
         case activityConstants.TYPE_SCHOOL_RENVOI:
-          return this.$t('Dashboard.HHCActivity.TYPE_SCHOOL_RENVOI', { firedUser: this.activity.target, courseName: this.activity.sessionName, courseDate: this.formatDate(this.activity.sessionDate) })
+          return this.$t('Dashboard.HHCActivity.TYPE_SCHOOL_RENVOI', {
+            firedUser: this.activity.target,
+            courseName: this.activity.sessionName,
+            courseDate: this.formatDate(this.activity.sessionDate)
+          })
         default:
           return 'Unknown activity type'
       }
     }
+
   },
   methods: {
     redirect () {
@@ -79,6 +96,11 @@ export default {
     },
     formatDate (date) {
       return dayjs(date, DATE_EXCHANGE_FORMAT).format(' DD MMMM YYYY ' + this.$t('Dashboard.HHCActivity.at') + ' HH:mm')
+    },
+    openUserCardModal (userId) {
+      this.$store.dispatch('userCard/initUserCard', {
+        userId
+      })
     }
   }
 }

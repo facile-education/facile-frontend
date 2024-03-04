@@ -49,7 +49,6 @@ export default {
       this.$emit('remove', this.tag)
     },
     openUserCardModal () {
-      console.log(this.tag)
       this.$store.dispatch('userCard/initUserCard', this.student)
     }
   }

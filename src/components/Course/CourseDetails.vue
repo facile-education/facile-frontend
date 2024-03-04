@@ -17,10 +17,26 @@
         class="teachers"
       >
         <div>
-          {{ course.teachers[0].firstName + ' ' + course.teachers[0].lastName }}
+          <a
+            href="#"
+            style="color: black;"
+            class="toggle-user-card"
+            @click.stop="openUserCardModal(course.teachers[0])"
+          >
+            {{ course.teachers[0].firstName + ' ' + course.teachers[0].lastName }}
+          </a>
         </div>
         <div v-if="course.teachers.length > 1">
-          {{ formattedRemainingTeachers }}
+          <a
+            v-if="course.teachers.length === 2"
+            href="#"
+            style="color: black;"
+            class="toggle-user-card"
+            @click.stop="openUserCardModal(course.teachers[1])"
+          >
+            {{ formattedRemainingTeachers }}
+          </a>
+          <span v-else>{{ formattedRemainingTeachers }}</span>
         </div>
       </div>
     </header>
@@ -128,6 +144,9 @@ export default {
         this.error = err
         console.error(err)
       })
+    },
+    openUserCardModal (teacher) {
+      this.$store.dispatch('userCard/initUserCard', teacher)
     }
   }
 }

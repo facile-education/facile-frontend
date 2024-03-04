@@ -249,8 +249,10 @@ export default {
       // For others, this is the sender
       if (messagingUtils.isDraftFolder() || messagingUtils.isSentFolder()) {
         return messagingUtils.shortRecipientList(this.mainMessage)
+      } else if (this.mainMessage.sender.isSenderDeleted) {
+        return this.$t('Messaging.userDelete', { user: this.mainMessage.sender.userName })
       } else {
-        return this.mainMessage.senderName
+        return this.mainMessage.sender.userName
       }
     },
     isDisplayMessageFromRouting () {

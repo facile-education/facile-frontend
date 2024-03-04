@@ -35,12 +35,16 @@
       <div class="header-main">
         <div class="header-line1">
           <p class="sender">
-            <span
+            <a
+              v-if="message.sender.isValidUser"
+              href="#"
+              style="color: black;"
               class="toggle-user-card"
-              @click.stop="openUserCardModal"
+              @click.prevent="openUserCardModal"
             >
-              {{ message.senderName }}
-            </span>
+              {{ displayedName }}
+            </a>
+            <span v-else>{{ displayedName }}</span>
           </p>
           <p
             class="sent-date"
@@ -131,6 +135,13 @@ export default {
     },
     isFolderIconImage () {
       return this.folderIcon?.indexOf('svg') !== -1
+    },
+    displayedName () {
+      if (this.message.sender.isSenderDeleted) {
+        return this.$t('Messaging.userDelete', { user: this.message.sender.userName })
+      } else {
+        return this.message.sender.userName
+      }
     }
   },
   mounted () {
@@ -144,9 +155,7 @@ export default {
       return dayjs(this.message.sendDate, DATE_EXCHANGE_FORMAT).format('DD/MM/YYYY HH:mm')
     },
     openUserCardModal () {
-      this.$store.dispatch('userCard/initUserCard', {
-        userId: this.message.senderId
-      })
+      this.$store.dispatch('userCard/initUserCard', this.message.sender)
     }
   }
 }

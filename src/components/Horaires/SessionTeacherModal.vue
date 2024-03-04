@@ -22,7 +22,16 @@
             class="teacher"
           >
             <div class="name">
-              <span><b>{{ `${teacher.firstName.substring(0, 1)}. ${teacher.lastName} ` }}</b>{{ $t('Horaires.SessionTeacherModal.substitutedBy') }}</span>
+              <span>
+                <a
+                  href="#"
+                  class="toggle-user-card"
+                  style="color: black;"
+                  @click.stop="openUserCardModal(teacher)"
+                >
+                  <b>{{ `${teacher.firstName.substring(0, 1)}. ${teacher.lastName} ` }}</b>
+                </a>{{ $t('Horaires.SessionTeacherModal.substitutedBy') }}
+              </span>
               <UserCompletion
                 v-model="teacher.substitutes"
                 style="display: inline-block;"
@@ -169,6 +178,11 @@ export default {
           console.error(err)
         }
       )
+    },
+    openUserCardModal (user) {
+      this.$store.dispatch('userCard/initUserCard', {
+        userId: user.teacherId
+      })
     },
     updateSubstitute (value) {
       // TODO

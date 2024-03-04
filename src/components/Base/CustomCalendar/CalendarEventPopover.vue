@@ -65,7 +65,21 @@
             v-if="selectedEvent.event.extendedProps.teacher || selectedEvent.event.extendedProps.teachers"
             class="teacher"
           >
-            {{ formattedTeacherName }}
+            <span
+              v-for="(teacher, index) in teachers"
+              :key="index"
+            >
+              <a
+                href="#"
+                style="color: black;"
+                class="toggle-user-card"
+                @click.stop="openUserCardModal(teacher)"
+              >
+                {{ teacher.name }}
+              </a>
+              <span v-if="index < teachers.length - 1">, </span>
+            </span>
+            {{ appEvent.subject ? ' - ' : '' }}
           </span>
           <span
             v-if="selectedEvent.event.extendedProps.subject"
@@ -133,8 +147,8 @@ export default {
         ' - ' +
         dayjs(this.selectedEvent.event.end).format('HH:mm')
     },
-    formattedTeacherName () {
-      return getTeachersLabel(this.appEvent.teachers) + (this.appEvent.subject ? ' - ' : '')
+    teachers () {
+      return getTeachersLabel(this.appEvent.teachers)
     },
     inscriptionLeft () {
       return this.appEvent.capacity - this.appEvent.nbRegisteredStudents
@@ -159,6 +173,9 @@ export default {
       if (self.$el && !self.$el.contains(e.target)) {
         this.$emit('close')
       }
+    },
+    openUserCardModal (teacher) {
+      this.$store.dispatch('userCard/initUserCard', teacher)
     }
   }
 }
