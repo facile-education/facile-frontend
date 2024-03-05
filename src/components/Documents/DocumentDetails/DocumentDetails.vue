@@ -23,7 +23,7 @@
         v-else
         class="document-name"
       >
-        {{ selectedDocuments.length + ' ' + $t('Documents.DocumentDetails.selectedDocuments') }}
+        {{ $t('Documents.DocumentDetails.selectedDocuments', {n: selectedDocuments.length}) }}
       </h3>
       <button
         class="close-option"

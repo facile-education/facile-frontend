@@ -63,7 +63,7 @@ export default {
       return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.HHCActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.HHCActivity.at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.HHCActivity.activityTimeFormat'))
     },
     isPendingFiring () {
       return this.activity.type === activityConstants.TYPE_PENDING_RENVOI
@@ -86,7 +86,6 @@ export default {
           return 'Unknown activity type'
       }
     }
-
   },
   methods: {
     redirect () {
@@ -95,12 +94,10 @@ export default {
       }
     },
     formatDate (date) {
-      return dayjs(date, DATE_EXCHANGE_FORMAT).format(' DD MMMM YYYY ' + this.$t('Dashboard.HHCActivity.at') + ' HH:mm')
+      return dayjs(date, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.HHCActivity.courseDateFormat'))
     },
     openUserCardModal (userId) {
-      this.$store.dispatch('userCard/initUserCard', {
-        userId
-      })
+      this.$store.dispatch('userCard/initUserCard', { userId })
     }
   }
 }

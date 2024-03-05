@@ -29,7 +29,7 @@
       <div class="description">
         <div class="left">
           <span class="text">
-            {{ (news.isSchoolNews ? $t('Dashboard.NewsActivity.hasPublishedAnnounce') : $t('Dashboard.NewsActivity.hasPublishedInfo')) + news.title }}
+            {{ $t((news.isSchoolNews ? 'Dashboard.NewsActivity.hasPublishedAnnounce' : 'Dashboard.NewsActivity.hasPublishedInfo'), {newsTitle: news.title}) }}
           </span>
         </div>
       </div>
@@ -185,7 +185,7 @@ export default {
       return dayjs(this.news.publicationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.news.publicationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.NewsActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.NewsActivity.at') + ' HH:mm')
+      return dayjs(this.news.publicationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.NewsActivity.activityTimeFormat'))
     }
   },
   methods: {

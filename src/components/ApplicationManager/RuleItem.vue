@@ -98,7 +98,7 @@ export default {
         return undefined
       }
 
-      const classList = [{ orgId: 0, orgName: this.$t('ApplicationManager.RuleItem.all-school') }]
+      const classList = [{ orgId: 0, orgName: this.$t('ApplicationManager.RuleItem.allSchool') }]
       classList.push(...this.$store.state.administration.classList)
       return classList
     },

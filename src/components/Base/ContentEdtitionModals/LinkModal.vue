@@ -10,11 +10,11 @@
     <template #header>
       <span
         v-if="isCreation"
-        v-t="'Base.LinkModal.creation-title'"
+        v-t="'Base.LinkModal.creationTitle'"
       />
       <span
         v-else
-        v-t="'Base.LinkModal.edition-title'"
+        v-t="'Base.LinkModal.editionTitle'"
       />
     </template>
 

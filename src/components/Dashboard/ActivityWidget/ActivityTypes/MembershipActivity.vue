@@ -95,10 +95,7 @@ export default {
       return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.MembershipActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.MembershipActivity.at') + ' HH:mm')
-    },
-    isDeactivation () {
-      return this.activity.type === activityConstants.TYPE_EXPIRED_GROUP
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.MembershipActivity.activityTimeFormat'))
     },
     description1 () {
       switch (this.activity.type) {
@@ -116,9 +113,9 @@ export default {
     description2 () {
       switch (this.activity.type) {
         case activityConstants.TYPE_ADD_MEMBERSHIP:
-          return this.$t('Dashboard.MembershipActivity.in-this-space')
+          return this.$t('Dashboard.MembershipActivity.inThisSpace')
         case activityConstants.TYPE_REMOVE_MEMBERSHIP:
-          return this.$t('Dashboard.MembershipActivity.from-this-space')
+          return this.$t('Dashboard.MembershipActivity.fromThisSpace')
         default:
           return ''
       }
@@ -142,9 +139,9 @@ export default {
     dashboardDescription () {
       switch (this.activity.type) {
         case activityConstants.TYPE_ADD_MEMBERSHIP:
-          return this.$t('Dashboard.MembershipActivity.added-you')
+          return this.$t('Dashboard.MembershipActivity.addedYou')
         case activityConstants.TYPE_REMOVE_MEMBERSHIP:
-          return this.$t('Dashboard.MembershipActivity.removed-you')
+          return this.$t('Dashboard.MembershipActivity.removedYou')
         default:
           return ''
       }

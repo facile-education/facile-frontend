@@ -219,13 +219,13 @@ export default {
     formErrorList () {
       return {
         title: (this.v$.title.$invalid && this.v$.title.$dirty)
-          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('Dashboard.SaveDiaryEventModal.sizeLimit1') + inputMaxSize + this.$t('Dashboard.SaveDiaryEventModal.sizeLimit2'))
+          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('Dashboard.SaveDiaryEventModal.sizeLimit', { maxSize: inputMaxSize }))
           : '',
         location: (this.v$.location.$invalid && this.v$.location.$dirty)
-          ? this.$t('Dashboard.SaveDiaryEventModal.sizeLimit1') + inputMaxSize + this.$t('Dashboard.SaveDiaryEventModal.sizeLimit2')
+          ? this.$t('Dashboard.SaveDiaryEventModal.sizeLimit', { maxSize: inputMaxSize })
           : '',
         description: (this.v$.description.$invalid && this.v$.description.$dirty)
-          ? this.$t('Dashboard.SaveDiaryEventModal.sizeLimit1') + ckMaxSize + this.$t('Dashboard.SaveDiaryEventModal.sizeLimit2')
+          ? this.$t('Dashboard.SaveDiaryEventModal.sizeLimit1', { maxSize: ckMaxSize })
           : '',
         populations: (this.v$.populations.$invalid && this.v$.populations.$dirty)
           ? this.$t('Dashboard.SaveDiaryEventModal.selectPopulations')

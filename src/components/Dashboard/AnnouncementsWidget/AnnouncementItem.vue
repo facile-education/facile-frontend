@@ -188,7 +188,7 @@ export default {
       return !this.isSelectionMode && (this.announcement.isEditable || this.announcement.isDeletable)
     },
     announcementDay () {
-      return this.$t('Dashboard.AnnouncementItem.at') + dayjs(this.announcement.publicationDate).format('DD/MM/YY')
+      return this.$t('Dashboard.AnnouncementItem.announcementDate', { date: dayjs(this.announcement.publicationDate).format('DD/MM/YY') })
     },
     computedDescription () {
       return this.announcement.shortContent ? this.announcement.shortContent : this.$t('Dashboard.AnnouncementItem.descriptionPlaceholder')

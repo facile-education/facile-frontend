@@ -9,7 +9,7 @@
       class="current-week-bar theme-background-color"
     />
     <span class="week-number-label">
-      {{ $t('Horaires.TimeLineWeekItem.weekInitial') + week.weekNumber }}
+      {{ $t('Horaires.TimeLineWeekItem.weekNumber', { weekNumber: week.weekNumber }) }}
     </span>
     <span class="week-label">
       {{ weekLabel }}
@@ -44,8 +44,7 @@ export default {
     weekTitle () {
       const startDate = dayjs(this.week.firstDayOfWeek, 'YYYY-MM-DD')
       const endDate = startDate.endOf('week')
-      return this.$t('Horaires.TimeLineWeekItem.from') + ' ' + startDate.format('DD MMMM YYYY') +
-        ' ' + this.$t('Horaires.TimeLineWeekItem.to') + ' ' + endDate.format('DD MMMM YYYY')
+      return this.$t('Horaires.TimeLineWeekItem.weekTitle', { firstWeekDay: startDate.format('DD MMMM YYYY'), lastWeekDay: endDate.format('DD MMMM YYYY') })
     }
   },
   methods: {

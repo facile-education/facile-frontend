@@ -191,7 +191,7 @@ function handleError (data, doc, folderId, documentList, index) {
   if (data.error === 'fileSizeException') {
     const formattedMaxUploadSize = formatSize(store.state.documents.documentsProperties.maxUploadSize)
     store.dispatch('popups/pushPopup', {
-      message: i18n.global.t('Documents.fileSizeException') + formattedMaxUploadSize,
+      message: i18n.global.t('Documents.fileSizeException', { maxUploadSize: formattedMaxUploadSize }),
       type: 'error'
     })
   } else if (data.error === 'DuplicateFileException') {

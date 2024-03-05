@@ -154,8 +154,11 @@ export default {
       return this.appEvent.capacity - this.appEvent.nbRegisteredStudents
     },
     formattedRoomAndPlaces () {
-      const isPlural = this.inscriptionLeft > 1
-      return this.appEvent.room + (this.inscriptionLeft ? (' - ' + this.inscriptionLeft + ' ' + this.$t('NotUsualSlots.remainingPlaces') + (isPlural ? 's' : '') + ' ' + this.$t('NotUsualSlots.free') + (isPlural ? 's' : '')) : '')
+      if (this.inscriptionLeft) {
+        return this.$tc('NotUsualSlots.remainingPlaces', this.inscriptionLeft)
+      } else {
+        return ''
+      }
     }
   },
   mounted () {

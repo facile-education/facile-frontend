@@ -9,8 +9,7 @@
     @close="closeModal"
   >
     <template #header>
-      <span v-t="'UserManagement.UserAffectationsModal.add-affectation-title'" />
-      <span>{{ editedUser.firstName }} {{ editedUser.lastName }}</span>
+      <span>{{ $t('UserManagement.UserAffectationsModal.addAffectationTitle', { userName: editedUser.firstName + ' ' + editedUser.lastName }) }}</span>
     </template>
 
     <template #body>
@@ -134,7 +133,7 @@ export default {
       return this.editedUser.affectations === undefined ? false : this.editedUser.affectations.find(affectation => affectation.orgId === orgId) !== undefined
     },
     buildTooltip (affectation) {
-      return this.$t('UserManagement.UserAffectationsModal.affected-by') + ' ' + affectation.adminName + this.$t('UserManagement.UserAffectationsModal.the') + dayjs(affectation.expirationDate, DATE_EXCHANGE_FORMAT).format('L')
+      return this.$t('UserManagement.UserAffectationsModal.affectedBy', { userName: affectation.adminName, affectationDate: dayjs(affectation.expirationDate, DATE_EXCHANGE_FORMAT).format('L') })
     },
     closeModal () {
       this.$emit('close')

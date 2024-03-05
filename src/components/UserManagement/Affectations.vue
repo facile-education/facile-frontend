@@ -23,7 +23,7 @@
       v-if="selectedSchool === undefined"
       class="main-label"
     >
-      <p>{{ $t('UserManagement.Affectations.please-select-school') }}</p>
+      <p>{{ $t('UserManagement.Affectations.pleaseSelectSchool') }}</p>
     </div>
     <div
       v-else-if="sortedAffectedUsers.length === 0 && filter === ''"

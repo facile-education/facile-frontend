@@ -34,7 +34,7 @@
         class="round"
         @click="deleteFolders"
       >
-        <span>{{ $t('Maintenance.OneShotMaintenance.delete-folders') }}</span>
+        <span>{{ $t('Maintenance.OneShotMaintenance.deleteFolders') }}</span>
       </WeprodeButton>
     </div>
     <WeprodeButton

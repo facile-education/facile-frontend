@@ -4,7 +4,7 @@
       v-if="group.expirationDate"
       class="expiration-date"
     >
-      {{ $t('Groups.GroupDetailsTab.expire') + formattedDate }}
+      {{ $t('Groups.GroupDetailsTab.expire', { dateLabel: formattedDate }) }}
     </div>
 
     <p

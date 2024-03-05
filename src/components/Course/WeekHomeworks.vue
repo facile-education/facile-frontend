@@ -117,7 +117,7 @@ export default {
         if (dayIndex !== -1) {
           homeworksByDay[dayIndex].homeworkList.push(homework)
         } else {
-          homeworksByDay.push({ dayId: homeworkDay, label: dayjs(homework.toDate).format(this.$t('Course.WeekHomeworks.for') + ' dddd DD MMM'), homeworkList: [homework] })
+          homeworksByDay.push({ dayId: homeworkDay, label: this.$t('Course.WeekHomeworks.forDate', { dateLabel: dayjs(homework.toDate).format('dddd DD MMM') }), homeworkList: [homework] })
         }
       })
 

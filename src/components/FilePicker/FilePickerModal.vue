@@ -144,7 +144,7 @@ export default {
     },
     submitLabel () {
       if (this.selectedFolder?.permissions.ADD_OBJECT) {
-        return this.$t('FilePicker.FilePickerModal.chooseSelectedFolder') + this.selectedFolder.name
+        return this.$t('FilePicker.FilePickerModal.chooseSelectedFolder', { folderName: this.selectedFolder.name })
       } else if (this.currentFolder?.permissions.ADD_OBJECT) {
         return this.$t('FilePicker.FilePickerModal.chooseCurrentFolder')
       } else {

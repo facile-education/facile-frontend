@@ -46,7 +46,7 @@ export const actions = {
       if (data.success) {
         commit('setVersionNotesListError', false)
         data.versionNotes.forEach(versionNote => {
-          versionNote.versionNoteLabel = i18n.global.t('VersionNotes.updateOf') + dayjs(versionNote.creationDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY')
+          versionNote.versionNoteLabel = i18n.global.t('VersionNotes.updateOf', { dateLabel: dayjs(versionNote.creationDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY') })
         })
         commit('setVersionNotesList', data.versionNotes)
 

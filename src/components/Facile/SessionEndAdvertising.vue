@@ -10,7 +10,7 @@
   >
     <template #body>
       <div class="text">
-        {{ $t('Facile.SessionEndAdvertising.sessionExpiresIn') + formattedRemainingTime }}
+        {{ $t('Facile.SessionEndAdvertising.sessionExpiresIn', { remainingTime: formattedRemainingTime }) }}
       </div>
 
       <div class="button-container">

@@ -70,7 +70,7 @@ export default {
       return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.SessionActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.SessionActivity.at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.SessionActivity.courseDateFormat'))
     },
     isCourse () {
       return this.activity.type === activityConstants.TYPE_SESSION

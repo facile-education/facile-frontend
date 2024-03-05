@@ -11,11 +11,7 @@
         v-if="nbTotalResults > 0"
         class="pagination"
       >
-        <span>{{ $t('UserManagement.ManualUsers.display') }}</span>
-        <span>{{ $t('UserManagement.ManualUsers.to') }}</span>
-        <span>{{ maxIndex }}</span>
-        <span>{{ $t('UserManagement.ManualUsers.over') }}</span>
-        <span>{{ nbTotalResults }}</span>
+        <span>{{ $t('UserManagement.ManualUsers.pagination', {currentIndex: maxIndex, nbResults: nbTotalResults}) }}</span>
       </div>
       <WeprodeInput
         ref="tagsinput"
@@ -32,19 +28,19 @@
       v-if="selectedSchool === undefined"
       class="main-label"
     >
-      <p>{{ $t('UserManagement.ManualUsers.please-select-school') }}</p>
+      <p>{{ $t('UserManagement.ManualUsers.pleaseSelectSchool') }}</p>
     </div>
     <div
       v-else-if="userList && userList.length === 0 && filter === ''"
       class="main-label"
     >
-      <p>{{ $t('UserManagement.ManualUsers.no-users') }}</p>
+      <p>{{ $t('UserManagement.ManualUsers.noUsers') }}</p>
     </div>
     <div
       v-else-if="userList && userList.length === 0 && filter !== ''"
       class="main-label"
     >
-      <p>{{ $t('no-users-for-filter', { filter: filter}) }}</p>
+      <p>{{ $t('noUsersForFilter', { filter: filter}) }}</p>
     </div>
     <div
       v-else-if="userList"

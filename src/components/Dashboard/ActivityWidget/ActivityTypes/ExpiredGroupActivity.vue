@@ -64,10 +64,10 @@ export default {
       return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.ExpiredGroupActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.ExpiredGroupActivity.at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.ExpiredGroupActivity.activityTimeFormat'))
     },
     description () {
-      return this.$t('Dashboard.ExpiredGroupActivity.space-is-deactivated')
+      return this.$t('Dashboard.ExpiredGroupActivity.spaceIsDeactivated')
     }
   },
   methods: {

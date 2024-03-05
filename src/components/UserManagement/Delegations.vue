@@ -14,7 +14,7 @@
       v-if="selectedSchool === undefined"
       class="main-label"
     >
-      <p>{{ $t('UserManagement.Delegations.please-select-school') }}</p>
+      <p>{{ $t('UserManagement.Delegations.pleaseSelectSchool') }}</p>
     </div>
     <div
       v-else-if="schoolAdmins.length === 0"

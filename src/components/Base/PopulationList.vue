@@ -17,7 +17,7 @@
       @focus="listDisplayed = true"
       @blur="listDisplayed = false"
     >
-      {{ populationList.length + $t('Base.PopulationList.populations') }}
+      {{ $t('Base.PopulationList.populations', {n: populationList.length}) }}
     </button>
 
     <ul v-if="listDisplayed">

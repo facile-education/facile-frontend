@@ -64,7 +64,7 @@ export default {
       } else if (this.selectedDocuments.length === 0) {
         return this.$t('Documents.DocumentDetailsModal.noDocumentSelected')
       } else {
-        return this.selectedDocuments.length + '  ' + this.$t('Documents.DocumentDetailsModal.selectedDocuments')
+        return this.$t('Documents.DocumentDetailsModal.selectedDocuments', { n: selectedDocuments.length })
       }
     },
     selectedDocuments () {

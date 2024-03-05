@@ -38,7 +38,7 @@
           >
             <div class="login-label">
               <p
-                v-t="'Authentication.login-label'"
+                v-t="'Authentication.loginLabel'"
               />
             </div>
             <input

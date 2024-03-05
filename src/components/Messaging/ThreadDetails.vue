@@ -109,7 +109,7 @@
         v-if="areMultiThreadsSelected"
         class="multi-threads"
       >
-        <p>{{ nbSelectedThreads }} {{ $t('Messaging.multiThreads') }}</p>
+        <p>{{ $t('Messaging.multiThreads', {n: nbSelectedThreads}) }}</p>
       </div>
 
       <!-- PlaceHolder when no messages selected -->

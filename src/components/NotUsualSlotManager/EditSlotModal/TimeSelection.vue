@@ -2,7 +2,6 @@
   <div data-test="time-selection">
     <div class="input-section">
       <slot />
-      <!--      <span> {{ ` ${$t('NotUsualSlotManager.TimeSelection.the')} ${startTime.format('dddd')}s ${$t('NotUsualSlotManager.TimeSelection.at')} ` }}</span>-->
       <div>
         <WeprodeInput
           v-model="inputStartHour"

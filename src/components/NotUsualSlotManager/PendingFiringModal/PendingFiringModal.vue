@@ -90,7 +90,7 @@ export default {
         return this.pendingFiring.subject + ' ' +
           this.$t('Moment.of') + ' ' + dayjs(this.pendingFiring.sessionDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
       } else {
-        return this.$t('NotUsualSlots.PendingFiringModal.courseOf') + this.pendingFiring.subject + ' ' +
+        return this.$t('NotUsualSlots.PendingFiringModal.courseOf', { courseName: this.pendingFiring.subject }) + ' ' +
           this.$t('Moment.of') + ' ' + dayjs(this.pendingFiring.sessionDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
       }
     },

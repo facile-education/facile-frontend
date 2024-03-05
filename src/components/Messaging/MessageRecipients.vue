@@ -83,9 +83,7 @@ export default {
     },
     formattedOtherRecipients () {
       const nbOtherRecipients = this.nbRecipients - this.nbDisplayed
-      return nbOtherRecipients > 1
-        ? this.$t('Messaging.OtherRecipient1') + nbOtherRecipients + this.$t('Messaging.OtherRecipient2')
-        : this.$t('Messaging.OtherRecipient')
+      return this.$tc('Messaging.OtherRecipient', nbOtherRecipients)
     }
   },
   created () {

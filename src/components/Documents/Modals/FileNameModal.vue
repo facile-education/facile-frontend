@@ -154,7 +154,7 @@ export default {
         if (this.v$.inputText.$errors[0].$validator === 'required') {
           return this.$t('Commons.required')
         } else if (this.v$.inputText.$errors[0].$validator === 'isUnderMaxSize') {
-          return this.$t('Documents.FileNameModal.sizeLimit1') + entityNameMaxSize + this.$t('Documents.FileNameModal.sizeLimit2')
+          return this.$t('Documents.FileNameModal.sizeLimit', { maxSize: entityNameMaxSize })
         } else if (this.v$.inputText.$errors[0].$validator === 'notBeginByDot') {
           return this.$t('Documents.FileNameModal.notBeginByDot')
         } else if (this.v$.inputText.$errors[0].$validator === 'containsNoCotes') {

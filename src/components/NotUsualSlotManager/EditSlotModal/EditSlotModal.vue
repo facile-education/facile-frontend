@@ -185,9 +185,9 @@ export default {
       }
     },
     capacityLabel () {
-      let label = this.$t('NotUsualSlots.EditSlotModal.remainingPlaces')
+      let label = this.$t('NotUsualSlots.EditSlotModal.roomCapacity')
       if (!this.isEventCreation) {
-        label += ' - ' + this.newEvent.nbRegisteredStudents + ' ' + this.$t('NotUsualSlots.EditSlotModal.registered')
+        label += ' - ' + this.$t('NotUsualSlots.EditSlotModal.registered', { n: this.newEvent.nbRegisteredStudents })
       }
       return label
     },
@@ -205,9 +205,9 @@ export default {
     },
     slotLabel () {
       if (this.isEventCreation) {
-        return this.$t('NotUsualSlotManager.EditSlotModal.all-the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + 's ' + this.$t('NotUsualSlotManager.EditSlotModal.on')
+        return this.$t('NotUsualSlotManager.EditSlotModal.allThe', { dayLabel: dayjs(this.eventToEdit.startDate).format('dddd') })
       } else {
-        return this.$t('NotUsualSlotManager.EditSlotModal.the') + ' ' + dayjs(this.eventToEdit.startDate).format('dddd') + ' ' + this.$t('NotUsualSlotManager.EditSlotModal.on')
+        return this.$t('NotUsualSlotManager.EditSlotModal.the', { dayLabel: dayjs(this.eventToEdit.startDate).format('dddd') })
       }
     },
     configuration () {

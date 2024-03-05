@@ -245,7 +245,7 @@ export default {
       } else if (publicationDate.isAfter(dayjs())) {
         return this.$t('Course.SessionDetails.scheduled')
       } else {
-        return this.$t('Course.SessionDetails.publishedOn') + publicationDate.format('DD/MM/YYYY')
+        return this.$t('Course.SessionDetails.publishedOn', { datelabel: publicationDate.format('DD/MM/YYYY') })
       }
     },
     formattedFuturePublicationDate () {
@@ -258,7 +258,7 @@ export default {
       return dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('dddd DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
     },
     listDateLabel () {
-      return this.$t('Course.SessionDetails.sessionOf') + dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
+      return this.$t('Course.SessionDetails.sessionOf', { dateLabel: dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '') })
     },
     eventList () {
       return this.$store.state.course.sessionList

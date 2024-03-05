@@ -7,7 +7,7 @@
       <span>{{ $t('Maintenance.GroupsMaintenance.archive') }}</span>
     </WeprodeButton>
 
-    <p>{{ $t('Maintenance.GroupsMaintenance.group-deletion') }}</p>
+    <p>{{ $t('Maintenance.GroupsMaintenance.groupDeletion') }}</p>
 
     <div class="group-deletion">
       <WeprodeInput
@@ -20,7 +20,7 @@
         class="round"
         @click="deleteGroup"
       >
-        <span>{{ $t('Maintenance.GroupsMaintenance.delete-group') }}</span>
+        <span>{{ $t('Maintenance.GroupsMaintenance.deleteGroup') }}</span>
       </WeprodeButton>
     </div>
 
@@ -34,7 +34,7 @@
         class="round"
         @click="deleteGroups"
       >
-        <span>{{ $t('Maintenance.GroupsMaintenance.delete-groups') }}</span>
+        <span>{{ $t('Maintenance.GroupsMaintenance.deleteGroups') }}</span>
       </WeprodeButton>
     </div>
   </div>

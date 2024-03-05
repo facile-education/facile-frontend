@@ -174,12 +174,11 @@ export default {
       const startDate = dayjs(this.detailedEvent.startDate)
       const endDate = dayjs(this.detailedEvent.endDate)
       if (startDate.isSame(endDate, 'day')) { // If start date and end date are the same day
-        return this.$t('Dashboard.DiaryEventDetails.from') + startDate.format('HH:mm') + this.$t('Dashboard.DiaryEventDetails.at') + endDate.format('HH:mm')
+        return this.$t('Dashboard.DiaryEventDetails.hourRangeFormat', { fromHour: startDate.format('HH:mm'), endHour: endDate.format('HH:mm') })
       } else if (startDate.isSame(endDate, 'year')) { // If start date and end date are the same year
-        return this.$t('Dashboard.DiaryEventDetails.fromDay') + startDate.format('dddd DD MMMM') + this.$t('Dashboard.DiaryEventDetails.at') + startDate.format('HH:mm') +
-          this.$t('Dashboard.DiaryEventDetails.to') + endDate.format('dddd DD MMMM') + this.$t('Dashboard.DiaryEventDetails.at') + endDate.format('HH:mm')
+        return this.$t('Dashboard.DiaryEventDetails.dayRangeFormat', { fromHour: startDate.format(this.$t('Dashboard.DiaryEventDetails.sameYearDateFormat')), endHour: endDate.format(this.$t('Dashboard.DiaryEventDetails.sameYearDateFormat')) })
       } else {
-        return this.$t('Dashboard.DiaryEventDetails.fromDay') + startDate.format('DD-MM-YY HH:mm') + this.$t('Dashboard.DiaryEventDetails.to') + endDate.format('DD-MM-YY HH:mm')
+        return this.$t('Dashboard.DiaryEventDetails.dayRangeFormat', { fromHour: startDate.format(this.$t('Dashboard.DiaryEventDetails.otherYearDateFormat')), endHour: endDate.format(this.$t('Dashboard.DiaryEventDetails.otherYearDateFormat')) })
       }
     }
   },

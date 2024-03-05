@@ -104,7 +104,7 @@ export default {
         if (this.v$.folderName.$errors[0].$validator === 'required') {
           return this.$t('Commons.required')
         } else if (this.v$.folderName.$errors[0].$validator === 'isUnderMaxSize') {
-          return this.$t('Documents.FolderNameModal.sizeLimit1') + entityNameMaxSize + this.$t('Documents.FolderNameModal.sizeLimit2')
+          return this.$t('Documents.FolderNameModal.sizeLimit', { maxSize: entityNameMaxSize })
         } else if (this.v$.folderName.$errors[0].$validator === 'notBeginByDot') {
           return this.$t('Documents.FolderNameModal.notBeginByDot')
         } else if (this.v$.folderName.$errors[0].$validator === 'containsNoCotes') {

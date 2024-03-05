@@ -10,7 +10,7 @@
         <!-- span v-if / v-t / class -->
         <span
           v-if="category === 'Création de contenu'"
-          v-t="'ApplicationManager.CategoryList.documents-info'"
+          v-t="'ApplicationManager.CategoryList.documentsInfo'"
           class="info"
         />
       </h3>

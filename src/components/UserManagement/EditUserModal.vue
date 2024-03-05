@@ -11,11 +11,11 @@
     <template #header>
       <span
         v-if="isCreation"
-        v-t="'UserManagement.EditUserModal.creation-title'"
+        v-t="'UserManagement.EditUserModal.creationTitle'"
       />
       <span
         v-else
-        v-t="'UserManagement.EditUserModal.edition-title'"
+        v-t="'UserManagement.EditUserModal.editionTitle'"
       />
     </template>
 
@@ -110,12 +110,12 @@
       <p
         v-if="!isCreation && isParent"
       >
-        {{ $t('UserManagement.EditUserModal.parent-account') }}{{ screenName }}
+        {{ $t('UserManagement.EditUserModal.parentAccount') }}{{ screenName }}
       </p>
 
       <p
         v-if="isCreation"
-        v-t="'UserManagement.EditUserModal.email-warning'"
+        v-t="'UserManagement.EditUserModal.emailWarning'"
       />
 
       <div
@@ -315,7 +315,7 @@ export default {
     },
     confirmUserRemoval () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('UserManagement.EditUserModal.delete-warning'),
+        text: this.$t('UserManagement.EditUserModal.deleteWarning'),
         lastAction: { fct: this.removeUser, params: [this.editedUser] }
       })
     },

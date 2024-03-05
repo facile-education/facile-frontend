@@ -3,18 +3,12 @@
     "view": "Visualiser",
     "download": "Télécharger",
     "remove": "Supprimer",
-    "attachedFile": " pièce jointe",
-    "attachedFiles": " pièces jointes",
+    "attachedFile": "{n} pièce jointe | {n} pièce jointe | {n} pièces jointes",
     "title": "Pièces jointes :",
-    "addAttachFileButton": "Ajouter une pièce jointe depuis mes documents",
     "addLocalAttachFileButton": "Ajouter une pièce jointe depuis mon poste de travail",
     "addToFolder": "Enregistrer dans mes documents",
     "addToFolderSuccess": "Fichier déposé",
     "AttachedFile": {
-      "attachedFile": " pièce jointe",
-      "attachedFiles": " pièces jointes",
-      "title": "Pièces jointes :",
-      "addAttachFileButton": "Ajouter une pièce jointe depuis mes documents",
       "addLocalAttachFileButton": "Ajouter une pièce jointe depuis mon poste de travail",
       "save": "Enregistrer",
       "addToFolderSuccess": "Fichier déposé",
@@ -91,14 +85,13 @@
     "failedDelete": "Echec de la suppression de {entityName}",
     "file": "Fichier",
     "files": "Fichiers",
-    "fileSizeException": "Le fichier dépasse la taille limite autorisée de ",
+    "fileSizeException": "Le fichier dépasse la taille limite autorisée de {maxUploadSize}",
     "folder": "Dossier",
     "group": "Groupe",
     "permissionException": "Vous ne disposez pas de la permission pour effectuer cette action",
     "subEntityFailedDelete": "Le sous élément {entityName} ne peut pas être supprimé",
     "unKnownSubEntityFailedDelete": "Un sous élément caché empêche la suppression complète du dossier",
     "uploadError": "Une erreur est survenue lors du téléversement",
-    "uploadSuccess": " importé",
     "documentFields": {
       "creationDate": "Création",
       "downloadCount": "Téléchargements",
@@ -107,7 +100,7 @@
       "size": "Taille",
       "viewCount": "Vues",
       "totalViewCount": "Nb de vues totales",
-      "totalDownloadCount": "Nb de téléchargements totals"
+      "totalDownloadCount": "Nb de téléchargements totaux"
     },
     "documentDetails": {
       "lastVersion": "Version actuelle",
@@ -148,8 +141,7 @@
       "goBack": "Retour"
     },
     "DocumentPlaceHolder": {
-      "isLoadDocumentsError": "Problème rencontré lors du",
-      "isLoadDocumentsError2": "chargement des fichiers",
+      "isLoadDocumentsError": "Problème rencontré lors du chargement des fichiers",
       "noDocumentToDisplay": "Déposez vos fichiers ici",
       "noDocumentToDisplay2": "ou utilisez le bouton +",
       "noDocumentToDisplayMobile": "Ajouter un document avec le bouton +"
@@ -172,13 +164,13 @@
     "DocumentDetailsModal": {
       "noData": "Il n'y a aucune information à afficher",
       "noDocumentSelected": "Aucun document sélectionné",
-      "selectedDocuments": " documents sélectionnés"
+      "selectedDocuments": "{n} documents sélectionnés"
     },
     "DocumentDetails": {
       "close": "Fermer",
       "noData": "Il n'y a aucune information à afficher",
       "noDocumentSelected": "Aucun document sélectionné",
-      "selectedDocuments": "documents sélectionnés"
+      "selectedDocuments": "{n} documents sélectionnés"
     },
     "DocumentVersion": {
       "restoredVersion": "Version restaurée"
@@ -214,8 +206,7 @@
       "notBeginByDot": "Ne doit pas commencer par un '.'",
       "rename": "Renommer",
       "renameHeader": "Renommer",
-      "sizeLimit1": "Ne doit pas dépasser ",
-      "sizeLimit2": " caractères"
+      "sizeLimit": "Ne doit pas dépasser {maxSize} caractères"
     },
     "FolderNameModal": {
       "backError": "Une erreur est survenue",
@@ -226,8 +217,7 @@
       "notBeginByDot": "Ne doit pas commencer par un '.'",
       "rename": "Renommer",
       "renameHeader": "Renommer",
-      "sizeLimit1": "Ne doit pas dépasser ",
-      "sizeLimit2": " caractères"
+      "sizeLimit": "Ne doit pas dépasser {maxSize} caractères"
     },
     "PermissionsModal": {
       "header": "Gestion des permissions",
@@ -363,13 +353,11 @@
     "replyAll": "Répondre à tous",
     "forward": "Transférer",
     "unreadOnly": "Non lus",
-    "multiThreads": " Discussions sélectionnées",
+    "multiThreads": "{n} discussions sélectionnées",
     "markAsRead": "@:ContextMenuOptions.markAsRead",
     "markAsUnread": "@:ContextMenuOptions.markAsUnread",
     "multiSelection": "Sélection multiple",
-    "OtherRecipient": "et un autre",
-    "OtherRecipient1": "et ",
-    "OtherRecipient2": " autres",
+    "OtherRecipient": "et un autre | et {n} autres",
     "lessRecipients": "Afficher moins",
     "search": "Rechercher",
     "sent": "Envoyés",
@@ -406,8 +394,7 @@
       "missingRecipient": "Sélectionnez au moins un destinataire",
       "addRecipients": "Ajouter des destinataires",
       "closeWarning": "Souhaitez-vous fermer cette fenêtre ? (Vous perdrez son contenu)",
-      "at": "Le ",
-      "wrote": " a écrit :",
+      "previousContentHeader": "Le {dateLabel} {senderName} à écrit :",
       "othersLabel": "et {nbOthers} autres"
     },
     "MenuFolder": {
@@ -452,12 +439,10 @@
     "yesterday": "Hier à"
   },
   "NotUsualSlots": {
-    "capacity": "Capacité: ",
     "classPlaceholder": "Classe",
     "detention": "Retenue",
     "fired": "Renvoi",
-    "free": "libre",
-    "remainingPlaces": "place",
+    "remainingPlaces": "{n} place libre | {n} place libre | {n} places libres",
     "replayTest": "Travaux à refaire",
     "study": "Cercle d'étude",
     "tutoring": "Dépannage",
@@ -468,13 +453,13 @@
       "header-create": "Créer un créneau de {slotType}",
       "header-modify": "Modifier un créneau de {slotType}",
       "longDeleteSlot": "Supprimer le créneau",
-      "remainingPlaces": "Capacité de la salle",
-      "registered": "inscrits",
+      "roomCapacity": "Capacité de la salle",
+      "registered": "{n} inscrits",
       "roomNamePlaceHolder": "Salle",
       "teacherNamePlaceHolder": "Maître surveillant"
     },
     "PendingFiringModal": {
-      "courseOf": "Cours de ",
+      "courseOf": "Cours de {courseName}",
       "information": "Un message de notification sera envoyé aux parents et au doyen avec le motif du renvoi.",
       "information2": "Merci de contacter un.e Doyen.ne référent.e de l'élève ou la direction.",
       "firedTimestamp": "Enregistré: ",
@@ -522,9 +507,9 @@
     "documentCopied": "Éléments copiés",
     "documentCut": "Éléments coupés",
     "duplicated": "Élément(s) dupliqué(s)",
-    "duplicationFailure": "Erreur lors de la copie de ",
-    "moveFailure": "Erreur lors du déplacement de ",
-    "unauthorizedCut": "Vous n'avez pas la permission de déplacer ",
+    "duplicationFailure": "Erreur lors de la copie de {entityName}",
+    "moveFailure": "Erreur lors du déplacement de {entityName}",
+    "unauthorizedCut": "Vous n'avez pas la permission de déplacer {entityName}",
     "error": "Une erreur est survenue",
     "moved": "Élément(s) déplacé(s)",
     "success": "Succès"
@@ -536,11 +521,11 @@
     "cancelButton": "Annuler",
     "renameButton": "Conserver",
     "replaceButton": "Remplacer",
-    "text": " existe déjà à cet emplacement. Voulez-vous remplacer l'existant par une nouvelle version ou conserver les deux éléments?",
-    "textWithoutReplaceOption": " existe déjà à cet emplacement. Voulez-vous continuer en conservant les deux documents?"
+    "text": "\"{entityName}\" existe déjà à cet emplacement. Voulez-vous remplacer l'existant par une nouvelle version ou conserver les deux éléments?",
+    "textWithoutReplaceOption": "\"{entityName}\" existe déjà à cet emplacement. Voulez-vous continuer en conservant les deux documents?"
   },
   "VersionNotes": {
-    "updateOf": "Mise à jour du ",
+    "updateOf": "Mise à jour du {dateLabel}",
     "SaveVersionNoteModal": {
       "contentLabel": "Contenu:",
       "create": "Créer",
@@ -618,8 +603,7 @@
       "rolesPlaceholder": "Profils cibles",
       "creationSubmit": "Créer",
       "updateSubmit": "Modifier",
-      "sizeLimit1": "Ne doit pas dépasser ",
-      "sizeLimit2": " caractères",
+      "sizeLimit": "Ne doit pas dépasser {maxSize} caractères",
       "saveSuccess": "Accès mis à jour",
       "selectRoles": "Veuillez sélectionner au moins un profil cible",
       "selectCategory": "Veuillez sélectionner une catégorie",
@@ -696,10 +680,10 @@
       "updateButton": "Valider"
     },
     "CategoryList": {
-      "documents-info": " - Disponibles directement au sein du service \"Mes documents\""
+      "documentsInfo": " - Disponibles directement au sein du service \"Mes documents\""
     },
     "RuleItem": {
-      "all-school": "Tout l'établissement",
+      "allSchool": "Tout l'établissement",
       "orgsPlaceholder": "Liste des classes",
       "fromLabel": "de",
       "rolesPlaceholder": "Liste des profils"
@@ -724,8 +708,8 @@
       "nonAdminSuggestionMessage": "Votre suggestion sera transmise à l'administrateur de votre établissement.",
       "adminAssistanceMessage": "Votre demande de support sera traitée par les équipes de Weprode, vous recevrez une réponse dans votre messagerie.",
       "adminSuggestionMessage": "Votre suggestion sera transmise aux équipes de Weprode, vous recevrez une réponse dans votre messagerie.",
-      "serviceLabel": "Service affecté",
-      "serviceConcernLabel": "Service concerné",
+      "serviceLabel": "Service affecté :",
+      "serviceConcernLabel": "Service concerné :",
       "success": "Demande envoyée"
     }
   },
@@ -750,10 +734,10 @@
   },
   "Base": {
     "InformationIcon": {
-      "info-letter": "i"
+      "infoLetter": "i"
     },
     "PopulationList": {
-      "populations": " populations"
+      "populations": "{n} populations"
     },
     "AudioRecorderModal": {
       "namePlaceholder": "Titre",
@@ -763,11 +747,11 @@
     "EmbedContentModal": {
       "add": "Ajouter",
       "cancel": "Annuler",
-      "creation-title": "Ajouter une vidéo",
-      "creation-title-h5p": "Ajouter un contenu H5P",
+      "creationTitle": "Ajouter une vidéo",
+      "creationTitleH5p": "Ajouter un contenu H5P",
       "edit": "Modifier",
-      "edition-title": "Modifier une video",
-      "edition-title-h5p": "Editer un contenu H5P",
+      "editionTitle": "Modifier une video",
+      "editionTitleH5p": "Editer un contenu H5P",
       "embedElementCheckFailed": "Ceci n'est pas un code d'intégration valide (par exemple {embedText} )",
       "embedElementCheckFailed-h5p": "Ce type de contenu n'est pas un contenu embarqué valide",
       "h5pUrl": "Récupérer une activité depuis h5p.eduge.ch",
@@ -778,8 +762,8 @@
       "urlPlaceholder-h5p": "Coller ici le code d'intégration H5P"
     },
     "LinkModal": {
-      "creation-title": "Ajouter un lien",
-      "edition-title": "Modifier un lien",
+      "creationTitle": "Ajouter un lien",
+      "editionTitle": "Modifier un lien",
       "cancel": "Annuler",
       "add": "Ajouter",
       "edit": "Modifier",
@@ -896,7 +880,7 @@
       "schedule": "Programmer",
       "setPublishDate": "Programmer la publication",
       "publishLater": "Enregistrer en brouillon",
-      "scheduledOn": "Programmé le",
+      "scheduledOn": "Programmé le :",
       "error": "Oups, une erreur est survenue...",
       "previousSession": "Voir la séance précédente",
       "description": "Description",
@@ -981,11 +965,11 @@
       "error": "Oups, une erreur est survenue...",
       "selectSessionPlaceholder": "Veuillez sélectionner une séance pour accéder à son contenu",
       "noHomeworksPlaceholder": "Aucun travail",
-      "sessionOf": "Séance du ",
+      "sessionOf": "Séance du {dateLabel}",
       "courseContent": "Support de cours",
       "notes": "Note privée",
       "notesPlaceholder": "Ma note privée",
-      "publishedOn": "Publié le ",
+      "publishedOn": "Publié le {dateLabel}",
       "workToDo": "Travaux à faire",
       "scheduled": "Programmé",
       "scheduledOn": "Publication prévue le",
@@ -1011,7 +995,7 @@
       "no-homeworks": "Aucun devoir à corriger"
     },
     "WeekHomeworks": {
-      "for": "Pour ",
+      "forDate": "Pour {dateLabel}",
       "emptyPlaceholder": "Aucun travail à faire",
       "errorPlaceholder": "Oups, une erreur est survenue...",
       "works": "Aucun nouveau travail | {count} Travail | {count} Travaux"
@@ -1022,12 +1006,12 @@
     "WorkItem": {
       "hourLabel": "h",
       "minuteLabel": "mn",
-      "givenThe": "Donné le "
+      "givenThe": "Donné le {dateLabel}"
     },
     "WorkLoadModal": {
       "errorPlaceholder": "Oups, une erreur est survenue...",
       "nbSelectedStudents": "aucun élève de | {count} élève de | {count} élèves de ",
-      "WorkLoadFor": "Charge de travail de "
+      "WorkLoadFor": "Charge de travail de {populationName}"
     },
     "course": "Cours",
     "serviceTitle": "Cours & Devoirs",
@@ -1061,6 +1045,7 @@
       "newsSince": "Nouveautés"
     },
     "DocActivity": {
+      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
       "TYPE_FILE_CREATION": "a partagé le fichier ",
       "TYPE_FILE_MODIFICATION": "a renommé le fichier ",
       "TYPE_FILE_MOVE": "a déplacé le fichier ",
@@ -1068,59 +1053,53 @@
       "TYPE_FOLDER_CREATION": "a partagé le dossier ",
       "TYPE_FOLDER_MODIFICATION": "a renommé le dossier ",
       "TYPE_FOLDER_MOVE": "a déplacé le dossier ",
-      "TYPE_FOLDER_DELETION": "a supprimé le dossier",
-      "on": "Le",
-      "at": "à"
+      "TYPE_FOLDER_DELETION": "a supprimé le dossier"
     },
     "ExpiredGroupActivity": {
-      "on": "Le",
-      "at": "à",
-      "space-is-deactivated": "L'espace est désactivé. Voulez vous le ",
+      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
+      "spaceIsDeactivated": "L'espace est désactivé. Voulez vous le ",
       "deactivation": "Désactivation",
       "reactivate": "réactiver",
       "reactivationConfirmMessage": "Voulez-vous vraiment réactiver le groupe {groupName} ?",
       "extension-success": "Groupe réactivé"
     },
     "HHCActivity": {
+      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
+      "courseDateFormat": "DD MMMM YYYY à HH:mm'",
       "TYPE_SCHOOL_RENVOI": "a renvoyé {firedUser} du cours de {courseName} du {courseDate}",
-      "TYPE_PENDING_RENVOI": "Pensez à motiver le renvoi de {firedUser} du cours de {courseName} du {courseDate}",
-      "setFiringReason": "Motivation de renvoi",
-      "at": "à",
-      "on": "Le"
+      "TYPE_PENDING_RENVOI": "Pensez à motiver le renvoi de {firedUser} du cours de {courseName} du {courseDate} ",
+      "setFiringReason": "Motivation de renvoi"
     },
     "MembershipActivity": {
-      "on": "Le",
-      "at": "à",
-      "added-you": "vous a inscrit dans cet espace",
+      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
+      "addedYou": "vous a inscrit dans cet espace",
       "added": "a inscrit ",
-      "removed-you": "vous a désinscrit de cet espace",
+      "removedYou": "vous a désinscrit de cet espace",
       "removed": "a désinscrit ",
       "nb-users": "{nbUsers} utilisateurs ",
-      "in-this-space": "dans cet espace",
-      "from-this-space": "de cet espace"
+      "inThisSpace": "dans cet espace",
+      "fromThisSpace": "de cet espace"
     },
     "NewsActivity": {
-      "on": "Le",
-      "at": "à",
+      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
       "see": "Voir",
       "groups-activity": "Fil d'activité de mes groupes",
       "update": "Modifier",
       "delete": "Supprimer",
       "deleteNewsWarning": "Supprimer cette information ?",
       "selectToConsult": "Consulter",
-      "hasPublishedInfo": "a publié ",
-      "hasPublishedAnnounce": "a publié l'annonce ",
+      "hasPublishedInfo": "a publié {newsTitle}",
+      "hasPublishedAnnounce": "a publié l'annonce {newsTitle}",
       "show": "Voir"
     },
     "SessionActivity": {
+      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
       "TYPE_SESSION": "a ajouté un support au cours du {courseDate}",
       "TYPE_HOMEWORK": "a donné du travail pour le cours du {homeworkDate}",
-      "unknown-activity": "Activité inconnue",
-      "on": "Le",
-      "at": "à"
+      "unknown-activity": "Activité inconnue"
     },
     "AnnouncementItem": {
-      "at": "Le ",
+      "announcementDate": "Le {dateLabel}",
       "by": " par ",
       "update": "Modifier",
       "delete": "Supprimer",
@@ -1168,8 +1147,7 @@
       "markAsUnreadForAll": "Notifier les destinataires",
       "creationSubmit": "Créer",
       "updateSubmit": "Modifier",
-      "sizeLimit1": "Ne doit pas dépasser ",
-      "sizeLimit2": " caractères",
+      "sizeLimit": "Ne doit pas dépasser {maxSize} caractères",
       "selectPopulations": "Veuillez sélectionner une population cible",
       "dateInPast": "La date de parution ne doit pas se situer dans le passé",
       "switchHelp": "Cette option permet de notifier les destinataires et l'annonce sera considérée comme non lue",
@@ -1192,10 +1170,10 @@
     "DiaryEventDetails": {
       "descriptionPlaceholder": "Aucune description pour cet événement",
       "errorPlaceholder": "Oups, une erreur est survenue...",
-      "from": "De ",
-      "fromDay": "Du ",
-      "at": " à ",
-      "to": " au ",
+      "hourRangeFormat": "De {fromHour} à {endHour}",
+      "dayRangeFormat": "Du {fromDate} au {endDate}",
+      "sameYearDateFormat": "dddd DD MMMM à HH:mm",
+      "otherYearDateFormat": "DD-MM-YY HH:mm",
       "by": "Par ",
       "populations": "Diffusé à",
       "readBy": "Lu par",
@@ -1232,8 +1210,7 @@
       "markAsUnreadForAll": "Notifier les destinataires",
       "creationSubmit": "Créer",
       "updateSubmit": "Modifier",
-      "sizeLimit1": "Ne doit pas dépasser ",
-      "sizeLimit2": " caractères",
+      "sizeLimit": "Ne doit pas dépasser {maxSize} caractères",
       "selectPopulations": "Veuillez sélectionner une population cible",
       "dateInPast": "La date de début ne doit pas se situer dans le passé",
       "dateOrder": "La date de fin doit être postérieure à celle de début",
@@ -1296,9 +1273,9 @@
       "emptyPlaceholder": "Aucun cours"
     },
     "StatisticItem": {
-      "compareLabel": " par rapport aux 7 derniers jours précedents",
-      "evolution": "Evolution",
-      "activity-details": ". Les activités comptent les informations, les créations de documents, les supports de cours et les devoirs"
+      "compareLabel": "{percentageGain} par rapport aux 7 derniers jours.",
+      "evolution": "Évolution",
+      "activityDetails": "Les activités comptent les informations, les créations de documents, les supports de cours et les devoirs"
     },
     "StatisticsHeader": {
       "statistics": "Statistiques"
@@ -1318,9 +1295,6 @@
       "errorNoFiles": "Le chargement n'est pas autorisé",
       "dropZoneLabel": "Déposer un document"
     },
-    "FilePickerButton": {
-      "selectFromDevice": "importer depuis le poste de travail"
-    },
     "FilePickerModalDocuments": {
       "emptyPlaceholder": "Aucun document"
     },
@@ -1333,11 +1307,10 @@
       "headerFolder": "Sélectionnez un dossier de destination",
       "headerFile": "Ajouter un document",
       "noSelectedFolder": "Dépose impossible",
-      "or": "ou",
       "submitButton": "Ajouter",
       "uploadFile": "Importer un ou plusieurs documents",
       "chooseCurrentFolder": "Choisir ce dossier",
-      "chooseSelectedFolder": "Choisir  "
+      "chooseSelectedFolder": "Choisir {folderName}"
     },
     "SelectFilesButtons": {
       "addFile": "Ajouter une pièce jointe depuis vos documents de l'ENTA",
@@ -1360,7 +1333,7 @@
       "extension-success": "Groupe réactivé"
     },
     "GroupList": {
-      "noContentFound": "Aucun groupe.",
+      "noContentFound": "Aucun groupe",
       "addGroup": "Créez votre groupe !"
     },
     "GroupToolbar": {
@@ -1376,11 +1349,9 @@
       "create": "Créer",
       "description": "Description",
       "edit": "Modifier",
-      "false": "Non",
       "group": "Groupe",
       "isPedagogical": "Espace à vocation pédagogique",
       "name": "Nom du groupe",
-      "true": "Oui",
       "identity": "Identité",
       "profile": "Profil",
       "school": "Établissement",
@@ -1393,10 +1364,7 @@
       "community-reactivated": "Votre communauté a été réactivée"
     },
     "SelectedGroupMemberItem": {
-      "false": "Non",
-      "true": "Oui",
-      "admin": "Administrateur",
-      "delete": "Supprimer l'utilisateur"
+      "admin": "Administrateur"
     },
     "GroupDetails": {
       "activities": "Activités",
@@ -1421,7 +1389,7 @@
     "GroupDetailsTab": {
       "accessToDocuments": "Accéder aux documents",
       "admins": "Administrateur | Administrateur | Administrateurs",
-      "expire": "Expire le ",
+      "expire": "Expire le {dateLabel}",
       "members": "Aucun membre | {count} Membre | {count} Membres",
       "others": "Personnel | Personnels",
       "parents": "Responsable légal | Responsables légaux",
@@ -1430,8 +1398,8 @@
       "teachers": "Enseignant | Enseignants"
     },
     "MemberPack": {
-      "collapse": "replier",
-      "unCollapse": "déplier"
+      "collapse": "Replier",
+      "unCollapse": "Déplier"
     }
   },
   "HelpModal": {
@@ -1466,7 +1434,7 @@
       "title": "ÉDITER UN LIEN",
       "linkLabelPlaceHolder": "Label",
       "linkUrlPlaceHolder": "Url",
-      "overflowUrlSize": "L'url ne doit pas excéder la taille suivante: ",
+      "overflowUrlSize": "L'url ne doit pas excéder la taille suivante: {maxSize}",
       "submit": "Valider"
     },
     "CreateQuestionModal": {
@@ -1529,9 +1497,6 @@
     "CreateSessionModal": {
       "title": "Création de séances",
       "the": "Le",
-      "from": "de",
-      "to": "à",
-      "hour": "h",
       "in": "au créneau",
       "group": "Classe / Groupe",
       "subject": "Discipline",
@@ -1562,7 +1527,7 @@
       "allSessions": "Appliquer le remplacement pour toutes les séances de {course}",
       "confirm": "Valider",
       "firstSession": "Première séance affectée : le {date} de {start} à {end}",
-      "lastSession": "Dernière séance affectée : ",
+      "lastSession": "Dernière séance affectée :",
       "substitute": "Remplaçant.e",
       "substitutedBy": " remplacé.e par ",
       "teacherManagement": "Gérer les maîtres de {course}"
@@ -1572,9 +1537,8 @@
       "next": "Suivant"
     },
     "TimeLineWeekItem": {
-      "from": "Du",
-      "to": "au",
-      "weekInitial": "S."
+      "weekTitle": "Du {firstWeekDay} au {lastWeekDay}",
+      "weekInitial": "S.{weekNumber}"
     },
     "serviceTitle": "Horaires"
   },
@@ -1603,15 +1567,14 @@
       "parentSynchro": "Synchro Parents",
       "success": "Opération terminée en succès",
       "error": "Opération terminée en erreur",
-      "startFsAnalysis": "Explorer le Fs",
-      "startFsAnalysisV2": "Explorer les fichiers en DB",
+      "startFsAnalysis": "Explorer le file system",
+      "startFsAnalysisV2": "Explorer les fichiers en base de donnée",
       "runAbsenceNotifications": "Notifications des absences HHC"
     },
     "GroupsMaintenance": {
       "archive": "Archivage",
-      "group-deletion": "Suppression de groupe(s)",
-      "delete-group": "Supprimer le groupe",
-      "delete-groups": "Supprimer les groupes",
+      "groupDeletion": "Suppression de groupe(s)",
+      "deleteGroup": "Supprimer le groupe",
       "success": "Opération terminée en succès",
       "error": "Opération terminée en erreur"
     },
@@ -1622,7 +1585,7 @@
       "pAuth": "pAuth bidon",
       "runDataFeed": "Alimentation des données (intégration uniquement)",
       "setNewsPermissions": "Permissions des PJ de news",
-      "delete-folders": "Supprimer les dossiers",
+      "deleteFolders": "Supprimer les dossiers",
       "setCoursePermissions": "Permissions des supports de cours et devoirs"
     },
     "PasswordUpdate": {
@@ -1637,9 +1600,9 @@
       "error": "Erreur lors du changement de mot de passe"
     },
     "administration": "Administration",
-    "groups": "Groupes ",
-    "one-shot-tools": "Outils one-shot",
-    "password-update": "Codes de secours"
+    "groups": "Groupes",
+    "oneShotTools": "Outils one-shot",
+    "passwordUpdate": "Codes de secours"
   },
   "Mediacenter": {
     "ResourceItem": {
@@ -1672,7 +1635,7 @@
       "changePictureLabel": "Changer l'image"
     },
     "SessionEndAdvertising": {
-      "sessionExpiresIn": "Votre session va expirer dans ",
+      "sessionExpiresIn": "Votre session va expirer dans {remainingTime}",
       "keepSessionAlive": "Garder la session active"
     }
   },
@@ -1687,16 +1650,12 @@
     "EditSlotModal": {
       "updateMessage": "Les modifications affecteront toutes les sessions concernées par ce créneau",
       "formMoreThanRegistered": "La capacité de la salle doit être au moins supérieure au nombre d'inscrits",
-      "all-the": "Tous les ",
-      "the": "Le ",
-      "on": "en",
+      "allThe": "Tous les {dayLabel}s en",
+      "the": "Le {dayLabel} en",
       "until-school-year-end": "jusqu'à la fin de l'année scolaire.",
       "onThePeriod": "Sur la période"
     },
     "TimeSelection": {
-      "at": "de",
-      "fromThe": "À partir du ",
-      "the": "des",
       "to": "à",
       "required": "Champ requis",
       "afterStartDate": "Cette date doit être sous la forme \"HH:mm\" et doit se situer après la date de début",
@@ -1711,12 +1670,7 @@
       "addressLabel": "Adresse: ",
       "deleteButtonTitle": "Supprimer la photo de profil",
       "addButtonTitle": "Ajouter une image de profil",
-      "emailAddressLabel": "Courriel: ",
-      "homePhoneNumberLabel": "Téléphone maison: ",
-      "mobilePhoneNumberLabel": "Téléphone mobile: ",
-      "officePhoneNumberLabel": "Téléphone bureau: ",
       "activityReport": "Rapport d'activités",
-      "reportChange": "Signaler un changement",
       "themeColor": "Couleur du thème",
       "userPicture": "Image de profil"
     },
@@ -1732,7 +1686,7 @@
     },
     "PreferencesModal": {
       "accountTabLabel": "Mon compte",
-      "infoLabel": "Paramètres enregistrés - ",
+      "infoLabel": "Paramètres enregistrés - {timestamp}",
       "messagingTabLabel": "Messagerie",
       "modalHeaderLabel": "Préférences"
     }
@@ -1888,14 +1842,14 @@
       "added": "Utilisateur(s) ajouté(s)"
     },
     "AddDelegationModal": {
-      "add-delegation-title": "Ajouter une délégation",
+      "addDelegationTitle": "Ajouter une délégation",
       "completionPlaceholder": "Saisir le nom ou prénom",
       "add": "Ajouter"
     },
     "Affectations": {
       "nameFilterPlaceholder": "Filtrer par nom/prénom",
       "add-affected-user": "Ajouter une affectation",
-      "please-select-school": "Veuillez sélectionner un établissement",
+      "pleaseSelectSchool": "Veuillez sélectionner un établissement",
       "no-affectation": "Aucune affectation pour cet établissement",
       "no-affectation-for-filter": "Aucune affectation avec le filtre '{filter}''",
       "lastName": "Nom",
@@ -1907,13 +1861,13 @@
     "Delegations": {
       "add-delegation": "Ajouter une délégation",
       "no-delegation": "Aucune délégation pour cet établissement",
-      "please-select-school": "Veuillez sélectionner un établissement",
+      "pleaseSelectSchool": "Veuillez sélectionner un établissement",
       "warning": "La suppression de cet administrateur est définitive.",
       "error": "Erreur lors de l'enregistrement de la délégation"
     },
     "EditUserModal": {
-      "creation-title": "Créer un utilisateur",
-      "edition-title": "Modifier un utilisateur",
+      "creationTitle": "Créer un utilisateur",
+      "editionTitle": "Modifier un utilisateur",
       "add": "Créer",
       "edit": "Valider",
       "delete": "Supprimer",
@@ -1922,9 +1876,9 @@
       "emailPlaceholder": "Mail",
       "school": "Établissement",
       "role": "Profil",
-      "parent-account": "Identifiant: {0}",
-      "email-warning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé.",
-      "delete-warning": "La suppression de cet utilisateur est définitive.",
+      "parentAccount": "Identifiant: {0}",
+      "emailWarning": "NB: Un e-mail contenant les informations d'authentification sera envoyé à l'utilisateur créé.",
+      "deleteWarning": "La suppression de cet utilisateur est définitive.",
       "userAdded": "Utilisateur créé",
       "userEdited": "Utilisateur modifié",
       "userRemoved": "Utilisateur supprimé",
@@ -1939,13 +1893,11 @@
     },
     "ManualUsers": {
       "action": "Editer",
-      "display": "Résultats 1",
-      "to": "à",
-      "over": "sur un total de",
+      "pagination": "Résultats 1 à {currentIndex} sur un total de {nbResults}",
       "create": "Ajouter un utilisateur",
-      "no-users": "Aucun compte manuel pour cet établissement",
-      "no-users-for-filter": "Aucun compte manuel avec le filtre '{filter}'",
-      "please-select-school": "Veuillez sélectionner un établissement",
+      "noUsers": "Aucun compte manuel pour cet établissement",
+      "noUsersForFilter": "Aucun compte manuel avec le filtre '{filter}'",
+      "pleaseSelectSchool": "Veuillez sélectionner un établissement",
       "email": "E-mail",
       "firstName": "Prénom",
       "lastName": "Nom",
@@ -1955,7 +1907,7 @@
       "nameFilterPlaceholder": "Filtrer par nom / prénom"
     },
     "UserAffectationsModal": {
-      "add-affectation-title": "Gérer les affectations de ",
+      "addAffectationTitle": "Gérer les affectations de {userName}",
       "affectationPlaceholder": "Saisir le nom ou prénom",
       "collapse": "Replier",
       "expand": "Déplier",
@@ -1963,8 +1915,7 @@
       "remove-affectation": "Supprimer l'affectation",
       "add": "Fermer",
       "classnameFilterPlaceholder": "Filtrer",
-      "affected-by": "Affectation ajoutée par ",
-      "the": " le ",
+      "affected-by": "Affectation ajoutée par {userName} le {affectationDate}",
       "added": "Affectation enregistrée",
       "removed": "Affectation supprimée"
     },
@@ -2057,7 +2008,7 @@
     "loginError": "Identifiant ou mot de passe incorrect",
     "inactiveAccount": "Votre compte est inactif.",
     "forgot-password": "Mot de passe oublié",
-    "login-label": "Saisissez votre identifiant. Vous recevrez un lien de réinitialisation de votre mot de passe ENTA sur le courriel associé à votre compte.",
+    "loginLabel": "Saisissez votre identifiant. Vous recevrez un lien de réinitialisation de votre mot de passe ENTA sur le courriel associé à votre compte.",
     "loginPlaceholder": "Identifiant",
     "send-recovery": "Envoyer",
     "main-form": "Retour au formulaire",

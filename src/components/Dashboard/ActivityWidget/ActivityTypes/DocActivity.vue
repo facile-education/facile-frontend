@@ -88,7 +88,7 @@ export default {
       return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).calendar()
     },
     formattedDateLong () {
-      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.DocActivity.on') + ' DD MMMM YYYY ' + this.$t('Dashboard.DocActivity.at') + ' HH:mm')
+      return dayjs(this.activity.modificationDate, DATE_EXCHANGE_FORMAT).format(this.$t('Dashboard.DocActivity.activityTimeFormat'))
     },
     description () {
       switch (this.activity.type) {

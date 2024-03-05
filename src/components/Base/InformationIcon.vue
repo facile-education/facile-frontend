@@ -9,7 +9,7 @@
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
   >
-    <span v-t="'Base.InformationIcon.info-letter'" />
+    <span v-t="'Base.InformationIcon.infoLetter'" />
     <div
       v-if="isHovering"
       class="text"

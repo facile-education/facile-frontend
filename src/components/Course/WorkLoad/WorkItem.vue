@@ -62,7 +62,7 @@ export default {
       }
     },
     formattedGivenDate () {
-      return this.$t('Course.WorkItem.givenThe') + dayjs(this.work.sourceSessionDate, DATE_EXCHANGE_FORMAT).format('DD/MM')
+      return this.$t('Course.WorkItem.givenThe', { dateLabel: dayjs(this.work.sourceSessionDate, DATE_EXCHANGE_FORMAT).format('DD/MM') })
     }
   }
 }

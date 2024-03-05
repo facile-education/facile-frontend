@@ -78,8 +78,8 @@ export default {
       }
     },
     title () {
-      return (this.evolution >= 0 ? '+ ' : '- ') + Math.abs(this.evolution) + this.$t('Dashboard.StatisticItem.compareLabel') +
-        (this.statistic.type === 3 ? this.$t('Dashboard.StatisticItem.activity-details') : '')
+      return this.$t('Dashboard.StatisticItem.compareLabel', { percentageGain: (this.evolution >= 0 ? '+ ' : '- ') + Math.abs(this.evolution) }) +
+        (this.statistic.type === 3 ? (' ' + this.$t('Dashboard.StatisticItem.activityDetails')) : '')
     }
   }
 }

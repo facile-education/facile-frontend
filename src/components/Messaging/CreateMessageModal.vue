@@ -448,9 +448,12 @@ export default {
       })
     },
     formatPreviousContent (content) {
-      return '</br><details><summary>' + this.$t('Messaging.CreateMessageModal.at') +
-        dayjs(this.originMessage.sendDate, DATE_EXCHANGE_FORMAT).format('DD/MM/YYYY HH:mm') +
-        ' ' + this.originMessage.sender.userName + this.$t('Messaging.CreateMessageModal.wrote') + '</summary>' +
+      return '</br><details><summary>' +
+        this.$t('Messaging.CreateMessageModal.previousContentHeader', {
+          dateLabel: dayjs(this.originMessage.sendDate, DATE_EXCHANGE_FORMAT).format('DD/MM/YYYY HH:mm'),
+          senderName: this.originMessage.sender.userName
+        }) +
+        '</summary>' +
         '</br> ' + "<div style='border-left:1px solid #000; padding-left:20px'>" +
         content +
         '</div>' +

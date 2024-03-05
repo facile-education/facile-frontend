@@ -67,7 +67,7 @@ export default {
     },
     text2 () {
       if (this.isLoadDocumentsError) {
-        return this.$t('Documents.DocumentPlaceHolder.isLoadDocumentsError2')
+        return undefined
       } else if (this.mq.phone || this.mq.tablet) {
         return undefined
       } else {

@@ -26,7 +26,7 @@
       />
       <WeprodeErrorMessage
         v-if="linkUrl.length > linkUrlMaxSize"
-        :error-message="$t('HelpModal.CreateExternalLinkModal.overflowUrlSize') + linkUrlMaxSize"
+        :error-message="$t('HelpModal.CreateExternalLinkModal.overflowUrlSize', { maxSize: linkUrlMaxSize })"
       />
     </template>
 

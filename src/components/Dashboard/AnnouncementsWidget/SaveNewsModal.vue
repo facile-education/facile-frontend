@@ -261,10 +261,10 @@ export default {
     formErrorList () {
       return {
         title: (this.v$.title.$invalid && this.v$.title.$dirty)
-          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('Dashboard.SaveNewsModal.sizeLimit1') + inputMaxSize + this.$t('Dashboard.SaveNewsModal.sizeLimit2'))
+          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('Dashboard.SaveNewsModal.sizeLimit', { maxSize: inputMaxSize }))
           : '',
         content: (this.v$.content.$invalid && this.v$.content.$dirty)
-          ? this.$t('Dashboard.SaveNewsModal.sizeLimit1') + ckMaxSize + this.$t('Dashboard.SaveNewsModal.sizeLimit2')
+          ? this.$t('Dashboard.SaveNewsModal.sizeLimit', { maxSize: ckMaxSize })
           : '',
         populations: (this.v$.populations.$invalid && this.v$.populations.$dirty)
           ? this.$t('Dashboard.SaveNewsModal.selectPopulations')

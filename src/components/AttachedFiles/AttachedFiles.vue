@@ -13,7 +13,7 @@
       v-if="readOnly && withHeader"
       class="header"
     >
-      {{ modelValue.length + (modelValue.length > 1 ? $t('AttachedFiles.attachedFiles') : $t('AttachedFiles.attachedFile')) }}
+      {{ $tc('AttachedFiles.attachedFiles', modelValue.length) }}
     </div>
     <ul
       class="file-list"

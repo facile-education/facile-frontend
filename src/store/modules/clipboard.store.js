@@ -55,7 +55,7 @@ export const actions = {
           })
           data.failedEntitiesList.forEach(failedEntity => {
             const sourceFailedEntity = entities.find(entity => entity.id === failedEntity.id.toString())
-            this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.duplicationFailure') + sourceFailedEntity.name, type: 'error' })
+            this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.duplicationFailure', { entityName: sourceFailedEntity.name }), type: 'error' })
           })
           // Print error messages if any
           if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
@@ -71,7 +71,7 @@ export const actions = {
   move ({ commit, rootState }, { targetFolder, entities, mode = conflicts.MODE_NORMAL }) {
     const unAuthorizedMoveEntity = entities.find(entity => !entity.permissions.DELETE)
     if (unAuthorizedMoveEntity) {
-      this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.unauthorizedCut') + unAuthorizedMoveEntity.name, type: 'error' })
+      this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.unauthorizedCut', { entityName: unAuthorizedMoveEntity.name }), type: 'error' })
       return
     }
 
@@ -109,7 +109,7 @@ export const actions = {
           data.failedEntitiesList.forEach(failedEntity => {
             const sourceFailedEntity = entities.find(entity => entity.id === failedEntity.id.toString())
             console.error(failedEntity.error)
-            this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.moveFailure') + sourceFailedEntity.name, type: 'error' })
+            this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.moveFailure', { entityName: sourceFailedEntity.name }), type: 'error' })
           })
           // Print error messages if any
           if (data.errorMessages !== undefined && data.errorMessages.length > 0) {
@@ -139,7 +139,7 @@ export const actions = {
     if (rootState.documents.selectedEntities.length !== 0 && !rootState.documents.selectedEntities[0].isGroupRootFolder) {
       const unAuthorizedCutEntity = rootState.documents.selectedEntities.find(entity => !entity.permissions.DELETE)
       if (unAuthorizedCutEntity) {
-        this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.unauthorizedCut') + unAuthorizedCutEntity.name, type: 'error' })
+        this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.unauthorizedCut', { entityName: unAuthorizedCutEntity.name }), type: 'error' })
         return
       }
 

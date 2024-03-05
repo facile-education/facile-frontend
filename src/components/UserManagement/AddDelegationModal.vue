@@ -10,7 +10,7 @@
   >
     <template #header>
       <span
-        v-t="'UserManagement.AddDelegationModal.add-delegation-title'"
+        v-t="'UserManagement.AddDelegationModal.addDelegationTitle'"
       />
     </template>
 

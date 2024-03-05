@@ -34,7 +34,7 @@ function checkFilesSize (currentListFiles, store) {
 
   if (invalidFilesList.length !== 0) {
     const formattedMaxUploadSize = formatSize(store.state.documents.documentsProperties.maxUploadSize)
-    store.dispatch('popups/pushPopup', { message: i18n.global.t('Documents.fileSizeException') + formattedMaxUploadSize, type: 'error' })
+    store.dispatch('popups/pushPopup', { message: i18n.global.t('Documents.fileSizeException', { maxUploadSize: formattedMaxUploadSize }), type: 'error' })
     return true
   }
   return false

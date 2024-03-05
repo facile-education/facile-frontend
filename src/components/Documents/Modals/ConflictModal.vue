@@ -20,7 +20,7 @@
         <p
           class="context-message"
         >
-          {{ '"' + entityNamesToDisplay + '"' + $t(canReplaceOriginalDoc ? 'ConflictModal.text': 'ConflictModal.textWithoutReplaceOption') }}
+          {{ $t(canReplaceOriginalDoc ? 'ConflictModal.text': 'ConflictModal.textWithoutReplaceOption', {entityName: entityNamesToDisplay}) }}
         </p>
       </div>
     </template>

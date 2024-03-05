@@ -182,7 +182,7 @@ export default {
     formErrorList () {
       return {
         title: (this.v$.title.$invalid && this.v$.title.$dirty)
-          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('Accesses.SaveAccessModal.sizeLimit1') + inputMaxSize + this.$t('Accesses.SaveAccessModal.sizeLimit2'))
+          ? (this.v$.title.$errors[0].$validator === 'required' ? this.$t('Commons.required') : this.$t('Accesses.SaveAccessModal.sizeLimit', { maxSize: inputMaxSize }))
           : '',
         roles: (this.v$.roles.$invalid && this.v$.roles.$dirty)
           ? this.$t('Accesses.SaveAccessModal.selectRoles')

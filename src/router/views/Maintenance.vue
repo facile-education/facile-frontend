@@ -16,13 +16,13 @@
         <GroupsMaintenance />
       </WeprodeTabItem>
       <WeprodeTabItem
-        :title="$t('Maintenance.one-shot-tools')"
+        :title="$t('Maintenance.oneShotTools')"
         class="tab"
       >
         <OneShotMaintenance />
       </WeprodeTabItem>
       <WeprodeTabItem
-        :title="$t('Maintenance.password-update')"
+        :title="$t('Maintenance.passwordUpdate')"
         class="tab"
       >
         <PasswordUpdate />
