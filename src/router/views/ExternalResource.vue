@@ -11,7 +11,7 @@
         >
         <h3 v-t="{path: 'ExternalResource.noConfigLabel', args: {resourceName:serviceName}}" />
         <I18n
-          keypath="contactLabel"
+          keypath="ExternalResource.contactLabel"
           tag="p"
           class="content"
         >
@@ -42,7 +42,7 @@
           >
           <h3>{{ $t('ExternalResource.newTabLabel', {resourceName: serviceName}) }}</h3>
           <I18n
-            keypath="openAgainLabel"
+            keypath="ExternalResource.openAgainLabel"
             tag="p"
             class="description"
           >
@@ -60,7 +60,7 @@
 
         <div v-else>
           <I18n
-            keypath="openInTabLabel"
+            keypath="ExternalResource.openInTabLabel"
             tag="p"
             class="description"
           >
