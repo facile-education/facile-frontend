@@ -39,6 +39,10 @@ const locales = [
   }
 ]
 
+const isLocaleSupported = (strLocale) => {
+  return locales.find(locale => locale.frontId === strLocale)
+}
+
 const slotLabelList = {
   '08 h': 'P1',
   '09 h': 'P2',
@@ -91,7 +95,8 @@ export {
   STATISTICS,
   UNIVERSALIS,
   UNIVERSALIS_JUNIOR,
-  USER_MANAGER
+  USER_MANAGER,
+  isLocaleSupported
 }
 
 export default {
