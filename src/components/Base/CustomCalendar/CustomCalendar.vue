@@ -103,9 +103,12 @@ export default {
     calendarView () {
       return this.mq.phone ? 'timeGridDay' : 'timeGridWeek' // Use as component key to force it to re-render when view change
     },
+    userLocale () {
+      return this.$store.state.user.locale
+    },
     defaultCalendarOptions () {
       return {
-        locale: frLocale,
+        locale: this.userLocale.frontId === 'fr' ? frLocale : '',
         plugins: [timeGridPlugin],
         initialView: this.calendarView,
         viewDidMount: this.onCalendarMount,
