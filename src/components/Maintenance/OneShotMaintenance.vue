@@ -74,6 +74,18 @@ export default {
         }
       )
     },
+    runDataFeed () {
+      // Commented out for safety
+      // runDataFeed().then(
+      //   (data) => {
+      //     if (data.success) {
+      //       this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.OneShotMaintenance.success'), type: 'success' })
+      //     } else {
+      //       this.$store.dispatch('popups/pushPopup', { message: this.$t('Maintenance.OneShotMaintenance.error'), type: 'error' })
+      //     }
+      //   }
+      // )
+    },
     setNewsPermissions () {
       setNewsPermissions().then(
         (data) => {
