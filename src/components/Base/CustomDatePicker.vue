@@ -7,8 +7,9 @@
     :is-required="isRequired"
     :rules="rules"
     class="date"
-    :is24hr="true"
+    :is24hr="is24H"
     :disabled-dates="disabledDates"
+    :locale="locale"
   >
     <template
       v-if="buttonForm"
@@ -77,6 +78,12 @@ export default {
   },
   emits: ['update:selectedDate'],
   computed: {
+    locale () {
+      return this.$store.state.user.locale.frontId
+    },
+    is24H () {
+      return this.locale !== 'en'
+    },
     disabledDates () {
       return this.hiddenDays.length > 0 ? [{ repeat: { weekdays: this.hiddenDays } }] : undefined
     },

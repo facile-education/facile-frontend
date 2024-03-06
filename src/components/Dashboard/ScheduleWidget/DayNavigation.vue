@@ -17,6 +17,7 @@
         :min-date="minDate"
         :max-date="maxDate"
         :disabled-dates="disabledDates"
+        :locale="locale"
         @dayclick="onDayClick"
       >
         <template #default="{ togglePopover }">
@@ -62,6 +63,9 @@ export default {
   },
   emits: ['select-date', 'go-previous', 'go-after'],
   computed: {
+    locale () {
+      return this.$store.state.user.locale.frontId
+    },
     configuration () {
       return this.$store.state.calendar.configuration
     },

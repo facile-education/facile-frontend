@@ -5,6 +5,7 @@
     :max-date="maxDate"
     :min-date="minDate"
     :disabled-dates="disabledDates"
+    :locale="locale"
   >
     <template #default="{ togglePopover }">
       <button
@@ -45,6 +46,9 @@ export default {
     },
     disabledDates () {
       return this.hiddenDays.length > 0 ? [{ repeat: { weekdays: this.hiddenDays } }] : undefined
+    },
+    locale () {
+      return this.$store.state.user.locale.frontId
     },
     formattedDate: {
       get () {

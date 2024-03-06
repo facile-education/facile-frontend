@@ -5,6 +5,7 @@
     class="date"
     :max-date="maxDate"
     :min-date="minDate"
+    :locale="locale"
     @update:model-value="emitNewDates"
   >
     <template #default="{ togglePopover }">
@@ -49,6 +50,9 @@ export default {
     }
   },
   computed: {
+    locale () {
+      return this.$store.state.user.locale.frontId
+    },
     formattedStartDate () {
       if (this.range.start) {
         return dayjs(this.range.start).format('DD/MM/YYYY')
