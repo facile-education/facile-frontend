@@ -67,9 +67,6 @@ export const mutations = {
     state.folderContent = {}
   },
   setBreadcrumb (state, payload) {
-    if (payload[0].name === '_PRIVATE_') {
-      payload[0].name = i18n.global.t('AppCommonsLabels.Documents.privateFolderName') // TODO change it
-    }
     state.breadcrumb = payload
   },
   setCurrentDisplay (state, payload) {
@@ -278,8 +275,9 @@ export const actions = {
       this.dispatch('currentActions/removeAction', { name: 'getBreadcrumb' })
 
       if (data.breadcrumb) {
-        for (let i = 0; i < data.breadcrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
-          data.breadcrumb[i].icon = require('@assets/icons/folder.svg')
+        data.breadcrumb[0].name = i18n.global.t('Documents.options.documents')
+        for (const folder of data.breadcrumb) { // Because all documents in breadcrumb are folders, add folder icon
+          folder.icon = require('@assets/icons/folder.svg')
         }
         commit('setBreadcrumb', data.breadcrumb)
       } else {
@@ -294,10 +292,11 @@ export const actions = {
     this.dispatch('currentActions/addAction', { name: 'getBreadcrumb' })
     groupService.getGroupBreadcrumb(groupFolderId).then((data) => {
       this.dispatch('currentActions/removeAction', { name: 'getBreadcrumb' })
+      data.breadCrumb[0].name = i18n.global.t('Documents.options.groups')
       if (data.success && data.breadCrumb) {
-        for (let i = 0; i < data.breadCrumb.length; ++i) { // Because all documents in breadcrumb are folders, add folder icon
-          data.breadCrumb[i].icon = require('@assets/icons/folder.svg')
-          data.breadCrumb[i].isGroupDirectory = true
+        for (const folder of data.breadCrumb) { // Because all documents in breadcrumb are folders, add folder icon
+          folder.icon = require('@assets/icons/folder.svg')
+          folder.isGroupDirectory = true
         }
         commit('setBreadcrumb', data.breadCrumb)
       } else {
