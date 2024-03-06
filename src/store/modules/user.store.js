@@ -3,6 +3,7 @@ import { getFullName } from '@utils/commons.util'
 
 import { getUserApplications } from '@/api/applicationManager.service'
 import userService from '@/api/user.service'
+import { locales } from '@/constants/appConstants.js'
 import i18n from '@/i18n'
 import router from '@/router'
 
@@ -15,6 +16,7 @@ export const state = {
   lastName: '',
   fullName: '',
   picture: '/image/user_male_portrait?img_id=3274117&t=1546588956172',
+  locale: 'en',
   isAdministrator: false,
   isLocalAdmin: false,
   isENTAdmin: false,
@@ -89,6 +91,10 @@ export const mutations = {
   updateInterfacePreferences (state, payload) {
     state.themeColor = payload.themeColor
   },
+  updateLocale (state, payload) {
+    state.locale = payload
+    i18n.global.locale = payload.frontId
+  },
   updatePicture (state, payload) {
     state.picture = payload
   },
@@ -159,6 +165,14 @@ export const actions = {
               data.themeColor = '#' + rootState.theme.mainColor
             }
 
+            // Locale
+            const appLocale = locales.find(locale => locale.backId === data.locale)
+            if (appLocale) {
+              commit('updateLocale', appLocale)
+            } else {
+              commit('updateLocale', locales.find(locale => locale.isDefault))
+            }
+
             if (!data.agreedTermsOfUse) {
               router.push({ name: 'AgreeTermsOfUse' })
             } else if (data.passwordChange) {
@@ -179,6 +193,20 @@ export const actions = {
   },
   setSelectedSchool ({ commit }, school) {
     commit('setSelectedSchool', school)
+  },
+  async updateLocale ({ commit }, locale) {
+    await userService.updateLocale(locale.backId).then((data) => {
+      if (data.success) {
+        commit('updateLocale', locale)
+      } else {
+        console.error('error when updating locale')
+        this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      }
+    },
+    (err) => {
+      this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      console.error(err)
+    })
   },
   removePicture ({ commit }) {
     this.dispatch('currentActions/addAction', { name: 'saveProfilePicture' })

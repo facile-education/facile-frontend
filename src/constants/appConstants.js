@@ -23,6 +23,22 @@ const USER_MANAGER = 'user-admin'
 const nbCharBeforeCompletion = 2
 const timeBeforeCompletion = 500
 
+const locales = [
+  {
+    frontId: 'en',
+    backId: 'en_US',
+    label: 'English',
+    image: require('@assets/icons/englishFlag.svg'),
+    isDefault: true
+  },
+  {
+    frontId: 'fr',
+    backId: 'fr_FR',
+    label: 'Français',
+    image: require('@assets/icons/frenchFlag.svg')
+  }
+]
+
 const slotLabelList = {
   '08 h': 'P1',
   '09 h': 'P2',
@@ -46,6 +62,7 @@ const entityNameMaxSize = 255
 const ckMaxSize = 63206
 
 export {
+  locales,
   nbCharBeforeCompletion,
   timeBeforeCompletion,
   uploadProgressionTimeAfterFinish,

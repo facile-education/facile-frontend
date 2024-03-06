@@ -52,27 +52,18 @@
     <section class="language">
       <h4 v-t="'Preferences.AccountTab.language'" />
       <ul>
-        <li>
+        <li
+          v-for="locale in locales"
+          :key="locale.frontId"
+        >
           <button
-            title="English"
-            aria-label="English"
-            @click="changeLocale('en')"
+            :title="locale.label"
+            :aria-label="locale.label"
+            @click="changeLocale(locale)"
           >
             <img
-              src="@assets/icons/englishFlag.svg"
-              alt="english flag"
-            >
-          </button>
-        </li>
-        <li>
-          <button
-            title="Français"
-            aria-label="Français"
-            @click="changeLocale('fr')"
-          >
-            <img
-              src="@assets/icons/frenchFlag.svg"
-              alt="french flag"
+              :src="locale.image"
+              :alt="locale.label + ' flag'"
             >
           </button>
         </li>
@@ -117,6 +108,7 @@ import { defineAsyncComponent } from 'vue'
 
 import userService from '@/api/user.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import { locales } from '@/constants/appConstants.js'
 const ImagePickerModal = defineAsyncComponent(() => import('@components/Base/ImagePicker.vue'))
 
 export default {
@@ -149,6 +141,9 @@ export default {
     isSavingProfilePicture () {
       return this.$store.getters['currentActions/isInProgress']('saveProfilePicture')
       // return true
+    },
+    locales () {
+      return locales
     }
   },
   created () {
@@ -187,12 +182,12 @@ export default {
       })
     },
     changeLocale (locale) {
-      this.$i18n.locale = locale
-
-      // Overkill way to refresh routes paths
-      const currentRouteName = this.$route.name
-      this.$store.dispatch('menu/initUserMenu', currentRouteName).then(() => {
-        this.$router.push({ name: currentRouteName })
+      this.$store.dispatch('user/updateLocale', locale).then(() => {
+        // Overkill way to refresh routes paths
+        const currentRouteName = this.$route.name
+        this.$store.dispatch('menu/initUserMenu', currentRouteName).then(() => {
+          this.$router.push({ name: currentRouteName })
+        })
       })
     },
     onFrequencySelect (newfrequency) {

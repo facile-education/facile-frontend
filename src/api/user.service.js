@@ -10,6 +10,7 @@ export default {
   removeUserPicture,
   updateInterfacePreferences,
   updateThemeColor,
+  updateLocale,
   updateReportFrequency,
   acceptTermsOfUse,
   getParentInfos
@@ -66,6 +67,14 @@ function updateThemeColor (newColor) {
   return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-theme-color',
     WeprodeUtils.params({
       color: formattedColor
+    })
+  ).then(response => response.data)
+}
+
+function updateLocale (locale) {
+  return axios.post(constants.JSON_WS_URL + PREF_PATH + '/update-locale',
+    WeprodeUtils.params({
+      locale
     })
   ).then(response => response.data)
 }
