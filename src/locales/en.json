@@ -1041,7 +1041,7 @@
     },
     "ActivityWidget": {
       "errorPlaceholder": "Oops, an error occurred...",
-      "emptyPlaceholder": "No activities to display",
+      "emptyPlaceholder": "No activity to display",
       "newsSince": "News"
     },
     "DocActivity": {
