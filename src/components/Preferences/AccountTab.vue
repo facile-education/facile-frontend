@@ -44,7 +44,7 @@
         </div>
 
         <WeprodeSpinner
-          v-if="isSavingProfilePicture"
+          v-if="isActionInProgress"
           style="z-index: 1"
         />
       </div>
@@ -59,6 +59,7 @@
           <button
             :title="locale.label"
             :aria-label="locale.label"
+            :disabled="locale.frontId === currentLocale.frontId || isChangingLocale"
             @click="changeLocale(locale)"
           >
             <img
@@ -138,12 +139,17 @@ export default {
     details () {
       return this.user.details
     },
-    isSavingProfilePicture () {
-      return this.$store.getters['currentActions/isInProgress']('saveProfilePicture')
-      // return true
+    isChangingLocale () {
+      return this.$store.getters['currentActions/isInProgress']('updateLocale')
+    },
+    isActionInProgress () {
+      return this.$store.getters['currentActions/isInProgress']('saveProfilePicture') || this.isChangingLocale
     },
     locales () {
       return locales
+    },
+    currentLocale () {
+      return this.user.locale
     }
   },
   created () {
@@ -293,6 +299,10 @@ h4 {
     background-color: transparent;
     border: none;
     cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+    }
   }
 
   img {

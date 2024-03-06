@@ -195,7 +195,9 @@ export const actions = {
     commit('setSelectedSchool', school)
   },
   async updateLocale ({ commit }, locale) {
+    this.dispatch('currentActions/addAction', { name: 'updateLocale' })
     await userService.updateLocale(locale.backId).then((data) => {
+      this.dispatch('currentActions/removeAction', { name: 'updateLocale' })
       if (data.success) {
         commit('updateLocale', locale)
       } else {
@@ -205,6 +207,7 @@ export const actions = {
     },
     (err) => {
       this.dispatch('popups/pushPopup', { message: i18n.global.t('Popup.error'), type: 'error' })
+      this.dispatch('currentActions/removeAction', { name: 'saveProfilePicture' })
       console.error(err)
     })
   },
