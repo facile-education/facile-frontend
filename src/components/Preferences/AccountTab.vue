@@ -49,6 +49,35 @@
         />
       </div>
     </section>
+    <section class="language">
+      <h4 v-t="'Preferences.AccountTab.language'" />
+      <ul>
+        <li>
+          <button
+            title="English"
+            aria-label="English"
+            @click="changeLocale('en')"
+          >
+            <img
+              src="@assets/icons/englishFlag.svg"
+              alt="english flag"
+            >
+          </button>
+        </li>
+        <li>
+          <button
+            title="Français"
+            aria-label="Français"
+            @click="changeLocale('fr')"
+          >
+            <img
+              src="@assets/icons/frenchFlag.svg"
+              alt="french flag"
+            >
+          </button>
+        </li>
+      </ul>
+    </section>
     <section class="theme-color">
       <h4 v-t="'Preferences.AccountTab.themeColor'" />
       <ColorPicker
@@ -157,6 +186,15 @@ export default {
         }
       })
     },
+    changeLocale (locale) {
+      this.$i18n.locale = locale
+
+      // Overkill way to refresh routes paths
+      const currentRouteName = this.$route.name
+      this.$store.dispatch('menu/initUserMenu', currentRouteName).then(() => {
+        this.$router.push({ name: currentRouteName })
+      })
+    },
     onFrequencySelect (newfrequency) {
       if (this.selectedFrequency) {
         userService.updateReportFrequency(newfrequency.value).then((data) => {
@@ -241,6 +279,29 @@ h4 {
         }
       }
     }
+  }
+}
+
+.language {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  img {
+    width: 70px;
   }
 }
 </style>

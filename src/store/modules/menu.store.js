@@ -70,9 +70,9 @@ export const mutations = {
 }
 
 export const actions = {
-  initUserMenu ({ commit }) {
+  async initUserMenu ({ commit }) {
     commit('setIsLoadingMenu', true)
-    return menuService.getUserMenu().then((data) => {
+    await menuService.getUserMenu().then((data) => {
       commit('setIsLoadingMenu', false)
       if (data.success) {
         commit('setMenuError', false)

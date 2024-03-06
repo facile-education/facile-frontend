@@ -1668,6 +1668,7 @@
       "daily": "Daily",
       "weekly": "Weekly",
       "addressLabel": "Address: ",
+      "language": "Language",
       "deleteButtonTitle": "Delete profile picture",
       "addButtonTitle": "Add profile picture",
       "activityReport": "Activity report",
