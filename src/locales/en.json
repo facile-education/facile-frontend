@@ -280,7 +280,7 @@
     "h5p": "H5P",
     "horaires": "Schedules",
     "horaires-admin": "Schedules",
-    "horaires-hors-cadre": "Out-of-frame Schedules",
+    "horaires-hors-cadre": "School Schedules",
     "maintenance": "Maintenance",
     "messaging": "Messaging",
     "NotFound": "404 Not Found",
@@ -307,7 +307,7 @@
       "h5p": "h5p",
       "horaires": "schedules",
       "horaires-admin": "administration-schedules",
-      "horaires-hors-cadre": "out-of-frame-schedules",
+      "horaires-hors-cadre": "school-schedules",
       "maintenance": "maintenance",
       "messaging": "messaging",
       "statistics": "statistics",
@@ -1538,7 +1538,7 @@
     },
     "TimeLineWeekItem": {
       "weekTitle": "From {firstWeekDay} to {lastWeekDay}",
-      "weekInitial": "W.{weekNumber}"
+      "weekNumber": "W.{weekNumber}"
     },
     "serviceTitle": "Timetable"
   },
@@ -1645,7 +1645,7 @@
       "deleteSlot": "Delete",
       "message": "Delete sessions of {slotType} on {dayLabel} from {startHour} to {endHour}",
       "onThePeriod": "On the period",
-      "title": "Delete an out-of-schedule slot"
+      "title": "Delete an school-schedule slot"
     },
     "EditSlotModal": {
       "updateMessage": "Modifications will affect all sessions affected by this slot",
@@ -1801,7 +1801,7 @@
       "documents": "Documents",
       "error": "Oops, an error occurred...",
       "homeworks": "Homework assigned",
-      "schoolLife": "Out-of-schedule times",
+      "schoolLife": "school-schedule times",
       "documentsPlaceholder": "No document uploaded",
       "homeworkPlaceholder": "No homework assigned",
       "schoolLifePlaceholder": "No data",

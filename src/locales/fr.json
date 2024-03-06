@@ -1538,7 +1538,7 @@
     },
     "TimeLineWeekItem": {
       "weekTitle": "Du {firstWeekDay} au {lastWeekDay}",
-      "weekInitial": "S.{weekNumber}"
+      "weekNumber": "S.{weekNumber}"
     },
     "serviceTitle": "Horaires"
   },
