@@ -33,17 +33,17 @@ const routes = [
     component: () => import('@/router/views/PasswordChange')
   },
   {
-    path: '/tableau-de-bord/all-events',
+    path: '/dashboard/all-events',
     name: 'AllEvents',
     component: () => import('@/router/views/AllDiaryEvents')
   },
   {
-    path: '/tableau-de-bord/all-announcements',
+    path: '/dashboard/all-announcements',
     name: 'AllAnnouncements',
     component: () => import('@/router/views/AllAnnouncements')
   },
   {
-    path: '/tableau-de-bord/all-activities',
+    path: '/dashboard/all-activities',
     name: 'AllActivities',
     component: () => import('@/router/views/AllActivities')
   },
