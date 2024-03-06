@@ -88,11 +88,18 @@ export default {
               'MediaEmbed'
             ],
             toolbar: ['heading', '|', 'bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'insertTable', 'undo', 'redo'],
-            language: 'fr',
             placeholder: this.placeholder,
             ckeditor: undefined
           }
     }
+  },
+  computed: {
+    locale () {
+      return this.$store.state.user.locale.frontId
+    }
+  },
+  created () {
+    this.editorOptions.language = this.locale
   },
   methods: {
     onEditorFocus () {
