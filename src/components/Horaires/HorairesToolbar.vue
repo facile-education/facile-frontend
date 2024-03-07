@@ -108,7 +108,7 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import groupService from '@/api/groups.service'
-import { getSchoolUsers } from '@/api/userSearch.service'
+import { getSchoolMembers } from '@/api/userSearch.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 const DatepickerNav = defineAsyncComponent(() => import('@/components/Horaires/DatepickerNav'))
@@ -230,7 +230,7 @@ export default {
       })
     },
     getCompletion (inputValue) {
-      getSchoolUsers(this.selectedSchool.schoolId, inputValue).then((data) => {
+      getSchoolMembers(this.selectedSchool.schoolId, inputValue).then((data) => {
         if (data.success) {
           if (data.users.length > 0) {
             this.autocompleteUserList = data.users

@@ -3,16 +3,18 @@ import axios from 'axios'
 import constants from '@/api/constants'
 
 export {
-  getSchoollifeAgents,
+  getSchoolMembers,
   getSchoolStudents,
+  getSchoolRelatives,
   getSchoolTeachers,
-  getSchoolUsers
+  getSchoolAgents,
+  getSchoollifeAgents
 }
 
 const USER_SEARCH_PATH = '/user.usersearch'
 
-function getSchoolUsers (schoolId, search = '') {
-  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-student-teacher-list', {
+function getSchoolMembers (schoolId, search = '') {
+  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-members', {
     params: {
       schoolId,
       search
@@ -20,26 +22,20 @@ function getSchoolUsers (schoolId, search = '') {
   }).then(response => response.data)
 }
 
-/**
- * Get the specified school's schoolife agents filtered by name
- */
-function getSchoollifeAgents (schoolId, search = '') {
-  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-schoolife-agents', {
+function getSchoolStudents (schoolId, search = '') {
+  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-students', {
     params: {
-      search,
-      schoolId
+      schoolId,
+      search
     }
   }).then(response => response.data)
 }
 
-/**
- * Get the specified school's students filtered by name
- */
-function getSchoolStudents (schoolId, search = '') {
-  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-students', {
+function getSchoolRelatives (schoolId, search = '') {
+  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-relatives', {
     params: {
-      search,
-      schoolId
+      schoolId,
+      search
     }
   }).then(response => response.data)
 }
@@ -47,8 +43,26 @@ function getSchoolStudents (schoolId, search = '') {
 function getSchoolTeachers (schoolId, search = '') {
   return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-teachers', {
     params: {
-      search,
-      schoolId
+      schoolId,
+      search
+    }
+  }).then(response => response.data)
+}
+
+function getSchoolAgents (schoolId, search = '') {
+  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-agents', {
+    params: {
+      schoolId,
+      search
+    }
+  }).then(response => response.data)
+}
+
+function getSchoollifeAgents (schoolId, search = '') {
+  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-schoolife-agents', {
+    params: {
+      schoolId,
+      search
     }
   }).then(response => response.data)
 }

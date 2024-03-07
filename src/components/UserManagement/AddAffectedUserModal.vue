@@ -47,7 +47,7 @@ import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
-import { getSchoolUsers } from '@/api/userSearch.service'
+import { getSchoolMembers } from '@/api/userSearch.service'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
@@ -94,12 +94,12 @@ export default {
       }
     },
     runSearch (filter) {
-      getSchoolUsers(this.$store.state.user.selectedSchool.schoolId, filter).then(
+      getSchoolMembers(this.$store.state.user.selectedSchool.schoolId, filter).then(
         (data) => {
           if (data.success) {
             this.schoolMembers = data.users
             this.schoolMembers.forEach((member) => {
-              member.nameAndRole = member.fullName + ' (' + member.roles + ')'
+              member.nameAndRole = member.lastName + ' ' + member.firstName + ' (' + member.roles + ')'
             })
           }
         }
