@@ -15,6 +15,11 @@ const changeDayJsLocale = (localeString) => {
   }
 }
 
+const getI18nFrontKey = (localeString) => {
+  return localeString.substring(0, 2)
+}
+
 export {
-  changeDayJsLocale
+  changeDayJsLocale,
+  getI18nFrontKey
 }
