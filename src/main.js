@@ -9,6 +9,7 @@ import { createApp, defineAsyncComponent } from 'vue'
 import VueMatomo from 'vue-matomo'
 import { Vue3Mq } from 'vue3-mq'
 import Vue3TouchEvents from 'vue3-touch-events'
+import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 
 import constants, { LOCAL_STORAGE_DATE_FORMAT } from '@/api/constants'
 import i18n from '@/i18n'
@@ -51,33 +52,14 @@ app.component('BannerLayout', BannerLayout)
 app.component('PublicLayout', PublicLayout)
 app.component('EmptyLayout', EmptyLayout)
 
+dayjs.extend(LocalizedFormat)
 const calendar = require('dayjs/plugin/calendar')
 dayjs.extend(calendar)
 
 const updateLocale = require('dayjs/plugin/updateLocale')
 dayjs.extend(updateLocale)
 
-dayjs.updateLocale('en', {
-  calendar: {
-    sameDay: 'h:mm A',
-    nextDay: '[Tomorrow]',
-    nextWeek: 'dddd',
-    lastDay: '[Yesterday]',
-    lastWeek: '[Last] dddd',
-    sameElse: 'DD/MM/YYYY'
-  }
-})
-dayjs.updateLocale('fr', {
-  calendar: {
-    sameDay: 'HH:mm',
-    nextDay: '[Demain]',
-    nextWeek: 'dddd',
-    lastDay: '[Hier]',
-    lastWeek: 'dddd [dernier]',
-    sameElse: 'DD/MM/YYYY'
-  }
-})
-console.log('Init dayjs locale with navigator language, for public pages')
+// Init dayjs locale with navigator language, for public pages
 changeDayJsLocale(navigator.language)
 
 axios.interceptors.request.use(async (config) => {

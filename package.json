@@ -35,7 +35,7 @@
     "color-convert": "^2.0.1",
     "core-js": "^3.8.3",
     "date-fns": "^2.22.1",
-    "dayjs": "^1.10.6",
+    "dayjs": "^1.11.10",
     "normalize.css": "^8.0.1",
     "recordrtc": "^5.6.2",
     "register-service-worker": "^1.7.2",
