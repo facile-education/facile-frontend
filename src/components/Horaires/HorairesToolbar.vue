@@ -23,8 +23,8 @@
         class="toggle-group-filter-button"
         @click="toggleSelection"
       >
-        <FAIcon
-          :name="iconClass"
+        <CustomIcon
+          :icon-name="iconClass"
           class="selection"
         />
       </button>
@@ -142,7 +142,7 @@ export default {
       return this.$store.state.horaires.selectedDate
     },
     iconClass () {
-      return this.isSingleUser ? 'fa-user' : 'fa-users'
+      return this.isSingleUser ? 'icon-user' : 'icon-users'
     },
     schoolList () {
       return this.$store.state.user.schoolList
@@ -324,7 +324,7 @@ export default {
 }
 
 .selection {
-  font-size: 2.3rem;
+  font-size: 1.6rem;
   padding: 0 0.5rem;
   cursor: pointer;
 }
