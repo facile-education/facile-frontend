@@ -52,6 +52,7 @@
 <script>
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import ThreadListOptions from '@components/Messaging/ThreadListOptions'
+import MessagingUtils from '@utils/messaging.utils.js'
 
 export default {
   name: 'ThreadListHeader',
@@ -64,9 +65,6 @@ export default {
     }
   },
   computed: {
-    isThreadsDisplayed () {
-      return this.$store.state.messaging.threads.length > 0
-    },
     isMultiSelectionActive () {
       return this.$store.state.messaging.isMultiSelectionActive
     },
@@ -80,7 +78,7 @@ export default {
       return this.$store.state.messaging.isMenuPanelDisplayed
     },
     currentFolderName () {
-      return this.$store.state.messaging.currentFolder.folderName
+      return MessagingUtils.getMessagingFolderName(this.$store.state.messaging.currentFolder)
     },
     currentFolder () {
       return this.$store.state.messaging.currentFolder
