@@ -62,23 +62,23 @@ if (isLocaleSupported(navigator.language)) {
 
 dayjs.updateLocale('en', {
   calendar: {
-    lastDay: '[Yesterday at] h:mm A',
-    sameDay: '[Today at] h:mm A',
-    nextDay: '[Tomorrow at] LT',
-    lastWeek: '[last] dddd [at] LT',
-    nextWeek: 'dddd [at] LT',
-    sameElse: 'L'
+    sameDay: 'h:mm A',
+    nextDay: '[Tomorrow]',
+    nextWeek: 'dddd',
+    lastDay: '[Yesterday]',
+    lastWeek: '[Last] dddd',
+    sameElse: 'DD/MM/YYYY'
   }
 })
 
 dayjs.updateLocale('fr', {
   calendar: {
-    sameDay: 'HH:mm', // The same day ( 2:30 AM )
-    nextDay: '[Demain]', // The next day ( Tomorrow at 2:30 AM )
-    nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
-    lastDay: '[Hier]', // The day before ( Yesterday at 2:30 AM )
-    lastWeek: 'dddd [dernier]', // Last week ( Last Monday at 2:30 AM )
-    sameElse: 'DD/MM/YYYY' // Everything else ( 7/10/2011 )
+    sameDay: 'HH:mm',
+    nextDay: '[Demain]',
+    nextWeek: 'dddd',
+    lastDay: '[Hier]',
+    lastWeek: 'dddd [dernier]',
+    sameElse: 'DD/MM/YYYY'
   }
 })
 axios.interceptors.request.use(async (config) => {
