@@ -1,7 +1,6 @@
 // import WeprodeUtils from '@utils/weprode.utils'
 import { getFullName } from '@utils/commons.util'
 import { changeDayJsLocale } from '@utils/i18n.util.js'
-import dayjs from 'dayjs'
 
 import { getUserApplications } from '@/api/applicationManager.service'
 import userService from '@/api/user.service'
