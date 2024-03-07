@@ -9,7 +9,7 @@ export default {
   deleteSlot,
   getSessionLimitSlotDate,
   getCandidateSessions,
-  getWeekSession,
+  getWeekSessions,
   getSessionMembers,
   registerClass,
   registerStudent,
@@ -98,12 +98,13 @@ function getCandidateSessions (student, currentSlotId) {
 /**
  * Get the unusual slots of a week, filtered by type
  */
-function getWeekSession (schoolId, slotType, currentDate) {
+function getWeekSessions (schoolId, slotType, startDate, endDate) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_PATH + '/get-week-sessions', {
     params: {
       schoolId,
       type: slotType,
-      currentDateStr: currentDate.format(DATE_EXCHANGE_FORMAT)
+      startDate: startDate.format(DATE_EXCHANGE_FORMAT),
+      endDate: endDate.format(DATE_EXCHANGE_FORMAT)
     }
   }).then(response => response.data)
 }

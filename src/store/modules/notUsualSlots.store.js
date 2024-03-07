@@ -40,7 +40,7 @@ const formatUsualSlot = (sessions) => {
 
 function getNonUsualSlots (store) {
   store.dispatch('currentActions/addAction', { name: 'getNonUsualSlots' })
-  schoolLifeService.getWeekSession(store.state.user.selectedSchool.schoolId, store.state.notUsualSlots.currentSlotType.type, store.state.notUsualSlots.displayedDates.startDate.hour(4)).then(
+  schoolLifeService.getWeekSessions(store.state.user.selectedSchool.schoolId, store.state.notUsualSlots.currentSlotType.type, store.state.notUsualSlots.displayedDates.startDate.hour(1), store.state.notUsualSlots.displayedDates.endDate.hour(23)).then(
     (data) => {
       store.dispatch('currentActions/removeAction', { name: 'getNonUsualSlots' })
       if (data.success) {

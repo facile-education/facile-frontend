@@ -108,7 +108,7 @@ export default {
     },
     defaultCalendarOptions () {
       return {
-        locale: this.userLocale.frontId === 'fr' ? frLocale : '',
+        locale: this.userLocale.frontId === 'fr' ? frLocale : undefined,
         plugins: [timeGridPlugin],
         initialView: this.calendarView,
         viewDidMount: this.onCalendarMount,

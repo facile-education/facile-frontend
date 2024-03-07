@@ -105,41 +105,41 @@ export default {
       const firstWeek = this.monthList[0].weekList[0].firstDayOfWeek
       return (dayjs(firstWeek, 'YYYY-MM-DD').week() === this.minDate.week())
     },
-    firstMondayDisplayed () {
+    firstDayOfWeekDisplayed () {
       if (this.startDate === undefined) return undefined
 
-      let firstMonday = this.startDate.clone()
-      if (firstMonday.isBefore(dayjs(this.minDate, 'YYYY-MM-DD'))) {
-        firstMonday = this.minDate.startOf('week')
+      let firstDayOfWeek = this.startDate.clone()
+      if (firstDayOfWeek.isBefore(dayjs(this.minDate, 'YYYY-MM-DD'))) {
+        firstDayOfWeek = this.minDate.startOf('week')
       }
-      return firstMonday
+      return firstDayOfWeek
     },
-    lastSundayDisplayed () {
+    lastDayOfWeekDisplayed () {
       if (this.endDate === undefined) return undefined
 
-      let lastSunday = this.endDate.clone()
-      if (lastSunday.isAfter(this.maxDate)) {
-        lastSunday = this.maxDate.endOf('week')
+      let lastDayOfWeek = this.endDate.clone()
+      if (lastDayOfWeek.isAfter(this.maxDate)) {
+        lastDayOfWeek = this.maxDate.endOf('week')
       }
-      return lastSunday
+      return lastDayOfWeek
     },
     monthList () {
       const monthList = []
 
-      let dateIndex = this.firstMondayDisplayed.clone()
-      const endOfLastMonth = this.lastSundayDisplayed.endOf('month')
+      let dateIndex = this.firstDayOfWeekDisplayed.clone()
+      const endOfLastMonth = this.lastDayOfWeekDisplayed.endOf('month')
 
       while (endOfLastMonth.isAfter(dateIndex)) {
         let firstWeekOfMonth = dateIndex.startOf('month').startOf('week')
         let lastWeekOfMonth = dateIndex.endOf('month').endOf('week')
 
         // Check the dates with the limits
-        if (firstWeekOfMonth.isBefore(this.firstMondayDisplayed)) {
-          firstWeekOfMonth = this.firstMondayDisplayed.startOf('week')
+        if (firstWeekOfMonth.isBefore(this.firstDayOfWeekDisplayed)) {
+          firstWeekOfMonth = this.firstDayOfWeekDisplayed.startOf('week')
         }
 
-        if (lastWeekOfMonth.isAfter(this.lastSundayDisplayed)) {
-          lastWeekOfMonth = this.lastSundayDisplayed.endOf('week')
+        if (lastWeekOfMonth.isAfter(this.lastDayOfWeekDisplayed)) {
+          lastWeekOfMonth = this.lastDayOfWeekDisplayed.endOf('week')
         }
 
         // If week is between 2 months, then count it as the beginning of the second month (prevent it to appear twice)
