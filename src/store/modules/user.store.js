@@ -1,5 +1,6 @@
 // import WeprodeUtils from '@utils/weprode.utils'
 import { getFullName } from '@utils/commons.util'
+import { changeDayJsLocale } from '@utils/i18n.util.js'
 import dayjs from 'dayjs'
 
 import { getUserApplications } from '@/api/applicationManager.service'
@@ -95,7 +96,7 @@ export const mutations = {
   updateLocale (state, payload) {
     state.locale = payload
     i18n.global.locale = payload.frontId
-    dayjs.locale(payload.frontId)
+    changeDayJsLocale(payload.frontId)
   },
   updatePicture (state, payload) {
     state.picture = payload

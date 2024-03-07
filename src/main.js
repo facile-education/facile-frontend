@@ -2,15 +2,16 @@ import './registerServiceWorker'
 
 import BannerLayout from '@layouts/BannerLayout.vue'
 import EmptyLayout from '@layouts/EmptyLayout.vue'
+import { changeDayJsLocale } from '@utils/i18n.util.js'
 import axios from 'axios'
 import dayjs from 'dayjs'
+// import fr from 'dayjs/locale/fr'
 import { createApp, defineAsyncComponent } from 'vue'
 import VueMatomo from 'vue-matomo'
 import { Vue3Mq } from 'vue3-mq'
 import Vue3TouchEvents from 'vue3-touch-events'
 
 import constants, { LOCAL_STORAGE_DATE_FORMAT } from '@/api/constants'
-import { isLocaleSupported } from '@/constants/appConstants.js'
 import i18n from '@/i18n'
 import router from '@/router'
 import store from '@/store'
@@ -56,9 +57,6 @@ dayjs.extend(calendar)
 
 const updateLocale = require('dayjs/plugin/updateLocale')
 dayjs.extend(updateLocale)
-if (isLocaleSupported(navigator.language)) {
-  dayjs.locale(navigator.language)
-}
 
 dayjs.updateLocale('en', {
   calendar: {
@@ -70,7 +68,6 @@ dayjs.updateLocale('en', {
     sameElse: 'DD/MM/YYYY'
   }
 })
-
 dayjs.updateLocale('fr', {
   calendar: {
     sameDay: 'HH:mm',
@@ -81,6 +78,9 @@ dayjs.updateLocale('fr', {
     sameElse: 'DD/MM/YYYY'
   }
 })
+console.log('Init dayjs locale with navigator language, for public pages')
+changeDayJsLocale(navigator.language)
+
 axios.interceptors.request.use(async (config) => {
   // Store the last webservice call date
   store.dispatch('user/setLastActionDate', dayjs())
