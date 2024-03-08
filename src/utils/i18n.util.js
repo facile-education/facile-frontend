@@ -7,7 +7,7 @@ const locales = {
 
 const calendar = {
   en: {
-    sameDay: 'h:mm A',
+    sameDay: 'HH:mm',
     nextDay: '[Tomorrow]',
     nextWeek: 'dddd',
     lastDay: '[Yesterday]',
