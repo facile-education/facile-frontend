@@ -1292,7 +1292,7 @@
       "Logbook": "Liaison"
     },
     "Logbook": {
-      "UnsignedWords": "{numberOfWords} mots non signés dans le carnet de liaison"
+      "UnsignedWords": "{count} mot non signé dans le carnet de liaison | {count} mots non signés dans le carnet de liaison"
     },
     "serviceTitle": "Tableau de bord"
   },

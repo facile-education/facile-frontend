@@ -1292,7 +1292,7 @@
       "Logbook": "logbook"
     },
     "Logbook": {
-      "UnsignedWords": "{numberOfWords} Unsigned words in the communication notebook."
+      "UnsignedWords": "{count} Unsigned word in the communication notebook. | {count} Unsigned words in the communication notebook."
     },
     "serviceTitle": "Dashboard"
   },
