@@ -4,7 +4,8 @@ export const state = {
   draggedEntities: [],
   isThereDocumentDrag: false,
   nbOpenModals: 0,
-  isMobileApp: false
+  isMobileApp: false,
+  is1D: true
 }
 
 export const mutations = {

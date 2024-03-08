@@ -34,6 +34,7 @@ export const state = {
   serviceList: undefined,
   children: [],
   selectedChild: undefined,
+  selectedClass: undefined,
   agreedTermsOfUse: true,
   hasReadLastVersionNote: false,
   roleId: 0 // For Matomo
@@ -88,6 +89,9 @@ export const mutations = {
   },
   setSelectedChild (state, payload) {
     state.selectedChild = payload
+  },
+  setSelectedClass (state, payload) {
+    state.selectedClass = payload
   },
   updateInterfacePreferences (state, payload) {
     state.themeColor = payload.themeColor

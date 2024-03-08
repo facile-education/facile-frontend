@@ -5,7 +5,9 @@ const nbAnnouncementsInWidget = 5
 const allAnnouncementsPaginationSize = 10
 
 const nbActivityInWidget = 8
+const nbActivityInWidget1D = 10
 const allActivitiesPaginationSize = 15
+const allActivitiesPaginationSize1D = 10
 
 const homeworksTypes = {
   SIMPLE_INSTRUCTION: 1,
@@ -22,5 +24,7 @@ export {
   nbAnnouncementsInWidget,
   allAnnouncementsPaginationSize,
   homeworksTypes,
-  nbHomeworksInWidget
+  nbHomeworksInWidget,
+  nbActivityInWidget1D,
+  allActivitiesPaginationSize1D
 }

@@ -1042,7 +1042,7 @@
     "ActivityWidget": {
       "errorPlaceholder": "Oups, une erreur est survenue...",
       "emptyPlaceholder": "Aucune activité à afficher",
-      "newsSince": "Nouveautés"
+      "newsSince": "Nouveautés depuis le {date}"
     },
     "DocActivity": {
       "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
@@ -1287,6 +1287,12 @@
       "nbActivities": "Activités",
       "nbConnexions": "Sessions",
       "nbUsers": "Visiteurs uniques"
+    },
+    "LogbookHeader": {
+      "Logbook": "Liaison"
+    },
+    "Logbook": {
+      "UnsignedWords": "{numberOfWords} mots non signés dans le carnet de liaison"
     },
     "serviceTitle": "Tableau de bord"
   },
@@ -1959,6 +1965,9 @@
       "currently": "Actuellement",
       "currentlyClass": "Actuellement : de {startHour} à {endHour}",
       "noClass": "Pas de cours"
+    },
+    "UserCardHHC": {
+      "hhcTitle": "Horaires hors cadre"
     }
   },
   "AccessManager": {
