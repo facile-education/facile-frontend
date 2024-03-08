@@ -135,7 +135,7 @@ export default {
     },
     openUserCardModal () {
       this.$store.dispatch('userCard/initUserCard', {
-        userId: this.student.studentId
+        userId: this.student.userId
       })
     }
   }

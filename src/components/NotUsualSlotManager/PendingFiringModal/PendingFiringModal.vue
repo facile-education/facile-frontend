@@ -111,7 +111,7 @@ export default {
       }
     },
     setFiringReason () {
-      schoolLifeService.setFiringReason(this.pendingFiring.sessionId, this.pendingFiring.studentId, this.justification).then((data) => {
+      schoolLifeService.setFiringReason(this.pendingFiring.sessionId, this.pendingFiring.userId, this.justification).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/removePendingFirings', this.pendingFiring)
           // Decrement notification count

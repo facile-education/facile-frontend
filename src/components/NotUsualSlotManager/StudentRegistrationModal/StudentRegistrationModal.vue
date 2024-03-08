@@ -373,6 +373,7 @@ export default {
     },
     deregisterFiring () {
       this.isLoading = true
+      console.log('this.student=', this.student)
       schoolLifeService.unRegisterFiring(this.event.sessionId, this.student).then((data) => {
         this.isLoading = false
         if (data.success) {

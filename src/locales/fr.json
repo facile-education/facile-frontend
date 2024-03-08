@@ -480,7 +480,7 @@
     },
     "StudentRegistrationModal": {
       "arrival": "Heure d'arrivée en salle de renvoi: ",
-      "class": "Elèves de: ",
+      "class": "Élèves de: ",
       "commentPlaceholder": "Motif de la retenue",
       "firedBy": "Renvoyé par: ",
       "haveToSelectSlot": "Veuillez sélectionner un cours",
@@ -646,7 +646,7 @@
       "removalConfirmButtonLabel": "Supprimer",
       "removalConfirmMessage": "Souhaitez-vous vraiment supprimer cette application ?",
       "removalConfirmTitle": "Suppression",
-      "studentsExportButton": "Elèves",
+      "studentsExportButton": "Élèves",
       "teachersExportButton": "Enseignants",
       "export": "Exporter",
       "exportSuccess": "Export terminé",
@@ -659,7 +659,7 @@
       "editModalTitle": "Modifier une application",
       "exportOtherCheckbox": "Ressources",
       "exportParentsCheckbox": "Parents",
-      "exportStudentsCheckbox": "Elèves",
+      "exportStudentsCheckbox": "Élèves",
       "exportTeachersCheckbox": "Enseignants",
       "exportLabel": "Exporter un/ou plusieurs types d'utilisateurs",
       "globalUrlCombobox": "URL globale",
@@ -815,7 +815,7 @@
     },
     "AddressBookSchool": {
       "myClass": "Ma classe",
-      "myStudents": "Elèves en responsabilité",
+      "myStudents": "Élèves en responsabilité",
       "relatives": "Responsables légaux",
       "myRelatives": "Mes responsables légaux"
     },
@@ -986,7 +986,7 @@
     },
     "StudentListModal": {
       "errorPlaceholder": "Oups, une erreur est survenue...",
-      "title": "Elèves destinataires",
+      "title": "Élèves destinataires",
       "whole-class": "Toute la classe",
       "specific": "Spécifique",
       "save": "Enregistrer"
@@ -1394,7 +1394,7 @@
       "others": "Personnel | Personnels",
       "parents": "Responsable légal | Responsables légaux",
       "publishNew": "Publier une actualité",
-      "students": "Elève | Elèves",
+      "students": "Élève | Élèves",
       "teachers": "Enseignant | Enseignants"
     },
     "MemberPack": {
@@ -1517,7 +1517,7 @@
     "HorairesToolbar": {
       "add": "NOUVEAU",
       "groupFilter": "Groupe",
-      "userInput": "Elève / Maître",
+      "userInput": "Élève / Maître",
       "childFilter": "Enfant",
       "timetableOf": "Horaires de ",
       "createSession": "Créer un cours",

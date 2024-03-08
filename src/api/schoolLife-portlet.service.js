@@ -89,7 +89,7 @@ function getSessionLimitSlotDate (sessionId) {
 function getCandidateSessions (student, currentSlotId) {
   return axios.get(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/get-candidate-sessions', {
     params: {
-      studentId: student.studentId,
+      studentId: student.userId,
       schoollifeSessionId: currentSlotId
     }
   }).then(response => response.data)
@@ -163,7 +163,7 @@ function unRegisterStudent (student, slotId, allSessions) {
 function registerFiring (slotId, student, sourceSessionId, sourceTeacherId, sourceSchoollifeSessionId, registrationDate) {
   return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/register-student-renvoi', WeprodeUtils.params({
     schoollifeSessionId: slotId,
-    studentId: student.studentId,
+    studentId: student.userId,
     sourceSessionId,
     sourceTeacherId,
     sourceSchoollifeSessionId,
@@ -177,7 +177,7 @@ function registerFiring (slotId, student, sourceSessionId, sourceTeacherId, sour
 function unRegisterFiring (slotId, student) {
   return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_RENVOI_PATH + '/unregister-student-renvoi', WeprodeUtils.params({
     schoollifeSessionId: slotId,
-    studentId: student.studentId
+    studentId: student.userId
   })).then(response => response.data)
 }
 

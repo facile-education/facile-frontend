@@ -62,9 +62,9 @@ function getNonUsualSlots (store) {
 
 function getSessions (store) {
   store.dispatch('currentActions/addAction', { name: 'getSessions' })
-  const student = store.state.notUsualSlots.queriedUser || { studentId: 0 }
-  if (student.studentId !== 0) {
-    scheduleService.getUserSessions(student.studentId, store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
+  const student = store.state.notUsualSlots.queriedUser || { userId: 0 }
+  if (student.userId !== 0) {
+    scheduleService.getUserSessions(student.userId, store.state.notUsualSlots.displayedDates.startDate, store.state.notUsualSlots.displayedDates.endDate).then(
       (data) => {
         store.dispatch('currentActions/removeAction', { name: 'getSessions' })
         if (data.success) {
@@ -132,7 +132,7 @@ export const mutations = {
     state.pendingFirings = payload
   },
   removePendingFirings (state, firingToRemove) {
-    const index = state.pendingFirings.findIndex((firing) => (firing.studentId === firingToRemove.studentId) && (firing.sessionId === firingToRemove.sessionId)) // 2 primary keys
+    const index = state.pendingFirings.findIndex((firing) => (firing.userId === firingToRemove.userId) && (firing.sessionId === firingToRemove.sessionId)) // 2 primary keys
     state.pendingFirings.splice(index, 1)
   },
   setDisplayedDate (state, { startDate, endDate }) {

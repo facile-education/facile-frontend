@@ -63,7 +63,7 @@
           user-type="teacher"
           :placeholder="$t('NotUsualSlots.EditSlotModal.teacherNamePlaceHolder')"
           :model-value="newEvent.teacher? [newEvent.teacher] : []"
-          @blur="v$.newEvent.teacher.teacherId.$touch()"
+          @blur="v$.newEvent.teacher.userId.$touch()"
           @update:model-value="updateTeacher"
         />
         <WeprodeErrorMessage :error-message="formErrorList.teacher" />
@@ -137,7 +137,7 @@ export default {
   validations: {
     newEvent: {
       teacher: {
-        teacherId: { required }
+        userId: { required }
       },
       capacity: {
         required,
@@ -177,7 +177,7 @@ export default {
     formErrorList () {
       const form = this.v$.newEvent
       return {
-        teacher: (form.teacher.teacherId.$invalid && form.teacher.teacherId.$dirty) ? this.$t('Commons.formRequired') : '',
+        teacher: (form.teacher.userId.$invalid && form.teacher.userId.$dirty) ? this.$t('Commons.formRequired') : '',
         capacity: (form.capacity.$invalid && form.capacity.$dirty)
           ? (form.capacity.required.$invalid ? this.$t('Commons.formRequired') : this.$t('NotUsualSlotManager.EditSlotModal.formMoreThanRegistered'))
           : '',
@@ -305,7 +305,7 @@ export default {
             this.newEvent.startDate.day(),
             this.selectedSlot.slotStartHour,
             this.selectedSlot.slotEndHour,
-            this.newEvent.teacher.teacherId,
+            this.newEvent.teacher.userId,
             this.currentSlotType.type,
             this.newEvent.room,
             this.newEvent.capacity
@@ -325,7 +325,7 @@ export default {
             this.newEvent.startDate.day(),
             this.selectedSlot.slotStartHour,
             this.selectedSlot.slotEndHour,
-            this.newEvent.teacher.teacherId,
+            this.newEvent.teacher.userId,
             this.newEvent.room,
             this.newEvent.capacity
           ).then((data) => {
