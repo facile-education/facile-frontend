@@ -54,7 +54,7 @@ export default {
 .population-list {
   position: relative;
   @extend %font-regular-m;
-  z-index: 100;
+  z-index: 10;
 }
 
 .lonely-population {

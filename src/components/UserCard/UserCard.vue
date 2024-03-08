@@ -17,7 +17,7 @@
       :user-details="userDetails"
     />
     <UserCardCurrentSchedule
-      v-if="userDetails && (userDetails.isTeacher || userDetails.isStudent)"
+      v-if="userDetails && (!currentUser.isParent && !currentUser.isStudent) && (userDetails.isTeacher || userDetails.isStudent)"
       :user-details="userDetails"
     />
     <UserCardHHC
@@ -56,6 +56,9 @@ export default {
   computed: {
     userToDisplay () {
       return this.$store.state.userCard.userToDisplay
+    },
+    currentUser () {
+      return this.$store.state.user
     }
   },
   watch: {

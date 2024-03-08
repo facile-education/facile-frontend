@@ -8,7 +8,7 @@
         class="hhc-icon"
         :icon-name="'icon-clock'"
       />
-      <span>{{ $t('hhcTitle') }} <span v-if="isUserSchoolLifeStatsEmpty">: Aucun</span></span>
+      <span>{{ $t('UserCard.UserCardHHC.hhcTitle') }} <span v-if="isUserSchoolLifeStatsEmpty">: Aucun</span></span>
     </h2>
     <ul
       class="content"
@@ -101,9 +101,3 @@ export default {
   }
 }
 </style>
-
-<i18n locale="fr">
-    {
-      "hhcTitle": "Horaires hors cadre",
-    }
-</i18n>

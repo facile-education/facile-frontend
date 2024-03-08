@@ -25,7 +25,10 @@
       />
     </button>
 
-    <Transition name="slide-fade">
+    <Transition
+      v-if="isMenuExpanded"
+      name="slide-fade"
+    >
       <nav
         v-if="menuCategory.showSubMenu"
         class="sub-menu"
@@ -133,7 +136,7 @@ button {
 .sub-menu {
   position: relative;
   padding-bottom: 0.5rem;
-  overflow-y: hidden;
+  overflow: hidden;
 
   &::after {
     @extend %menu-separator;
