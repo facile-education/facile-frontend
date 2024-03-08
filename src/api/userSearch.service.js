@@ -13,56 +13,62 @@ export {
 
 const USER_SEARCH_PATH = '/user.usersearch'
 
-function getSchoolMembers (schoolId, search = '') {
+function getSchoolMembers (schoolId, filter = '') {
   return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-members', {
     params: {
       schoolId,
-      search
+      filter
     }
   }).then(response => response.data)
 }
 
-function getSchoolStudents (schoolId, search = '') {
+function getSchoolStudents (schoolId, filter = '', start = -1, limit = -1) {
   return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-students', {
     params: {
       schoolId,
-      search
+      filter,
+      start,
+      limit
     }
   }).then(response => response.data)
 }
 
-function getSchoolRelatives (schoolId, search = '') {
+function getSchoolRelatives (schoolId, filter = '', start = -1, limit = -1) {
   return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-relatives', {
     params: {
       schoolId,
-      search
+      filter,
+      start,
+      limit
     }
   }).then(response => response.data)
 }
 
-function getSchoolTeachers (schoolId, search = '') {
+function getSchoolTeachers (schoolId, filter = '', start = -1, limit = -1) {
   return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-teachers', {
     params: {
       schoolId,
-      search
+      filter,
+      start,
+      limit
     }
   }).then(response => response.data)
 }
 
-function getSchoolAgents (schoolId, search = '') {
+function getSchoolAgents (schoolId, filter = '', start = -1, limit = -1) {
   return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-school-agents', {
     params: {
       schoolId,
-      search
+      filter
     }
   }).then(response => response.data)
 }
 
-function getSchoollifeAgents (schoolId, search = '') {
+function getSchoollifeAgents (schoolId, filter = '') {
   return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-schoolife-agents', {
     params: {
       schoolId,
-      search
+      filter
     }
   }).then(response => response.data)
 }
