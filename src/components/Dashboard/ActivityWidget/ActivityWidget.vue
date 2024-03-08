@@ -128,8 +128,7 @@ export default {
       return this.$store.state.user.isParent
     },
     separatorLabel () {
-      // return this.$t('Dashboard.ActivityWidget.newsSince') + dayjs(this.lastDashboardAccessDate, DATE_EXCHANGE_FORMAT).calendar()
-      return this.$t('Dashboard.ActivityWidget.newsSince')
+      return this.$t('Dashboard.ActivityWidget.newsSince', { date: dayjs(this.lastDashboardAccessDate, DATE_EXCHANGE_FORMAT).calendar() })
     },
     filterBooleans () {
       if (this.filter.activityTypes.length === 0) { // If no filter selected, return all activity types
