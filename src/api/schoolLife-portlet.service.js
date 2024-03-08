@@ -138,7 +138,7 @@ function registerClass (classId, slotId, comment, notifyParents, replayTestSubje
  */
 function registerStudent (student, slotId, comment, notifyParents, replayTestSubject) {
   return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/register-student', WeprodeUtils.params({
-    studentId: student.studentId,
+    studentId: student.userId,
     schoollifeSessionId: slotId,
     comment,
     notifyParents,
@@ -151,7 +151,7 @@ function registerStudent (student, slotId, comment, notifyParents, replayTestSub
  */
 function unRegisterStudent (student, slotId, allSessions) {
   return axios.post(constants.JSON_WS_URL + SCHOOL_LIFE_SESSION_STUDENT_PATH + '/unregister-student', WeprodeUtils.params({
-    studentId: student.studentId,
+    studentId: student.userId,
     schoollifeSessionId: slotId,
     allSessions
   })).then(response => response.data)

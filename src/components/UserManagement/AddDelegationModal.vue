@@ -46,6 +46,7 @@
 
 <script>
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+import { getFullName } from '@utils/commons.util'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
@@ -101,6 +102,9 @@ export default {
             (data) => {
               if (data.success) {
                 this.delegationCandidates = data.candidates
+                this.delegationCandidates.forEach(candidate => {
+                  candidate.fullName = getFullName(candidate)
+                })
               }
             }
           )

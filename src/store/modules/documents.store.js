@@ -292,7 +292,9 @@ export const actions = {
     this.dispatch('currentActions/addAction', { name: 'getBreadcrumb' })
     groupService.getGroupBreadcrumb(groupFolderId).then((data) => {
       this.dispatch('currentActions/removeAction', { name: 'getBreadcrumb' })
-      data.breadCrumb[0].name = i18n.global.t('Documents.options.groups')
+      if (data.breadCrumb) {
+        data.breadCrumb[0].name = i18n.global.t('Documents.options.groups')
+      }
       if (data.success && data.breadCrumb) {
         for (const folder of data.breadCrumb) { // Because all documents in breadcrumb are folders, add folder icon
           folder.icon = require('@assets/icons/folder.svg')
