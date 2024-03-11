@@ -82,7 +82,7 @@ export default {
       return this.$store.state.user.locale.frontId
     },
     is24H () {
-      return this.locale !== 'en'
+      return this.locale === 'en' || this.locale === 'fr' // Finally keep 24h format for english interface
     },
     disabledDates () {
       return this.hiddenDays.length > 0 ? [{ repeat: { weekdays: this.hiddenDays } }] : undefined
