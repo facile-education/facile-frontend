@@ -104,14 +104,14 @@ export default {
         options: [
           {
             name: 'update',
-            title: this.$t('VersionNotes.VersionNoteSelector.update'),
+            i18nKey: 'VersionNotes.VersionNoteSelector.update',
             icon: icons.options.rename,
             position: 1,
             hasSeparator: false
           },
           {
             name: 'delete',
-            title: this.$t('VersionNotes.VersionNoteSelector.delete'),
+            i18nKey: 'VersionNotes.VersionNoteSelector.delete',
             icon: icons.options.delete,
             position: 2,
             hasSeparator: false

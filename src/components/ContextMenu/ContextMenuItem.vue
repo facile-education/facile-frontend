@@ -26,7 +26,7 @@
         />
       </span>
       <span class="title">
-        {{ option.title }}
+        {{ $t(option.i18nKey) }}
       </span>
       <span
         v-if="option.icon"
@@ -35,7 +35,7 @@
         <img
           v-if="isIconImage"
           :src="option.icon"
-          :alt="option.title"
+          :alt="$t(option.i18nKey)"
         >
         <CustomIcon
           v-else

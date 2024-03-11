@@ -263,15 +263,15 @@ export default {
       publicationOptions: [
         {
           name: 'publish',
-          title: this.$t('Course.HomeworkEditModal.publish')
+          i18nKey: 'Course.HomeworkEditModal.publish'
         },
         {
           name: 'setPublishDate',
-          title: this.$t('Course.HomeworkEditModal.setPublishDate')
+          i18nKey: 'Course.HomeworkEditModal.setPublishDate'
         },
         {
           name: 'publishLater',
-          title: this.$t('Course.HomeworkEditModal.publishLater')
+          i18nKey: 'Course.HomeworkEditModal.publishLater'
         }
       ]
     }

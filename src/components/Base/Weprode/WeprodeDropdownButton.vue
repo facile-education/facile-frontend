@@ -4,7 +4,7 @@
       class="main-button theme-background-color"
       @click="$emit('click', selectedOption)"
     >
-      <span v-if="selectedOption">{{ selectedOption.title }}</span>
+      <span v-if="selectedOption">{{ $t(selectedOption.i18nKey) }}</span>
     </button>
 
     <button

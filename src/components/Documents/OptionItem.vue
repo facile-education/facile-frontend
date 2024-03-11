@@ -13,7 +13,7 @@
       v-else
       ref="root"
       class="option-item"
-      :title="option.title"
+      :title="$t(option.i18nKey)"
       @click="handleClick"
     >
       <img
@@ -27,7 +27,7 @@
         :icon-name="option.icon"
       />
       <span class="title">
-        {{ option.title }}
+        {{ $t(option.i18nKey) }}
       </span>
     </button>
     <ContextMenu

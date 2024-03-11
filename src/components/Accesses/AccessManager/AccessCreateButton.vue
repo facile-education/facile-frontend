@@ -48,7 +48,7 @@ export default {
       const options = [
         {
           name: 'createCategory',
-          title: this.$t('Accesses.AccessCreateButton.category'),
+          i18nKey: 'Accesses.AccessCreateButton.category',
           position: 0,
           hasSeparator: false
         }
@@ -57,7 +57,7 @@ export default {
         options.push(
           {
             name: 'createAccess',
-            title: this.$t('Accesses.AccessCreateButton.access'),
+            i18nKey: 'Accesses.AccessCreateButton.access',
             position: 1,
             hasSeparator: false
           }

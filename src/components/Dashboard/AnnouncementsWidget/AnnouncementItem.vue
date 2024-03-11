@@ -250,7 +250,7 @@ export default {
       if (this.announcement.isEditable) {
         options.push({
           name: 'update',
-          title: this.$t('Dashboard.AnnouncementItem.update'),
+          i18nKey: 'Dashboard.AnnouncementItem.update',
           icon: icons.options.rename,
           position: 1,
           hasSeparator: false
@@ -259,7 +259,7 @@ export default {
       if (this.announcement.isDeletable) {
         options.push({
           name: 'delete',
-          title: this.$t('Dashboard.AnnouncementItem.delete'),
+          i18nKey: 'Dashboard.AnnouncementItem.delete',
           icon: icons.options.delete,
           position: 2,
           hasSeparator: false

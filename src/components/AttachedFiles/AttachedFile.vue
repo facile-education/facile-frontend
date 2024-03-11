@@ -156,14 +156,14 @@ export default {
         options: [
           {
             name: 'save',
-            title: this.$t('AttachedFiles.AttachedFile.save'),
+            i18nKey: 'AttachedFiles.AttachedFile.save',
             icon: icons.options.save,
             position: 1,
             hasSeparator: false
           },
           {
             name: 'download',
-            title: this.$t('AttachedFiles.AttachedFile.download'),
+            i18nKey: 'AttachedFiles.AttachedFile.download',
             icon: icons.options.download,
             position: 2,
             hasSeparator: false

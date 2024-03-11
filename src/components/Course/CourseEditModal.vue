@@ -137,15 +137,15 @@ export default {
       publicationOptions: [
         {
           name: 'publish',
-          title: this.$t('Course.CourseEditModal.publish')
+          i18nKey: 'Course.CourseEditModal.publish'
         },
         {
           name: 'setPublishDate',
-          title: this.$t('Course.CourseEditModal.setPublishDate')
+          i18nKey: 'Course.CourseEditModal.setPublishDate'
         },
         {
           name: 'publishLater',
-          title: this.$t('Course.CourseEditModal.publishLater')
+          i18nKey: 'Course.CourseEditModal.publishLater'
         }
       ]
     }

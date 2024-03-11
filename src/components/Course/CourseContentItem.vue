@@ -238,14 +238,14 @@ export default {
         options: [
           {
             name: 'save',
-            title: this.$t('Course.CourseContentItem.save'),
+            i18nKey: 'Course.CourseContentItem.save',
             icon: icons.options.save,
             position: 1,
             hasSeparator: false
           },
           {
             name: 'download',
-            title: this.$t('Course.CourseContentItem.download'),
+            i18nKey: 'Course.CourseContentItem.download',
             icon: icons.options.download,
             position: 2,
             hasSeparator: false

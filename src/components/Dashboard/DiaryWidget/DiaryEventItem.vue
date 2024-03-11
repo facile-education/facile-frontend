@@ -249,7 +249,7 @@ export default {
       if (this.event.isEditable) {
         options.push({
           name: 'update',
-          title: this.$t('Dashboard.DiaryEventItem.update'),
+          i18nKey: 'Dashboard.DiaryEventItem.update',
           icon: icons.options.rename,
           position: 1,
           hasSeparator: false
@@ -258,7 +258,7 @@ export default {
       if (this.event.isDeletable) {
         options.push({
           name: 'delete',
-          title: this.$t('Dashboard.DiaryEventItem.delete'),
+          i18nKey: 'Dashboard.DiaryEventItem.delete',
           icon: icons.options.delete,
           position: 2,
           hasSeparator: false
