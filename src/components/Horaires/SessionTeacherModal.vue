@@ -160,7 +160,7 @@ export default {
         teacherArray.push({
           allSlots: teacher.allSlots,
           teacherId: teacher.teacherId,
-          substituteId: (teacher.substitutes[0]) ? teacher.substitutes[0].teacherId : 0,
+          substituteId: (teacher.substitutes[0]) ? teacher.substitutes[0].userId : 0,
           lastSessionId: teacher.targetSession.sessionId
         })
       })

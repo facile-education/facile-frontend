@@ -22,12 +22,12 @@
     />
     <div
       v-else-if="!userList"
-      v-t="activeTab === 'addressBook' ? 'addressBookPlaceholder' : 'advancedSearchPlaceholder'"
+      v-t="activeTab === 'addressBook' ? 'ContactPicker.ContactUserList.addressBookPlaceholder' : 'ContactPicker.ContactUserList.advancedSearchPlaceholder'"
       class="placeholder"
     />
     <div
       v-else-if="userList.length === 0"
-      v-t="activeTab === 'addressBook' ? 'addressBookEmptyPlaceholder': 'advancedSearchEmptyPlaceholder'"
+      v-t="activeTab === 'addressBook' ? 'ContactPicker.ContactUserList.addressBookEmptyPlaceholder': 'ContactPicker.ContactUserList.advancedSearchEmptyPlaceholder'"
       class="placeholder"
     />
     <div

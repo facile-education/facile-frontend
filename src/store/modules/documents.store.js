@@ -274,7 +274,7 @@ export const actions = {
     navigationService.getBreadcrumb(folderId).then((data) => {
       this.dispatch('currentActions/removeAction', { name: 'getBreadcrumb' })
 
-      if (data.breadCrumb && data.breadcrumb[0]) {
+      if (data.breadCrumb && data.breadCrumb[0]) {
         data.breadcrumb[0].name = i18n.global.t('Documents.options.documents')
         for (const folder of data.breadcrumb) { // Because all documents in breadcrumb are folders, add folder icon
           folder.icon = require('@assets/icons/folder.svg')
