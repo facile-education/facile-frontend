@@ -8,7 +8,7 @@ import { formatNonUsualSlots } from '@/utils/notUsualSlot.util'
 const formatNonUsualSlot = (sessions) => {
   sessions.forEach(event => {
     const slotType = notUsualSlotsConstants.getSlotTypeByNumber(event.type)
-    event.title = slotType.label
+    event.title = i18n.global.t(slotType.i18nKey)
     event.color = slotType.color
 
     event.options = []

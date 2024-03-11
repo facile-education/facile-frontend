@@ -93,7 +93,7 @@ export default {
     },
     formattedMessage () {
       return this.$t('NotUsualSlotManager.DeleteSlotModal.message', {
-        slotType: this.currentSlotType.label,
+        slotType: this.$t(this.currentSlotType.i18nKey),
         dayLabel: dayjs(this.initEvent.startDate, DATE_EXCHANGE_FORMAT).format('dddd'),
         startHour: dayjs(this.initEvent.startDate, DATE_EXCHANGE_FORMAT).format('HH:mm'),
         endHour: dayjs(this.initEvent.endDate, DATE_EXCHANGE_FORMAT).format('HH:mm')

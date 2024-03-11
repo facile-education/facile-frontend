@@ -6,7 +6,7 @@
     :style="'background-color: ' + slotType.color + ';'"
     @click="itemClicked"
   >
-    {{ slotType.label }}
+    {{ $t(slotType.i18nKey) }}
     <div
       v-if="isSelected && !(!mq.desktop && currentSlotType)"
       class="is-selected"

@@ -201,7 +201,7 @@ export default {
       return this.eventToEdit.title === undefined
     },
     modalTitle () {
-      return this.isEventCreation ? this.$t('NotUsualSlots.EditSlotModal.header-create', { slotType: this.currentSlotType.label }) : this.$t('NotUsualSlots.EditSlotModal.header-modify', { slotType: this.currentSlotType.label })
+      return this.isEventCreation ? this.$t('NotUsualSlots.EditSlotModal.header-create', { slotType: this.$t(this.currentSlotType.i18nKey) }) : this.$t('NotUsualSlots.EditSlotModal.header-modify', { slotType: this.currentSlotType.label })
     },
     slotLabel () {
       if (this.isEventCreation) {
@@ -238,7 +238,7 @@ export default {
     this.newEvent.firstSessionDate = dayjs(this.eventToEdit.startDate, DATE_EXCHANGE_FORMAT)
 
     if (this.isEventCreation) {
-      this.newEvent.title = this.currentSlotType.label
+      this.newEvent.title = this.$t(this.currentSlotType.i18nKey)
       this.newEvent.backgroundColor = this.currentSlotType.color
       this.newEvent.borderColor = this.currentSlotType.color
     } else { // Event update

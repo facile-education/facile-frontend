@@ -91,7 +91,7 @@ export default {
       return notUsualSlotsConstants.getSlotTypeByNumber(this.event.type)
     },
     formattedSlot () {
-      return this.slotType.label + ' ' + this.$t('Moment.of') + ' ' + dayjs(this.event.startDate).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
+      return this.$t(this.slotType.i18nKey) + ' ' + this.$t('Moment.of') + ' ' + dayjs(this.event.startDate).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
     },
     currentUser () {
       return this.$store.state.user
