@@ -201,7 +201,9 @@ export default {
         this.$emit('selected-folder', undefined)
         navigationService.getBreadcrumb(folderId).then((data) => {
           if (data.success) {
-            data.breadcrumb[0].name = this.$t('Documents.options.documents')
+            if (data.breadcrumb && data.breadcrumb[0]) {
+              data.breadcrumb[0].name = this.$t('Documents.options.documents')
+            }
             data.breadcrumb.forEach(folder => { folder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
             this.currentBreadcrumb = data.breadcrumb
             this.$emit('current-folder', this.currentFolder)
