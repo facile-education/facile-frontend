@@ -201,7 +201,7 @@ export default {
       return this.eventToEdit.title === undefined
     },
     modalTitle () {
-      return this.isEventCreation ? this.$t('NotUsualSlots.EditSlotModal.header-create', { slotType: this.$t(this.currentSlotType.i18nKey) }) : this.$t('NotUsualSlots.EditSlotModal.header-modify', { slotType: this.currentSlotType.label })
+      return this.isEventCreation ? this.$t('NotUsualSlots.EditSlotModal.header-create', { slotType: this.$t(this.currentSlotType.i18nKey) }) : this.$t('NotUsualSlots.EditSlotModal.header-modify', { slotType: this.$t(this.currentSlotType.i18nKey) })
     },
     slotLabel () {
       if (this.isEventCreation) {

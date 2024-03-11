@@ -57,6 +57,9 @@ export default {
     }
   },
   created () {
+    this.options.forEach(option => {
+      option.title = this.$t(option.i18nKey)
+    })
     if (this.initialOption) {
       this.selectedOption = this.initialOption
     } else if (this.options.length > 0) {
