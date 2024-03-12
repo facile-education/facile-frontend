@@ -20,7 +20,7 @@
         :class="{ 'inactive': item.number === 0 }"
       >
         <span>{{ item.number }}</span>
-        {{ slotType(item.type).label }}
+        {{ slotName(item.type) }}
       </li>
     </ul>
   </section>
@@ -52,8 +52,9 @@ export default {
     }
   },
   methods: {
-    slotType (slotType) {
-      return notUsualSlotsConstants.getSlotTypeByNumber(slotType)
+    slotName (slotType) {
+      console.log('slotType=', slotType)
+      return this.$t(notUsualSlotsConstants.getSlotTypeByNumber(slotType).i18nKey)
     }
   }
 
