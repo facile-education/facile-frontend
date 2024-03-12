@@ -155,9 +155,9 @@ export default {
     },
     formattedRoomAndPlaces () {
       if (this.inscriptionLeft) {
-        return this.$tc('NotUsualSlots.remainingPlaces', this.inscriptionLeft)
+        return this.appEvent.room + ' - ' + this.$tc('NotUsualSlots.remainingPlaces', this.inscriptionLeft)
       } else {
-        return ''
+        return this.appEvent.room
       }
     }
   },
