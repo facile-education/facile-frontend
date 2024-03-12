@@ -26,7 +26,7 @@
         />
       </span>
       <span class="title">
-        {{ $t(option.i18nKey) }}
+        {{ title }}
       </span>
       <span
         v-if="option.icon"
@@ -35,7 +35,7 @@
         <img
           v-if="isIconImage"
           :src="option.icon"
-          :alt="$t(option.i18nKey)"
+          :alt="title"
         >
         <CustomIcon
           v-else
@@ -109,6 +109,9 @@ export default {
     }
   },
   computed: {
+    title () { // Allow to force option title if there is no i18nKey corresponding (folder names for example)
+      return this.option.title ? this.option.title : this.$t(this.option.i18nKey)
+    },
     isaSubMenuDisplayed () {
       return this.$store.state.contextMenu.isSubMenuDisplay
     },
