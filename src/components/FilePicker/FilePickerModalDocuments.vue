@@ -190,22 +190,25 @@ export default {
     handleResponse (data, folderId) {
       this.isLoadingFiles = false
       if (data.success) {
-        data.subFolders.forEach(subFolder => { subFolder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
-        this.currentFolders = data.subFolders ? data.subFolders : []
-        this.currentFolders = WeprodeUtils.sortArrayWithString(this.currentFolders, false, 'name')
+        navigationService.getBreadcrumb(folderId).then((breadcrumbData) => {
+          if (breadcrumbData.success) {
+            // Update only now the files
+            data.subFolders.forEach(subFolder => { subFolder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
+            this.currentFolders = data.subFolders ? data.subFolders : []
+            this.currentFolders = WeprodeUtils.sortArrayWithString(this.currentFolders, false, 'name')
 
-        this.currentFiles = data.files ? data.files : []
-        this.currentFiles = WeprodeUtils.sortArrayWithString(this.currentFiles, false, 'name')
+            this.currentFiles = data.files ? data.files : []
+            this.currentFiles = WeprodeUtils.sortArrayWithString(this.currentFiles, false, 'name')
 
-        this.selectedFolder = undefined
-        this.$emit('selected-folder', undefined)
-        navigationService.getBreadcrumb(folderId).then((data) => {
-          if (data.success) {
-            if (data.breadcrumb && data.breadcrumb[0]) {
-              data.breadcrumb[0].name = this.$t('Documents.options.documents')
+            this.selectedFolder = undefined
+            this.$emit('selected-folder', undefined)
+
+            // Update breadCrumb
+            if (breadcrumbData.breadcrumb && breadcrumbData.breadcrumb[0]) {
+              breadcrumbData.breadcrumb[0].name = this.$t('Documents.options.documents')
             }
-            data.breadcrumb.forEach(folder => { folder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
-            this.currentBreadcrumb = data.breadcrumb
+            breadcrumbData.breadcrumb.forEach(folder => { folder.hasAddPermission = true }) // Add hasAddPermission = true property to all document folder for compliance with group objects
+            this.currentBreadcrumb = breadcrumbData.breadcrumb
             this.$emit('current-folder', this.currentFolder)
           } else {
             console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
@@ -218,17 +221,22 @@ export default {
     handleGroupResponse (data, folderId) {
       this.isLoadingFiles = false
       if (data.success) {
-        this.currentFolders = data.folders ? data.folders : []
-        this.currentFolders = WeprodeUtils.sortArrayWithString(this.currentFolders, false, 'name')
+        groupService.getGroupBreadcrumb(folderId).then((breadcrumbData) => {
+          if (breadcrumbData.success) {
+            this.currentFolders = data.folders ? data.folders : []
+            this.currentFolders = WeprodeUtils.sortArrayWithString(this.currentFolders, false, 'name')
 
-        this.currentFiles = data.files ? data.files : []
-        this.currentFiles = WeprodeUtils.sortArrayWithString(this.currentFiles, false, 'name')
+            this.currentFiles = data.files ? data.files : []
+            this.currentFiles = WeprodeUtils.sortArrayWithString(this.currentFiles, false, 'name')
 
-        this.selectedFolder = undefined
-        this.$emit('selected-folder', undefined)
-        groupService.getGroupBreadcrumb(folderId).then((data) => {
-          if (data.success) {
-            this.currentBreadcrumb = data.breadCrumb
+            this.selectedFolder = undefined
+            this.$emit('selected-folder', undefined)
+
+            // Update breadCrumb
+            if (breadcrumbData.breadCrumb && breadcrumbData.breadCrumb[0]) {
+              breadcrumbData.breadCrumb[0].name = this.$t('Documents.options.groups')
+            }
+            this.currentBreadcrumb = breadcrumbData.breadCrumb
             this.$emit('current-folder', this.currentFolder)
           } else {
             console.error('Unable to get breadcrumb from backend for folder id ' + folderId)
