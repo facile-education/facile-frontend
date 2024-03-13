@@ -263,7 +263,7 @@ export default {
       // Then fetch other activities
       getDashboardActivity(
         this.filter.selectedGroup ? this.filter.selectedGroup.groupId : 0,
-        this.displayAll && this.lastReadNewsDate !== undefined ? this.lastReadNewsDate.format(DATE_EXCHANGE_FORMAT) : dayjs().format(DATE_EXCHANGE_FORMAT),
+        this.displayAll && this.lastReadNewsDate !== undefined ? this.lastReadNewsDate.format(DATE_EXCHANGE_FORMAT) : '-1',
         this.nbActivitiesPerPage,
         this.filterBooleans.withNews,
         this.filterBooleans.withDocs,
