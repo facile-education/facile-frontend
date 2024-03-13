@@ -28,14 +28,14 @@ const locales = [
     frontId: 'en',
     backId: 'en_US',
     label: 'English',
-    image: require('@assets/icons/englishFlag.svg'),
+    iconName: 'englishFlag', // icon name in icons.js
     isDefault: true
   },
   {
     frontId: 'fr',
     backId: 'fr_FR',
     label: 'Français',
-    image: require('@assets/icons/frenchFlag.svg')
+    iconName: 'frenchFlag'
   }
 ]
 

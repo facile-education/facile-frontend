@@ -63,7 +63,7 @@
             @click="changeLocale(locale)"
           >
             <img
-              :src="locale.image"
+              :src="getLocaleImage(locale)"
               :alt="locale.label + ' flag'"
             >
           </button>
@@ -110,6 +110,7 @@ import { defineAsyncComponent } from 'vue'
 import userService from '@/api/user.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import { locales } from '@/constants/appConstants.js'
+import { icons } from '@/constants/icons.js'
 const ImagePickerModal = defineAsyncComponent(() => import('@components/Base/ImagePicker.vue'))
 
 export default {
@@ -159,6 +160,9 @@ export default {
     this.themeColor = this.$store.state.user.themeColor
   },
   methods: {
+    getLocaleImage (locale) {
+      return icons[locale.iconName]
+    },
     getPersonalDetails () {
       this.$store.dispatch('currentActions/addAction', { name: 'getPersonalDetails' })
       userService.getPersonalDetails().then(
