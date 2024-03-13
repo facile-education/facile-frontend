@@ -39,10 +39,6 @@ const locales = [
   }
 ]
 
-const isLocaleFR = (strLocale) => {
-  return locales.find(locale => strLocale.startsWith('fr'))
-}
-
 const slotLabelList = {
   '08 h': 'P1',
   '09 h': 'P2',
