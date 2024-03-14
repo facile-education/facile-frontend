@@ -91,8 +91,7 @@ export {
   STATISTICS,
   UNIVERSALIS,
   UNIVERSALIS_JUNIOR,
-  USER_MANAGER,
-  isLocaleFR
+  USER_MANAGER
 }
 
 export default {
