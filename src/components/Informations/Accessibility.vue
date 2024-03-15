@@ -15,8 +15,13 @@ export default {
       template: ''
     }
   },
+  computed: {
+    locale () {
+      return this.$store.state.user.locale.frontId
+    }
+  },
   created () {
-    axios.get('accessibility.html').then(response => {
+    axios.get(`accessibility_${this.locale}.html`).then(response => {
       this.template = response.data
     })
   }
