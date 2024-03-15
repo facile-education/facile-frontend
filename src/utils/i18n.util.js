@@ -1,5 +1,7 @@
 import dayjs from 'dayjs'
 
+import { locales as frontLocales } from '@/constants/appConstants.js'
+
 const locales = {
   en: () => import('dayjs/locale/en'),
   fr: () => import('dayjs/locale/fr')
@@ -26,8 +28,9 @@ const calendar = {
 
 const changeDayJsLocale = (localeString) => {
   let language = localeString
-  if (localeString.indexOf('-') !== -1) {
-    language = getI18nFrontKey(localeString)
+  language = getI18nFrontKey(localeString)
+  if (!language) {
+    language = 'en'
   }
 
   locales[language]().then(() => {
@@ -39,7 +42,17 @@ const changeDayJsLocale = (localeString) => {
 }
 
 const getI18nFrontKey = (localeString) => {
-  return localeString.substring(0, 2)
+  let formattedKey
+  if (localeString.indexOf('-') !== -1) {
+    formattedKey = localeString.substring(0, 2)
+  } else {
+    formattedKey = localeString
+  }
+
+  // Check is formattedKey is supported by the front
+  const locale = frontLocales.find(locale => locale.frontId === formattedKey)
+
+  return locale?.frontId
 }
 
 export {
