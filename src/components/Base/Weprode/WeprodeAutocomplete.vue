@@ -17,7 +17,10 @@
         @keydown.stop.enter="onEnter"
       />
     </div>
-    <ul class="suggestion-list">
+    <ul
+      v-if="!isLoading"
+      class="suggestion-list"
+    >
       <li
         v-for="(item, index) in filteredList"
         :key="index"
@@ -32,6 +35,12 @@
         {{ getDisplayValue(item) }} <slot />
       </li>
     </ul>
+    <div
+      v-else
+      class="loading-container"
+    >
+      <WeprodeSpinner />
+    </div>
   </div>
 </template>
 
@@ -40,10 +49,11 @@ import WeprodeUtils from '@utils/weprode.utils'
 import { directive } from 'vue3-click-away'
 
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 export default {
   name: 'WeprodeAutocomplete',
-  components: { WeprodeInput },
+  components: { WeprodeSpinner, WeprodeInput },
   directives: {
     'click-outside': directive
   },
@@ -51,6 +61,10 @@ export default {
     list: {
       type: Array,
       default: () => []
+    },
+    isLoading: {
+      type: Boolean,
+      default: false
     },
     displayField: {
       type: String,
@@ -166,6 +180,10 @@ export default {
 
   .filter {
     padding: 10px;
+  }
+
+  .loading-container {
+    height: 4rem;
   }
 
   .item {

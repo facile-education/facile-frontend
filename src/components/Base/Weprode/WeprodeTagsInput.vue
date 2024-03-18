@@ -50,6 +50,7 @@
     <WeprodeAutocomplete
       v-if="displayCompletion"
       :list="filteredList"
+      :is-loading="isLoading"
       :display-field="displayField"
       :sort="sort"
       :sort-field="sortField"
@@ -81,6 +82,7 @@ export default {
     displayField: { type: String, default: undefined },
     idField: { type: String, default: undefined },
     list: { type: Array, default: () => [] },
+    isLoading: { type: Boolean, default: false },
     minLength: { type: Number, default: 0 },
     maxSize: { type: Number, default: -1 },
     modelValue: { type: Array, default: () => [] },

@@ -47,6 +47,7 @@
             display-field="text"
             id-field="id"
             :list="autocompleteItems"
+            :is-loading="isCompletionLoading"
             class="recipients"
             :class="device"
             :max-tags-to-display="2"
@@ -225,6 +226,7 @@ export default {
       search: '',
       error: '',
       autocompleteItems: [],
+      isCompletionLoading: false,
       isContactPickerModalDisplayed: false,
       isLoading: false,
       originMessage: {},
@@ -367,13 +369,18 @@ export default {
       }, 300)
     },
     getCompletion (query) {
+      this.isCompletionLoading = true
       messageService.getUsersCompletion(query).then((data) => {
+        this.isCompletionLoading = false
         if (data.success) {
           this.autocompleteItems = data.results
           addContactFieldsToContactList(data.results)
         } else {
           console.error('Error while getting users', data.error)
         }
+      }, (err) => {
+        console.error(err)
+        this.isCompletionLoading = false
       })
     },
     checkFields () {
