@@ -15,8 +15,13 @@ export default {
       template: ''
     }
   },
+  computed: {
+    locale () {
+      return this.$store.state.user.locale.frontId
+    }
+  },
   created () {
-    axios.get('privacy.html').then(response => {
+    axios.get(`/resources/privacy_${this.locale}.html`).then(response => {
       this.template = response.data
     })
   }
