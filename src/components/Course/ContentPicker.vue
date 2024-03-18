@@ -54,7 +54,7 @@
       <EmbedContentModal
         v-if="isH5PModalDisplayed"
         data-test="h5p"
-        :is-h5p="true"
+        :ish5p="true"
         :edited-content="{}"
         @save="addContent"
         @close="toggleH5PModal"

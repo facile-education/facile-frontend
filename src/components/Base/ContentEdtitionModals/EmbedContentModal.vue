@@ -13,11 +13,11 @@
       </span>
       <span
         v-else-if="isCreation"
-        v-t="isH5P? 'creation-title-h5p' : 'creation-title'"
+        v-t="ish5p? 'creation-title-h5p' : 'creation-title'"
       />
       <span
         v-else
-        v-t="isH5P? 'edition-title-h5p' : 'edition-title'"
+        v-t="ish5p? 'edition-title-h5p' : 'edition-title'"
       />
     </template>
 
@@ -45,7 +45,7 @@
         <WeprodeInput
           v-model="contentValue"
           :maxlength="2000"
-          :placeholder="$t(isH5P ? 'urlPlaceholder-h5p' : 'urlPlaceholder')"
+          :placeholder="$t(ish5p ? 'urlPlaceholder-h5p' : 'urlPlaceholder')"
           @keyup.enter.stop="submit"
         />
         <WeprodeErrorMessage
@@ -54,7 +54,7 @@
       </div>
 
       <a
-        v-if="!readOnly && isH5P"
+        v-if="!readOnly && ish5p"
         v-t="'h5pUrl'"
         href="https://h5p.eduge.ch/mes-ressources-h5p"
         rel="noopener"
@@ -111,7 +111,7 @@ export default {
       type: Boolean,
       default: false
     },
-    isH5P: {
+    ish5p: {
       type: Boolean,
       default: false
     }
@@ -137,7 +137,7 @@ export default {
     formErrorList () {
       return {
         contentName: (this.v$.contentName.$invalid && this.v$.contentName.$dirty) ? this.$t('Commons.required') : '',
-        embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t(this.isH5P ? 'embedElementCheckFailed-h5p' : 'embedElementCheckFailed') : '',
+        embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t(this.ish5p ? 'embedElementCheckFailed-h5p' : 'embedElementCheckFailed') : '',
         embedSrcAttribute: (this.v$.embedSrcAttribute.$invalid && this.v$.embedSrcAttribute.$dirty) ? this.$t('srcRequired') : ''
       }
     },
@@ -183,7 +183,7 @@ export default {
         isEmbedUrlWhitelisted(this.embedSrcAttribute).then((data) => {
           if (data.success) {
             if (data.isAllowed) {
-              this.$emit('save', { contentType: this.isH5P ? 6 : 4, contentName: this.contentName, contentValue: this.embedSrcAttribute })
+              this.$emit('save', { contentType: this.ish5p ? 6 : 4, contentName: this.contentName, contentValue: this.embedSrcAttribute })
               this.closeModal()
             } else {
               this.urlError = this.$t('UnauthorizedUrlException')

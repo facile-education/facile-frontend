@@ -78,7 +78,7 @@
       <EmbedContentModal
         v-if="h5pModalDisplayed"
         :edited-content="content"
-        :is-h5p="true"
+        :ish5p="true"
         :read-only="true"
         @close="h5pModalDisplayed=false"
       />
