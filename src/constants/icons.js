@@ -2,6 +2,8 @@
 const icons = {
   frenchFlag: require('@assets/icons/frenchFlag.svg'),
   englishFlag: require('@assets/icons/englishFlag.svg'),
+  deutschFlag: require('@assets/icons/germanyFlag.svg'),
+  italianFlag: require('@assets/icons/italyFlag.svg'),
   file: require('@assets/icons/file.svg'),
   folder: require('@assets/icons/folder.svg'),
   folderOpen: require('@assets/icons/folder.svg'),
