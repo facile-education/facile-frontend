@@ -2064,5 +2064,55 @@
   },
   "Viewer": {
     "close": "Retour"
+  },
+  "Logbook": {
+    "serviceTitle": "Carnet de liason",
+    "newEntryButtonLabel": "Nouveau",
+    "errorPlaceholder": "Oups, une erreur est survenue...",
+    "noEntryPlaceholder": "Pas de mot",
+    "entriesFilters": {
+      "searchStudentPlaceholder": "Elèves"
+    },
+    "entriesEditModal": {
+      "modalTitle": "Créer un mot",
+      "populationPlaceholder": "Populations",
+      "titlePlaceholder": "Titre",
+      "contentPlaceholder": "Contenu du mot",
+      "signingLabel": "Signature des parents",
+      "authorizationLabel": "Autorisation de sortie",
+      "maxDateLabel": "Date limite",
+      "createSubmit": "Créer",
+      "editSubmit": "Modifier"
+    },
+    "statusModal": {
+      "titleModal": "Détail des signatures",
+      "followupSubmit": "Relancer les non signataires",
+      "hasAuthorized": "A autorisé",
+      "hasNotAuthorized": "N'a pas autorisé",
+      "isWaiting": "En attente",
+      "hasSigned": "A signé",
+      "hasNotSigned": "N'a pas signé"
+    },
+    "entriesItem": {
+      "entryPublicationDate": "Le {date}",
+      "agentNbSignedInfos": "Signé pour {nbSigned} élèves sur {nbStudents}",
+      "agentNbAuthorizationInfos": "Autorisé pour {nbSigned} élèves sur {nbStudents}",
+      "editButtonLabel": "Modifier",
+      "deleteButtonLabel": "Supprimer",
+      "signing": "Signature",
+      "authorization": "Autorisation",
+      "youSigned": "Vous avez signé le {signatureDate}",
+      "hasSigned": "A signé le {signatureDate}",
+      "signButtonLabel": "Signer",
+      "deadlinePassed": "La date limite est dépassée",
+      "waitingSigning": "N'a pas encore Signé",
+      "waitingAuthorization": "N'a pas encore autorisé",
+      "authorizeButtonLabel": "Autoriser",
+      "notAuthorizeButtonLabel": "Ne pas autoriser",      
+      "youAuthorized": "Vous avez autorisé le {date}",
+      "hasAuthorized": "A autorisé le {date}",
+      "youNotAuthorized": "Vous n'avez pas autorisé",
+      "hasNotAuthorized": "N'a pas autorisé"
+    }
   }
 }

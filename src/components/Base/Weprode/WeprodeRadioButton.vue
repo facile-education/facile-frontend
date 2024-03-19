@@ -100,8 +100,9 @@ export default {
 
 .checkmark {
   position: absolute;
-  top: -1px;
+  top: 50%;
   left: 0;
+  transform: translateY(-50%);
   width: 18px;
   height: 18px;
   border: 1px solid rgba(183,183,183,0.5);

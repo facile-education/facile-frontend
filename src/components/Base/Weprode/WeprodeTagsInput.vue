@@ -91,7 +91,7 @@ export default {
     sortField: { type: String, default: undefined },
     maxTagsToDisplay: { type: Number, default: -1 },
     othersLabelTemplate: { type: Function, default: (nbOthers) => { return 'and ' + nbOthers + ' others' } },
-    isTagClickable: { type: Function, default: () => { return false } }
+    isTagClickable: { type: Function, default: () => { return true } }
   },
   emits: ['blur', 'update:modelValue', 'inputChange'],
   data () {

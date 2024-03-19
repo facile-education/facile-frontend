@@ -35,6 +35,7 @@ export const state = {
   children: [],
   selectedChild: undefined,
   selectedClass: undefined,
+  selectedStudent: undefined,
   agreedTermsOfUse: true,
   hasReadLastVersionNote: false,
   roleId: 0 // For Matomo
@@ -92,6 +93,9 @@ export const mutations = {
   },
   setSelectedClass (state, payload) {
     state.selectedClass = payload
+  },
+  setSelectedStudent (state, payload) {
+    state.selectedStudent = payload
   },
   updateInterfacePreferences (state, payload) {
     state.themeColor = payload.themeColor

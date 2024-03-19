@@ -2064,5 +2064,55 @@
   },
   "Viewer": {
     "close": "Zurück"
+  },
+  "Logbook": {
+    "serviceTitle": "Verbindungsbuch",
+    "newEntryButtonLabel": "Neu",
+    "errorPlaceholder": "Hoppla, ein Fehler ist aufgetreten...",
+    "noEntryPlaceholder": "Keine Einträge",
+    "entriesFilters": {
+    "searchStudentPlaceholder": "Schüler"
+    },
+    "entriesEditModal": {
+    "modalTitle": "Eintrag erstellen",
+    "populationPlaceholder": "Populationen",
+    "titlePlaceholder": "Titel",
+    "contentPlaceholder": "Inhalt des Eintrags",
+    "signingLabel": "Elternunterschrift",
+    "authorizationLabel": "Ausgangsgenehmigung",
+    "maxDateLabel": "Frist",
+    "createSubmit": "Erstellen",
+    "editSubmit": "Bearbeiten"
+    },
+    "statusModal": {
+    "titleModal": "Signaturdetails",
+    "followupSubmit": "Nicht-Unterzeichner erinnern",
+    "hasAuthorized": "Autorisiert",
+    "hasNotAuthorized": "Nicht autorisiert",
+    "isWaiting": "Warten",
+    "hasSigned": "Unterschrieben",
+    "hasNotSigned": "Nicht unterschrieben"
+    },
+    "entriesItem": {
+    "entryPublicationDate": "Am {date}",
+    "agentNbSignedInfos": "Unterschrieben für {nbSigned} Schüler von {nbStudents}",
+    "agentNbAuthorizationInfos": "Autorisiert für {nbSigned} Schüler von {nbStudents}",
+    "editButtonLabel": "Bearbeiten",
+    "deleteButtonLabel": "Löschen",
+    "signing": "Unterschrift",
+    "authorization": "Genehmigung",
+    "youSigned": "Sie haben am {signatureDate} unterschrieben",
+    "hasSigned": "Hat am {signatureDate} unterschrieben",
+    "signButtonLabel": "Unterschreiben",
+    "deadlinePassed": "Frist abgelaufen",
+    "waitingSigning": "Noch nicht unterschrieben",
+    "waitingAuthorization": "Noch nicht autorisiert",
+    "authorizeButtonLabel": "Autorisieren",
+    "notAuthorizeButtonLabel": "Nicht autorisieren",
+    "youAuthorized": "Sie haben am {date} autorisiert",
+    "hasAuthorized": "Hat am {date} autorisiert",
+    "youNotAuthorized": "Sie haben nicht autorisiert",
+    "hasNotAuthorized": "Nicht autorisiert"
+    }
   }
 }

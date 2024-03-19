@@ -8,7 +8,6 @@
     :max-size="maxSize"
     :completion-only="true"
     :list="autocompleteUserList"
-    :is-tag-clickable="(item) => item.type === contactTypeUser"
     :sort="false"
     display-field="displayName"
     id-field="userId"

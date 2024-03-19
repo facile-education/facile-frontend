@@ -2064,5 +2064,55 @@
   },
   "Viewer": {
     "close": "Close"
+  },
+  "Logbook": {
+    "serviceTitle": "Connection Book",
+    "newEntryButtonLabel": "New",
+    "errorPlaceholder": "Oops, an error occurred...",
+    "noEntryPlaceholder": "No entries",
+    "entriesFilters": {
+    "searchStudentPlaceholder": "Students"
+    },
+    "entriesEditModal": {
+    "modalTitle": "Create an entry",
+    "populationPlaceholder": "Populations",
+    "titlePlaceholder": "Title",
+    "contentPlaceholder": "Entry content",
+    "signingLabel": "Parent's signature",
+    "authorizationLabel": "Exit authorization",
+    "maxDateLabel": "Deadline",
+    "createSubmit": "Create",
+    "editSubmit": "Edit"
+    },
+    "statusModal": {
+    "titleModal": "Signature details",
+    "followupSubmit": "Remind non-signers",
+    "hasAuthorized": "Authorized",
+    "hasNotAuthorized": "Not authorized",
+    "isWaiting": "Waiting",
+    "hasSigned": "Signed",
+    "hasNotSigned": "Not signed"
+    },
+    "entriesItem": {
+    "entryPublicationDate": "On {date}",
+    "agentNbSignedInfos": "Signed for {nbSigned} students out of {nbStudents}",
+    "agentNbAuthorizationInfos": "Authorized for {nbSigned} students out of {nbStudents}",
+    "editButtonLabel": "Edit",
+    "deleteButtonLabel": "Delete",
+    "signing": "Signature",
+    "authorization": "Authorization",
+    "youSigned": "You signed on {signatureDate}",
+    "hasSigned": "Signed on {signatureDate}",
+    "signButtonLabel": "Sign",
+    "deadlinePassed": "Deadline has passed",
+    "waitingSigning": "Not yet Signed",
+    "waitingAuthorization": "Not yet authorized",
+    "authorizeButtonLabel": "Authorize",
+    "notAuthorizeButtonLabel": "Do not authorize",
+    "youAuthorized": "You authorized on {date}",
+    "hasAuthorized": "Authorized on {date}",
+    "youNotAuthorized": "You did not authorize",
+    "hasNotAuthorized": "Not authorized"
+    }
   }
 }
