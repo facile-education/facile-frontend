@@ -754,7 +754,7 @@
       "editionTitleH5p": "Editer un contenu H5P",
       "embedElementCheckFailed": "Ceci n'est pas un code d'intégration valide (par exemple {embedText} )",
       "embedElementCheckFailed-h5p": "Ce type de contenu n'est pas un contenu embarqué valide",
-      "h5pUrl": "Récupérer une activité depuis h5p.eduge.ch",
+      "getH5pResourceFrom": "Récupérer une activité depuis {h5pDomain}",
       "namePlaceholder": "Titre",
       "srcRequired": "Le contenu embarqué doit comprendre un attribut \"src\" non vide",
       "UnauthorizedUrlException": "Ce nom de domaine n'est pas autorisé pour ce type de contenu",

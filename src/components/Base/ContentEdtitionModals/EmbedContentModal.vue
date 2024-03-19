@@ -18,7 +18,6 @@
       <span
         v-else
         v-t="ish5p? 'Base.EmbedContentModal.editionTitleH5p' : 'Base.EmbedContentModal.editionTitle'"
-        v-t="ish5p? 'edition-title-h5p' : 'edition-title'"
       />
     </template>
 
@@ -55,12 +54,11 @@
       </div>
 
       <a
-        v-if="!readOnly && ish5p"
-        v-t="'Base.EmbedContentModal.h5pUrl'"
-        href="https://h5p.eduge.ch/mes-ressources-h5p"
+        v-if="!readOnly && ish5p && h5pUrl"
+        :href="h5pUrl"
         rel="noopener"
         target="_blank"
-      />
+      >{{ $t('Base.EmbedContentModal.getH5pResourceFrom', { h5pDomain: h5pDomain }) }}</a>
 
       <iframe
         v-if="embedSrcAttribute"
@@ -132,6 +130,17 @@ export default {
     }
   },
   computed: {
+    h5pUrl () {
+      return this.$store.state.documents.documentsProperties?.h5pUrl
+    },
+    h5pDomain () {
+      let domain
+      const matches = this.h5pUrl.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)
+      if (matches && matches.length > 1) {
+        domain = matches[1]
+      }
+      return domain
+    },
     isCreation () {
       return this.editedContent.contentId === undefined
     },
@@ -158,6 +167,11 @@ export default {
   watch: {
     embedSrcAttribute () {
       this.urlError = '' // Reset URL error when url change
+    }
+  },
+  created () {
+    if (this.ish5p && !this.h5pUrl) {
+      this.$store.dispatch('documents/getGlobalDocumentsProperties')
     }
   },
   mounted () {

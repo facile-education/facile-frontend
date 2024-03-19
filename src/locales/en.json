@@ -754,7 +754,7 @@
       "editionTitleH5p": "Edit H5P content",
       "embedElementCheckFailed": "This is not a valid embed code (e.g., {embedText})",
       "embedElementCheckFailed-h5p": "This type of content is not a valid embedded content",
-      "h5pUrl": "Retrieve an activity from h5p.eduge.ch",
+      "getH5pResourceFrom": "Retrieve an activity from {h5pDomain}",
       "namePlaceholder": "Title",
       "srcRequired": "Embedded content must have a non-empty \"src\" attribute",
       "UnauthorizedUrlException": "This domain is not authorized for this type of content",
