@@ -1,0 +1,1102 @@
+{
+  "AttachedFiles": {
+    "view": "Visualiser",
+    "download": "Scaricare",
+    "remove": "Rimuovere",
+    "attachedFile": "{n} allegato | {n} allegato | {n} allegati",
+    "title": "Allegati:",
+    "addLocalAttachFileButton": "Aggiungi un allegato dal mio computer",
+    "addToFolder": "Salva nei miei documenti",
+    "addToFolderSuccess": "File salvato",
+    "AttachedFile": {
+      "addLocalAttachFileButton": "Aggiungi un allegato dal mio computer",
+      "save": "Salva",
+      "addToFolderSuccess": "File salvato",
+      "download": "Scaricare",
+      "options": "Opzioni",
+      "viewFile": "Visualizza {target}",
+      "remove": "Rimuovere"
+    }
+  },
+  "CalendarEventOptions": {
+    "delete": "Elimina",
+    "registerStudent": "Registrare lo studente",
+    "saveTeacherSubstitute": "@:CalendarEventOptions.download",
+    "showStudentList": "Lista degli iscritti",
+    "update": "Modifica"
+  },
+  "Commons": {
+    "back": "Indietro",
+    "delete": "Elimina",
+    "download": "Scaricare",
+    "submit": "Convalidare",
+    "formDateOrder": "La data di fine deve essere successiva alla data di inizio",
+    "formInvalidDate": "Formato data non valido",
+    "formInvalidEmail": "Formato email non valido",
+    "formRequired": "Campo richiesto",
+    "new": "Nuovo",
+    "required": "Campo richiesto",
+    "size": "Dimensione",
+    "type": "Tipo",
+    "update": "Modifica"
+  },
+  "CommunicationManager": {
+    "InternalRightList": {
+      "informations": "Questo servizio consente di definire, per profilo utente, le liste dei contatti che saranno create automaticamente nell'agenda degli utenti. È possibile gestire le possibilità di comunicazione per ciascun profilo all'interno della vostra istituzione scolastica o comunità scolastica.",
+      "save": "Convalidare",
+      "title": "Comunicazione interna"
+    },
+    "InternalRoleTab": {
+      "allOthersInSchool": "Tutto il personale della collettività dell'istituto",
+      "allPersonalsInSchool": "Tutto il personale dell'istituto",
+      "allParentsInSchool": "Tutti i genitori dell'istituto",
+      "allStudentsInSchool": "Tutti gli studenti dell'istituto",
+      "allTeachersInSchool": "Tutti gli insegnanti dell'istituto",
+      "childrenClassesParents": "I genitori delle classi dei suoi figli",
+      "childrenClassesTeachers": "Gli insegnanti delle classi dei suoi figli",
+      "collectivityLabel": "Questo profilo può comunicare con tutti gli insegnanti e il personale dell'istituto",
+      "hisChildren": "I suoi figli",
+      "hisParents": "I suoi genitori",
+      "parentsOfEachClass": "I genitori delle classi",
+      "parentsOfHisClass": "I genitori degli studenti delle sue classi",
+      "personalLabel": "Questo profilo può comunicare con tutti gli utenti dell'istituto",
+      "studentsOfHisClass": "Gli studenti delle sue classi",
+      "studentsOfEachClass": "Gli studenti delle classi",
+      "teacherLabel": "Questo profilo può comunicare con gli studenti e i genitori delle sue classi e con tutti gli insegnanti e il personale dell'istituto",
+      "teachersOfEachClass": "Gli insegnanti delle classi",
+      "teachersOfHisClass": "Gli insegnanti delle sue classi"
+    },
+    "ExternalRightList": {
+      "informations": "Puoi gestire l'autorizzazione, per profilo utente, all'aggiunta di account email.",
+      "save": "Convalidare",
+      "title": "Comunicazione esterna"
+    },
+    "ExternalRoleItem": {
+      "no": "no",
+      "yes": "sì"
+    },
+    "serviceTitle": "Amministrazione delle comunicazioni"
+  },
+  "Documents": {
+    "antivirusException": "Un virus è stato rilevato in uno dei file caricati",
+    "documentDeleted": "Elemento/i eliminato/i",
+    "errorNoFiles": "Il caricamento non è consentito",
+    "extensionException": "Estensione non supportata",
+    "failedDelete": "Eliminazione di {entityName} non riuscita",
+    "file": "File",
+    "files": "File",
+    "fileSizeException": "Il file supera la dimensione massima consentita di {maxUploadSize}",
+    "folder": "Cartella",
+    "group": "Gruppo",
+    "permissionException": "Non hai il permesso per eseguire questa azione",
+    "subEntityFailedDelete": "Impossibile eliminare il sotto elemento {entityName}",
+    "unKnownSubEntityFailedDelete": "Un sotto elemento nascosto impedisce l'eliminazione completa della cartella",
+    "uploadError": "Si è verificato un errore durante il caricamento",
+    "documentFields": {
+      "creationDate": "Creazione",
+      "downloadCount": "Download",
+      "lastModifiedDate": "Ultima modifica",
+      "name": "Nome",
+      "size": "Dimensione",
+      "viewCount": "Visualizzazioni",
+      "totalViewCount": "Totale visualizzazioni",
+      "totalDownloadCount": "Totale download"
+    },
+    "documentDetails": {
+      "lastVersion": "Ultima versione",
+      "restoreVersion": "Ripristina questa versione",
+      "versions": "Versioni",
+      "viewVersion": "Visualizza"
+    },
+    "options": {
+      "download": "@:Commons.download",
+      "details": "Dettagli",
+      "delete": "Elimina",
+      "documents": "Personali",
+      "duplicate": "Duplica",
+      "groups": "Collaborativi",
+      "import": "Importa",
+      "managePermissions": "Permessi",
+      "copyUrl": "Copia URL",
+      "move": "Sposta",
+      "newAudio": "Registrazione vocale",
+      "newFolder": "@:Documents.folder",
+      "newGeogebra": "Geogebra",
+      "newHTML": "Nota",
+      "newMindMap": "Mappa mentale",
+      "newODT": "Testo",
+      "newODS": "Foglio di calcolo",
+      "newODP": "Presentazione",
+      "newScratch": "Scratch",
+      "open": "Apri",
+      "recent": "Recenti",
+      "rename": "Rinomina",
+      "resetFields": "Valori predefiniti",
+      "toggleDetailsLabel": "Dettagli",
+      "uploadFiles": "Carica un file",
+      "mobileUploadFiles": "Carica",
+      "uploadFolder": "Carica una cartella"
+    },
+    "BreadCrumbItem": {
+      "goBack": "Indietro"
+    },
+    "DocumentPlaceHolder": {
+      "isLoadDocumentsError": "Si è verificato un problema durante il caricamento dei file",
+      "noDocumentToDisplay": "Rilascia qui i tuoi file",
+      "noDocumentToDisplay2": "o usa il pulsante +",
+      "noDocumentToDisplayMobile": "Aggiungi un documento con il pulsante +"
+    },
+    "FilesFields": {
+      "ascending": "Crescente",
+      "descending": "Decrescente"
+    },
+    "OptionItem": {
+      "new": "NUOVO"
+    },
+    "UploadProgression": {
+      "cancel": "Annulla",
+      "close": "Chiudi",
+      "collapse": "Comprimi",
+      "extend": "Estendi",
+      "uploadOn": "{done} caricato su {total} | {done} caricato su {total} | {done} caricamenti su {total}",
+      "uploadfinished": "{nb} caricamento completato | {nb} caricamento completato | {nb} caricamenti completati"
+    },
+    "DocumentDetailsModal": {
+      "noData": "Non ci sono informazioni da visualizzare",
+      "noDocumentSelected": "Nessun documento selezionato",
+      "selectedDocuments": "{n} documenti selezionati"
+    },
+    "DocumentDetails": {
+      "close": "Chiudi",
+      "noData": "Non ci sono informazioni da visualizzare",
+      "noDocumentSelected": "Nessun documento selezionato",
+      "selectedDocuments": "{n} documenti selezionati"
+    },
+    "DocumentVersion": {
+      "restoredVersion": "Versione ripristinata"
+    },
+    "GridDocument": {
+      "details": "Visualizza informazioni",
+      "members": "Membri"
+    },
+    "FileDisplayModal": {
+      "collapse": "Comprimi",
+      "expand": "Schermo intero",
+      "close": "Chiudi"
+    },
+    "FileDisplay": {
+      "lockWarning": "Questo file è aperto in modalità di modifica da un altro utente. Apertura in sola visualizzazione...",
+      "lockWarningUser": "Questo file è aperto in modalità di modifica da {userName}. Apertura in sola visualizzazione...",
+      "quitWithoutSaving": "Tutte le modifiche non salvate andranno perse",
+      "Unsupported": "Tipo di file non visualizzabile",
+      "Forbidden": "Non hai il permesso di visualizzare questo file"
+    },
+    "ImageDocument": {
+      "unknown-url": "Documento non disponibile"
+    },
+    "WISIWIG": {
+      "documentSaved": "Documento salvato",
+      "saveError": "Errore durante il salvataggio del file"
+    },
+    "FileNameModal": {
+      "backError": "Si è verificato un errore",
+      "containsNoCotes": "Non deve contenere caratteri speciali",
+      "createHeader": "Nuovo",
+      "createSubmit": "Crea",
+      "notBeginByDot": "Non deve iniziare con un '.'",
+      "rename": "Rinomina",
+      "renameHeader": "Rinomina",
+      "sizeLimit": "Non deve superare {maxSize} caratteri"
+    },
+    "FolderNameModal": {
+      "backError": "Si è verificato un errore",
+      "containsNoCotes": "Non deve contenere caratteri speciali",
+      "createHeader": "Nuova cartella",
+      "duplicateFileException": "Esiste già una cartella con lo stesso nome",
+      "createSubmit": "Crea",
+      "notBeginByDot": "Non deve iniziare con un '.'",
+      "rename": "Rinomina",
+      "renameHeader": "Rinomina",
+      "sizeLimit": "Non deve superare {maxSize} caratteri"
+    },
+    "PermissionsModal": {
+      "header": "Gestione dei permessi",
+      "reset": "Reset",
+      "add": "Aggiungi",
+      "view": "Visualizza",
+      "update": "Modifica",
+      "delete": "Elimina",
+      "permissions": "Permessi",
+      "recursiveLabel": "Applica questi permessi a tutti gli elementi contenuti nella cartella",
+      "name": "Ruolo",
+      "submit": "Convalida",
+      "permission-success": "Permessi salvati"
+    },
+    "RolePermissions": {
+      "National_1": "Studente",
+      "National_2": "Genitore",
+      "National_3": "Insegnante",
+      "National_4": "Direttore",
+      "Group_admin": "Admin. ENTA",
+      "Assistanttechnique": "Assistente tecnico",
+      "Caissiercomptable": "Cassiere contabile",
+      "Conseillersocial": "Consulente sociale",
+      "Conseillerd'orientation": "Consulente di orientamento",
+      "Doyen": "Decano",
+      "Infirmiere": "Infermiere",
+      "Bibliothecaire": "Bibliotecario",
+      "Psychologue": "Psicologo",
+      "Secretaire": "Segretario",
+      "SiteAdministrator": "Admin. del sito",
+      "SiteOwner": "Proprietario del sito"
+    },
+    "deletionWarning": "Questo documento verrà eliminato definitivamente",
+    "moveInCurrentFolder": "La cartella di destinazione è la stessa della partenza!",
+    "serviceTitle": "I miei documenti",
+    "rootCollaborativeUploadForbidden": "Non è consentito aggiungere un documento qui",
+    "missingPastePermissions": "Incolla non consentito qui"
+  },
+  "Menu": {
+    "access-admin": "Accesso",
+    "administration": "Amministrazione",
+    "AgreeTermsOfUse": "Condizioni Generali",
+    "AllActivities": "Tutte le attività",
+    "AllAnnouncements": "Tutti gli annunci",
+    "AllEvents": "Tutti gli eventi",
+    "application-admin": "Applicazioni",
+    "Authentication": "Home ENTA",
+    "AuthenticationRequired": "Autenticazione richiesta",
+    "cdt": "Corsi & compiti",
+    "communication": "Comunicazione",
+    "contacts": "Contatti",
+    "cortex": "Cortex",
+    "dashboard": "Home",
+    "dashboard-admin": "Dashboard",
+    "disciplines-co": "Insegnamento Co",
+    "documents": "Documenti",
+    "GroupDocuments": "Documenti collaborativi",
+    "groups": "Spazi collaborativi",
+    "grr": "GRR",
+    "h5p": "H5P",
+    "horaires": "Orari",
+    "horaires-admin": "Orari",
+    "horaires-hors-cadre": "Orari fuori schema",
+    "maintenance": "Manutenzione",
+    "messaging": "Messaggistica",
+    "NotFound": "404 Non trovato",
+    "PasswordChange": "Aggiornamento password",
+    "resources": "Risorse",
+    "school-life": "Vita scolastica",
+    "statistics": "Statistiche",
+    "universalis": "Universalis",
+    "universalis-junior": "Universalis Junior",
+    "user-admin": "Utenti",
+    "Viewer": "Visualizzatore",
+    "route": {
+      "access-admin": "accesso-amministrazione",
+      "application-admin": "amministrazione-applicazioni",
+      "cdt": "corsi-e-compiti",
+      "contacts": "contatti",
+      "cortex": "cortex",
+      "dashboard": "dashboard",
+      "dashboard-admin": "amministrazione-dashboard",
+      "disciplines-co": "insegnamento-co",
+      "documents": "documenti",
+      "groups": "spazi",
+      "grr": "grr",
+      "h5p": "h5p",
+      "horaires": "orari",
+      "horaires-admin": "amministrazione-orari",
+      "horaires-hors-cadre": "orari-fuori-schema",
+      "maintenance": "manutenzione",
+      "messaging": "messaggistica",
+      "statistics": "statistiche",
+      "universalis": "universalis",
+      "universalis-junior": "universalis-junior",
+      "user-admin": "amministrazione-utenti",
+      "agree-terms-of-use": "accordo-termini-utilizzo",
+      "password-change": "cambio-password"
+    },
+    "LayoutMenu": {
+      "close": "Chiudi il menu",
+      "collapse": "Comprimi",
+      "extend": "Espandi"
+    },
+    "MenuCategory": {
+      "collapse": "Comprimi",
+      "extend": "Espandi"
+    },
+    "MenuItemList": {
+      "errorPlaceholder": "Si è verificato un errore durante il caricamento del menu"
+    }
+  },
+  "Messaging": {
+    "answered": "Risposto",
+    "addFolder": "Nuova cartella",
+    "addSubFolder": "Nuova sottocartella",
+    "boxes": "Cartelle",
+    "deleteFolder": "@:ContextMenuOptions.delete",
+    "draft": "Bozze",
+    "forwarded": "Inoltrato",
+    "hasAttachedFiles": "Contiene allegati",
+    "inbox": "Posta in arrivo",
+    "title": "Messaggistica",
+    "new": "Nuovo",
+    "personalFolders": "Le mie cartelle",
+    "findInFolder": "Trovato nella cartella",
+    "hasRead": "Letto",
+    "deleteMessage": "Elimina",
+    "editDraft": "Modifica",
+    "noRecipient": "(Nessun destinatario)",
+    "rename": "Rinomina",
+    "reply": "Rispondi",
+    "replyAll": "Rispondi a tutti",
+    "forward": "Inoltra",
+    "unreadOnly": "Non letti",
+    "multiThreads": "{n} discussioni selezionate",
+    "markAsRead": "@:ContextMenuOptions.markAsRead",
+    "markAsUnread": "@:ContextMenuOptions.markAsUnread",
+    "multiSelection": "Selezione multipla",
+    "OtherRecipient": "e un altro | e altri {n}",
+    "lessRecipients": "Mostra meno",
+    "search": "Cerca",
+    "sent": "Inviati",
+    "serviceTitle": "Messaggistica",
+    "showAllRecipients": "Dettagli",
+    "hideAllRecipients": "Nascondi",
+    "to": "A :",
+    "trash": "Cestino",
+    "noObjectWarning": "Stai per inviare un messaggio senza oggetto",
+    "confirmFolderDeletionWarning": "I messaggi della cartella eliminata saranno spostati nel Cestino",
+    "userDelete": "{user} (utente eliminato)",
+    "Parameters": {
+      "header": "Parametri di messaggistica",
+      "submitButton": "Salva",
+      "forward": "Inoltra",
+      "forwardPlaceHolder": "Inserisci i tuoi indirizzi email",
+      "signature": "Firma",
+      "signaturePlaceHolder": "Firma",
+      "autoReply": "Risposta automatica",
+      "autoReplyPlaceHolder": "Messaggio di assenza"
+    },
+    "CreateMessageModal": {
+      "header": "Nuovo messaggio",
+      "headerForward": "Inoltra",
+      "headerReply": "Rispondi",
+      "headerReplyAll": "Rispondi a tutti",
+      "submitButton": "Invia",
+      "recipientsPlaceHolder": "Destinatari",
+      "subjectPlaceHolder": "Oggetto",
+      "draftButton": "Salva in bozze",
+      "draftSaved": "Bozza salvata",
+      "successMessage": "Messaggio inviato",
+      "required": "Campo obbligatorio",
+      "missingRecipient": "Seleziona almeno un destinatario",
+      "addRecipients": "Aggiungi destinatari",
+      "closeWarning": "Vuoi chiudere questa finestra? (Perderai il suo contenuto)",
+      "previousContentHeader": "Il {dateLabel} {senderName} ha scritto:",
+      "othersLabel": "e altri {nbOthers}"
+    },
+    "MenuFolder": {
+      "newFolder": "Nuova cartella"
+    },
+    "ThreadDetails": {
+      "noSelectedMessage": "Seleziona una discussione o un messaggio"
+    },
+    "ThreadListHeader": {
+      "unRead": "0 non letto | 1 non letto | {count} non letti",
+      "messages": "Nessun messaggio | 1 messaggio | {count} messaggi",
+      "filterByUnread": "Filtrato per non letti"
+    },
+    "ThreadListOptions": {
+      "mark": "Segna",
+      "trash": "Elimina",
+      "displayMenuPanel": "Mostra menu",
+      "hideMenuPanel": "Nascondi menu",
+      "all": "Tutti",
+      "refresh": "Aggiorna"
+    },
+    "ThreadList": {
+      "noMessage": "Nessun messaggio",
+      "noNewMessage": "Nessun messaggio non letto",
+      "emptyFolder": "Questa cartella è vuota",
+      "loadingError": "Errore durante il caricamento della risorsa",
+      "permissionError": "Permesso negato",
+      "refresh": "Aggiorna"
+    }
+  },
+  "ContextMenuOptions": {
+    "delete": "Elimina",
+    "markAsRead": "Segna come letto",
+    "markAsUnread": "Segna come non letto"
+  },
+  "Moment": {
+    "at": "a",
+    "of": "del",
+    "the": "il",
+    "today": "oggi",
+    "tomorrow": "Domani alle",
+    "yesterday": "Ieri alle"
+  },
+  "NotUsualSlots": {
+    "classPlaceholder": "Classe",
+    "detention": "Punizione",
+    "fired": "Espulso",
+    "remainingPlaces": "{n} posto rimasto | {n} posti rimasti",
+    "replayTest": "Ripetizione del test",
+    "study": "Studio",
+    "tutoring": "Ripetizioni",
+    "studentNamePlaceHolder": "Nome studente",
+    "EditSlotModal": {
+      "deleteSlot": "Elimina",
+      "haveToSelectHour": "Si prega di inserire un intervallo di ore valido (hh:mm)",
+      "header-create": "Crea uno slot per {slotType}",
+      "header-modify": "Modifica uno slot per {slotType}",
+      "longDeleteSlot": "Elimina lo slot",
+      "roomCapacity": "Capacità della stanza",
+      "registered": "{n} registrato | {n} registrati",
+      "roomNamePlaceHolder": "Stanza",
+      "teacherNamePlaceHolder": "Insegnante"
+    },
+    "PendingFiringModal": {
+      "courseOf": "Corso di {courseName}",
+      "information": "Un messaggio di notifica verrà inviato ai genitori e al preside con il motivo dell'espulsione.",
+      "information2": "Si prega di contattare un preside di riferimento dello studente o la direzione.",
+      "firedTimestamp": "Registrato: ",
+      "haveToWriteJustification": "Si prega di inserire una giustificazione per l'espulsione",
+      "justificationPlaceholder": "Motivo dell'espulsione",
+      "header": "Motivo dell'espulsione",
+      "slot": "Espulsione: ",
+      "student": "@:NotUsualSlots.StudentRegistrationModal.student",
+      "sendReason": "Invia"
+    },
+    "StudentListModal": {
+      "header": "Elenco degli studenti",
+      "noStudentPresent": "Nessun studente registrato per questo slot",
+      "present": "Presente",
+      "slot": "Slot: ",
+      "unsubscribe": "Annulla iscrizione",
+      "callRollButton": "Chiamata"
+    },
+    "StudentRegistrationModal": {
+      "arrival": "Orario di arrivo in aula per l'espulsione: ",
+      "class": "Studenti di: ",
+      "commentPlaceholder": "Motivo della punizione",
+      "firedBy": "Espulso da: ",
+      "haveToSelectSlot": "Si prega di selezionare un corso",
+      "haveToSelectSubject": "Si prega di selezionare una disciplina",
+      "haveToSelectValidTime": "Si prega di inserire un orario valido (hh:mm)",
+      "header": "Registrazione",
+      "deregistrationHeader": "Annulla iscrizione",
+      "notifyParents": "Notifica ai genitori",
+      "noSlotAvailable": "Al momento non è possibile selezionare alcun corso",
+      "noSubjectsAvailable": "Nessuna disciplina disponibile per la selezione",
+      "subject": "Disciplina: ",
+      "selectSlot": "Seleziona un corso",
+      "selectSubject": "Seleziona una disciplina",
+      "slot": "@:NotUsualSlots.StudentListModal.slot",
+      "student": "Studente: ",
+      "sourceSlot": "Espulso dal corso: ",
+      "register": "Registrati",
+      "unregister": "Annulla registrazione"
+    }
+  },
+  "Popup": {
+    "copied": "Copiato",
+    "cut": "Tagliato",
+    "documentCopied": "Elementi copiati",
+    "documentCut": "Elementi tagliati",
+    "duplicated": "Elemento/i duplicato/i",
+    "duplicationFailure": "Errore durante la copia di {entityName}",
+    "moveFailure": "Errore durante lo spostamento di {entityName}",
+    "unauthorizedCut": "Non hai l'autorizzazione per spostare {entityName}",
+    "error": "Si è verificato un errore",
+    "moved": "Elementi spostati",
+    "success": "Successo"
+  },
+  "Unauthenticated": "Effettua l'accesso per accedere a questo servizio",
+  "UnAuthorised": "Il tuo stato non ti consente di accedere a questa pagina",
+  "ConflictModal": {
+    "header": "Conflitto in corso",
+    "cancelButton": "Annulla",
+    "renameButton": "Mantieni",
+    "replaceButton": "Sostituisci",
+    "text": "\"{entityName}\" esiste già in questa posizione. Vuoi sostituire l'esistente con una nuova versione o mantenere entrambi gli elementi?",
+    "textWithoutReplaceOption": "\"{entityName}\" esiste già in questa posizione. Vuoi continuare mantenendo entrambi i documenti?"
+  },
+  "VersionNotes": {
+    "updateOf": "Aggiornamento del {dateLabel}",
+    "SaveVersionNoteModal": {
+      "contentLabel": "Contenuto:",
+      "create": "Crea",
+      "createHeader": "Creazione di una nota sulla versione",
+      "error": "Errore nella richiesta",
+      "required": "Campi obbligatori",
+      "titlePlaceholder": "Titolo",
+      "update": "Modifica",
+      "updateHeader": "Modifica di una nota sulla versione"
+    },
+    "VersionNoteSelector": {
+      "delete": "Elimina",
+      "deleteVersionNoteWarning": "Stai per eliminare una nota sulla versione, questa azione sarà irreversibile",
+      "emptyPlaceholder": "Nessuna nota sulla versione disponibile",
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "options": "Opzioni",
+      "update": "Modifica"
+    },
+    "VersionNotesModal": {
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "new": "Nuovo",
+      "versionNotesHeader": "Novità nel tuo ENTA"
+    }
+  },
+  "WarningModal": {
+    "header": "Vuoi continuare?",
+    "cancelButton": "Annulla",
+    "confirmButton": "Continua"
+  },
+  "Accesses": {
+    "AccessCategoryInput": {
+      "newCategory": "Nuova categoria"
+    },
+    "AccessCategoryItem": {
+      "delete": "Elimina questa categoria",
+      "deleteCategoryWarning": "Vuoi eliminare la categoria {categoryName} e i suoi accessi?",
+      "saveSuccess": "Categoria salvata",
+      "deleteSuccess": "Categoria eliminata"
+    },
+    "AccessCreateButton": {
+      "category": "Categoria",
+      "access": "Accesso",
+      "new": "Nuovo"
+    },
+    "AccessesPlaceholder": {
+      "noAccess": "Nessun accesso",
+      "createAccess": "Aggiungi il tuo primo accesso!"
+    },
+    "AccessItem": {
+      "deleteAccessWarning": "Vuoi eliminare l'accesso {accessName}?",
+      "profiles": "Profili: ",
+      "saveSuccess": "Accesso aggiornato"
+    },
+    "AccessRedirectionSelector": {
+      "urlPlaceHolder": "URL",
+      "TYPE_EXTERNAL_URL": "URL esterno",
+      "TYPE_COLLABORATIVE_FOLDER": "Cartella interna",
+      "TYPE_SHARED_FILE": "File interno",
+      "urlRequired": "Campo obbligatorio",
+      "urlInvalid": "URL non valido",
+      "folderRequired": "Seleziona una cartella",
+      "fileRequired": "Seleziona un file",
+      "selectFolder": "Seleziona una cartella",
+      "selectFile": "Seleziona un file"
+    },
+    "CategoriesPlaceholder": {
+      "noAccess": "Nessun accesso",
+      "createCategory": "Aggiungi la tua prima categoria di accesso!"
+    },
+    "SaveAccessModal": {
+      "creationTitle": "Aggiungi un accesso",
+      "updateTitle": "Modifica un accesso",
+      "namePlaceHolder": "Titolo",
+      "placeholderCategory": "Scegli una categoria",
+      "rolesPlaceholder": "Ruoli di destinazione",
+      "creationSubmit": "Crea",
+      "updateSubmit": "Modifica",
+      "sizeLimit": "Non deve superare {maxSize} caratteri",
+      "saveSuccess": "Accesso aggiornato",
+      "selectRoles": "Seleziona almeno un ruolo di destinazione",
+      "selectCategory": "Seleziona una categoria",
+      "selectFolder": "Seleziona una cartella collaborativa",
+      "selectFile": "Seleziona un file collaborativo"
+    },
+    "SeeAccessesAs": {
+      "seeAs": "Vedi come"
+    },
+    "AccessModal": {
+      "myAccesses": "I miei accessi",
+      "AccessesOf": "Accessi di un {roleLabel}",
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "emptyPlaceholder": "Nessun accesso"
+    },
+    "AccessPopover": {
+      "AccessesOf": "Accessi dei {roleLabel}",
+      "close": "Chiudi",
+      "emptyPlaceholder": "Nessun accesso",
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "myAccesses": "I miei accessi"
+    }
+  },
+  "ApplicationManager": {
+    "AMToolbar": {
+      "allENT": "Tutto l'ENTA"
+    },
+    "ApplicationDetails": {
+      "broadcastButtonTooltip": "Trasmettere",
+      "broadcastLabel": "Trasmessa ai seguenti profili:",
+      "configurationButtonTooltip": "Gestire le regole di trasmissione",
+      "customUrlPlaceholder": "http(s)://...",
+      "deleteButtonTooltip": "Eliminare",
+      "editButtonTooltip": "Modificare",
+      "exportLabel": "Esportazioni necessarie:",
+      "noBroadcastLabel": "L'applicazione non è trasmessa.",
+      "addRule": "Si prega di aggiungere prima una regola di trasmissione.",
+      "otherExportButton": "Risorse",
+      "parentsExportButton": "Genitori",
+      "removalConfirmButtonLabel": "Eliminare",
+      "removalConfirmMessage": "Vuoi davvero eliminare questa applicazione?",
+      "removalConfirmTitle": "Eliminazione",
+      "studentsExportButton": "Studenti",
+      "teachersExportButton": "Insegnanti",
+      "export": "Esportare",
+      "exportSuccess": "Esportazione completata",
+      "exportError": "Si è verificato un errore durante l'esportazione"
+    },
+    "ApplicationEditionModal": {
+      "addModalTitle": "Aggiungi una nuova applicazione",
+      "categoryPlaceholder": "Categoria",
+      "customUrlCombobox": "URL personalizzato",
+      "editModalTitle": "Modifica un'applicazione",
+      "exportOtherCheckbox": "Risorse",
+      "exportParentsCheckbox": "Genitori",
+      "exportStudentsCheckbox": "Studenti",
+      "exportTeachersCheckbox": "Insegnanti",
+      "exportLabel": "Esportare uno o più tipi di utenti",
+      "globalUrlCombobox": "URL globale",
+      "globalUrlPlaceholder": "https://...",
+      "keyPlaceholder": "Chiave",
+      "modalSaveButton": "Convalidare",
+      "namePlaceholder": "Nome",
+      "noUrlCombobox": "Nessuno",
+      "menuEntryLabel": "ID di menu corrispondente",
+      "rolesPlaceholder": "Profilo/i predefinito/i",
+      "schoolsPlaceholder": "Filtro delle scuole",
+      "urlTypeLabel": "Tipo di URL"
+    },
+    "BroadcastScopeModal": {
+      "addRuleButton": "Aggiungi una regola di trasmissione",
+      "defaultLabel": "L'applicazione non è trasmessa",
+      "modalTitle": "Regole di trasmissione",
+      "updateButton": "Convalidare"
+    },
+    "CategoryList": {
+      "documentsInfo": " - Disponibili direttamente nel servizio \"I miei documenti\""
+    },
+    "RuleItem": {
+      "allSchool": "Tutta la scuola",
+      "orgsPlaceholder": "Elenco delle classi",
+      "fromLabel": "da",
+      "rolesPlaceholder": "Elenco dei profili"
+    },
+    "RuleLabel": {
+      "allSchoolLabel": "da tutta la scuola",
+      "everyRoleLabel": "Tutti i profili",
+      "fromOrgsLabel": "dalle classi"
+    },
+    "serviceTitle": "Gestione delle applicazioni"
+  },
+  "Assistance": {
+    "AssistanceModal": {
+      "applyContextText": "Ricordati di spiegare il contesto del tuo errore, se necessario fornisci uno screenshot e qualsiasi altro elemento che ritieni utile per consentirci di riprodurre il problema.",
+      "addFilesButtonLabel": "Aggiungi un file (opzionale)",
+      "submitButtonLabel": "Invia",
+      "issueDescription": "Descrizione dell'incidente",
+      "suggestionDescription": "Descrizione della proposta",
+      "assistanceHeaderLabel": "Segnalare un problema",
+      "suggestionHeaderLabel": "Proporre un'idea",
+      "nonAdminAssistanceMessage": "La tua richiesta di supporto sarà inviata all'amministratore della tua scuola.",
+      "nonAdminSuggestionMessage": "La tua proposta sarà inviata all'amministratore della tua scuola.",
+      "adminAssistanceMessage": "La tua richiesta di supporto sarà gestita dal team di Weprode, riceverai una risposta nella tua casella di posta.",
+      "adminSuggestionMessage": "La tua proposta sarà trasmessa al team di Weprode, riceverai una risposta nella tua casella di posta.",
+      "serviceLabel": "Servizio interessato:",
+      "serviceConcernLabel": "Servizio interessato:",
+      "success": "Richiesta inviata"
+    }
+  },
+  "Banner": {
+    "BannerPopoverMenu": {
+      "assistance": "Assistenza",
+      "controlPanel": "Pannello di controllo",
+      "informations": "Informazioni",
+      "logout": "Esci",
+      "news": "Novità",
+      "preferences": "Preferenze",
+      "suggestion": "Suggerimento"
+    },
+    "BannerSearch": {
+      "searchLabel": "Cerca"
+    },
+    "BannerServices": {
+      "accesses": "Accessi",
+      "help": "Aiuto"
+    },
+    "toggleMenu": "Menu"
+  },
+  "Base": {
+    "InformationIcon": {
+      "infoLetter": "i"
+    },
+    "PopulationList": {
+      "populations": "{n} popolazioni"
+    },
+    "AudioRecorderModal": {
+      "namePlaceholder": "Titolo",
+      "title": "Registrazione audio",
+      "save": "Salva"
+    },
+    "EmbedContentModal": {
+      "add": "Aggiungi",
+      "cancel": "Annulla",
+      "creationTitle": "Aggiungi un video",
+      "creationTitleH5p": "Aggiungi contenuto H5P",
+      "edit": "Modifica",
+      "editionTitle": "Modifica un video",
+      "editionTitleH5p": "Modifica contenuto H5P",
+      "embedElementCheckFailed": "Questo non è un codice di incorporamento valido (ad esempio {embedText})",
+      "embedElementCheckFailed-h5p": "Questo tipo di contenuto non è un contenuto incorporato valido",
+      "getH5pResourceFrom": "Recupera attività da {h5pDomain}",
+      "namePlaceholder": "Titolo",
+      "srcRequired": "Il contenuto incorporato deve contenere un attributo \"src\" non vuoto",
+      "UnauthorizedUrlException": "Questo dominio non è autorizzato per questo tipo di contenuto",
+      "urlPlaceholder": "Incolla qui il codice di incorporamento del video",
+      "urlPlaceholder-h5p": "Incolla qui il codice di incorporamento H5P"
+    },
+    "LinkModal": {
+      "creationTitle": "Aggiungi un link",
+      "editionTitle": "Modifica un link",
+      "cancel": "Annulla",
+      "add": "Aggiungi",
+      "edit": "Modifica",
+      "namePlaceholder": "Titolo",
+      "urlPlaceholder": "https://www.tuolink.com",
+      "UnauthorizedUrlException": "URL non valido"
+    },
+    "CustomCalendar": {
+      "clickToAddSlot": "Fare clic per aggiungere uno slot"
+    },
+    "WeprodeTagItem": {
+      "remove": "Rimuovi"
+    },
+    "WeprodeWindow": {
+      "close": "Chiudi",
+      "collapse": "Riduci",
+      "expand": "Schermo intero"
+    }
+  },
+  "ContactPicker": {
+    "ContactPickerModal": {
+      "header": "Selezione dei contatti"
+    },
+    "ContactPickerToolTip": {
+      "header": "Selezione dei contatti"
+    },
+    "addressBook": "Rubrica",
+    "advancedSearch": "Ricerca avanzata",
+    "addContacts": "Destinatario aggiunto | Destinatario aggiunto | {count} destinatari aggiunti",
+    "removeContacts": "Destinatario rimosso",
+    "AddressBookItem": {
+      "add": "Aggiungi",
+      "remove": "Rimuovi"
+    },
+    "AddressBook": {
+      "errorPlaceholder": "Ops, si è verificato un errore..."
+    },
+    "AddressBookClasses": {
+      "classes": "Classi"
+    },
+    "AddressBookCommunities": {
+      "communities": "Comunità"
+    },
+    "AddressBookCourses": {
+      "courses": "Corsi"
+    },
+    "AddressBookPersonals": {
+      "personals": "Personale"
+    },
+    "AddressBookSchool": {
+      "myClass": "Mia classe",
+      "myStudents": "Studenti sotto la mia responsabilità",
+      "relatives": "Tutori legali",
+      "myRelatives": "Miei tutori legali"
+    },
+    "ContactAdvancedSearch": {
+      "queryPlaceholder": "Nome/cognome",
+      "emptyRequest": "Si prega di inserire almeno 2 caratteri per la ricerca o selezionare un elemento da uno dei menu a discesa",
+      "rolesPlaceHolder": "Tutti i profili",
+      "schoolsPlaceHolder": "Tutte le scuole",
+      "search": "Ricerca"
+    },
+    "ContactUserListHeader": {
+      "searchPlaceHolder": "Filtra"
+    },
+    "ContactUserListItem": {
+      "add": "Aggiungi",
+      "remove": "Rimuovi"
+    },
+    "ContactUserList": {
+      "addressBookEmptyPlaceholder": "Nessun contatto",
+      "advancedSearchEmptyPlaceholder": "Nessun contatto corrisponde alla ricerca",
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "addressBookPlaceholder": "Seleziona una lista per visualizzare i contatti",
+      "advancedSearchPlaceholder": "Effettua una ricerca per visualizzare i contatti"
+    }
+  },
+  "Course": {
+    "ChoosePublicationDateModal": {
+      "choosePublicationDate": "Programma la pubblicazione",
+      "schedule": "Programma"
+    },
+    "ContentPicker": {
+      "addFile": "Aggiungi un file dai tuoi documenti dell'ENTA",
+      "addOSFile": "Aggiungi un file dal computer",
+      "addH5p": "Aggiungi un elemento H5P",
+      "addLink": "Aggiungi un link",
+      "addSound": "Aggiungi una registrazione audio",
+      "addText": "Aggiungi del testo",
+      "addVideo": "Aggiungi un video"
+    },
+    "CourseContentItem": {
+      "audio": "Audio",
+      "file": "File",
+      "h5p": "Contenuto ricco",
+      "link": "Link esterno",
+      "video": "Video",
+      "addToFolderSuccess": "File aggiunto",
+      "save": "Salva",
+      "download": "Scarica"
+    },
+    "CourseDetails": {
+      "andOthers": "e {nbRemaining} altri",
+      "back": "Torna ai corsi",
+      "emptyCoursePlaceholder": "Nessun contenuto da visualizzare per questo corso",
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "showDrafts": "Mostra le bozze",
+      "hideDrafts": "Nascondi le bozze"
+    },
+    "CourseEditModal": {
+      "title": "Supporto del corso {courseName} - Sessione del {day} alle {hour}",
+      "courseTitle": "Titolo del supporto*",
+      "publish": "Pubblica",
+      "schedule": "Programma",
+      "setPublishDate": "Programma la pubblicazione",
+      "publishLater": "Salva come bozza",
+      "scheduledOn": "Programmato il:",
+      "error": "Ops, si è verificato un errore...",
+      "previousSession": "Visualizza la sessione precedente",
+      "description": "Descrizione",
+      "required": "Campo obbligatorio",
+      "confirmClosure": "Ci sono modifiche non salvate, sei sicuro di voler uscire dalla modifica e perdere le modifiche?"
+    },
+    "CourseSchedule": {
+      "nextDay": "Giorno successivo",
+      "previousDay": "Giorno precedente",
+      "displayWholeWeek": "Mostra l'intera settimana",
+      "instructions": "Seleziona una sessione per accedere al suo contenuto"
+    },
+    "CourseTab": {
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "emptyPlaceholder": "Nessun corso da visualizzare"
+    },
+    "DoneInfoModal": {
+      "header": "Realizzato da {n} studente su {totalCount} | Realizzato da {n} studente su {totalCount} | Realizzato da {n} studenti su {totalCount}",
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "emptyPlaceholder": "Questo compito non è stato assegnato a nessun studente"
+    },
+    "HomeworkEditModal": {
+      "allStudents": "Tutti gli studenti",
+      "basicInstruction": "Istruzione di base",
+      "confirmClosure": "Ci sono modifiche non salvate, sei sicuro di voler uscire dalla modifica e perdere le modifiche?",
+      "docToComplete": "Documento da completare",
+      "docToReturn": "Documento da restituire",
+      "error": "Ops, si è verificato un errore...",
+      "for": "Per",
+      "getNextSessionsError": "Si è verificato un errore durante il recupero delle prossime sessioni",
+      "instructions": "Istruzioni",
+      "duration": "Durata stimata",
+      "homeworkTitle": "Titolo del compito*",
+      "homeworkType": "Tipo di compito",
+      "futureDate": "Da fare entro il",
+      "publish": "Pubblica",
+      "schedule": "Programma",
+      "setPublishDate": "Programma la pubblicazione",
+      "publishLater": "Salva come bozza",
+      "preview": "Anteprima",
+      "required": "Campo obbligatorio",
+      "scheduledOn": "Programmato il",
+      "select": "Seleziona",
+      "sessionDate": "Da fare durante la sessione",
+      "someStudents": "Uno studente su {total} | {count} studenti su {total}",
+      "creationTitle": "Assegna un compito",
+      "updateTitle": "Modifica un compito",
+      "workLoad": "Carico di lavoro"
+    },
+    "HomeworkTab": {
+      "later": "Più tardi:",
+      "nextWeek": "Settimana prossima:",
+      "currentWeek": "Questa settimana:"
+    },
+    "Homework": {
+      "at": "alle",
+      "delete": "Elimina",
+      "doneStatus": "Realizzato da {nbDone} studente su {nbStudents} | Realizzato da {nbDone} studente su {nbStudents} | Realizzato da {nbDone} studenti su {nbStudents}",
+      "edit": "Modifica",
+      "hourLabel": "h",
+      "minuteLabel": "min",
+      "publishedOn": "Pubblicato il",
+      "draftStatus": "Bozza",
+      "toDoHomework": "Da fare per questa sessione",
+      "sessionHomework": "Da fare durante la sessione",
+      "scheduled": "Programmato",
+      "scheduledOn": "Pubblicazione prevista il",
+      "givenHomework": "Per il {targetDate}"
+    },
+    "ScheduleTab": {
+      "back": "Torna al pianificatore"
+    },
+    "SessionContent": {
+      "courseContentPlaceholder": "Nessun contenuto"
+    },
+    "SessionDetails": {
+      "add": "Aggiungi",
+      "options": "Opzioni",
+      "delete": "Elimina",
+      "draftStatus": "Bozza",
+      "edit": "Modifica",
+      "error": "Ops, si è verificato un errore...",
+      "selectSessionPlaceholder": "Seleziona una sessione per accedere al suo contenuto",
+      "noHomeworksPlaceholder": "Nessun compito",
+      "sessionOf": "Sessione del {dateLabel}",
+      "courseContent": "Supporto del corso",
+      "notes": "Nota privata",
+      "notesPlaceholder": "La mia nota privata",
+      "publishedOn": "Pubblicato il {dateLabel}",
+      "workToDo": "Compiti da fare",
+      "scheduled": "Programmato",
+      "scheduledOn": "Pubblicazione prevista il",
+      "courseContentPlaceholder": "Nessun supporto del corso registrato"
+    },
+    "StudentHomework": {
+      "done": "Fatto",
+      "error": "Ops, si è verificato un errore...",
+      "given": "Assegnato il {date}",
+      "modified": "modificato il {date}",
+      "todo": "Da fare",
+      "hourLabel": "h",
+      "minuteLabel": "minuti"
+    },
+    "StudentListModal": {
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "title": "Studenti destinatari",
+      "whole-class": "Tutta la classe",
+      "specific": "Specifica",
+      "save": "Salva"
+    },
+    "TeacherHomeworkTab": {
+      "no-homeworks": "Nessun compito da correggere"
+    },
+    "WeekHomeworks": {
+      "forDate": "Per il {dateLabel}",
+      "emptyPlaceholder": "Nessun compito da fare",
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "works": "Nessun nuovo compito | {count} Compito | {count} Compiti"
+    },
+    "WorkDay": {
+      "emptyPlaceholder": "Nessun compito"
+    },
+    "WorkItem": {
+      "hourLabel": "h",
+      "minuteLabel": "min",
+      "givenThe": "Assegnato il {dateLabel}"
+    },
+    "WorkLoadModal": {
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "nbSelectedStudents": "nessuno studente su | {count} studente su | {count} studenti su ",
+      "WorkLoadFor": "Carico di lavoro per {populationName}"
+    },
+    "course": "Corso",
+    "serviceTitle": "Corsi & Compiti",
+    "schedule": "Sessioni",
+    "homework": "Da fare",
+    "toCorrect": "Da correggere"
+  },
+  "Dashboard": {
+    "ActivityFilter": {
+      "allGroups": "Tutti gli spazi",
+      "filter": "Filtrare",
+      "news": "Informazioni",
+      "docs": "Documenti",
+      "schoolLife": "Vita scolastica",
+      "membership": "Ciclo di vita dei gruppi",
+      "sessions": "Corsi e compiti"
+    },
+    "ActivityHeader": {
+      "activities": "Attività",
+      "allActivities": "Tutte le attività",
+      "dashboard": "Dashboard",
+      "create-news": "Condividi una notizia",
+      "showMore": "Mostra di più"
+    },
+    "ActivityItem": {
+      "unknown-activity": "Attività sconosciuta"
+    },
+    "ActivityWidget": {
+      "errorPlaceholder": "Ops, si è verificato un errore...",
+      "emptyPlaceholder": "Nessuna attività da mostrare",
+      "newsSince": "Novità dal {date}"
+    },
+    "DocActivity": {
+      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "TYPE_FILE_CREATION": "ha condiviso il file ",
+      "TYPE_FILE_MODIFICATION": "ha rinominato il file ",
+      "TYPE_FILE_MOVE": "ha spostato il file ",
+      "TYPE_FILE_DELETION": "ha eliminato il file",
+      "TYPE_FOLDER_CREATION": "ha condiviso la cartella ",
+      "TYPE_FOLDER_MODIFICATION": "ha rinominato la cartella ",
+      "TYPE_FOLDER_MOVE": "ha spostato la cartella ",
+      "TYPE_FOLDER_DELETION": "ha eliminato la cartella"
+    },
+    "ExpiredGroupActivity": {
+      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "spaceIsDeactivated": "Lo spazio è disattivato. Vuoi ",
+      "deactivation": "Disattivare",
+      "reactivate": "riattivarlo",
+      "reactivationConfirmMessage": "Vuoi davvero riattivare il gruppo {groupName} ?",
+      "extension-success": "Gruppo riattivato"
+    },
+    "HHCActivity": {
+      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "courseDateFormat": "DD MMMM YYYY alle HH:mm'",
+      "TYPE_SCHOOL_RENVOI": "ha cacciato {firedUser} dal corso di {courseName} del {courseDate}",
+      "TYPE_PENDING_RENVOI": "Ricorda di motivare il licenziamento di {firedUser} dal corso di {courseName} del {courseDate} ",
+      "setFiringReason": "Motivazione del licenziamento"
+    },
+    "MembershipActivity": {
+      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "addedYou": "ti ha iscritto in questo spazio",
+      "added": "ha iscritto ",
+      "removedYou": "ti ha disiscritto da questo spazio",
+      "removed": "ha disiscritto ",
+      "nb-users": "{nbUsers} utenti ",
+      "inThisSpace": "in questo spazio",
+      "fromThisSpace": "da questo spazio"
+    },
+    "NewsActivity": {
+      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "see": "Vedi",
+      "groups-activity": "Feed delle attività dei miei gruppi",
+      "update": "Aggiorna",
+      "delete": "Elimina",
+      "deleteNewsWarning": "Eliminare questa notizia?",
+      "selectToConsult": "Consultare",
+      "hasPublishedInfo": "ha pubblicato {newsTitle}",
+      "hasPublishedAnnounce": "ha pubblicato l'annuncio {newsTitle}",
+      "show": "Mostra"
+    },
+    "SessionActivity": {
+      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "TYPE_SESSION": "ha aggiunto un supporto al corso del {courseDate}",
+      "TYPE_HOMEWORK": "ha assegnato compiti per il corso del {homeworkDate}",
+      "unknown-activity": "Attività sconosciuta"
+    }
+  }
+}

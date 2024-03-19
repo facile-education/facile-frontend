@@ -40,8 +40,10 @@
 
 <script>
 import CalendarEvent from '@components/Base/CustomCalendar/CalendarEvent.vue'
+import deLocale from '@fullcalendar/core/locales/de.js'
 import enLocale from '@fullcalendar/core/locales/en-gb.js'
-import frLocale from '@fullcalendar/core/locales/fr'
+import frLocale from '@fullcalendar/core/locales/fr.js'
+import itLocale from '@fullcalendar/core/locales/it.js'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import FullCalendar from '@fullcalendar/vue3'
@@ -107,9 +109,23 @@ export default {
     userLocale () {
       return this.$store.state.user.locale
     },
+    calendarLocale () {
+      switch (this.userLocale.frontId) {
+        case 'fr':
+          return frLocale
+        case 'en':
+          return enLocale
+        case 'de':
+          return deLocale
+        case 'it':
+          return itLocale
+        default:
+          return enLocale
+      }
+    },
     defaultCalendarOptions () {
       return {
-        locale: this.userLocale.frontId === 'fr' ? frLocale : enLocale,
+        locale: this.calendarLocale,
         plugins: [timeGridPlugin],
         initialView: this.calendarView,
         viewDidMount: this.onCalendarMount,

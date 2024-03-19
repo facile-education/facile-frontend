@@ -36,6 +36,18 @@ const locales = [
     backId: 'fr_FR',
     label: 'Français',
     iconName: 'frenchFlag'
+  },
+  {
+    frontId: 'de',
+    backId: 'de_DE',
+    label: 'Deutsch',
+    iconName: 'deutschFlag'
+  },
+  {
+    frontId: 'it',
+    backId: 'it_IT',
+    label: 'Italiano',
+    iconName: 'italianFlag'
   }
 ]
 

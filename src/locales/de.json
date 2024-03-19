@@ -298,7 +298,7 @@
       "cdt": "kurse-und-hausaufgaben",
       "contacts": "kontakte",
       "cortex": "cortex",
-      "dashboard": "startseite",
+      "dashboard": "dashboard",
       "dashboard-admin": "verwaltung-dashboard",
       "disciplines-co": "ko-unterricht",
       "documents": "dokumente",
@@ -1544,7 +1544,7 @@
     },
     "TimeLineWeekItem": {
       "weekTitle": "Vom {firstWeekDay} bis {lastWeekDay}",
-      "weekNumber": "Woche {weekNumber}"
+      "weekNumber": "W.{weekNumber}"
     },
     "serviceTitle": "Zeitplan"
   },

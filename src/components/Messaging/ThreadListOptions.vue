@@ -12,7 +12,7 @@
           :active="unreadOnly"
           name="toggleUnreadOnly"
           icon-height="18px"
-          :alt="$t('unreadOnly')"
+          :alt="$t('Messaging.unreadOnly')"
           @click="toggleUnreadOnly"
         />
       </li>
@@ -68,7 +68,7 @@
           title="options"
           name="options"
           icon-height="18px"
-          :alt="$t('unreadOnly')"
+          :alt="$t('Messaging.unreadOnly')"
           @click.stop="displayThreadOptions"
         />
       </li>
