@@ -3,7 +3,7 @@
   <div class="wrapper">
     <a
       id="academic"
-      href="https://www.edulog.ch/"
+      :href="edulogUrl"
       :title="$t('Authentication.entLogin')"
       class="btn"
     >
@@ -172,8 +172,12 @@ export default {
 
     const authSetup = authComponent()
 
+    const targetURL = encodeURIComponent(window.location.origin + '/login' + (authSetup.isMobileApp.value ? '?mobile_app=true' : ''))
+    const edulogUrl = `/Shibboleth.sso/Login?entityID=${import.meta.env.VITE_EDULOG_ENTITY_ID}&target=${targetURL}`
+
     return {
-      ...authSetup
+      ...authSetup,
+      edulogUrl
     }
   }
 }
