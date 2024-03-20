@@ -28,18 +28,18 @@ const calendar = {
   },
   de: {
     sameDay: 'HH:mm', // The same day ( 2:30 AM )
-    nextDay: '[Demain]', // The next day ( Tomorrow at 2:30 AM )
+    nextDay: '[Morgen]', // The next day ( Tomorrow at 2:30 AM )
     nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
-    lastDay: '[Hier]', // The day before ( Yesterday at 2:30 AM )
-    lastWeek: 'dddd [dernier]', // Last week ( Last Monday at 2:30 AM )
+    lastDay: '[Gestern]', // The day before ( Yesterday at 2:30 AM )
+    lastWeek: '[letzten] dddd', // Last week ( Last Monday at 2:30 AM )
     sameElse: 'DD/MM/YYYY' // Everything else ( 7/10/2011 )
   },
   it: {
     sameDay: 'HH:mm', // The same day ( 2:30 AM )
-    nextDay: '[Demain]', // The next day ( Tomorrow at 2:30 AM )
+    nextDay: '[Domani]', // The next day ( Tomorrow at 2:30 AM )
     nextWeek: 'dddd', // The next week ( Sunday at 2:30 AM )
-    lastDay: '[Hier]', // The day before ( Yesterday at 2:30 AM )
-    lastWeek: 'dddd [dernier]', // Last week ( Last Monday at 2:30 AM )
+    lastDay: '[Leri]', // The day before ( Yesterday at 2:30 AM )
+    lastWeek: 'dddd [scorso]', // Last week ( Last Monday at 2:30 AM )
     sameElse: 'DD/MM/YYYY' // Everything else ( 7/10/2011 )
   }
 }
