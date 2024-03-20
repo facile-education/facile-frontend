@@ -135,6 +135,7 @@ export default {
       .counts {
         display: flex;
         align-items: center;
+        white-space: nowrap;
         .nb-messages {
           color: $color-new-light-text;
           font-weight: normal;
