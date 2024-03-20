@@ -30,6 +30,7 @@
       </template>
 
       <template #body>
+        <WeprodeSpinner v-if="isLoading" />
         <!-- Recipients -->
         <div
           class="recipients-panel"
@@ -180,6 +181,7 @@ import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import messageService from '@/api/messaging/message.service'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import constants from '@/constants/messagingConstants'
@@ -199,6 +201,7 @@ let timeout
 export default {
   name: 'CreateMessageModal',
   components: {
+    WeprodeSpinner,
     CustomIcon,
     ContactPickerToolTip,
     ContactPickerModal,
@@ -411,12 +414,12 @@ export default {
         this.messageParameters.isReply || this.messageParameters.isReplyAll,
         this.messageParameters.isForward,
         false).then((data) => {
-        this.isLoading = false
-
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: successMessage, type: 'success' })
           // Wait a little before refreshing because sending is done in a new thread
           setTimeout(() => {
+            this.isLoading = false
+            this.$store.dispatch('popups/pushPopup', { message: successMessage, type: 'success' })
+
             if (this.$store.state.messaging.selectedMessages.length > 0) {
             // Message is selected -> reload parent thread
               for (const thread of this.$store.state.messaging.threads) {
@@ -441,8 +444,9 @@ export default {
               this.$store.dispatch('messaging/selectFolder', this.$store.state.messaging.currentFolder)
             }
             this.onClose()
-          }, 500)
+          }, 2000)
         } else {
+          this.isLoading = false
           console.error('Error while sending files')
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
           this.onClose()
