@@ -1544,7 +1544,7 @@
     },
     "TimeLineWeekItem": {
       "weekTitle": "Dal {firstWeekDay} al {lastWeekDay}",
-      "weekNumber": "Sett. {weekNumber}"
+      "weekNumber": "S.{weekNumber}"
     },
     "serviceTitle": "Orari"
   },
