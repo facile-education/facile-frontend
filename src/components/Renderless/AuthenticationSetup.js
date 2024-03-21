@@ -213,10 +213,9 @@ export default () => {
     // This authenticates through Shibboleth and MobileApplication too
     fetch(constants.BASE_API_URL + '/c/common/authentication-check').then(response => {
       response.json().then(data => {
-        
         if (response.status === 200 && data.isAuthenticated === true) {
           // store.commit('user/setPAuth', pAuth.value)
-          
+
           if (isMobileAppLoading.value) {
             // Manage mobile token
             let service = DASHBOARD
