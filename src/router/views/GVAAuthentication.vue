@@ -1,5 +1,10 @@
 <template>
   <h1 :aria-label="$t('Authentication.title')" />
+  <span
+      v-if="isIdpAuthenticated"
+      v-t="'Authentication.sessionErrorMessage'"
+      class="errorMessage"
+  />
   <div class="wrapper">
     <img
       src="@assets/images/gva/logo_eel.png"

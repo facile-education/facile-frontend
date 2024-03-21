@@ -27,6 +27,7 @@ export default () => {
   const recoveryLogin = ref('')
   const passwordRecoveryUrl = ref(constants.BASE_API_URL + '/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=/login/forgot_password&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=/login/forgot_password')
   const checkEmail = ref(false)
+  const isIdpAuthenticated = ref(false)
 
   // Computed properties
   const isMobileApp = computed(() => {
@@ -208,37 +209,35 @@ export default () => {
       setCookie('COOKIE_SUPPORT', true, 365)
     }
 
-    // Using fetch instead of axios to avoid intercept loop
-    // This authenticates through Shibboleth and MobileApplication
-    fetch(constants.P_AUTH_URL).then(response => { if (response.status === 200) { return response.text() } }).then(response => {
-      if (response !== undefined) {
-        pAuth.value = response.trim()
-
-        // Check if already authenticated
-        fetch(constants.JSON_WS_URL + USER_PATH + GET_USER_INFOS_WS + '?p_auth=' + pAuth.value).then(response => {
-          if (response.status === 200) {
-            store.commit('user/setPAuth', pAuth.value)
-
-            if (isMobileAppLoading.value) {
-              // Manage mobile token
-              let service = DASHBOARD
-              if (window.location.href.includes('service')) {
-                service = new URLSearchParams(window.location.search).get('service')
-              }
-              response.json().then(data => {
-                if (window.location.href.includes('mobile_token')) {
-                  refreshMobileToken(data.userId, service)
-                } else {
-                  addMobileToken(data.userId, service)
-                }
-              })
-            } else {
-              router.push(DASHBOARD)
+    // Check if already authenticated
+    // This authenticates through Shibboleth and MobileApplication too
+    fetch(constants.BASE_API_URL + '/c/common/authentication-check').then(response => {
+      response.json().then(data => {
+        
+        if (response.status === 200 && data.isAuthenticated === true) {
+          // store.commit('user/setPAuth', pAuth.value)
+          
+          if (isMobileAppLoading.value) {
+            // Manage mobile token
+            let service = DASHBOARD
+            if (window.location.href.includes('service')) {
+              service = new URLSearchParams(window.location.search).get('service')
             }
+            response.json().then(data => {
+              if (window.location.href.includes('mobile_token')) {
+                refreshMobileToken(data.userId, service)
+              } else {
+                addMobileToken(data.userId, service)
+              }
+            })
+          } else {
+            router.push(DASHBOARD)
           }
-          // Else replace token with mobileApp=true if existing
-        })
-      }
+        } else if (data.hasIdpSession) {
+          isIdpAuthenticated.value = true
+        }
+      })
+      // Else replace token with mobileApp=true if existing
     })
   })
 
@@ -251,6 +250,7 @@ export default () => {
     pAuth,
     isError,
     isLocked,
+    isIdpAuthenticated,
     lockoutDuration,
     nbRemainingTries,
     showPasswordRecoveryForm,

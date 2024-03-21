@@ -1,6 +1,11 @@
 <template>
   <h1 :aria-label="$t('Authentication.title')" />
   <div class="wrapper">
+    <span
+      v-if="isIdpAuthenticated"
+      v-t="'Authentication.sessionErrorMessage'"
+      class="errorMessage"
+    />
     <a
       id="academic"
       :href="edulogUrl"
