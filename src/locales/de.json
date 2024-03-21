@@ -280,7 +280,7 @@
     "h5p": "H5P",
     "horaires": "Zeitpläne",
     "horaires-admin": "Zeitpläne",
-    "horaires-hors-cadre": "Außerhalb des Rahmenzeitplans",
+    "horaires-hors-cadre": "Schulpläne",
     "maintenance": "Wartung",
     "messaging": "Nachrichten",
     "NotFound": "404 Nicht gefunden",
@@ -305,9 +305,9 @@
       "groups": "bereiche",
       "grr": "grr",
       "h5p": "h5p",
-      "horaires": "zeitpläne",
-      "horaires-admin": "verwaltung-zeitpläne",
-      "horaires-hors-cadre": "außerhalb-des-rahmenzeitplans",
+      "horaires": "zeitplane",
+      "horaires-admin": "verwaltung-zeitplane",
+      "horaires-hors-cadre": "Schulplane",
       "maintenance": "wartung",
       "messaging": "nachrichten",
       "statistics": "statistiken",
@@ -1967,7 +1967,7 @@
       "noClass": "Kein Unterricht"
     },
     "UserCardHHC": {
-      "hhcTitle": "Außerhalb des Stundenplans"
+      "hhcTitle": "Schulpläne"
     }
   },
   "AccessManager": {
