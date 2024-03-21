@@ -17,6 +17,8 @@
 
 <script>
 import '@ckeditor/ckeditor5-build-inline/build/translations/fr'
+import '@ckeditor/ckeditor5-build-inline/build/translations/de'
+import '@ckeditor/ckeditor5-build-inline/build/translations/it'
 
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
 import { defineAsyncComponent } from 'vue'
