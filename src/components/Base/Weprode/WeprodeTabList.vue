@@ -132,18 +132,18 @@ export default {
 .title {
   display: flex;
   align-items: center;
+  gap: 4px;
   padding: 0 1rem;
   height: 1.5rem;
   margin-bottom: 8px;
 
   img {
     height: 20px;
-    margin-right: 0.5rem;
+    margin-right: 4px;
   }
 
   .font-icon {
     font-size: 1.5rem;
-    margin-right: 0.3rem;
   }
 }
 </style>
