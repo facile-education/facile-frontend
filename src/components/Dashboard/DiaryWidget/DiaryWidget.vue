@@ -19,9 +19,10 @@
     />
     <div
       v-else-if="eventList.length === 0 && !isFirstLoad"
-      v-t="unReadOnly ? 'Dashboard.DiaryWidget.unReadEmptyPlaceholder' : 'Dashboard.DiaryWidget.emptyPlaceholder'"
       class="placeholder"
-    />
+    >
+      {{ $t(unReadOnly ? 'Dashboard.DiaryWidget.unReadEmptyPlaceholder' : 'Dashboard.DiaryWidget.emptyPlaceholder') }}
+    </div>
     <div v-else>
       <div class="events-by-month">
         <div

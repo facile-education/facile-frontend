@@ -18,9 +18,10 @@
     />
     <div
       v-else-if="homeworkList.length === 0 && !isFirstLoad"
-      v-t="'Dashboard.HomeworkWidget.emptyPlaceholder'"
       class="placeholder"
-    />
+    >
+      {{ $t('Dashboard.HomeworkWidget.emptyPlaceholder') }}
+    </div>
     <div v-else>
       <ul class="homeworks-by-day">
         <li

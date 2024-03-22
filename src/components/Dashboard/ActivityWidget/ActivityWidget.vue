@@ -27,9 +27,10 @@
     />
     <div
       v-else-if="readActivities.length === 0 && unreadActivities.length === 0 && !isFirstLoad"
-      v-t="'Dashboard.ActivityWidget.emptyPlaceholder'"
       class="placeholder"
-    />
+    >
+      {{ $t('Dashboard.ActivityWidget.emptyPlaceholder') }}
+    </div>
     <div
       v-else
       ref="scroll"

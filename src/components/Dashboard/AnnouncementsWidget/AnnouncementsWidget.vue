@@ -24,9 +24,10 @@
     />
     <div
       v-else-if="announcementsList.length === 0 && !isFirstLoad"
-      v-t="unReadOnly ? 'Dashboard.AnnouncementsWidget.unReadEmptyPlaceholder' : 'Dashboard.AnnouncementsWidget.emptyPlaceholder'"
       class="placeholder"
-    />
+    >
+      {{ $t(unReadOnly ? 'Dashboard.AnnouncementsWidget.unReadEmptyPlaceholder' : 'Dashboard.AnnouncementsWidget.emptyPlaceholder') }}
+    </div>
     <div v-else>
       <div class="announcements-container">
         <div
