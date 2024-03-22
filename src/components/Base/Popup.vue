@@ -14,10 +14,7 @@
         :name="iconName"
       />
     </div>
-    <div
-      class="message"
-      @click="isMounted = true"
-    >
+    <div class="message">
       {{ message }}
     </div>
     <button
