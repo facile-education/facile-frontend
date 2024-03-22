@@ -225,7 +225,7 @@ export default {
           ? this.$t('Dashboard.SaveDiaryEventModal.sizeLimit', { maxSize: inputMaxSize })
           : '',
         description: (this.v$.description.$invalid && this.v$.description.$dirty)
-          ? this.$t('Dashboard.SaveDiaryEventModal.sizeLimit1', { maxSize: ckMaxSize })
+          ? this.$t('Dashboard.SaveDiaryEventModal.sizeLimit', { maxSize: ckMaxSize })
           : '',
         populations: (this.v$.populations.$invalid && this.v$.populations.$dirty)
           ? this.$t('Dashboard.SaveDiaryEventModal.selectPopulations')

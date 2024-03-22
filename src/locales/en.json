@@ -169,7 +169,8 @@
     "DocumentDetailsModal": {
       "noData": "There is no information to display",
       "noDocumentSelected": "No document selected",
-      "selectedDocuments": "{n} documents selected"
+      "selectedDocuments": "{n} documents selected",
+      "tooManyData": "Too many documents selected"
     },
     "DocumentDetails": {
       "close": "Close",
@@ -1010,7 +1011,7 @@
     },
     "WorkLoadModal": {
       "errorPlaceholder": "Oops, an error occurred...",
-      "nbSelectedStudents": "no student from | {count} student from | {count} students from ",
+      "nbSelectedStudents": "no student from | {count} student from | {count} students from",
       "WorkLoadFor": "Workload for {populationName}"
     },
     "course": "Course",
@@ -1045,7 +1046,7 @@
       "newsSince": "What's new since {date}"
     },
     "DocActivity": {
-      "activityTimeFormat": "MMM DD, YYYY at HH:mm",
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
       "TYPE_FILE_CREATION": "shared the file ",
       "TYPE_FILE_MODIFICATION": "renamed the file ",
       "TYPE_FILE_MOVE": "moved the file ",
@@ -1056,7 +1057,7 @@
       "TYPE_FOLDER_DELETION": "deleted the folder"
     },
     "ExpiredGroupActivity": {
-      "activityTimeFormat": "MMM DD, YYYY at HH:mm",
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
       "spaceIsDeactivated": "The space is deactivated. Do you want to ",
       "deactivation": "Deactivate",
       "reactivate": "reactivate",
@@ -1064,14 +1065,14 @@
       "extension-success": "Group reactivated"
     },
     "HHCActivity": {
-      "activityTimeFormat": "MMM DD, YYYY at HH:mm",
-      "courseDateFormat": "MMM DD, YYYY at HH:mm'",
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
+      "courseDateFormat": "MMM DD, YYYY [at] HH:mm'",
       "TYPE_SCHOOL_RENVOI": "has dismissed {firedUser} from the {courseName} course on {courseDate}",
       "TYPE_PENDING_RENVOI": "Remember to justify the dismissal of {firedUser} from the {courseName} course on {courseDate} ",
       "setFiringReason": "Dismissal justification"
     },
     "MembershipActivity": {
-      "activityTimeFormat": "MMM DD, YYYY at HH:mm",
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
       "addedYou": "added you to this space",
       "added": "added ",
       "removedYou": "removed you from this space",
@@ -1081,7 +1082,7 @@
       "fromThisSpace": "from this space"
     },
     "NewsActivity": {
-      "activityTimeFormat": "MMM DD, YYYY at HH:mm",
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
       "see": "See",
       "groups-activity": "My groups' activity feed",
       "update": "Update",
@@ -1093,7 +1094,7 @@
       "show": "Show"
     },
     "SessionActivity": {
-      "activityTimeFormat": "MMM DD, YYYY at HH:mm",
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
       "TYPE_SESSION": "added a support to the {courseDate} course",
       "TYPE_HOMEWORK": "assigned homework for the {homeworkDate} course",
       "unknown-activity": "Unknown activity"
@@ -1172,7 +1173,7 @@
       "errorPlaceholder": "Oops, an error occurred...",
       "hourRangeFormat": "From {fromHour} to {endHour}",
       "dayRangeFormat": "From {fromDate} to {endDate}",
-      "sameYearDateFormat": "dddd, DD MMMM at HH:mm",
+      "sameYearDateFormat": "dddd, DD MMMM [at] HH:mm",
       "otherYearDateFormat": "DD-MM-YY HH:mm",
       "by": "By ",
       "populations": "Sent to",

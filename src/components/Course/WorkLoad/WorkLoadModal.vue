@@ -9,7 +9,7 @@
     @close="$emit('close')"
   >
     <template #header>
-      <span>{{ $t('Course.WorkLoadModal.WorkLoadFor', {populationName: (!isWholeClass ? $tc('Course.WorkLoadModal.nbSelectedStudents', selectedStudents.length) : '') + courseName}) }}</span>
+      <span>{{ $t('Course.WorkLoadModal.WorkLoadFor', {populationName: (!isWholeClass ? $tc('Course.WorkLoadModal.nbSelectedStudents', selectedStudents.length) + ' ' : '') + courseName}) }}</span>
     </template>
 
     <template #body>

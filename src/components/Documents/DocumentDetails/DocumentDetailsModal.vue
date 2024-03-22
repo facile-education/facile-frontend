@@ -35,7 +35,7 @@
         />
         <p
           v-else-if="selectedDocuments.length > 1"
-          v-t="('tooManyData')"
+          v-t="('Documents.DocumentDetailsModal.tooManyData')"
           class="placeholder"
         />
       </div>

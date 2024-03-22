@@ -92,6 +92,11 @@
     "subEntityFailedDelete": "Das Unterlement {entityName} kann nicht gelöscht werden",
     "unKnownSubEntityFailedDelete": "Ein verstecktes Unterlement verhindert das vollständige Löschen des Ordners",
     "uploadError": "Beim Hochladen ist ein Fehler aufgetreten",
+    "deletionWarning": "Dieses Dokument geht endgültig verloren",
+    "moveInCurrentFolder": "Das Zielverzeichnis ist dasselbe wie das Startverzeichnis!",
+    "serviceTitle": "Meine Dokumente",
+    "rootCollaborativeUploadForbidden": "Das Hinzufügen eines Dokuments hier ist nicht erlaubt",
+    "missingPastePermissions": "Einfügen hier nicht erlaubt",
     "documentFields": {
       "creationDate": "Erstellt",
       "downloadCount": "Downloads",
@@ -170,7 +175,8 @@
       "close": "Schließen",
       "noData": "Es sind keine Informationen verfügbar",
       "noDocumentSelected": "Kein Dokument ausgewählt",
-      "selectedDocuments": "{n} ausgewählte Dokumente"
+      "selectedDocuments": "{n} ausgewählte Dokumente",
+      "tooManyData": "Zu viele Dokumente ausgewählt"
     },
     "DocumentVersion": {
       "restoredVersion": "Wiederhergestellte Version"
@@ -249,12 +255,7 @@
       "Secretaire": "Sekretär",
       "SiteAdministrator": "Website-Administrator",
       "SiteOwner": "Website-Ersteller"
-    },
-    "deletionWarning": "Dieses Dokument geht endgültig verloren",
-    "moveInCurrentFolder": "Das Zielverzeichnis ist dasselbe wie das Startverzeichnis!",
-    "serviceTitle": "Meine Dokumente",
-    "rootCollaborativeUploadForbidden": "Das Hinzufügen eines Dokuments hier ist nicht erlaubt",
-    "missingPastePermissions": "Einfügen hier nicht erlaubt"
+    }
   },
   "Menu": {
     "access-admin": "Zugriff",
@@ -307,7 +308,7 @@
       "h5p": "h5p",
       "horaires": "zeitplane",
       "horaires-admin": "verwaltung-zeitplane",
-      "horaires-hors-cadre": "Schulplane",
+      "horaires-hors-cadre": "schulplane",
       "maintenance": "wartung",
       "messaging": "nachrichten",
       "statistics": "statistiken",
@@ -1010,7 +1011,7 @@
     },
     "WorkLoadModal": {
       "errorPlaceholder": "Hoppla, ein Fehler ist aufgetreten...",
-      "nbSelectedStudents": "kein Schüler aus | {count} Schüler aus | {count} Schüler aus ",
+      "nbSelectedStudents": "kein Schüler aus | {count} Schüler aus | {count} Schüler aus",
       "WorkLoadFor": "Arbeitsbelastung für {populationName}"
     },
     "course": "Kurs",
@@ -1045,7 +1046,7 @@
       "newsSince": "Neuigkeiten seit {date}"
     },
     "DocActivity": {
-      "activityTimeFormat": "DD MMMM YYYY um HH:mm",
+      "activityTimeFormat": "DD MMMM YYYY [um] HH:mm",
       "TYPE_FILE_CREATION": "hat die Datei geteilt ",
       "TYPE_FILE_MODIFICATION": "hat die Datei umbenannt ",
       "TYPE_FILE_MOVE": "hat die Datei verschoben ",
@@ -1056,7 +1057,7 @@
       "TYPE_FOLDER_DELETION": "hat das Verzeichnis gelöscht"
     },
     "ExpiredGroupActivity": {
-      "activityTimeFormat": "DD MMMM YYYY um HH:mm",
+      "activityTimeFormat": "DD MMMM YYYY [um] HH:mm",
       "spaceIsDeactivated": "Der Raum ist deaktiviert. Möchten Sie es ",
       "deactivation": "Deaktivierung",
       "reactivate": "reaktivieren",
@@ -1064,14 +1065,14 @@
       "extension-success": "Gruppe reaktiviert"
     },
     "HHCActivity": {
-      "activityTimeFormat": "DD MMMM YYYY um HH:mm",
-      "courseDateFormat": "DD MMMM YYYY um HH:mm'",
+      "activityTimeFormat": "DD MMMM YYYY [um] HH:mm",
+      "courseDateFormat": "DD MMMM YYYY [um] HH:mm'",
       "TYPE_SCHOOL_RENVOI": "hat {firedUser} vom Kurs {courseName} vom {courseDate} verwiesen",
       "TYPE_PENDING_RENVOI": "Denken Sie daran, {firedUser} vom Kurs {courseName} vom {courseDate} zu verweisen",
       "setFiringReason": "Entlassungsgrund angeben"
     },
     "MembershipActivity": {
-      "activityTimeFormat": "DD MMMM YYYY um HH:mm",
+      "activityTimeFormat": "DD MMMM YYYY [um] HH:mm",
       "addedYou": "hat Sie in diesen Raum eingetragen",
       "added": "hat hinzugefügt ",
       "removedYou": "hat Sie aus diesem Raum ausgetragen",
@@ -1081,7 +1082,7 @@
       "fromThisSpace": "aus diesem Raum"
     },
     "NewsActivity": {
-      "activityTimeFormat": "DD MMMM YYYY um HH:mm",
+      "activityTimeFormat": "DD MMMM YYYY [um] HH:mm",
       "see": "Sehen",
       "groups-activity": "Aktivitätsverlauf meiner Gruppen",
       "update": "Bearbeiten",
@@ -1093,7 +1094,7 @@
       "show": "Anzeigen"
     },
     "SessionActivity": {
-      "activityTimeFormat": "DD MMMM YYYY um HH:mm",
+      "activityTimeFormat": "DD MMMM YYYY [um] HH:mm",
       "TYPE_SESSION": "hat eine Unterstützung zum Kurs {courseDate} hinzugefügt",
       "TYPE_HOMEWORK": "hat Hausaufgaben für den Kurs am {homeworkDate} gegeben",
       "unknown-activity": "Unbekannte Aktivität"
@@ -1172,7 +1173,7 @@
       "errorPlaceholder": "Hoppla, ein Fehler ist aufgetreten...",
       "hourRangeFormat": "Von {fromHour} bis {endHour}",
       "dayRangeFormat": "Von {fromDate} bis {endDate}",
-      "sameYearDateFormat": "dddd DD MMMM um HH:mm",
+      "sameYearDateFormat": "dddd DD MMMM [um] HH:mm",
       "otherYearDateFormat": "DD-MM-YY HH:mm",
       "by": "Von ",
       "populations": "Veröffentlicht an",

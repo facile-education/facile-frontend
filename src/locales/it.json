@@ -92,6 +92,11 @@
     "subEntityFailedDelete": "Impossibile eliminare il sotto elemento {entityName}",
     "unKnownSubEntityFailedDelete": "Un sotto elemento nascosto impedisce l'eliminazione completa della cartella",
     "uploadError": "Si è verificato un errore durante il caricamento",
+    "deletionWarning": "Questo documento verrà eliminato definitivamente",
+    "moveInCurrentFolder": "La cartella di destinazione è la stessa della partenza!",
+    "serviceTitle": "I miei documenti",
+    "rootCollaborativeUploadForbidden": "Non è consentito aggiungere un documento qui",
+    "missingPastePermissions": "Incolla non consentito qui",
     "documentFields": {
       "creationDate": "Creazione",
       "downloadCount": "Download",
@@ -164,7 +169,8 @@
     "DocumentDetailsModal": {
       "noData": "Non ci sono informazioni da visualizzare",
       "noDocumentSelected": "Nessun documento selezionato",
-      "selectedDocuments": "{n} documenti selezionati"
+      "selectedDocuments": "{n} documenti selezionati",
+      "tooManyData": "Troppi documenti selezionati"
     },
     "DocumentDetails": {
       "close": "Chiudi",
@@ -249,12 +255,7 @@
       "Secretaire": "Segretario",
       "SiteAdministrator": "Admin. del sito",
       "SiteOwner": "Proprietario del sito"
-    },
-    "deletionWarning": "Questo documento verrà eliminato definitivamente",
-    "moveInCurrentFolder": "La cartella di destinazione è la stessa della partenza!",
-    "serviceTitle": "I miei documenti",
-    "rootCollaborativeUploadForbidden": "Non è consentito aggiungere un documento qui",
-    "missingPastePermissions": "Incolla non consentito qui"
+    }
   },
   "Menu": {
     "access-admin": "Accesso",
@@ -1010,7 +1011,7 @@
     },
     "WorkLoadModal": {
       "errorPlaceholder": "Ops, si è verificato un errore...",
-      "nbSelectedStudents": "nessuno studente su | {count} studente su | {count} studenti su ",
+      "nbSelectedStudents": "nessuno studente su | {count} studente su | {count} studenti su",
       "WorkLoadFor": "Carico di lavoro per {populationName}"
     },
     "course": "Corso",
@@ -1045,7 +1046,7 @@
       "newsSince": "Novità dal {date}"
     },
     "DocActivity": {
-      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "activityTimeFormat": "[Il] DD MMMM YYYY [alle] HH:mm",
       "TYPE_FILE_CREATION": "ha condiviso il file ",
       "TYPE_FILE_MODIFICATION": "ha rinominato il file ",
       "TYPE_FILE_MOVE": "ha spostato il file ",
@@ -1056,7 +1057,7 @@
       "TYPE_FOLDER_DELETION": "ha eliminato la cartella"
     },
     "ExpiredGroupActivity": {
-      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "activityTimeFormat": "[Il] DD MMMM YYYY [alle] HH:mm",
       "spaceIsDeactivated": "Lo spazio è disattivato. Vuoi ",
       "deactivation": "Disattivare",
       "reactivate": "riattivarlo",
@@ -1064,14 +1065,14 @@
       "extension-success": "Gruppo riattivato"
     },
     "HHCActivity": {
-      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
-      "courseDateFormat": "DD MMMM YYYY alle HH:mm'",
+      "activityTimeFormat": "[Il] DD MMMM YYYY [alle] HH:mm",
+      "courseDateFormat": "DD MMMM YYYY [alle] HH:mm'",
       "TYPE_SCHOOL_RENVOI": "ha cacciato {firedUser} dal corso di {courseName} del {courseDate}",
       "TYPE_PENDING_RENVOI": "Ricorda di motivare il licenziamento di {firedUser} dal corso di {courseName} del {courseDate} ",
       "setFiringReason": "Motivazione del licenziamento"
     },
     "MembershipActivity": {
-      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "activityTimeFormat": "[Il] DD MMMM YYYY [alle] HH:mm",
       "addedYou": "ti ha iscritto in questo spazio",
       "added": "ha iscritto ",
       "removedYou": "ti ha disiscritto da questo spazio",
@@ -1081,7 +1082,7 @@
       "fromThisSpace": "da questo spazio"
     },
     "NewsActivity": {
-      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "activityTimeFormat": "[Il] DD MMMM YYYY [alle] HH:mm",
       "see": "Vedi",
       "groups-activity": "Feed delle attività dei miei gruppi",
       "update": "Aggiorna",
@@ -1093,7 +1094,7 @@
       "show": "Mostra"
     },
     "SessionActivity": {
-      "activityTimeFormat": "Il DD MMMM YYYY alle HH:mm",
+      "activityTimeFormat": "[Il] DD MMMM YYYY [alle] HH:mm",
       "TYPE_SESSION": "ha aggiunto un supporto al corso del {courseDate}",
       "TYPE_HOMEWORK": "ha assegnato compiti per il corso del {homeworkDate}",
       "unknown-activity": "Attività sconosciuta"
@@ -1172,7 +1173,7 @@
       "errorPlaceholder": "Ops, si è verificato un errore...",
       "hourRangeFormat": "Da {fromHour} a {endHour}",
       "dayRangeFormat": "Dal {fromDate} al {endDate}",
-      "sameYearDateFormat": "dddd DD MMMM alle HH:mm",
+      "sameYearDateFormat": "dddd DD MMMM [alle] HH:mm",
       "otherYearDateFormat": "DD-MM-YY HH:mm",
       "by": "Da ",
       "populations": "Diffuso a",

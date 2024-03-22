@@ -245,7 +245,7 @@ export default {
       } else if (publicationDate.isAfter(dayjs())) {
         return this.$t('Course.SessionDetails.scheduled')
       } else {
-        return this.$t('Course.SessionDetails.publishedOn', { datelabel: publicationDate.format('DD/MM/YYYY') })
+        return this.$t('Course.SessionDetails.publishedOn', { dateLabel: publicationDate.format('DD/MM/YYYY') })
       }
     },
     formattedFuturePublicationDate () {

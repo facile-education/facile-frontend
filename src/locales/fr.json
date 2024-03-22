@@ -92,6 +92,11 @@
     "subEntityFailedDelete": "Le sous élément {entityName} ne peut pas être supprimé",
     "unKnownSubEntityFailedDelete": "Un sous élément caché empêche la suppression complète du dossier",
     "uploadError": "Une erreur est survenue lors du téléversement",
+    "deletionWarning": "Ce document sera définitivement perdu",
+    "moveInCurrentFolder": "Le dossier de destination est le même que celui de départ!",
+    "serviceTitle": "Mes documents",
+    "rootCollaborativeUploadForbidden": "Il n'est pas autorisé d'ajouter un document ici",
+    "missingPastePermissions": "Dépose non autorisée ici",
     "documentFields": {
       "creationDate": "Création",
       "downloadCount": "Téléchargements",
@@ -164,7 +169,8 @@
     "DocumentDetailsModal": {
       "noData": "Il n'y a aucune information à afficher",
       "noDocumentSelected": "Aucun document sélectionné",
-      "selectedDocuments": "{n} documents sélectionnés"
+      "selectedDocuments": "{n} documents sélectionnés",
+      "tooManyData": "Trop de documents sélectionnés"
     },
     "DocumentDetails": {
       "close": "Fermer",
@@ -249,12 +255,7 @@
       "Secretaire": "Secrétaire",
       "SiteAdministrator": "Admin. de site",
       "SiteOwner": "Créateur·trice de site"
-    },
-    "deletionWarning": "Ce document sera définitivement perdu",
-    "moveInCurrentFolder": "Le dossier de destination est le même que celui de départ!",
-    "serviceTitle": "Mes documents",
-    "rootCollaborativeUploadForbidden": "Il n'est pas autorisé d'ajouter un document ici",
-    "missingPastePermissions": "Dépose non autorisée ici"
+    }
   },
   "Menu": {
     "access-admin": "Accès",
@@ -1010,7 +1011,7 @@
     },
     "WorkLoadModal": {
       "errorPlaceholder": "Oups, une erreur est survenue...",
-      "nbSelectedStudents": "aucun élève de | {count} élève de | {count} élèves de ",
+      "nbSelectedStudents": "aucun élève de | {count} élève de | {count} élèves de",
       "WorkLoadFor": "Charge de travail de {populationName}"
     },
     "course": "Cours",
@@ -1045,7 +1046,7 @@
       "newsSince": "Nouveautés depuis le {date}"
     },
     "DocActivity": {
-      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
+      "activityTimeFormat": "[Le] DD MMMM YYYY [à] HH:mm",
       "TYPE_FILE_CREATION": "a partagé le fichier ",
       "TYPE_FILE_MODIFICATION": "a renommé le fichier ",
       "TYPE_FILE_MOVE": "a déplacé le fichier ",
@@ -1056,7 +1057,7 @@
       "TYPE_FOLDER_DELETION": "a supprimé le dossier"
     },
     "ExpiredGroupActivity": {
-      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
+      "activityTimeFormat": "[Le] DD MMMM YYYY [à] HH:mm",
       "spaceIsDeactivated": "L'espace est désactivé. Voulez vous le ",
       "deactivation": "Désactivation",
       "reactivate": "réactiver",
@@ -1064,14 +1065,14 @@
       "extension-success": "Groupe réactivé"
     },
     "HHCActivity": {
-      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
-      "courseDateFormat": "DD MMMM YYYY à HH:mm'",
+      "activityTimeFormat": "[Le] DD MMMM YYYY [à] HH:mm",
+      "courseDateFormat": "DD MMMM YYYY [à] HH:mm'",
       "TYPE_SCHOOL_RENVOI": "a renvoyé {firedUser} du cours de {courseName} du {courseDate}",
       "TYPE_PENDING_RENVOI": "Pensez à motiver le renvoi de {firedUser} du cours de {courseName} du {courseDate} ",
       "setFiringReason": "Motivation de renvoi"
     },
     "MembershipActivity": {
-      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
+      "activityTimeFormat": "[Le] DD MMMM YYYY [à] HH:mm",
       "addedYou": "vous a inscrit dans cet espace",
       "added": "a inscrit ",
       "removedYou": "vous a désinscrit de cet espace",
@@ -1081,7 +1082,7 @@
       "fromThisSpace": "de cet espace"
     },
     "NewsActivity": {
-      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
+      "activityTimeFormat": "[Le] DD MMMM YYYY [à] HH:mm",
       "see": "Voir",
       "groups-activity": "Fil d'activité de mes groupes",
       "update": "Modifier",
@@ -1093,7 +1094,7 @@
       "show": "Voir"
     },
     "SessionActivity": {
-      "activityTimeFormat": "Le DD MMMM YYYY à HH:mm",
+      "activityTimeFormat": "[Le] DD MMMM YYYY [à] HH:mm",
       "TYPE_SESSION": "a ajouté un support au cours du {courseDate}",
       "TYPE_HOMEWORK": "a donné du travail pour le cours du {homeworkDate}",
       "unknown-activity": "Activité inconnue"
@@ -1172,7 +1173,7 @@
       "errorPlaceholder": "Oups, une erreur est survenue...",
       "hourRangeFormat": "De {fromHour} à {endHour}",
       "dayRangeFormat": "Du {fromDate} au {endDate}",
-      "sameYearDateFormat": "dddd DD MMMM à HH:mm",
+      "sameYearDateFormat": "dddd DD MMMM [à] HH:mm",
       "otherYearDateFormat": "DD-MM-YY HH:mm",
       "by": "Par ",
       "populations": "Diffusé à",

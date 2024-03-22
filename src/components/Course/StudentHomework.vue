@@ -80,7 +80,7 @@ export default {
     dateLabel () {
       let label = this.$t('Course.StudentHomework.given', { date: this.givenDate.format('DD MMMM') })
       if (this.givenDate.isBefore(this.modifiedDate)) {
-        label += `(${this.$t('Course.StudentHomework.modified', { date: this.modifiedDate.format('DD MMMM à HH:mm') })})`
+        label += ` (${this.$t('Course.StudentHomework.modified', { date: this.modifiedDate.format('DD MMMM à HH:mm') })})`
       }
 
       return label

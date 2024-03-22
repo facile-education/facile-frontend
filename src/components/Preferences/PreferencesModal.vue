@@ -76,7 +76,7 @@ export default {
       this.$store.dispatch('messaging/closeParametersModal')
     },
     updateInfoLabel () {
-      this.infoLabel = this.$t('Preferences.PreferencesModal.infoLabel', { timeStamp: dayjs().format('HH:mm') })
+      this.infoLabel = this.$t('Preferences.PreferencesModal.infoLabel', { timestamp: dayjs().format('HH:mm') })
     }
   }
 }
