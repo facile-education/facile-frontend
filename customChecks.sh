@@ -37,8 +37,23 @@ function count_lang_key {
   fi
 }
 
+different_keys=false
+first_lang_nb_key=0
+
 # Check line number in translation files
 for language in "${languages[@]}"; do
   current_lang_nb_key=$(count_lang_key "$locale_folder" "$language")
   echo "$current_lang_nb_key translation key for language $language"
+
+  # Check if there if differences between lang
+  if [ "$first_lang_nb_key" -eq 0 ]; then
+    first_lang_nb_key=$current_lang_nb_key
+  elif [ "$current_lang_nb_key" -ne "$first_lang_nb_key" ]; then
+    different_keys=true
+    break
+  fi
 done
+if [ "$different_keys" = true ]; then
+  echo "The number of translation keys is different for at least one language"
+  exit 1
+fi
