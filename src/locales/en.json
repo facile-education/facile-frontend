@@ -1965,6 +1965,9 @@
       "currently": "Currently",
       "currentlyClass": "Currently: from {startHour} to {endHour}",
       "noClass": "No class"
+    },
+    "UserCardHHC": {
+      "hhcTitle": "School schedules"
     }
   },
   "AccessManager": {
