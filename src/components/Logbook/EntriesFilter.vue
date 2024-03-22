@@ -89,6 +89,13 @@ export default {
       return this.$store.state.user.isSecretariat
     }
   },
+  watch: {
+    tagsList (newList) {
+      if (newList.length === 0) {
+        this.$store.commit('user/setSelectedClass', this.teacherClasses[0])
+      }
+    }
+  },
   created () {
     if (this.isDirector || this.isSecretariat || this.isTeacher) {
       getLogbookBroadcastPopulations().then(data => {
