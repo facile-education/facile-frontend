@@ -4,7 +4,7 @@ npm-build:
   script:
     - npm install --progress=false
     - npm run lint
-    - ./customChecks.sh
+    - pwd && ls -lah && ./customChecks.sh
     - npm run build
   artifacts:
     expire_in: 1 week
