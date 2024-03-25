@@ -11,7 +11,7 @@ npm-build:
     - npm run lint
     - npm run build
   needs:
-    - custom-checks
+    - translation-check
   artifacts:
     expire_in: 1 week
     paths:
