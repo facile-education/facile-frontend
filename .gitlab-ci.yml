@@ -1,7 +1,7 @@
-custom-checks:
+translation-check:
   stage: build
   script:
-    - bash customChecks.sh
+    - bash translationCheck.sh
 
 npm-build:
   image: node:16-alpine
@@ -11,7 +11,7 @@ npm-build:
     - npm run lint
     - npm run build
   needs:
-    - custom-checks # Needs previous job artifacts
+    - custom-checks
   artifacts:
     expire_in: 1 week
     paths:
