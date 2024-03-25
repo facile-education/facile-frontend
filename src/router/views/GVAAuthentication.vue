@@ -1,16 +1,16 @@
 <template>
   <h1 :aria-label="$t('Authentication.title')" />
-  <span
-    v-if="isIdpAuthenticated"
-    v-t="'Authentication.sessionErrorMessage'"
-    class="errorMessage"
-  />
   <div class="wrapper">
     <img
       src="@assets/images/gva/logo_eel.png"
       :alt="$t('Authentication.eelImg')"
       class="eel-img"
     >
+    <span
+      v-if="isIdpAuthenticated"
+      v-t="'Authentication.sessionErrorMessage'"
+      class="errorMessage idp-session"
+    />
     <a
       id="academic"
       v-t="'Authentication.studentTeacher'"
@@ -210,6 +210,12 @@ $eel-blue: #2c7bb8;
 .eel-img {
   margin-bottom: 1.5rem;
   width: 100%;
+}
+
+.idp-session {
+  text-align: center;
+  background-color: rgba($error-color, .07);
+  padding: 1rem;
 }
 
 .gva-img {

@@ -2022,6 +2022,7 @@
     "loginLabel": "Inserisci il tuo ID. Riceverai un link per reimpostare la password dell'ENTA all'indirizzo email associato al tuo account.",
     "loginPlaceholder": "ID",
     "send-recovery": "Invia",
+    "sessionErrorMessage": "Non riusciamo a identificarti, ti preghiamo di contattare la tua istituzione scolastica.",
     "main-form": "Torna al modulo principale",
     "showPassword": "Mostra",
     "check-email": "Controlla la tua email",

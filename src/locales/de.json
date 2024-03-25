@@ -2022,6 +2022,7 @@
     "loginLabel": "Geben Sie Ihren Benutzernamen ein. Sie erhalten einen Link zur Zurücksetzung Ihres ENTA-Passworts an die mit Ihrem Konto verknüpfte E-Mail-Adresse.",
     "loginPlaceholder": "Benutzername",
     "send-recovery": "Senden",
+    "sessionErrorMessage": "Wir können Sie nicht identifizieren, bitte kontaktieren Sie Ihre Schuleinrichtung.",
     "main-form": "Zurück zum Formular",
     "showPassword": "Passwort anzeigen",
     "check-email": "Überprüfen Sie Ihre E-Mail",

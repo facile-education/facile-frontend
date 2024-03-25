@@ -4,7 +4,7 @@
     <span
       v-if="isIdpAuthenticated"
       v-t="'Authentication.sessionErrorMessage'"
-      class="errorMessage"
+      class="errorMessage idp-session"
     />
     <a
       id="academic"
@@ -190,6 +190,13 @@ export default {
 
 <style lang="scss" scoped>
 @import "@design";
+
+.idp-session {
+  text-align: center;
+  background-color: rgba($error-color, .07);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
 
 .wrapper {
   position: relative;

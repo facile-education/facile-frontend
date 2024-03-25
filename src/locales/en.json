@@ -2022,6 +2022,7 @@
     "loginLabel": "Enter your username. You will receive a password reset link for your ENTA account on the email associated with your account.",
     "loginPlaceholder": "Username",
     "send-recovery": "Send",
+    "sessionErrorMessage": "We are unable to identify you, please contact your school institution.",
     "main-form": "Back to form",
     "showPassword": "Show",
     "check-email": "Check your email",
