@@ -224,26 +224,16 @@ export default {
     }
   },
   created () {
-    const { cookies } = useCookies()
-    if (this.userId === undefined && this.$store.state.menu.menu === undefined && cookies.get('REMEMBER_ME') === 'true') {
-      // Case of session timeout reached
-      // userService.getUserInformations()
-      this.$store.dispatch('user/initUserInformations').then(
-        (data) => {
-          this.$store.dispatch('menu/initUserMenu')
-        })
-    } else {
-      if (this.userId === undefined) {
-        this.$store.dispatch('user/initUserInformations').catch(() => {
-          // Catch promise exception to prevent cypress crash
-        })
-      } else if (!this.user.agreedTermsOfUse) {
+    if (this.userId === undefined || this.$store.state.menu.menu === undefined) {
+      this.$store.dispatch('user/initUserInformations').then(() => { // Chain the two calls to ensure the menu is defined with the good locale
+        this.$store.dispatch('menu/initUserMenu')
+      })
+    }
+    if (this.userId) {
+      if (!this.user.agreedTermsOfUse) {
         this.$router.push({ name: 'AgreeTermsOfUse' })
       } else if (this.user.passwordChange) {
         this.$router.push({ name: 'PasswordChange' })
-      }
-      if (this.$store.state.menu.menu === undefined) {
-        this.$store.dispatch('menu/initUserMenu')
       }
     }
   },

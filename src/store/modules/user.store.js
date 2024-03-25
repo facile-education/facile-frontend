@@ -36,7 +36,8 @@ export const state = {
   selectedChild: undefined,
   selectedClass: undefined,
   selectedStudent: undefined,
-  agreedTermsOfUse: true,
+  agreedTermsOfUse: undefined,
+  passwordChange: undefined,
   hasReadLastVersionNote: false,
   roleId: 0 // For Matomo
 }
