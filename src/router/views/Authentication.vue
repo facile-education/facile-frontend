@@ -210,7 +210,8 @@ export default {
 }
 
 .login-img {
-  height: 60px;
+  max-height: 60px;
+  max-width: 100%;
 }
 
 .guest {
