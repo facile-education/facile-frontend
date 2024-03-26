@@ -351,6 +351,7 @@ export default {
 
 .data {
   width: calc(100% - (50px + 0.5rem));
+  line-height: 13px;
 }
 
 .type {
