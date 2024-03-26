@@ -28,12 +28,13 @@
     @click="clickOnContent"
     @keyup.enter="clickOnContent"
   >
-    <div class="icon">
-      <img
-        :src="thumbnail"
-        alt="type thumbnail"
-      >
+    <div
+      class="icon"
+      :class="{'h5p': typeLabel === 'h5p'}"
+    >
+      <CustomIcon :icon-name="icon" />
     </div>
+
     <div class="data">
       <div class="type">
         {{ $t('Course.CourseContentItem.' + typeLabel) }}
@@ -111,7 +112,6 @@ import { defineAsyncComponent } from 'vue'
 
 import contentTypeConstants from '@/constants/contentTypeConstants'
 import { icons } from '@/constants/icons'
-import { getExtensionFromName } from '@/utils/commons.util'
 const ContextMenu = defineAsyncComponent(() => import('@components/ContextMenu/ContextMenu.vue'))
 const FilePickerModal = defineAsyncComponent(() => import('@components/FilePicker/FilePickerModal.vue'))
 const EmbedContentModal = defineAsyncComponent(() => import('@components/Base/ContentEdtitionModals/EmbedContentModal'))
@@ -119,8 +119,8 @@ const EmbedContentModal = defineAsyncComponent(() => import('@components/Base/Co
 export default {
   name: 'CourseContentItem',
   components: {
-    CustomIcon,
     AttachedFile,
+    CustomIcon,
     FilePickerModal,
     EmbedContentModal,
     TextContent,
@@ -162,24 +162,21 @@ export default {
     hasRemoveButton () {
       return this.isEdition && this.typeLabel !== 'file'
     },
-    saveIcon () {
-      return icons.options.save
+    thumbnail () {
+      return new URL(`../../assets/icons/documents/${this.typeLabel}.svg`, import.meta.url).href
     },
     icon () {
-      return new URL(`../../assets/icons/contents/${this.typeLabel}.svg`, import.meta.url).href
-    },
-    fileExtension () {
-      return getExtensionFromName(this.content.contentName)
-    },
-    thumbnail () {
-      if (this.typeLabel === 'file') {
-        if (icons.extensions[this.fileExtension] === undefined) {
-          return icons.file
-        } else {
-          return icons.extensions[this.fileExtension]
-        }
-      } else {
-        return new URL(`../../assets/icons/documents/${this.typeLabel}.svg`, import.meta.url).href
+      switch (this.content.contentType) {
+        case contentTypeConstants.TYPE_AUDIO_CONTENT:
+          return icons.audio
+        case contentTypeConstants.TYPE_LINK_CONTENT:
+          return icons.link
+        case contentTypeConstants.TYPE_VIDEO_CONTENT:
+          return icons.video
+        case contentTypeConstants.TYPE_H5P_CONTENT:
+          return icons.h5p
+        default:
+          return ''
       }
     },
     typeLabel () {
@@ -339,6 +336,12 @@ export default {
   align-items: center;
   justify-content: center;
   margin-right: 0.5rem;
+  font-size: 2rem;
+  color: $color-icon-content;
+
+  &.h5p{
+    font-size: 1rem;
+  }
 
   img {
     width: 34px;

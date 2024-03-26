@@ -7,6 +7,10 @@ const icons = {
   file: require('@assets/icons/file.svg'),
   folder: require('@assets/icons/folder.svg'),
   folderOpen: require('@assets/icons/folder.svg'),
+  audio: 'icon-record',
+  link: 'icon-link',
+  video: 'icon-play',
+  h5p: 'icon-h5p',
   extensions: {
     ggb: require('@assets/icons/file_geogebra.svg'),
     gif: require('@assets/icons/file_image.svg'),

@@ -141,9 +141,6 @@ export default {
     }
   },
   computed: {
-    saveIcon () {
-      return icons.options.save
-    },
     formattedSize () {
       return this.attachedFile.size !== undefined ? formatSize(this.attachedFile.size) : '-'
     }
