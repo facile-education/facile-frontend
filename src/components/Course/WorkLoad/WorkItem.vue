@@ -97,6 +97,7 @@ export default {
 
 .estimated-time {
   @extend %font-bold-l;
+  white-space: nowrap;
 }
 
 strong, .course-name, .given-date {

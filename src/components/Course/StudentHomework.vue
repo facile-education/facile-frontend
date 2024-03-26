@@ -171,10 +171,12 @@ export default {
   margin-left: 10px;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+@media screen and (min-width: 600px) {
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .left {
@@ -218,6 +220,7 @@ header {
 .estimated-time {
   @extend %font-regular-s;
   color: $neutral-80;
+  white-space: nowrap;
 }
 
 .right {

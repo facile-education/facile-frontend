@@ -251,6 +251,7 @@ header {
   .estimated-time {
     color: $neutral-80;
     @extend %font-regular-s;
+    white-space: nowrap;
   }
 }
 
