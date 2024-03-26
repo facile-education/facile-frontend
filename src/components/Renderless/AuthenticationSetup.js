@@ -214,7 +214,6 @@ export default () => {
     fetch(constants.BASE_API_URL + '/c/common/authentication-check').then(response => {
       response.json().then(data => {
         if (response.status === 200 && data.isAuthenticated === true) {
-          // store.commit('user/setPAuth', pAuth.value)
 
           if (isMobileAppLoading.value) {
             // Manage mobile token
@@ -222,13 +221,12 @@ export default () => {
             if (window.location.href.includes('service')) {
               service = new URLSearchParams(window.location.search).get('service')
             }
-            response.json().then(data => {
-              if (window.location.href.includes('mobile_token')) {
-                refreshMobileToken(data.userId, service)
-              } else {
-                addMobileToken(data.userId, service)
-              }
-            })
+
+            if (window.location.href.includes('mobile_token')) {
+              refreshMobileToken(data.userId, service)
+            } else {
+              addMobileToken(data.userId, service)
+            }
           } else {
             router.push(DASHBOARD)
           }

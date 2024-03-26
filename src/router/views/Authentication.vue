@@ -210,7 +210,6 @@ export default {
 }
 
 .login-img {
-  width: 100%;
   height: 60px;
 }
 
