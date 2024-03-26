@@ -56,6 +56,7 @@
         </span>
 
         <span
+          v-else-if="homework.isSent"
           class="right-section"
         >
           {{ $t('Dashboard.HomeworkItem.returned') }}
@@ -66,6 +67,7 @@
           >
         </span>
         <span
+          v-else
           v-t="'Dashboard.HomeworkItem.toReturn'"
           class="right-section"
         />
