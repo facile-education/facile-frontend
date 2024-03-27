@@ -147,7 +147,7 @@ export default {
     formErrorList () {
       return {
         contentName: (this.v$.contentName.$invalid && this.v$.contentName.$dirty) ? this.$t('Commons.required') : '',
-        embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t(this.ish5p ? 'embedElementCheckFailed-h5p' : 'embedElementCheckFailed') : '',
+        embedHTMLElement: (this.v$.embedHTMLElement.$invalid && this.v$.embedHTMLElement.$dirty) ? this.$t(this.ish5p ? 'Base.EmbedContentModal.embedElementCheckFailed-h5p' : 'Base.EmbedContentModal.embedElementCheckFailed') : '',
         embedSrcAttribute: (this.v$.embedSrcAttribute.$invalid && this.v$.embedSrcAttribute.$dirty) ? this.$t('Base.EmbedContentModal.srcRequired') : ''
       }
     },
