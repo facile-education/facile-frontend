@@ -204,7 +204,6 @@ export default {
     if (!this.configuration) {
       this.$store.dispatch('calendar/getConfiguration')
     }
-    console.log(this.maxDate)
     this.$store.dispatch('misc/incrementModalCount')
     getLogbookBroadcastPopulations().then(data => {
       data.populations.classes.forEach(classItem => {

@@ -51,7 +51,10 @@ export default {
       selectedUser: undefined,
       teacherClasses: [],
       tagsList: [],
-      autocompleteUserList: []
+      autocompleteUserList: [],
+      test: [{
+        test: 'test'
+      }]
     }
   },
   computed: {
@@ -99,6 +102,12 @@ export default {
   created () {
     if (this.isDirector || this.isSecretariat || this.isTeacher) {
       getLogbookBroadcastPopulations().then(data => {
+        if (data.populations.classes.length > 1) {
+          this.teacherClasses.push({
+            className: 'Classes',
+            orgId: 0
+          })
+        }
         data.populations.classes.forEach(classItem => {
           this.teacherClasses.push(classItem)
         })
@@ -134,6 +143,7 @@ export default {
     onSelectUser (userList) {
       if (userList.length) {
         this.$store.commit('user/setSelectedStudent', userList[0])
+        this.selectedClass = this.teacherClasses[0]
       } else {
         this.$store.commit('user/setSelectedStudent', undefined)
         this.autocompleteUserList.length = 0

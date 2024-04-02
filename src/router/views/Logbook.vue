@@ -20,7 +20,7 @@
     <EntriesEditModal
       v-if="isDisplayEditModal"
       @close="isDisplayEditModal = false"
-      @entry-created="isEntryCreated = true"
+      @entry-created="setIsEntryCreated"
     />
   </teleport>
 </template>
@@ -73,6 +73,9 @@ export default {
   methods: {
     openEntriesEditModal () {
       this.isDisplayEditModal = true
+    },
+    setIsEntryCreated () {
+      this.isEntryCreated = true
     }
   }
 

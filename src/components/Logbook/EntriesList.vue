@@ -123,12 +123,15 @@ export default {
   },
   created () {
     if (this.isParent) {
-      console.log(this.currentUser)
       this.getChildLogbook(this.currentUser.children[0].userId)
     } else if (this.isTeacher || this.isDirector || this.isSecretariat) {
       getLogbookBroadcastPopulations().then(data => {
         this.firstClass = data.populations.classes[0]
-        this.getClassLogbook(this.firstClass.orgId)
+        if (data.populations.length === 1) {
+          this.getClassLogbook(this.firstClass.orgId)
+        } else {
+          this.isLoading = false
+        }
       }, err => {
         console.log(err)
       })
@@ -186,6 +189,8 @@ export default {
         this.getClassLogbook(this.classSelected ? this.classSelected.orgId : this.firstClass.orgId)
       } else if (this.studentEntries.length > 0) {
         this.getStudentLogbook(this.studentSelected.userId)
+      } else {
+        this.getClassLogbook(this.firstClass.orgId)
       }
     }
   }
