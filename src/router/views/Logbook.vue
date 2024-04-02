@@ -8,6 +8,7 @@
       <WeprodeButton
         v-if="isTeacher || isDirector || isSecretariat"
         class="create-button"
+        data-test="create-entry-button"
         @click="openEntriesEditModal"
       >
         <CustomIcon icon-name="icon-plus" />

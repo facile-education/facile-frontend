@@ -2,6 +2,7 @@
   <WeprodeWindow
     v-if="configuration"
     class="edit-entries-modal"
+    data-test="edit-entries-modal"
     :class="{'phone': mq.phone || mq.tablet}"
     :full-screen="mq.phone || mq.tablet"
     :modal="true"
@@ -35,7 +36,7 @@
         ref="createMessageSubjectInput"
         v-model="title"
         class="subject"
-        data-test="subject-input"
+        data-test="entry-title"
         :placeholder="$t('Logbook.entriesEditModal.titlePlaceholder')"
       />
       <WeprodeErrorMessage
@@ -54,6 +55,7 @@
           v-model="entryType"
           :label="$t('Logbook.entriesEditModal.signingLabel')"
           name="date"
+          data-test="signing"
           rb-value="signing"
           class="radio"
         />
@@ -61,6 +63,7 @@
           v-model="entryType"
           :label="$t('Logbook.entriesEditModal.authorizationLabel')"
           name="date"
+          data-test="authorization"
           rb-value="authorization"
           class="radio"
         />

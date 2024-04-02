@@ -1,13 +1,16 @@
 <template>
   <div class="entries-list-item theme-border-color">
     <header>
-      <h2>{{ data.title }}</h2>
+      <h2 data-test="entry-title">
+        {{ data.title }}
+      </h2>
       <div class="publication-infos">
         <p>{{ publicationDate }}</p>
         <a
           href="#"
           style="color: black;"
           class="toggle-user-card"
+          data-test="author"
           @click.stop="openUserCardModal(data.author)"
         >
           {{ data.author.userName }}
@@ -94,6 +97,7 @@
               :disabled="data.limitDate < currentDate"
               :title="data.limitDate < currentDate && $t('Logbook.entriesItem.deadlinePassed')"
               :label="$t('Logbook.entriesItem.signButtonLabel')"
+              data-test="signing-button"
               @click="handleSignEntry(data.logbookEntryId, data.isAuthorization)"
             />
             <p v-else>
@@ -123,11 +127,13 @@
               <WeprodeButton
                 :disabled="data.limitDate < currentDate"
                 :label="$t('Logbook.entriesItem.authorizeButtonLabel')"
+                data-test="authorize-button"
                 @click="handleSignEntry(data.logbookEntryId, true)"
               />
               <WeprodeButton
                 :disabled="data.limitDate < currentDate"
                 :label="$t('Logbook.entriesItem.notAuthorizeButtonLabel')"
+                data-test="not-authorize-button"
                 @click="handleSignEntry(data.logbookEntryId, false)"
               />
             </div>
