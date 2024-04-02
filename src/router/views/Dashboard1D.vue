@@ -6,8 +6,12 @@
     <div class="dashboard-panel">
       <div class="left">
         <LogbookWidget
-          v-if="currentUser.isParent && isDisplayedLogbook"
+          v-if="currentUser.isParent && isDisplayedLogbook && !isLoading"
           :logbook-data="logbookData"
+        />
+        <WeprodeSpinner
+          v-if="isLoading"
+          style="z-index: 1"
         />
         <ActivityWidget1D />
       </div>
@@ -22,6 +26,7 @@
 import { defineAsyncComponent } from 'vue'
 
 import { getLogbookUnReadEntries } from '@/api/dashboard/logbook.service'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 const LogbookWidget = defineAsyncComponent(() => import('@components/Dashboard1D/Logbook/LogbookWidget1D.vue'))
@@ -30,32 +35,19 @@ const NewsWidget1D = defineAsyncComponent(() => import('@components/Dashboard1D/
 
 export default {
   name: 'Dashboard',
-  components: { ServicesWrapper, LogbookWidget, ActivityWidget1D, NewsWidget1D },
+  components: { ServicesWrapper, LogbookWidget, ActivityWidget1D, NewsWidget1D, WeprodeSpinner },
   emits: ['update:layout'],
   data () {
     return {
-      logbookData: [
-        {
-          firstName: 'Eleanora',
-          lastName: 'COMENCINI',
-          nbUnreadLogbookEntries: 1,
-          userId: 45787
-        },
-        {
-          firstName: 'Barbara',
-          lastName: 'COMENCINI',
-          nbUnreadLogbookEntries: 10,
-          userId: 48166
-        }
-      ]
+      logbookData: [],
+      isDisplayedLogbook: false,
+      isLoading: true,
+      error: false
     }
   },
   computed: {
     currentUser () {
       return this.$store.state.user
-    },
-    isDisplayedLogbook () {
-      return this.logbookData.some(entry => entry.nbUnreadLogbookEntries > 0)
     }
   },
   beforeCreate () {
@@ -74,7 +66,16 @@ export default {
         this.isLoading = false
         if (data.success) {
           this.error = false
-          // this.logbookData = data
+          this.logbookData = data.unreadLogbookEntries
+          if (this.logbookData.length > 1) {
+            if (this.logbookData.some(entry => entry.nbUnreadLogbookEntries > 0)) {
+              this.isDisplayedLogbook = true
+            }
+          } else {
+            if (this.logbookData[0].nbUnreadLogbookEntries > 0) {
+              this.isDisplayedLogbook = true
+            }
+          }
         } else {
           this.error = true
           console.error('Error')

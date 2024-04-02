@@ -42,6 +42,10 @@
         :activity="activity"
         @refresh="$emit('refresh')"
       />
+      <LogbookEntryActivity
+        v-else-if="isLogbookEntryActivity"
+        :activity="activity"
+      />
       <div v-else>
         {{ $t('Dashboard.ActivityItem.unknown-activity') }}
       </div>
@@ -54,6 +58,8 @@ import { isInViewport } from '@utils/commons.util'
 import { defineAsyncComponent } from 'vue'
 
 import activityConstants from '@/constants/activityConstants'
+
+import LogbookEntryActivity from './ActivityTypes/LogbookEntryActivity.vue'
 const NewsActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/NewsActivity.vue'))
 const DocActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/DocActivity.vue'))
 const MembershipActivity = defineAsyncComponent(() => import('@components/Dashboard/ActivityWidget/ActivityTypes/MembershipActivity.vue'))
@@ -63,7 +69,7 @@ const ExpiredGroupActivity = defineAsyncComponent(() => import('@components/Dash
 
 export default {
   name: 'ActivityItem',
-  components: { SessionActivity, HHCActivity, MembershipActivity, DocActivity, NewsActivity, ExpiredGroupActivity },
+  components: { SessionActivity, HHCActivity, MembershipActivity, DocActivity, NewsActivity, ExpiredGroupActivity, LogbookEntryActivity },
   props: {
     activity: {
       type: Object,
@@ -89,6 +95,9 @@ export default {
     },
     isNewsActivity () {
       return this.activity.type === activityConstants.TYPE_NEWS
+    },
+    isLogbookEntryActivity () {
+      return this.activity.type === activityConstants.TYPE_LOGBOOK_ENTRY
     },
     isDocActivity () {
       return this.activity.type === activityConstants.TYPE_FILE_CREATION ||

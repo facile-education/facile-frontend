@@ -1099,6 +1099,9 @@
       "TYPE_HOMEWORK": "a donné du travail pour le cours du {homeworkDate}",
       "unknown-activity": "Activité inconnue"
     },
+    "LogbookActivity": {
+      "entryCreated": "a ajouté un mot dans le carnet de lisaion"
+    },
     "AnnouncementItem": {
       "announcementDate": "Le {dateLabel}",
       "by": " par ",

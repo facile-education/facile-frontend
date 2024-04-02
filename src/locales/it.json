@@ -1099,6 +1099,9 @@
       "TYPE_HOMEWORK": "ha assegnato compiti per il corso del {homeworkDate}",
       "unknown-activity": "Attività sconosciuta"
     },
+    "LogbookActivity": {
+      "entryCreated": "ha aggiunto una parola nel quaderno di Lisaion."
+    },
     "AnnouncementItem": {
       "announcementDate": "Il {dateLabel}",
       "by": " da ",

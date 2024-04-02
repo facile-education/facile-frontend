@@ -1099,6 +1099,9 @@
       "TYPE_HOMEWORK": "hat Hausaufgaben für den Kurs am {homeworkDate} gegeben",
       "unknown-activity": "Unbekannte Aktivität"
     },
+    "LogbookActivity": {
+      "entryCreated": "hat ein Wort zum Lisaion-Notizbuch hinzugefügt."
+    },
     "AnnouncementItem": {
       "announcementDate": "Am {dateLabel}",
       "by": " von ",

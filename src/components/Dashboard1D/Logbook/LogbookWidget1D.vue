@@ -18,7 +18,7 @@
             class="toggle-user-card"
             @click.stop="openUserCardModal(children)"
           >
-            {{ children.firstName + '' + children.lastName }}
+            {{ children.firstName + ' ' + children.lastName }}
           </a>
           <a href="">{{ $tc('Dashboard.Logbook.UnsignedWords', {count: children.nbUnreadLogbookEntries}) }}</a>
         </li>

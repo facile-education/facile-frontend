@@ -1099,6 +1099,9 @@
       "TYPE_HOMEWORK": "assigned homework for the {homeworkDate} course",
       "unknown-activity": "Unknown activity"
     },
+    "LogbookActivity": {
+      "entryCreated": "added a word to logbook"
+    },
     "AnnouncementItem": {
       "announcementDate": "On {dateLabel}",
       "by": " by ",
