@@ -9,10 +9,6 @@
           v-if="currentUser.isParent && isDisplayedLogbook && !isLoading"
           :logbook-data="logbookData"
         />
-        <WeprodeSpinner
-          v-if="isLoading"
-          style="z-index: 1"
-        />
         <ActivityWidget1D />
       </div>
       <div class="right">
@@ -26,7 +22,6 @@
 import { defineAsyncComponent } from 'vue'
 
 import { getLogbookUnReadEntries } from '@/api/dashboard/logbook.service'
-import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 
 import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
 const LogbookWidget = defineAsyncComponent(() => import('@components/Dashboard1D/Logbook/LogbookWidget1D.vue'))
@@ -35,7 +30,7 @@ const NewsWidget1D = defineAsyncComponent(() => import('@components/Dashboard1D/
 
 export default {
   name: 'Dashboard',
-  components: { ServicesWrapper, LogbookWidget, ActivityWidget1D, NewsWidget1D, WeprodeSpinner },
+  components: { ServicesWrapper, LogbookWidget, ActivityWidget1D, NewsWidget1D },
   emits: ['update:layout'],
   data () {
     return {
