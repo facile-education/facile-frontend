@@ -20,6 +20,7 @@
       v-if="isTeacher || isDirector || isSecretariat"
       v-model="tagsList"
       :placeholder="$t('Logbook.entriesFilters.searchStudentPlaceholder')"
+      data-test="searchStudent"
       :close-on-select="true"
       :max-size="1"
       :completion-only="true"
@@ -27,7 +28,7 @@
       display-field="text"
       id-field="id"
       @input-change="searchTimeOut"
-      @update:model-value="onSelectUser"
+      @update:model-value="onSelectUser(tagsList)"
     />
   </div>
 </template>
@@ -35,8 +36,7 @@
 <script>
 import { addContactFieldsToContactList } from '@utils/contacts.utils'
 
-import messageService from '@/api/messaging/message.service'
-import { getTeacherStudents } from '@/api/userSearch.service'
+import { getSchoolStudents, getTeacherStudents } from '@/api/userSearch.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 
@@ -77,7 +77,9 @@ export default {
       },
       set (value) {
         this.$store.commit('user/setSelectedClass', value)
-        this.tagsList.length = 0
+        if (value !== this.teacherClasses[0]) {
+          this.tagsList.length = 0
+        }
       }
     },
     currentUser () {
@@ -91,6 +93,9 @@ export default {
     },
     isSecretariat () {
       return this.$store.state.user.isSecretariat
+    },
+    selectedSchool () {
+      return this.$store.state.user.selectedSchool
     }
   },
   watch: {
@@ -144,10 +149,10 @@ export default {
           console.error(err)
         })
       } else {
-        messageService.getUsersCompletion(query).then((data) => {
+        getSchoolStudents(this.selectedSchool.schoolId, query).then((data) => {
           if (data.success) {
-            this.autocompleteUserList = data.results
-            addContactFieldsToContactList(data.results)
+            this.autocompleteUserList = data.students
+            addContactFieldsToContactList(data.students)
           } else {
             console.error('Error while getting users', data.error)
           }
@@ -158,8 +163,8 @@ export default {
     },
     onSelectUser (userList) {
       if (userList.length) {
-        this.$store.commit('user/setSelectedStudent', userList[0])
         this.selectedClass = this.teacherClasses[0]
+        this.$store.commit('user/setSelectedStudent', userList[0])
       } else {
         this.$store.commit('user/setSelectedStudent', undefined)
         this.autocompleteUserList.length = 0

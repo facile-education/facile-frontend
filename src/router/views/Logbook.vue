@@ -19,7 +19,7 @@
   </ServicesWrapper>
   <teleport to="body">
     <EntriesEditModal
-      v-if="isDisplayEditModal"
+      v-if="isDisplayEditModal && configuration"
       @close="isDisplayEditModal = false"
       @entry-created="setIsEntryCreated"
     />
@@ -66,10 +66,18 @@ export default {
     },
     isParent () {
       return this.$store.state.user.isParent
+    },
+    configuration () {
+      return this.$store.state.calendar.configuration
     }
   },
   beforeCreate () {
     this.$emit('update:layout', 'BannerLayout')
+  },
+  created () {
+    if (!this.configuration) {
+      this.$store.dispatch('calendar/getConfiguration')
+    }
   },
   methods: {
     openEntriesEditModal () {
@@ -79,7 +87,6 @@ export default {
       this.isEntryCreated = true
     }
   }
-
 }
 </script>
 

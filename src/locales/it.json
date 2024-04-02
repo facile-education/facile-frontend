@@ -2073,6 +2073,9 @@
     "serviceTitle": "Libro di collegamento",
     "newEntryButtonLabel": "Nuovo",
     "errorPlaceholder": "Ops, si è verificato un errore...",
+    "warningMessageDeleteEntry": "Vuoi davvero eliminare questa parola?",
+    "successCreateEntry": "Parola creata con successo",
+    "successUpdateEntry": "Parola modificata con successo",
     "noEntryPlaceholder": "Nessun inserimento",
     "entriesFilters": {
     "searchStudentPlaceholder": "Studenti"

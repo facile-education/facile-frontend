@@ -16,69 +16,71 @@
     </template>
 
     <template
-      v-if="maxDate"
       #body
     >
-      <WeprodeTagsInput
-        v-model="populations"
-        :placeholder="$t('Logbook.entriesEditModal.populationPlaceholder')"
-        :is-tag-clickable="(item) => item.type === contactTypeUser"
-        :list="populationsList"
-        :close-on-select="true"
-        display-field="populationName"
-      />
-      <WeprodeErrorMessage
-        :error-message="formErrorList.populations"
-      />
-
-      <WeprodeInput
-        id="create-message-subject-input"
-        ref="createMessageSubjectInput"
-        v-model="title"
-        class="subject"
-        data-test="entry-title"
-        :placeholder="$t('Logbook.entriesEditModal.titlePlaceholder')"
-      />
-      <WeprodeErrorMessage
-        :error-message="formErrorList.title"
-      />
-
-      <TextContent
-        v-if="content !== undefined"
-        v-model:content="content"
-        class="ck-editor"
-        :placeholder="$t('Logbook.entriesEditModal.contentPlaceholder')"
-      />
-
-      <div class="entries-type">
-        <WeprodeRadioButton
-          v-model="entryType"
-          :label="$t('Logbook.entriesEditModal.signingLabel')"
-          name="date"
-          data-test="signing"
-          rb-value="signing"
-          class="radio"
+      <div v-if="limitDate">
+        <WeprodeTagsInput
+          v-model="populations"
+          :placeholder="$t('Logbook.entriesEditModal.populationPlaceholder')"
+          :is-tag-clickable="(item) => item.type === contactTypeUser"
+          :list="populationsList"
+          :close-on-select="true"
+          display-field="populationName"
         />
-        <WeprodeRadioButton
-          v-model="entryType"
-          :label="$t('Logbook.entriesEditModal.authorizationLabel')"
-          name="date"
-          data-test="authorization"
-          rb-value="authorization"
-          class="radio"
+        <WeprodeErrorMessage
+          :error-message="formErrorList.populations"
         />
+
+        <WeprodeInput
+          id="create-message-subject-input"
+          ref="createMessageSubjectInput"
+          v-model="title"
+          class="subject"
+          data-test="entry-title"
+          :placeholder="$t('Logbook.entriesEditModal.titlePlaceholder')"
+        />
+        <WeprodeErrorMessage
+          :error-message="formErrorList.title"
+        />
+
+        <TextContent
+          v-if="content !== undefined"
+          v-model:content="content"
+          class="ck-editor"
+          :placeholder="$t('Logbook.entriesEditModal.contentPlaceholder')"
+        />
+
+        <div class="entries-type">
+          <WeprodeRadioButton
+            v-model="entryType"
+            :label="$t('Logbook.entriesEditModal.signingLabel')"
+            name="date"
+            data-test="signing"
+            rb-value="signing"
+            class="radio"
+          />
+          <WeprodeRadioButton
+            v-model="entryType"
+            :label="$t('Logbook.entriesEditModal.authorizationLabel')"
+            name="date"
+            data-test="authorization"
+            rb-value="authorization"
+            class="radio"
+          />
+        </div>
+        <div class="max-date">
+          <p>{{ $t('Logbook.entriesEditModal.maxDateLabel') }}</p>
+          <CustomDatePicker
+            v-model:selected-date="limitDate"
+            :min-date="minDate"
+            :with-hours="true"
+            :is-required="true"
+            :minute-increment="15"
+            class="max-date-button"
+          />
+        </div>
       </div>
-      <div class="max-date">
-        <p>{{ $t('Logbook.entriesEditModal.maxDateLabel') }}</p>
-        <CustomDatePicker
-          v-model:selected-date="maxDate"
-          :min-date="minDate"
-          :with-hours="true"
-          :is-required="true"
-          :minute-increment="15"
-          class="max-date-button"
-        />
-      </div>
+      <WeprodeSpinner v-else />
     </template>
 
     <template #footer>
@@ -110,6 +112,7 @@ import messageService from '@/api/messaging/message.service'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
 import WeprodeRadioButton from '@/components/Base/Weprode/WeprodeRadioButton.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import { ckMaxSize } from '@/constants/appConstants'
@@ -134,7 +137,8 @@ export default {
     TextContent,
     WeprodeRadioButton,
     CustomDatePicker,
-    WeprodeErrorMessage
+    WeprodeErrorMessage,
+    WeprodeSpinner
   },
   inject: ['mq'],
   props: {
@@ -155,7 +159,8 @@ export default {
       populationsList: [],
       title: '',
       content: '',
-      entryType: 'signing'
+      entryType: 'signing',
+      limitDate: undefined
     }
   },
   validations: {
@@ -174,9 +179,9 @@ export default {
     minDate () {
       return dayjs().toDate()
     },
-    maxDate () {
-      return this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD') : dayjs()
-    },
+    // limitDate () {
+    //   return this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD') : dayjs()
+    // },
     formErrorList () {
       return {
         title: (this.v$.title.$invalid && this.v$.title.$dirty)
@@ -204,9 +209,10 @@ export default {
     }
   },
   created () {
-    if (!this.configuration) {
-      this.$store.dispatch('calendar/getConfiguration')
+    if (this.configuration) {
+      this.limitDate = dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
     }
+
     this.$store.dispatch('misc/incrementModalCount')
     getLogbookBroadcastPopulations().then(data => {
       data.populations.classes.forEach(classItem => {
@@ -232,7 +238,7 @@ export default {
       this.title = this.initEntry.title
       this.content = this.initEntry.content
       this.entryType = this.initEntry.isAuthorization ? 'authorization' : 'signing'
-      this.maxDate = dayjs(this.initEntry.limitDate)
+      this.limitDate = dayjs(this.initEntry.limitDate)
       this.initEntry.populations.classes.forEach(classItem => {
         this.populations.push({
           populationName: classItem.orgName,
@@ -293,9 +299,9 @@ export default {
     },
     createEntries () {
       this.formatePopulations()
-      createEntries(this.title, this.content, this.populationsFormate, this.entryType === 'authorization', false, this.maxDate).then(data => {
+      createEntries(this.title, this.content, this.populationsFormate, this.entryType === 'authorization', false, this.limitDate).then(data => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: 'Mot créé avec succès', type: 'success' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Logbook.successCreateEntry'), type: 'success' })
           this.$emit('entryCreated')
           this.onClose()
         } else {
@@ -305,9 +311,9 @@ export default {
     },
     updateEntry () {
       this.formatePopulations()
-      updateEntry(this.initEntry.logbookEntryId, this.title, this.content, this.populationsFormate, this.entryType === 'authorization', this.maxDate).then(data => {
+      updateEntry(this.initEntry.logbookEntryId, this.title, this.content, this.populationsFormate, this.entryType === 'authorization', this.limitDate).then(data => {
         if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: 'Mot modifié avec succès', type: 'success' })
+          this.$store.dispatch('popups/pushPopup', { message: this.$t('Logbook.successUpdateEntry'), type: 'success' })
           this.$emit('entryEdited')
           this.onClose()
         } else {

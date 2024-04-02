@@ -2073,6 +2073,9 @@
     "serviceTitle": "Connection Book",
     "newEntryButtonLabel": "New",
     "errorPlaceholder": "Oops, an error occurred...",
+    "warningMessageDeleteEntry": "Do you really want to delete this word?",
+    "successCreateEntry": "Word created successfully",
+    "successUpdateEntry": "Word updated successfully",
     "noEntryPlaceholder": "No entries",
     "entriesFilters": {
     "searchStudentPlaceholder": "Students"

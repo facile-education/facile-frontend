@@ -14,11 +14,14 @@
           {{ student.lastName + ' ' + student.firstName }}
         </a>
       </span>
-      <span>{{ nbSigning }}/{{ student.parents.length }}</span>
+      <span class="nbSigning">{{ nbSigning }}/{{ student.parents.length }}</span>
     </button>
 
     <Transition name="slide-fade">
-      <ul v-if="isExtended">
+      <ul
+        v-if="isExtended"
+        class="parents-details"
+      >
         <li
           v-for="parent in student.parents"
           :key="parent.userId"
@@ -83,8 +86,6 @@ export default {
       if (this.isAuthorization) {
         for (const element of this.student.parents) {
           if (element.hasAuthorized) {
-            this.nbSigning++
-          } else if (element.hasSigned && !element.hasAuthorized) {
             this.nbSigning++
           }
         }

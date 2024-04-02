@@ -2073,6 +2073,9 @@
     "serviceTitle": "Carnet de liason",
     "newEntryButtonLabel": "Nouveau",
     "errorPlaceholder": "Oups, une erreur est survenue...",
+    "warningMessageDeleteEntry": "Voulez vous vraiment supprimer ce mot ?",
+    "successCreateEntry": "Mot créé avec succès",
+    "successUpdateEntry": "Mot modifié avec succès",
     "noEntryPlaceholder": "Pas de mot",
     "entriesFilters": {
       "searchStudentPlaceholder": "Elèves"

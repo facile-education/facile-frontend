@@ -2073,6 +2073,9 @@
     "serviceTitle": "Verbindungsbuch",
     "newEntryButtonLabel": "Neu",
     "errorPlaceholder": "Hoppla, ein Fehler ist aufgetreten...",
+    "warningMessageDeleteEntry": "Möchten Sie dieses Wort wirklich löschen?",
+    "successCreateEntry": "Wort erfolgreich erstellt",
+    "successUpdateEntry": "Wort erfolgreich geändert",
     "noEntryPlaceholder": "Keine Einträge",
     "entriesFilters": {
     "searchStudentPlaceholder": "Schüler"

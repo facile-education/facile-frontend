@@ -76,6 +76,7 @@
         <li
           v-for="(parent, index) in data.parents"
           :key="index"
+          class="parent"
         >
           <a
             href="#"
@@ -85,7 +86,10 @@
           >
             {{ parent.firstName + ' ' + parent.lastName }}
           </a>
-          <div v-if="isParent && !data.isAuthorization">
+          <div
+            v-if="isParent && !data.isAuthorization"
+            data-test="parents-options"
+          >
             <p
               v-if="parent.hasSigned"
               class="theme-text-color"
@@ -128,12 +132,14 @@
                 :disabled="data.limitDate < currentDate"
                 :label="$t('Logbook.entriesItem.authorizeButtonLabel')"
                 data-test="authorize-button"
+                :title="data.limitDate < currentDate && $t('Logbook.entriesItem.deadlinePassed')"
                 @click="handleSignEntry(data.logbookEntryId, true)"
               />
               <WeprodeButton
                 :disabled="data.limitDate < currentDate"
                 :label="$t('Logbook.entriesItem.notAuthorizeButtonLabel')"
                 data-test="not-authorize-button"
+                :title="data.limitDate < currentDate && $t('Logbook.entriesItem.deadlinePassed')"
                 @click="handleSignEntry(data.logbookEntryId, false)"
               />
             </div>
@@ -233,7 +239,7 @@ export default {
     },
     nbSignedInfos () {
       if (this.data.isAuthorization) {
-        return this.$t('Logbook.entriesItem.agentNbAuthorizationInfos', { nbSigned: this.data.nbSignatures, nbStudents: this.data.nbSignaturesNeeded })
+        return this.$t('Logbook.entriesItem.agentNbAuthorizationInfos', { nbSigned: this.data.nbAuthorization, nbStudents: this.data.nbSignaturesNeeded })
       } else {
         return this.$t('Logbook.entriesItem.agentNbSignedInfos', { nbSigned: this.data.nbSignatures, nbStudents: this.data.nbSignaturesNeeded })
       }
@@ -259,7 +265,7 @@ export default {
     },
     confirmDeleteEntry () {
       this.$store.dispatch('warningModal/addWarning', {
-        text: 'Voulez vous vraiment supprimer ce mot ?',
+        text: this.$t('Logbook.warningMessageDeleteEntry'),
         lastAction: { fct: this.deleteEntry }
       })
     },
@@ -295,6 +301,8 @@ export default {
       align-items: flex-start;
       justify-content: space-between;
       h2{
+        max-width: 80%;
+        word-wrap: break-word;
         margin: 0;
         @extend %font-heading-xs;
       }
@@ -310,6 +318,7 @@ export default {
     }
     .content{
       margin: 0;
+      word-wrap: break-word;
       @extend %font-regular-m;
     }
     .clickable{

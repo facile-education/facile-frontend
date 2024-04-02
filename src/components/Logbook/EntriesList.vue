@@ -106,7 +106,11 @@ export default {
     classSelected (newClass) {
       this.childEntries = []
       this.studentEntries = []
-      this.getClassLogbook(newClass.orgId)
+      if (newClass.orgId === 0) {
+        this.classEntries = []
+      } else {
+        this.getClassLogbook(newClass.orgId)
+      }
     },
     studentSelected (newStudent) {
       this.childEntries = []
