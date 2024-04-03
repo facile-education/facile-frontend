@@ -8,7 +8,8 @@ export {
   getSchoolRelatives,
   getSchoolTeachers,
   getSchoolAgents,
-  getSchoollifeAgents
+  getSchoollifeAgents,
+  getTeacherStudents
 }
 
 const USER_SEARCH_PATH = '/user.usersearch'
@@ -69,6 +70,16 @@ function getSchoollifeAgents (schoolId, filter = '') {
     params: {
       schoolId,
       filter
+    }
+  }).then(response => response.data)
+}
+
+function getTeacherStudents (filter = '', start = -1, limit = -1) {
+  return axios.get(constants.JSON_WS_URL + USER_SEARCH_PATH + '/get-teacher-students', {
+    params: {
+      filter,
+      start,
+      limit
     }
   }).then(response => response.data)
 }

@@ -11,9 +11,8 @@
           class="toggle-user-card"
           @click.stop="openUserCardModal(student)"
         >
-          {{ student.firstName + ' ' + student.lastName }}
+          {{ student.lastName + ' ' + student.firstName }}
         </a>
-        ({{ student.className }})
       </span>
       <span>{{ nbSigning }}/{{ student.parents.length }}</span>
     </button>
@@ -23,6 +22,7 @@
         <li
           v-for="parent in student.parents"
           :key="parent.userId"
+          class="parent"
         >
           <a
             href="#"
@@ -30,7 +30,7 @@
             class="toggle-user-card"
             @click.stop="openUserCardModal(parent)"
           >
-            {{ parent.firstName + ' ' + parent.lastName }}
+            {{ parent.lastName.toUpperCase() + ' ' + parent.firstName }}
           </a>
           <span v-if="isAuthorization && parent.hasSigned && parent.hasAuthorized">{{ $t('Logbook.statusModal.hasAuthorized') }}</span>
           <span v-if="isAuthorization && parent.hasSigned && !parent.hasAuthorized">{{ $t('Logbook.statusModal.hasNotAuthorized') }}</span>
@@ -138,6 +138,11 @@ export default {
     padding-right: 5px;
     font-size: 1.15rem;
     margin: 10px 0;
+  }
+
+  .parent {
+    margin-left: 20px;
+    margin-right: 20px;
   }
 
   .icon-collapse, .icon-extend {

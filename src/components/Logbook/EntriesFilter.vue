@@ -36,6 +36,7 @@
 import { addContactFieldsToContactList } from '@utils/contacts.utils'
 
 import messageService from '@/api/messaging/message.service'
+import { getTeacherStudents } from '@/api/userSearch.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 
@@ -129,16 +130,31 @@ export default {
       }
     },
     getCompletion (query) {
-      messageService.getUsersCompletion(query).then((data) => {
-        if (data.success) {
-          this.autocompleteUserList = data.results
-          addContactFieldsToContactList(data.results)
-        } else {
-          console.error('Error while getting users', data.error)
-        }
-      }, (err) => {
-        console.error(err)
-      })
+      // Teachers can see only their students
+      // Other agents can see all school's students
+      if (this.isTeacher) {
+        getTeacherStudents(query).then((data) => {
+          if (data.success) {
+            this.autocompleteUserList = data.students
+            addContactFieldsToContactList(data.students)
+          } else {
+            console.error('Error while getting users', data.error)
+          }
+        }, (err) => {
+          console.error(err)
+        })
+      } else {
+        messageService.getUsersCompletion(query).then((data) => {
+          if (data.success) {
+            this.autocompleteUserList = data.results
+            addContactFieldsToContactList(data.results)
+          } else {
+            console.error('Error while getting users', data.error)
+          }
+        }, (err) => {
+          console.error(err)
+        })
+      }
     },
     onSelectUser (userList) {
       if (userList.length) {

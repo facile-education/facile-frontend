@@ -14,7 +14,7 @@
 
     <template #body>
       <EntryStatusStudent
-        v-for="(student, index) in allStudents"
+        v-for="(student, index) in sortedStudents"
         :key="index"
         :student="student"
         :is-authorization="entry.isAuthorization"
@@ -41,6 +41,7 @@
 
 <script>
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
+import _ from 'lodash'
 
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
@@ -71,6 +72,9 @@ export default {
     }
   },
   computed: {
+    sortedStudents () {
+      return _.orderBy(this.allStudents, 'lastName', 'asc')
+    }
   },
   created () {
     getEntryReadStatus(this.entry.logbookEntryId).then(data => {
