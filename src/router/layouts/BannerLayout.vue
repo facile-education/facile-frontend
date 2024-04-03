@@ -227,7 +227,7 @@ export default {
     if (this.userId === undefined || this.$store.state.menu.menu === undefined) {
       this.$store.dispatch('user/initUserInformations').then(() => { // Chain the two calls to ensure the menu is defined with the good locale
         this.$store.dispatch('menu/initUserMenu')
-      })
+      }).catch(() => console.log('User is probably not authenticated.'))
     }
     if (this.userId) {
       if (!this.user.agreedTermsOfUse) {
