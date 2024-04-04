@@ -77,11 +77,12 @@
           v-for="(parent, index) in data.parents"
           :key="index"
           class="parent"
+          :class="mq.phone && 'mobile'"
         >
           <a
             href="#"
             style="color: black;"
-            class="toggle-user-card"
+            class="toggle-user-card parents-full-name"
             @click.stop="openUserCardModal(parent)"
           >
             {{ parent.firstName + ' ' + parent.lastName }}
@@ -89,6 +90,7 @@
           <div
             v-if="isParent && !data.isAuthorization"
             data-test="parents-options"
+            class="parents-options"
           >
             <p
               v-if="parent.hasSigned"
@@ -200,6 +202,7 @@ export default {
     EntriesEditModal,
     EntrySignatureStatusModal
   },
+  inject: ['mq'],
   props: {
     data: {
       type: Object,
@@ -301,7 +304,7 @@ export default {
       align-items: flex-start;
       justify-content: space-between;
       h2{
-        max-width: 80%;
+        max-width: 70%;
         word-wrap: break-word;
         margin: 0;
         @extend %font-heading-xs;
@@ -376,6 +379,17 @@ export default {
         cursor: pointer;
         border: none;
       }
+    }
+
+    .parents-full-name{
+      text-decoration: underline
+    }
+
+    .mobile{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 5px;
     }
 }
 </style>./EntryStatusModal/EntrySignatureStatusModal.vue

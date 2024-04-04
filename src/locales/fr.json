@@ -2112,7 +2112,7 @@
       "hasSigned": "A signé le {signatureDate}",
       "signButtonLabel": "Signer",
       "deadlinePassed": "La date limite est dépassée",
-      "waitingSigning": "N'a pas encore Signé",
+      "waitingSigning": "N'a pas encore signé",
       "waitingAuthorization": "N'a pas encore autorisé",
       "authorizeButtonLabel": "Autoriser",
       "notAuthorizeButtonLabel": "Ne pas autoriser",      

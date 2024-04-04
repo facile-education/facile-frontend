@@ -6,7 +6,7 @@
     <div class="header">
       <EntriesFilter v-if="isTeacher || isDirector || isSecretariat || isParent" />
       <WeprodeButton
-        v-if="isTeacher || isDirector || isSecretariat"
+        v-if="(isTeacher || isDirector || isSecretariat) && !mq.phone"
         class="create-button"
         data-test="create-entry-button"
         @click="openEntriesEditModal"
@@ -16,6 +16,20 @@
       </WeprodeButton>
     </div>
     <EntriesList :is-entry-created="isEntryCreated" />
+    <div
+      v-if="mq.phone"
+      class="footer"
+    >
+      <WeprodeButton
+        v-if="(isTeacher || isDirector || isSecretariat)"
+        class="create-button"
+        data-test="create-entry-button"
+        @click="openEntriesEditModal"
+      >
+        <CustomIcon icon-name="icon-plus" />
+        <span>{{ $t('Logbook.newEntryButtonLabel') }}</span>
+      </WeprodeButton>
+    </div>
   </ServicesWrapper>
   <teleport to="body">
     <EntriesEditModal
@@ -47,6 +61,7 @@ export default {
     EntriesList,
     CustomIcon
   },
+  inject: ['mq'],
   emits: ['update:layout'],
   data () {
     return {
@@ -109,5 +124,15 @@ export default {
 .first-line{
   margin-bottom: 0.5rem;
   display: flex;
+}
+.footer{
+  position: fixed;
+  padding: 10px;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  background-color: white;
 }
 </style>

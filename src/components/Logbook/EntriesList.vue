@@ -2,6 +2,7 @@
   <div
     v-if="dataToDisplay"
     class="list-entries"
+    :class="mq.phone && (isSecretariat || isTeacher || isDirector) && 'mobile'"
   >
     <EntriesListItem
       v-for="(data, index) in dataToDisplay"
@@ -41,6 +42,7 @@ export default {
     EntriesListItem,
     WeprodeSpinner
   },
+  inject: ['mq'],
   props: {
     isEntryCreated: {
       type: Boolean,
@@ -207,7 +209,11 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 20px
+    margin-top: 20px;
+    padding-bottom: 20px;
+    &.mobile {
+      padding-bottom: 100px
+    }
   }
   .placeholder{
     @extend %content-placeholder;
