@@ -54,12 +54,10 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('misc/incrementModalCount')
     this.$store.dispatch('help/getHelpMenu', { query: '', menuEntryId: this.$route.meta.id })
   },
   methods: {
     closeModal () {
-      this.$store.dispatch('misc/decreaseModalCount')
       this.$emit('close')
     }
   }

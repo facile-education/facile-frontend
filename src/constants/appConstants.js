@@ -1,3 +1,7 @@
+// Help constants
+const appVersion = '1-1-0'
+const helpWebsite = 'http://help.facile.education'
+
 // The keys should match the one in fr.json "Menu"
 // TODO: Review usage of those statics route name and check if it's translation-compliant
 const COURSES = 'cdt'
@@ -63,6 +67,8 @@ const entityNameMaxSize = 255
 const ckMaxSize = 63206
 
 export {
+  helpWebsite,
+  appVersion,
   locales,
   nbCharBeforeCompletion,
   timeBeforeCompletion,

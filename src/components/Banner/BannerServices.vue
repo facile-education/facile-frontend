@@ -23,6 +23,7 @@
 import { defineAsyncComponent } from 'vue'
 
 import BannerItem from '@/components/Banner/BannerItem'
+import { appVersion, helpWebsite } from '@/constants/appConstants.js'
 const AccessPopover = defineAsyncComponent(() => import('@components/Accesses/AccessVisualization/AccessPopover'))
 
 export default {
@@ -36,14 +37,21 @@ export default {
       isAccessPopoverDisplayed: false
     }
   },
+  computed: {
+    currentLocale () {
+      return this.$store.state.user.locale.frontId
+    }
+  },
   methods: {
     toggleAccesses () {
       this.$store.dispatch('menu/closeMobileMenu')
       this.isAccessPopoverDisplayed = !this.isAccessPopoverDisplayed
     },
     openHelpModal () {
-      this.$store.dispatch('menu/closeMobileMenu')
-      this.$store.dispatch('help/openHelpModal')
+      const helpUrl = helpWebsite + '/' + this.currentLocale + '/' + appVersion + '/' + this.$route.name
+      window.open(helpUrl, '_blank')
+      // this.$store.dispatch('menu/closeMobileMenu')
+      // this.$store.dispatch('help/openHelpModal')
     }
   }
 }
