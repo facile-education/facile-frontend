@@ -35,7 +35,17 @@
     :selected-event="selectedEvent"
     @option-clicked="optionClicked"
     @close="unselectEvent"
+    @open-call-modal="isDisplayedCallModal = true"
   />
+  <teleport
+    v-if="isDisplayedCallModal"
+    to="body"
+  >
+    <CallModal
+      :session="selectedEvent"
+      @close="isDisplayedCallModal = false"
+    />
+  </teleport>
 </template>
 
 <script>
@@ -51,11 +61,13 @@ import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+
+import CallModal from '../../Call/CallModal.vue'
 const CalendarEventPopover = defineAsyncComponent(() => import('@components/Base/CustomCalendar/CalendarEventPopover.vue'))
 
 export default {
   name: 'CustomCalendar',
-  components: { CalendarEventPopover, CalendarEvent, FullCalendar },
+  components: { CalendarEventPopover, CalendarEvent, FullCalendar, CallModal },
   inject: ['mq'],
   props: {
     events: {
@@ -93,7 +105,8 @@ export default {
   data () {
     return {
       selectedEvent: undefined,
-      pan: 0
+      pan: 0,
+      isDisplayedCallModal: false
     }
   },
   computed: {
