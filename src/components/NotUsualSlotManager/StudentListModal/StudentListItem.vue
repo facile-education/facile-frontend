@@ -31,10 +31,7 @@
         data-test="unregister"
         @click="isStudentDeregistrationModalDisplayed = true"
       >
-        <img
-          src="@assets/icons/leave.svg"
-          :alt="$t('NotUsualSlots.StudentListModal.unsubscribe')"
-        >
+        <CustomIcon icon-name="icon-out" />
       </button>
     </div>
 
@@ -55,6 +52,7 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
@@ -66,7 +64,7 @@ const StudentRegistrationModal = defineAsyncComponent(() => import('@components/
 
 export default {
   name: 'StudentListItem',
-  components: { StudentRegistrationModal, WeprodeCheckbox },
+  components: { CustomIcon, StudentRegistrationModal, WeprodeCheckbox },
   inject: ['mq'],
   props: {
     student: {
@@ -175,9 +173,8 @@ button {
   display: flex;
   align-items: center;
 
-  img {
-    height: 24px;
-    width: 24px;
+  .icon-out {
+    font-size: 1.25rem;
   }
 }
 

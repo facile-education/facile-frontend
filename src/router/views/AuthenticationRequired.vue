@@ -1,7 +1,7 @@
 <template>
   <h1 :aria-label="$t('AuthenticationRequired.title')" />
   <div class="error">
-    <CustomIcon :icon-name="'icon-user'" />
+    <CustomIcon :icon-name="'icon-user-24'" />
     <h2 v-t="'AuthenticationRequired.authRequired'" />
     <p>{{ $t('AuthenticationRequired.redirected') }}</p>
     <div class="spinner-container">

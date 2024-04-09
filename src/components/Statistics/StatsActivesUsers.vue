@@ -1,7 +1,7 @@
 <template>
   <section v-if="nbUsers !== undefined">
     <span class="theme-text-color">
-      <CustomIcon :icon-name="'icon-user'" />
+      <CustomIcon :icon-name="'icon-user-24'" />
       <AnimatedCounter
         v-if="nbUsers > 0"
         :target="nbUsers"
@@ -100,7 +100,7 @@ export default {
   }
 }
 
-.icon-user {
+.icon-user-24 {
   margin-right: 8px;
 }
 

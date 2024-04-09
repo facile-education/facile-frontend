@@ -35,12 +35,19 @@
         :win-width="(mq.phone || mq.tablet) ? 'auto' : '650px'"
         @close="closeCreateSessionModal"
       />
+      <CallModal
+        v-if="isCallModalDisplayed"
+        :session-id="updatedSession.sessionId"
+        :can-edit-call="canEditCall"
+        @close="isCallModalDisplayed = !isCallModalDisplayed"
+      />
     </teleport>
   </ServicesWrapper>
 </template>
 
 <script>
 import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
+import CallModal from '@components/Call/CallModal.vue'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 // Lazy loading
@@ -59,6 +66,7 @@ dayjs.extend(customParseFormat)
 export default {
   name: 'Horaires',
   components: {
+    CallModal,
     CustomCalendar,
     HorairesToolbar,
     SessionTeacherModal,
@@ -72,7 +80,9 @@ export default {
   data () {
     return {
       updatedSession: undefined,
-      isEditModalDisplayed: false
+      isEditModalDisplayed: false,
+      isCallModalDisplayed: false,
+      canEditCall: false
     }
   },
   computed: {
@@ -130,6 +140,16 @@ export default {
         case 'saveTeacherSubstitute':
           this.updatedSession = eventOption.event
           this.isEditModalDisplayed = !this.isEditModalDisplayed
+          break
+        case 'doCall':
+          this.updatedSession = eventOption.event
+          this.canEditCall = true
+          this.isCallModalDisplayed = !this.isCallModalDisplayed
+          break
+        case 'viewCall':
+          this.updatedSession = eventOption.event
+          this.canEditCall = false
+          this.isCallModalDisplayed = !this.isCallModalDisplayed
           break
         default:
           console.error('no option exist with name ' + eventOption.option.name)

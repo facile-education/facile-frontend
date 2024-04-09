@@ -2,7 +2,7 @@
   <div
     class="popup"
     data-test="popup"
-    :style="'background-color: ' + backgroundColor + ';'"
+    :class="type"
   >
     <div class="icon">
       <CustomIcon
@@ -59,20 +59,6 @@ export default {
   },
   emits: ['close'],
   computed: {
-    backgroundColor () {
-      switch (this.type) {
-        case 'success':
-          return '#90C864'
-        case 'info':
-          return '#4489FB'
-        case 'warning':
-          return '#FFAA28'
-        case 'error':
-          return '#F94A17'
-        default:
-          return ''
-      }
-    },
     iconName () {
       switch (this.type) {
         case 'success':
@@ -109,6 +95,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@design";
 /* TODO make animation */
 
 .popup {
@@ -156,6 +143,22 @@ export default {
       font-size: 1rem;
     }
   }
+}
+
+.info {
+  background-color: $info;
+}
+
+.success {
+  background-color: $success;
+}
+
+.warning {
+  background-color: $warning;
+}
+
+.error {
+  background-color: $danger;
 }
 
 .progress-bar {

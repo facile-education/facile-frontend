@@ -56,18 +56,6 @@
                 />
               </button>
             </li>
-            <li class="option">
-              <button
-                title="Faire l'appel"
-                aria-label="Faire l'appel"
-                @click="$emit('openCallModal')"
-              >
-                <CustomIcon
-                  class="menu-item-icon"
-                  icon-name="icon-users"
-                />
-              </button>
-            </li>
           </ul>
         </div>
       </header>
@@ -130,7 +118,7 @@ export default {
       required: true
     }
   },
-  emits: ['close', 'optionClicked', 'openCallModal'],
+  emits: ['close', 'optionClicked'],
   computed: {
     appEvent () {
       return this.selectedEvent.event.extendedProps
@@ -247,9 +235,7 @@ export default {
     color: #333;
     padding: 8px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
 
     h4 {
       margin: 0;

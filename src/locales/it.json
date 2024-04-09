@@ -22,8 +22,10 @@
     "delete": "Elimina",
     "registerStudent": "Registrare lo studente",
     "saveTeacherSubstitute": "@:CalendarEventOptions.download",
+    "doCall": "Effettua la chiamata",
     "showStudentList": "Lista degli iscritti",
-    "update": "Modifica"
+    "update": "Modifica",
+    "viewCall": "Visualizza la chiamata"
   },
   "Commons": {
     "back": "Indietro",
@@ -783,6 +785,23 @@
       "collapse": "Riduci",
       "expand": "Schermo intero"
     }
+  },
+  "Call": {
+    "callModalHeader": "Chiamata",
+    "student": "Studente",
+    "data": "Dati",
+    "absence": "Assenza",
+    "late": "Ritardo",
+    "firing": "Espulsione",
+    "infirmary": "Infermeria",
+    "comments": "Note",
+    "lateDuration": "Durata del ritardo",
+    "minute": "min",
+    "commentPlaceholder": "Nota...",
+    "errorPlaceholder": "Ops, si è verificato un errore...",
+    "save": "Salva",
+    "submit": "Invia",
+    "summary": "Sommario"
   },
   "ContactPicker": {
     "ContactPickerModal": {

@@ -25,6 +25,9 @@
 .icon-chevron-right-s:before {
   content: "\e919";
 }
+.icon-double-chevron-left:before {
+  content: "\e912";
+}
 .icon-plus:before {
   content: "\e91a";
 }
@@ -82,6 +85,9 @@
 .icon-home:before {
   content: "\e906";
 }
+.icon-school-life:before {
+  content: "\e902";
+}
 .icon-resource:before {
   content: "\e907";
 }
@@ -112,12 +118,21 @@
 .icon-users:before {
   content: "\e911";
 }
-.icon-user:before {
+.icon-user-24:before {
   content: "\e91f";
 }
-.icon-double-chevron-left:before {
-  content: "\e912";
+.icon-user-16:before {
+  content: "\e925";
 }
-.icon-school-life:before {
-  content: "\e902";
+.icon-add-user:before {
+  content: "\e926";
+}
+.icon-no-user:before {
+  content: "\e923";
+}
+.icon-soin:before {
+  content: "\e927";
+}
+.icon-out:before {
+  content: "\e924";
 }

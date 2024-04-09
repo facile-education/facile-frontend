@@ -149,7 +149,7 @@ export const mutations = {
           event.options.unshift({
             name: 'registerStudent',
             label: i18n.global.t('CalendarEventOptions.registerStudent'),
-            icon: require('@assets/icons/add_user.svg')
+            icon: 'icon-add-user'
           })
         }
       })

@@ -20,10 +20,12 @@
   },
   "CalendarEventOptions": {
     "delete": "Supprimer",
+    "doCall": "Faire l'appel",
     "registerStudent": "Inscrire l'élève",
     "saveTeacherSubstitute": "@:CalendarEventOptions.download",
     "showStudentList": "Liste des inscrits",
-    "update": "Modifier"
+    "update": "Modifier",
+    "viewCall": "Voir l'appel"
   },
   "Commons": {
     "back": "Retour",
@@ -783,6 +785,34 @@
       "collapse": "Réduire",
       "expand": "Plein écran"
     }
+  },
+  "Call": {
+    "callModalHeader": "Appel",
+    "confirmClosure": "Des modifications sont en cours, voulez vous vraiment quitter sans faire l'appel?",
+    "student": "Élève",
+    "data": "Infos",
+    "presence": "Présence",
+    "late": "Retard",
+    "firing": "Exclu.",
+    "infirmary": "Infirm.",
+    "comment": "Commentaire",
+    "comments": "Commentaires",
+    "removeLate": "Annuler le retard",
+    "removeComment": "Supprimer le commentaire",
+    "lateDuration": "Durée du retard",
+    "lateInputPlaceholder": "Minutes de retard",
+    "minute": "min",
+    "nbAbsence": "Aucune absence | Une absence | {n} absences",
+    "nbLate": "Aucun retard | Un retard | {n} retards",
+    "nbFired": "Aucune exclusion | Une exclusion | {n} exclusions",
+    "nbMedical": "Aucune infirmerie | Une infirmerie | {n} infirmeries",
+    "nbNotes": "Aucun commentaire | Un commentaire | {n} commentaires",
+    "commentPlaceholder": "Observation...",
+    "errorPlaceholder": "Oups, une erreur est survenue...",
+    "callSaved": "Appel enregistré",
+    "save": "Enregistrer",
+    "submit": "Valider",
+    "summary": "Récapitulatif"
   },
   "ContactPicker": {
     "ContactPickerModal": {
@@ -2115,7 +2145,7 @@
       "waitingSigning": "N'a pas encore signé",
       "waitingAuthorization": "N'a pas encore autorisé",
       "authorizeButtonLabel": "Autoriser",
-      "notAuthorizeButtonLabel": "Ne pas autoriser",      
+      "notAuthorizeButtonLabel": "Ne pas autoriser",
       "youAuthorized": "Vous avez autorisé le {date}",
       "hasAuthorized": "A autorisé le {date}",
       "youNotAuthorized": "Vous n'avez pas autorisé",

@@ -20,10 +20,12 @@
   },
   "CalendarEventOptions": {
     "delete": "Löschen",
+    "doCall": "Anruf tätigen",
     "registerStudent": "Schüler anmelden",
     "saveTeacherSubstitute": "@:CalendarEventOptions.download",
     "showStudentList": "Teilnehmerliste anzeigen",
-    "update": "Aktualisieren"
+    "update": "Aktualisieren",
+    "viewCall": "Anruf anzeigen"
   },
   "Commons": {
     "back": "Zurück",
@@ -783,6 +785,23 @@
       "collapse": "Reduzieren",
       "expand": "Vollbild"
     }
+  },
+  "Call": {
+    "callModalHeader": "Anruf",
+    "student": "Schüler",
+    "data": "Informationen",
+    "absence": "Abwesenheit",
+    "late": "Verspätung",
+    "firing": "Entlassung",
+    "infirmary": "Krankenstation",
+    "comments": "Anmerkungen",
+    "lateDuration": "Verspätungsdauer",
+    "minute": "min",
+    "commentPlaceholder": "Anmerkung...",
+    "errorPlaceholder": "Hoppla, ein Fehler ist aufgetreten...",
+    "save": "Speichern",
+    "submit": "Absenden",
+    "summary": "Zusammenfassung"
   },
   "ContactPicker": {
     "ContactPickerModal": {

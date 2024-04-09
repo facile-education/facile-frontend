@@ -38,8 +38,8 @@
       @click.stop="openUserCardModal"
     >
       <CustomIcon
-        class=".icon-user"
-        :icon-name="'icon-user'"
+        class=".icon-user-24"
+        :icon-name="'icon-user-24'"
       />
     </a>
   </div>

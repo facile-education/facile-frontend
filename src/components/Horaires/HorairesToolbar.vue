@@ -142,7 +142,7 @@ export default {
       return this.$store.state.horaires.selectedDate
     },
     iconClass () {
-      return this.isSingleUser ? 'icon-user' : 'icon-users'
+      return this.isSingleUser ? 'icon-user-24' : 'icon-users'
     },
     schoolList () {
       return this.$store.state.user.schoolList

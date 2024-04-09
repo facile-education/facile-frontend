@@ -19,9 +19,8 @@ function getCallDetails (sessionId) {
 }
 
 function doCall (sessionId, studentsPresence) {
-  return axios.post(constants.JSON_WS_URL + CALL_PATH + '/do-call',
-    WeprodeUtils.params({
-      sessionId,
-      studentsPresence: JSON.stringify(studentsPresence)
-    })).then(response => response.data)
+  return axios.post(constants.JSON_WS_URL + CALL_PATH + '/do-call', WeprodeUtils.params({
+    sessionId,
+    studentsPresence: JSON.stringify(studentsPresence)
+  })).then(response => response.data)
 }

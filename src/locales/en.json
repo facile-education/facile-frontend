@@ -20,10 +20,12 @@
   },
   "CalendarEventOptions": {
     "delete": "Delete",
+    "doCall": "Make the call",
     "registerStudent": "Register student",
     "saveTeacherSubstitute": "@:CalendarEventOptions.download",
     "showStudentList": "List of registered",
-    "update": "Update"
+    "update": "Update",
+    "viewCall": "View the call"
   },
   "Commons": {
     "back": "Back",
@@ -783,6 +785,23 @@
       "collapse": "Collapse",
       "expand": "Full Screen"
     }
+  },
+  "Call": {
+    "callModalHeader": "Call",
+    "student": "Student",
+    "data": "Info",
+    "absence": "Absence",
+    "late": "Late",
+    "firing": "Dismissal",
+    "infirmary": "Infirmary",
+    "comments": "Notes",
+    "lateDuration": "Late duration",
+    "minute": "min",
+    "commentPlaceholder": "Comments...",
+    "errorPlaceholder": "Oops, an error occurred...",
+    "save": "Save",
+    "submit": "Submit",
+    "summary": "Summary"
   },
   "ContactPicker": {
     "ContactPickerModal": {

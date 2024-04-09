@@ -19,7 +19,7 @@
     />
 
     <div class="nb-users">
-      <CustomIcon :icon-name="'icon-user'" />
+      <CustomIcon :icon-name="'icon-user-24'" />
       <div>{{ userListLength }}</div>
     </div>
 
@@ -110,7 +110,7 @@ button {
   justify-content: center;
   line-height: 1rem;
 
-  .icon-user {
+  .icon-user-24 {
     width: 0.875rem;
     margin: 3px 0;
   }
