@@ -270,6 +270,7 @@
     "Authentication": "Accueil ENTA",
     "AuthenticationRequired": "Authentification requise",
     "cdt": "Cours & devoirs",
+    "logbook": "Carnet de liaison",
     "communication": "Communication",
     "contacts": "Contacts",
     "cortex": "Cortex",
@@ -299,6 +300,7 @@
       "access-admin": "administration-acces",
       "application-admin": "admininistration-applications",
       "cdt": "cours-et-devoirs",
+      "logbook": "carnet-de-liaison",
       "contacts": "contacts",
       "cortex": "cortex",
       "dashboard": "dashboard",
@@ -2101,17 +2103,27 @@
   },
   "Logbook": {
     "serviceTitle": "Carnet de liason",
+    "entryTabLabel": "Correspondances",
+    "schoolLifeTabLabel": "Vie scolaire",
     "newEntryButtonLabel": "Nouveau",
     "errorPlaceholder": "Oups, une erreur est survenue...",
     "warningMessageDeleteEntry": "Voulez vous vraiment supprimer ce mot ?",
     "successCreateEntry": "Mot créé avec succès",
     "successUpdateEntry": "Mot modifié avec succès",
     "noEntryPlaceholder": "Pas de mot",
+    "confirmSigningTextModal": "Etes-vous sur de vouloir signer cette {entryType}",
+    "confirmAuthorizationTextModal": "Vous allez donner votre autorisation",
+    "notConfirmAuthorizationTextModal": "Vous n'allez pas donner votre autorisation",
+    "confirmReminderTextModal": "Vous allez relancer les {nbParents} parents qui n'ont pas signé",
+    "totalReminders": "Relancé déjà {nbReminders} fois",
+    "lastReminderDate": "'Dernière relance le {reminderDate}",
     "entriesFilters": {
-      "searchStudentPlaceholder": "Elèves"
+      "searchStudentPlaceholder": "Elèves",
+      "myEntriesButtonLabel": "Mes correspondances",
+      "myEntriesButtonTitle": "Afficher mes correspondances"
     },
     "entriesEditModal": {
-      "modalTitle": "Créer un mot",
+      "modalTitle": "Créer un mot - {entryType}",
       "populationPlaceholder": "Populations",
       "titlePlaceholder": "Titre",
       "contentPlaceholder": "Contenu du mot",
@@ -2119,7 +2131,8 @@
       "authorizationLabel": "Autorisation de sortie",
       "maxDateLabel": "Date limite",
       "createSubmit": "Créer",
-      "editSubmit": "Modifier"
+      "editSubmit": "Modifier",
+      "warningCreateEntryMessage": "Vous ne pourrez pas modifier le mot une fois qu’il sera créé et envoyé"
     },
     "statusModal": {
       "titleModal": "Détail des signatures",
@@ -2142,14 +2155,24 @@
       "hasSigned": "A signé le {signatureDate}",
       "signButtonLabel": "Signer",
       "deadlinePassed": "La date limite est dépassée",
+      "waiting": "En attente",
       "waitingSigning": "N'a pas encore signé",
-      "waitingAuthorization": "N'a pas encore autorisé",
+      "waitingAuthorization": "N'a pas encore répondu",
       "authorizeButtonLabel": "Autoriser",
       "notAuthorizeButtonLabel": "Ne pas autoriser",
       "youAuthorized": "Vous avez autorisé le {date}",
-      "hasAuthorized": "A autorisé le {date}",
+      "hasAuthorized": "a autorisé le {date}",
       "youNotAuthorized": "Vous n'avez pas autorisé",
-      "hasNotAuthorized": "N'a pas autorisé"
+      "hasNotAuthorized": "N'a pas autorisé",
+      "entryTypeInformation": "Information",
+      "entryTypeAuthorization": "Autorisation",
+      "entryTypeObservation": "Observation",
+      "entryReadStatusButton": "Voir les signatures",
+      "followupButton": "Relancer",
+      "signingParentTitle": "Signature de {parentFullName}",
+      "yourSigningTitle": "Votre {signingType}",
+      "oneSignatureRequiredTitle": "signature d’un responsable légal",
+      "oneAuthorizationRequiredTitle": "Autorisation d’un responsable légal"
     }
   }
 }

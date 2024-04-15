@@ -1,14 +1,31 @@
 <template>
-  <div class="entries-list-item theme-border-color">
-    <header>
+  <div class="entries-list-item">
+    <div
+      v-if="isParent && !isCurrentParentSigned && !isOneParentRequired"
+      class="pellet theme-background-color"
+    />
+    <div
+      v-else-if="isParent && isOneParentRequired && !isOneParentSigned"
+      class="pellet theme-background-color"
+    />
+    <div
+      class="left"
+      :class="(isParent || isStudent) && 'student-parent-display'"
+    >
+      <p class="entry-type">
+        {{ activityType }}
+      </p>
       <h2 data-test="entry-title">
         {{ data.title }}
       </h2>
+      <p
+        class="content"
+        v-html="data.content"
+      />
       <div class="publication-infos">
         <p>{{ publicationDate }}</p>
         <a
           href="#"
-          style="color: black;"
           class="toggle-user-card"
           data-test="author"
           @click.stop="openUserCardModal(data.author)"
@@ -16,270 +33,96 @@
           {{ data.author.userName }}
         </a>
       </div>
-    </header>
-    <p
-      class="content"
-      v-html="data.content"
-    />
-    <div
-      v-if="isTeacher || isDirector || isSecretariat"
-      class="bottomAdmin"
-    >
-      <p
-        class="read-infos"
-        :class="data.isAllowedToReadStatus && 'clickable'"
-        @click="isDisplayStatusModal = true"
-      >
-        {{ nbSignedInfos }}
-      </p>
     </div>
+    <div class="separation" />
     <div
-      class="entry-options"
+      class="right"
+      :class="(isParent || isStudent) && 'student-parent-display'"
     >
-      <button
-        v-if="data.nbSignatures === 0 && data.isEditable"
-        class="option"
-        :aria-label="'Modifier'"
-        :title="$t('Logbook.entriesItem.editButtonLabel')"
-        data-test="buttonUpdateEntry"
-        @click="isDisplayEditModal = true"
-        @keyup.stop
-      >
-        <CustomIcon
-          class="icon"
-          icon-name="icon-edit"
-        />
-      </button>
-      <button
-        v-if="data.isDeletable"
-        class="option"
-        :aria-label="'Supprimer'"
-        :title="$t('Logbook.entriesItem.deleteButtonLabel')"
-        data-test="buttonDeleteEntry"
-        @click.stop="confirmDeleteEntry"
-        @keyup.stop
-      >
-        <CustomIcon
-          class="icon"
-          icon-name="icon-trash"
-        />
-      </button>
-    </div>
-    <div
-      v-if="isParent || isStudent"
-      class="bottom"
-    >
-      <p class="entry-type">
-        {{ entryType }}
-      </p>
-      <ul class="parent-status">
-        <li
-          v-for="(parent, index) in data.parents"
-          :key="index"
-          class="parent"
-          :class="mq.phone && 'mobile'"
-        >
-          <a
-            href="#"
-            style="color: black;"
-            class="toggle-user-card parents-full-name"
-            @click.stop="openUserCardModal(parent)"
-          >
-            {{ parent.firstName + ' ' + parent.lastName }}
-          </a>
-          <div
-            v-if="isParent && !data.isAuthorization"
-            data-test="parents-options"
-            class="parents-options"
-          >
-            <p
-              v-if="parent.hasSigned"
-              class="theme-text-color"
-            >
-              {{ parent.userId === currentUser.userId ? $t('Logbook.entriesItem.youSigned', {signatureDate: formateDate(parent.signatureDate)}) : $t('Logbook.entriesItem.hasSigned', {signatureDate: formateDate(parent.signatureDate)}) }}
-            </p>
-            <WeprodeButton
-              v-else-if="parent.userId === currentUser.userId"
-              :disabled="data.limitDate < currentDate"
-              :title="data.limitDate < currentDate && $t('Logbook.entriesItem.deadlinePassed')"
-              :label="$t('Logbook.entriesItem.signButtonLabel')"
-              data-test="signing-button"
-              @click="handleSignEntry(data.logbookEntryId, data.isAuthorization)"
-            />
-            <p v-else>
-              {{ $t('Logbook.entriesItem.waitingSigning') }}
-            </p>
-          </div>
-          <div v-if="isParent && data.isAuthorization">
-            <p
-              v-if="parent.hasSigned && parent.hasAuthorized"
-              :class="{'theme-text-color':parent.userId === currentUser.userId}"
-            >
-              {{ parent.userId === currentUser.userId ? $t('Logbook.entriesItem.youAuthorized', {date: formateDate(parent.signatureDate)}) : $t('Logbook.entriesItem.hasAuthorized', {date: formateDate(parent.signatureDate)}) }}
-            </p>
-            <p
-              v-if="parent.hasSigned && !parent.hasAuthorized"
-              :class="{'theme-text-color':parent.userId === currentUser.userId}"
-            >
-              {{ parent.userId === currentUser.userId ? $t('Logbook.entriesItem.youNotAuthorized') : $t('Logbook.entriesItem.hasNotAuthorized') }}
-            </p>
-            <p v-if="!parent.hasSigned && parent.userId != currentUser.userId">
-              {{ $t('Logbook.entriesItem.waitingAuthorization') }}
-            </p>
-            <div
-              v-if="parent.userId === currentUser.userId && !parent.hasSigned"
-              class="authorization-options"
-            >
-              <WeprodeButton
-                :disabled="data.limitDate < currentDate"
-                :label="$t('Logbook.entriesItem.authorizeButtonLabel')"
-                data-test="authorize-button"
-                :title="data.limitDate < currentDate && $t('Logbook.entriesItem.deadlinePassed')"
-                @click="handleSignEntry(data.logbookEntryId, true)"
-              />
-              <WeprodeButton
-                :disabled="data.limitDate < currentDate"
-                :label="$t('Logbook.entriesItem.notAuthorizeButtonLabel')"
-                data-test="not-authorize-button"
-                :title="data.limitDate < currentDate && $t('Logbook.entriesItem.deadlinePassed')"
-                @click="handleSignEntry(data.logbookEntryId, false)"
-              />
-            </div>
-          </div>
-          <div v-if="isStudent">
-            <p v-if="parent.hasSigned && !data.isAuthorization">
-              {{ $t('Logbook.entriesItem.hasSigned', {signatureDate: formateDate(parent.signatureDate)}) }}
-            </p>
-            <p v-if="parent.hasSigned && parent.hasAuthorized">
-              {{ $t('Logbook.entriesItem.hasAuthorized', {date: formateDate(parent.signatureDate)}) }}
-            </p>
-            <p v-if="!parent.hasSigned && !data.isAuthorization">
-              {{ $t('Logbook.entriesItem.waitingSigning') }}
-            </p>
-            <p v-if="!parent.hasSigned && !parent.hasAuthorized && data.isAuthorization">
-              {{ $t('Logbook.entriesItem.waitingAuthorization') }}
-            </p>
-            <p v-if="parent.hasSigned && !parent.hasAuthorized && data.isAuthorization">
-              {{ $t('Logbook.entriesItem.hasNotAuthorized') }}
-            </p>
-          </div>
-        </li>
-      </ul>
+      <ParentsStudentsSigningSection
+        v-if="isParent || isStudent"
+        :data="data"
+        @signed="$emit('signed')"
+      />
+      <AgentsSigningSection
+        v-else
+        :data="data"
+        :is-student-entries="isStudentEntries"
+        @refresh="$emit('refresh')"
+      />
     </div>
   </div>
-  <teleport to="body">
-    <EntriesEditModal
-      v-if="isDisplayEditModal"
-      :init-entry="data"
-      @close="isDisplayEditModal = false"
-      @entry-edited="$emit('entryEdited')"
-    />
-  </teleport>
-  <teleport to="body">
-    <EntrySignatureStatusModal
-      v-if="isDisplayStatusModal"
-      :entry="data"
-      @close="isDisplayStatusModal = false"
-    />
-  </teleport>
 </template>
 
 <script>
-import CustomIcon from '@components/Base/CustomIcon.vue'
 import dayjs from 'dayjs'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
-import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
+import AgentsSigningSection from '@/components/Logbook/AgentsSigningSection'
+import ParentsStudentsSigningSection from '@/components/Logbook/ParentsStudentSigningSection.vue'
+import logbookConstants from '@/constants/logbookConstants'
 
-import { deleteEntry, signLogbookEntry } from '../../api/logbook.service'
-import EntriesEditModal from '../../components/Logbook/EntriesEditModal.vue'
-import EntrySignatureStatusModal from '../../components/Logbook/EntryStatusModal/EntryStatusModal.vue'
 export default {
   name: 'EntriesListItem',
   components: {
-    WeprodeButton,
-    CustomIcon,
-    EntriesEditModal,
-    EntrySignatureStatusModal
+    ParentsStudentsSigningSection,
+    AgentsSigningSection
   },
-  inject: ['mq'],
   props: {
     data: {
       type: Object,
       default: undefined
+    },
+    isStudentEntries: {
+      type: Boolean,
+      default: false
     }
   },
-  emits: ['deleteEntry', 'signed', 'entryEdited'],
+  emits: ['signed', 'refresh'],
   data () {
     return {
       currentDate: dayjs().format(DATE_EXCHANGE_FORMAT),
       authorization: '',
       isDisplayEditModal: false,
-      isDisplayStatusModal: false
+      isOneParentRequired: false
     }
   },
   computed: {
-    currentUser () {
-      return this.$store.state.user
-    },
-    isTeacher () {
-      return this.$store.state.user.isTeacher
-    },
-    isDirector () {
-      return this.$store.state.user.isDirectionMember
-    },
-    isSecretariat () {
-      return this.$store.state.user.isSecretariat
-    },
-    isParent () {
-      return this.$store.state.user.isParent
+    publicationDate () {
+      return this.$t('Logbook.entriesItem.entryPublicationDate', { date: this.formateDate(this.data.modificationDate) })
     },
     isStudent () {
       return this.$store.state.user.isStudent
     },
-    publicationDate () {
-      return this.$t('Logbook.entriesItem.entryPublicationDate', { date: this.formateDate(this.data.modificationDate) })
+    isParent () {
+      return this.$store.state.user.isParent
     },
-    nbSignedInfos () {
-      if (this.data.isAuthorization) {
-        return this.$t('Logbook.entriesItem.agentNbAuthorizationInfos', { nbSigned: this.data.nbAuthorization, nbStudents: this.data.nbSignaturesNeeded })
+    currentUser () {
+      return this.$store.state.user
+    },
+    isCurrentParentSigned () {
+      const currentParent = this.data.parents.find((parent) => parent.userId === this.currentUser.userId)
+      return currentParent.hasSigned
+    },
+    activityType () {
+      if (this.data.type === logbookConstants.ENTRY_TYPE_INFORMATION) {
+        return this.$t('Logbook.entriesItem.entryTypeInformation')
+      } else if (this.data.type === logbookConstants.ENTRY_TYPE_AUTHORIZATION) {
+        return this.$t('Logbook.entriesItem.entryTypeAuthorization')
       } else {
-        return this.$t('Logbook.entriesItem.agentNbSignedInfos', { nbSigned: this.data.nbSignatures, nbStudents: this.data.nbSignaturesNeeded })
+        return this.$t('Logbook.entriesItem.entryTypeObservation')
       }
     },
-    entryType () {
-      if (this.data.isAuthorization) {
-        return this.$t('Logbook.entriesItem.authorization')
-      } else {
-        return this.$t('Logbook.entriesItem.signing')
-      }
+    isOneParentSigned () {
+      return this.data.parents.some(parent => parent.hasSigned)
+    },
+    isOneNotAuthorized () {
+      return this.data.parents.some(parent => !parent.hasAuthorized && parent.hasSigned)
     }
   },
   methods: {
     formateDate (date) {
       return dayjs(date).format('DD/MM/YY')
-    },
-    handleSignEntry (entryId, hasAuthorized) {
-      signLogbookEntry(entryId, hasAuthorized).then(data => {
-        this.$emit('signed')
-      }, err => {
-        console.log(err)
-      })
-    },
-    confirmDeleteEntry () {
-      this.$store.dispatch('warningModal/addWarning', {
-        text: this.$t('Logbook.warningMessageDeleteEntry'),
-        lastAction: { fct: this.deleteEntry }
-      })
-    },
-    deleteEntry () {
-      deleteEntry(this.data.logbookEntryId).then((data) => {
-        if (data.success) {
-          this.$emit('deleteEntry')
-        } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-        }
-      })
     },
     openUserCardModal (user) {
       this.$store.dispatch('userCard/initUserCard', user)
@@ -290,106 +133,115 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/design';
-.entries-list-item{
+
+.entries-list-item {
   position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  border: solid 1px;
-  padding: 10px;
-  border-radius: 10px;
-  min-height: 150px;
-    header{
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      h2{
-        max-width: 70%;
-        word-wrap: break-word;
-        margin: 0;
-        @extend %font-heading-xs;
-      }
-      .publication-infos{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        a, p{
-          margin: 0;
-          @extend %font-regular-s
-        }
-      }
+  gap: 16px;
+  padding: 24px;
+  border-radius: 6px;
+  border: 1px solid $neutral-40;
+  background: $neutral-10;
+  box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.10);
+  width: 100%;
+
+  .pellet {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 16px;
+    height: 16px;
+    border: 3px solid $neutral-10;
+    border-radius: 100%;
+  }
+
+  .left {
+    width: calc(100% - 250px);
+    &.student-parent-display{
+      width: 50%;
+      max-width: 50%;
     }
-    .content{
+
+    .entry-type {
+      @extend %font-regular-m;
+      color: $neutral-80;
+      background-color: $neutral-20;
+      padding: 2px 8px;
+      margin: 0;
+      border-radius: 6px;
+      width: fit-content;
+      margin-bottom: 8px
+    }
+
+    h2 {
+      max-width: 70%;
+      word-wrap: break-word;
+      margin: 0;
+      @extend %font-heading-xs;
+    }
+
+    .content {
       margin: 0;
       word-wrap: break-word;
       @extend %font-regular-m;
     }
-    .clickable{
-      cursor: pointer;
-      align-self: flex-end;
-      margin-bottom: 0;
-      text-decoration: underline
-    }
-    .entry-type{
-      @extend %font-bold-l;
-    }
-    .bottom{
-      border-top: solid 1px;
-      .parent-status{
+
+    .publication-infos {
+      display: flex;
+      gap: 8px;
+
+      a,
+      p {
         margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        li{
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          list-style: none;
-          @extend %font-regular-m;
-          p{
-            margin: 0;
-            @extend %font-regular-m;
-          }
-          button{
-            padding: 5px 10px;
-            @extend %font-regular-m;
-          }
-        }
+        @extend %font-regular-xs;
+        color: $neutral-80;
       }
     }
-    .bottomAdmin{
-      position: relative;
-    }
-    .authorization-options{
-      display: flex;
-      gap: 10px;
-      button{
-        padding: 10px;
-      }
-    }
-    .entry-options{
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      button{
-        cursor: pointer;
-        border: none;
-      }
-    }
+  }
 
-    .parents-full-name{
-      text-decoration: underline
-    }
+  .separation {
+    height: auto;
+    width: 1px;
+    background: #E0E0E0;
+  }
 
-    .mobile{
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start !important;
-      gap: 5px;
+  .right {
+    align-self: center;
+    padding: 0 16px;
+    min-width: 250px;
+    &.student-parent-display{
+      width: 50%;
     }
+  }
 }
-</style>./EntryStatusModal/EntrySignatureStatusModal.vue
+
+@media screen and (max-width: 1080px) {
+  .entries-list-item {
+    flex-direction: column;
+
+    .left{
+      width: 100%;
+      &.student-parent-display{
+      width: 100%;
+      max-width: 100%;
+    }
+    }
+
+    .separation {
+      height: 1px;
+      width: 100%;
+      background: #E0E0E0;
+    }
+
+    .right {
+      align-self: flex-start;
+      padding: 0;
+      width: 100%;
+      &.student-parent-display{
+      width: 100%;
+    }
+    }
+  }
+}
+</style>

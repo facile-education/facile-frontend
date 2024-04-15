@@ -3,37 +3,72 @@
     :is-title-visible="true"
     :title="$t('Logbook.serviceTitle')"
   >
-    <div class="header">
-      <EntriesFilter v-if="isTeacher || isDirector || isSecretariat || isParent" />
-      <WeprodeButton
-        v-if="(isTeacher || isDirector || isSecretariat) && !mq.phone"
-        class="create-button"
-        data-test="create-entry-button"
-        @click="openEntriesEditModal"
-      >
-        <CustomIcon icon-name="icon-plus" />
-        <span>{{ $t('Logbook.newEntryButtonLabel') }}</span>
-      </WeprodeButton>
-    </div>
-    <EntriesList :is-entry-created="isEntryCreated" />
-    <div
-      v-if="mq.phone"
-      class="footer"
-    >
-      <WeprodeButton
-        v-if="(isTeacher || isDirector || isSecretariat)"
-        class="create-button"
-        data-test="create-entry-button"
-        @click="openEntriesEditModal"
-      >
-        <CustomIcon icon-name="icon-plus" />
-        <span>{{ $t('Logbook.newEntryButtonLabel') }}</span>
-      </WeprodeButton>
+    <div class="container-logbook">
+      <div class="header">
+        <div
+          v-if="(isTeacher || isDirector || isSecretariat) && !mq.phone && !mq.tablet"
+          class="container-create-entry"
+        >
+          <WeprodeButton
+            class="create-button"
+            data-test="create-entry-button"
+            @click="displayCreateEntryOptions"
+          >
+            <CustomIcon icon-name="icon-plus" />
+            <span>{{ $t('Logbook.newEntryButtonLabel') }}</span>
+          </WeprodeButton>
+          <ContextMenu
+            v-if="isContextMenuDisplayed"
+            class="context-menu"
+            data-test="containerCreateEntryOptions"
+            :is-absolute="true"
+            @close="isContextMenuDisplayed = false"
+            @choose-option="optionClicked"
+          />
+        </div>
+        <EntriesFilter v-if="isTeacher || isDirector || isSecretariat || isParent" />
+      </div>
+      <EntryTypeFilter v-if="isTeacher || isDirector || isSecretariat" />
+      <component :is="isTeacher || isDirector || isSecretariat ? 'v-fragment' : 'WeprodeTabList'">
+        <component
+          :is="isTeacher || isDirector || isSecretariat ? 'v-fragment' : 'WeprodeTabItem'"
+          :title="$t('Logbook.entryTabLabel')"
+        >
+          <EntriesList
+            :is-entry-created="isEntryCreated"
+            @is-refreshed="isEntryCreated = false"
+          />
+          <div
+            v-if="(isTeacher || isDirector || isSecretariat) && (mq.phone || mq.tablet)"
+            class="container-create-entry-mobile"
+          >
+            <WeprodeButton
+              class="create-button mobile"
+              data-test="create-entry-button"
+              @click="displayCreateEntryOptions"
+            >
+              <CustomIcon icon-name="icon-plus" />
+            </WeprodeButton>
+            <ContextMenu
+              v-if="isContextMenuDisplayed && (mq.phone || mq.tablet)"
+              data-test="containerCreateEntryOptions"
+              :is-absolute="true"
+              @close="isContextMenuDisplayed = false"
+              @choose-option="optionClicked"
+            />
+          </div>
+        </component>
+        <component
+          :is="isTeacher || isDirector || isSecretariat ? 'v-fragment' : 'WeprodeTabItem'"
+          :title="$t('Logbook.schoolLifeTabLabel')"
+        />
+      </component>
     </div>
   </ServicesWrapper>
   <teleport to="body">
     <EntriesEditModal
       v-if="isDisplayEditModal && configuration"
+      :entry-type="entryType"
       @close="isDisplayEditModal = false"
       @entry-created="setIsEntryCreated"
     />
@@ -43,13 +78,17 @@
 <script>
 
 import CustomIcon from '@components/Base/CustomIcon.vue'
+import VFragment from '@components/Base/VFragment.vue'
 
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
-
-import EntriesEditModal from '../../components/Logbook/EntriesEditModal.vue'
-import EntriesFilter from '../../components/Logbook/EntriesFilter.vue'
-import EntriesList from '../../components/Logbook/EntriesList.vue'
-import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
+import WeprodeTabItem from '@/components/Base/Weprode/WeprodeTabItem.vue'
+import WeprodeTabList from '@/components/Base/Weprode/WeprodeTabList.vue'
+import ContextMenu from '@/components/ContextMenu/ContextMenu.vue'
+import EntriesEditModal from '@/components/Logbook/EntriesEditModal.vue'
+import EntriesFilter from '@/components/Logbook/EntriesFilter.vue'
+import EntriesList from '@/components/Logbook/EntriesList.vue'
+import EntryTypeFilter from '@/components/Logbook/EntryTypeFilter.vue'
+import ServicesWrapper from '@/components/ServicesWrapper/ServicesWrapper.vue'
 
 export default {
   name: 'Course',
@@ -59,14 +98,21 @@ export default {
     EntriesFilter,
     WeprodeButton,
     EntriesList,
-    CustomIcon
+    CustomIcon,
+    WeprodeTabItem,
+    WeprodeTabList,
+    VFragment,
+    ContextMenu,
+    EntryTypeFilter
   },
   inject: ['mq'],
   emits: ['update:layout'],
   data () {
     return {
       isDisplayEditModal: false,
-      isEntryCreated: false
+      isEntryCreated: false,
+      isContextMenuDisplayed: false,
+      entryType: undefined
     }
   },
   computed: {
@@ -84,6 +130,32 @@ export default {
     },
     configuration () {
       return this.$store.state.calendar.configuration
+    },
+    isAContextMenuDisplayed () {
+      return this.$store.state.contextMenu.isAContextMenuDisplayed
+    },
+    createMenu () {
+      const options = [
+        {
+          name: 'createInformation',
+          i18nKey: 'Logbook.entriesItem.entryTypeInformation',
+          position: 0,
+          hasSeparator: false
+        },
+        {
+          name: 'createAuthorization',
+          i18nKey: 'Logbook.entriesItem.entryTypeAuthorization',
+          position: 1,
+          hasSeparator: false
+        },
+        {
+          name: 'createObservation',
+          i18nKey: 'Logbook.entriesItem.entryTypeObservation',
+          position: 2,
+          hasSeparator: false
+        }
+      ]
+      return options
     }
   },
   beforeCreate () {
@@ -100,6 +172,36 @@ export default {
     },
     setIsEntryCreated () {
       this.isEntryCreated = true
+    },
+    displayCreateEntryOptions (event) {
+      if (!this.isAContextMenuDisplayed) {
+        this.isContextMenuDisplayed = true
+        this.$store.dispatch('contextMenu/openContextMenu',
+          {
+            event,
+            options: this.createMenu
+          })
+      }
+    },
+    optionClicked (option) {
+      switch (option.name) {
+        case 'createInformation':
+          this.entryType = 1
+          this.isDisplayEditModal = true
+          break
+        case 'createAuthorization':
+          this.entryType = 2
+          this.isDisplayEditModal = true
+          break
+        case 'createObservation':
+          this.entryType = 3
+          this.isDisplayEditModal = true
+          break
+        default:
+          console.error('unknown action for option', option)
+      }
+      this.isContextMenuDisplayed = false
+      this.$store.dispatch('contextMenu/closeMenus')
     }
   }
 }
@@ -108,31 +210,43 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.header{
+.header {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  button{
+  gap: 30px;
+
+  button {
     height: fit-content;
+  }
+}
+
+.container-create-entry {
+  position: relative;
+}
+
+.container-create-entry-mobile {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+
+  .context-menu {
+    bottom: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    top: auto !important;
   }
 }
 
 .create-button {
   @extend %create-button;
+
+  &.mobile {
+    border-radius: 100%;
+    border: 3px solid $neutral-10;
+  }
 }
 
-.first-line{
+.first-line {
   margin-bottom: 0.5rem;
   display: flex;
-}
-.footer{
-  position: fixed;
-  padding: 10px;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  background-color: white;
 }
 </style>

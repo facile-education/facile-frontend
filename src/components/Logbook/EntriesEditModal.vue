@@ -3,21 +3,19 @@
     v-if="configuration"
     class="edit-entries-modal"
     data-test="edit-entries-modal"
-    :class="{'phone': mq.phone || mq.tablet}"
+    :class="{ 'phone': mq.phone || mq.tablet }"
     :full-screen="mq.phone || mq.tablet"
     :modal="true"
     :draggable="true"
     @close="confirmClosure"
   >
     <template #header>
-      <span
-        v-t="'Logbook.entriesEditModal.modalTitle'"
-      />
+      <span>
+        {{ modalTitle }}
+      </span>
     </template>
 
-    <template
-      #body
-    >
+    <template #body>
       <div v-if="limitDate">
         <WeprodeTagsInput
           v-model="populations"
@@ -27,9 +25,7 @@
           :close-on-select="true"
           display-field="populationName"
         />
-        <WeprodeErrorMessage
-          :error-message="formErrorList.populations"
-        />
+        <WeprodeErrorMessage :error-message="formErrorList.populations" />
 
         <WeprodeInput
           id="create-message-subject-input"
@@ -39,9 +35,7 @@
           data-test="entry-title"
           :placeholder="$t('Logbook.entriesEditModal.titlePlaceholder')"
         />
-        <WeprodeErrorMessage
-          :error-message="formErrorList.title"
-        />
+        <WeprodeErrorMessage :error-message="formErrorList.title" />
 
         <TextContent
           v-if="content !== undefined"
@@ -49,26 +43,10 @@
           class="ck-editor"
           :placeholder="$t('Logbook.entriesEditModal.contentPlaceholder')"
         />
-
-        <div class="entries-type">
-          <WeprodeRadioButton
-            v-model="entryType"
-            :label="$t('Logbook.entriesEditModal.signingLabel')"
-            name="date"
-            data-test="signing"
-            rb-value="signing"
-            class="radio"
-          />
-          <WeprodeRadioButton
-            v-model="entryType"
-            :label="$t('Logbook.entriesEditModal.authorizationLabel')"
-            name="date"
-            data-test="authorization"
-            rb-value="authorization"
-            class="radio"
-          />
-        </div>
-        <div class="max-date">
+        <div
+          v-if="entryType === 2"
+          class="max-date"
+        >
           <p>{{ $t('Logbook.entriesEditModal.maxDateLabel') }}</p>
           <CustomDatePicker
             v-model:selected-date="limitDate"
@@ -84,13 +62,12 @@
     </template>
 
     <template #footer>
-      <div
-        class="footer"
-      >
+      <div class="footer">
+        <p>{{ $t('Logbook.entriesEditModal.warningCreateEntryMessage') }}</p>
         <WeprodeButton
           data-test="submitButton"
           class="dark"
-          :label="isCreation ? $t('Logbook.entriesEditModal.createSubmit') : $t('Logbook.entriesEditModal.editSubmit')"
+          :label="$t('Logbook.entriesEditModal.createSubmit')"
           @click="submit"
         />
       </div>
@@ -111,14 +88,14 @@ import dayjs from 'dayjs'
 import messageService from '@/api/messaging/message.service'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
-import WeprodeRadioButton from '@/components/Base/Weprode/WeprodeRadioButton.vue'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import { ckMaxSize } from '@/constants/appConstants'
+import logbookConstants from '@/constants/logbookConstants'
 import constants from '@/constants/messagingConstants'
 
-import { createEntries, getLogbookBroadcastPopulations, updateEntry } from '../../api/logbook.service'
+import { createEntries, getLogbookBroadcastPopulations } from '../../api/logbook.service'
 
 const inputMaxSize = 75
 const isUnderInputMaxSize = (value) => validators.isUnderMaxSize(value, inputMaxSize)
@@ -135,7 +112,6 @@ export default {
     WeprodeButton,
     WeprodeInput,
     TextContent,
-    WeprodeRadioButton,
     CustomDatePicker,
     WeprodeErrorMessage,
     WeprodeSpinner
@@ -144,6 +120,10 @@ export default {
   props: {
     initEntry: {
       type: Object,
+      default: undefined
+    },
+    entryType: {
+      type: Number,
       default: undefined
     }
   },
@@ -159,7 +139,6 @@ export default {
       populationsList: [],
       title: '',
       content: '',
-      entryType: 'signing',
       limitDate: undefined
     }
   },
@@ -179,9 +158,6 @@ export default {
     minDate () {
       return dayjs().toDate()
     },
-    // limitDate () {
-    //   return this.configuration ? dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD') : dayjs()
-    // },
     formErrorList () {
       return {
         title: (this.v$.title.$invalid && this.v$.title.$dirty)
@@ -198,17 +174,25 @@ export default {
     isTeacher () {
       return this.$store.state.user.isTeacher
     },
-    isCreation () {
-      return this.initEntry === undefined
-    },
     contactTypeUser () {
       return constants.CONTACT_TYPE_USER
     },
     configuration () {
       return this.$store.state.calendar.configuration
+    },
+    modalTitle () {
+      if (this.entryType === logbookConstants.ENTRY_TYPE_INFORMATION) {
+        return this.$t('Logbook.entriesEditModal.modalTitle', { entryType: this.$t('Logbook.entriesItem.entryTypeInformation') })
+      } else if (this.entryType === logbookConstants.ENTRY_TYPE_AUTHORIZATION) {
+        return this.$t('Logbook.entriesEditModal.modalTitle', { entryType: this.$t('Logbook.entriesItem.entryTypeAuthorization') })
+      } else {
+        return this.$t('Logbook.entriesEditModal.modalTitle', { entryType: this.$t('Logbook.entriesItem.entryTypeObservation') })
+      }
     }
   },
   created () {
+    this.$store.dispatch('logbook/addFilter', logbookConstants.NONE_FILTERS)
+    this.$store.dispatch('logbook/handleLoadAuthorEntries', true)
     if (this.configuration) {
       this.limitDate = dayjs(this.configuration.schoolYearEndDate, 'YYYY-MM-DD')
     }
@@ -234,26 +218,6 @@ export default {
     }, err => {
       console.log(err)
     })
-    if (!this.isCreation) {
-      this.title = this.initEntry.title
-      this.content = this.initEntry.content
-      this.entryType = this.initEntry.isAuthorization ? 'authorization' : 'signing'
-      this.limitDate = dayjs(this.initEntry.limitDate)
-      this.initEntry.populations.classes.forEach(classItem => {
-        this.populations.push({
-          populationName: classItem.orgName,
-          orgId: classItem.orgId,
-          type: 2
-        })
-      })
-      this.initEntry.populations.students.forEach(student => {
-        this.populations.push({
-          populationName: student.firstName + ' ' + student.lastName,
-          userId: student.userId,
-          type: 1
-        })
-      })
-    }
     this.setInitialForm()
   },
   methods: {
@@ -291,30 +255,16 @@ export default {
     submit () {
       if (this.v$.$invalid) {
         this.v$.$touch()
-      } else if (this.isCreation) {
-        this.createEntries()
       } else {
-        this.updateEntry()
+        this.createEntries()
       }
     },
     createEntries () {
       this.formatePopulations()
-      createEntries(this.title, this.content, this.populationsFormate, this.entryType === 'authorization', false, this.limitDate).then(data => {
+      createEntries(this.title, this.content, this.populationsFormate, this.entryType, false, this.limitDate).then(data => {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Logbook.successCreateEntry'), type: 'success' })
           this.$emit('entryCreated')
-          this.onClose()
-        } else {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('popupError'), type: 'error' })
-        }
-      })
-    },
-    updateEntry () {
-      this.formatePopulations()
-      updateEntry(this.initEntry.logbookEntryId, this.title, this.content, this.populationsFormate, this.entryType === 'authorization', this.limitDate).then(data => {
-        if (data.success) {
-          this.$store.dispatch('popups/pushPopup', { message: this.$t('Logbook.successUpdateEntry'), type: 'success' })
-          this.$emit('entryEdited')
           this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('popupError'), type: 'error' })
@@ -353,14 +303,16 @@ export default {
 @import '@design';
 
 .edit-entries-modal {
-  .subject{
+  .subject {
     margin-top: 20px;
   }
+
   .ck-editor {
     border: 1px solid #666 !important;
     max-height: 30vh;
     overflow-y: auto;
     margin-top: 20px;
+
     p {
       margin: 5px 0;
       line-height: 1.25rem;
@@ -376,25 +328,20 @@ export default {
   }
 }
 
-.entries-type{
+.max-date {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 10px;
-  label{
-    width: fit-content;
-  }
-}
-
-.max-date{
-  display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 10px;
   margin-top: 20px;
   width: fit-content;
-  p{
+
+  p {
     margin: 0;
     @extend %font-regular-l;
   }
+}
+
+.footer p {
+  @extend %font-regular-m
 }
 </style>

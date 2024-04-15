@@ -1,20 +1,11 @@
 <template>
-  <div
-    class="first-line"
-  >
+  <div class="first-line">
     <WeprodeDropdown
       v-if="childList.length > 1"
       v-model="selectedChild"
       :list="childList"
       :sort="false"
       display-field="firstName"
-    />
-    <WeprodeDropdown
-      v-if="isTeacher || isDirector || isSecretariat"
-      v-model="selectedClass"
-      :list="teacherClasses"
-      :sort="false"
-      display-field="className"
     />
     <WeprodeTagsInput
       v-if="isTeacher || isDirector || isSecretariat"
@@ -40,7 +31,6 @@ import { getSchoolStudents, getTeacherStudents } from '@/api/userSearch.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeTagsInput from '@/components/Base/Weprode/WeprodeTagsInput.vue'
 
-import { getLogbookBroadcastPopulations } from '../../api/logbook.service'
 export default {
   name: 'EntryFilter',
   components: {
@@ -50,36 +40,25 @@ export default {
   data () {
     return {
       selectedUser: undefined,
-      teacherClasses: [],
       tagsList: [],
-      autocompleteUserList: [],
-      test: [{
-        test: 'test'
-      }]
+      autocompleteUserList: []
     }
   },
   computed: {
     childList () {
       return this.$store.state.user.children
     },
+    isLoadAuthorLogbook () {
+      return this.$store.state.logbook.isLoadAuthorEntries
+    },
     selectedChild: {
       get () {
         return this.$store.state.user.selectedChild ? this.$store.state.user.selectedChild : this.$store.state.user.children
       },
       set (child) {
+        this.$store.dispatch('logbook/addFilter', undefined)
         this.$store.commit('user/setSelectedChild', child)
         this.selectedUser = child
-      }
-    },
-    selectedClass: {
-      get () {
-        return this.currentUser.selectedClass ? this.currentUser.selectedClass : this.teacherClasses[0]
-      },
-      set (value) {
-        this.$store.commit('user/setSelectedClass', value)
-        if (value !== this.teacherClasses[0]) {
-          this.tagsList.length = 0
-        }
       }
     },
     currentUser () {
@@ -96,30 +75,6 @@ export default {
     },
     selectedSchool () {
       return this.$store.state.user.selectedSchool
-    }
-  },
-  watch: {
-    tagsList (newList) {
-      if (newList.length === 0) {
-        this.$store.commit('user/setSelectedClass', this.teacherClasses[0])
-      }
-    }
-  },
-  created () {
-    if (this.isDirector || this.isSecretariat || this.isTeacher) {
-      getLogbookBroadcastPopulations().then(data => {
-        if (data.populations.classes.length > 1) {
-          this.teacherClasses.push({
-            className: 'Classes',
-            orgId: 0
-          })
-        }
-        data.populations.classes.forEach(classItem => {
-          this.teacherClasses.push(classItem)
-        })
-      }, err => {
-        console.log(err)
-      })
     }
   },
   methods: {
@@ -162,11 +117,21 @@ export default {
       }
     },
     onSelectUser (userList) {
+      this.$store.dispatch('logbook/addFilter', undefined)
       if (userList.length) {
-        this.selectedClass = this.teacherClasses[0]
         this.$store.commit('user/setSelectedStudent', userList[0])
+        this.$store.dispatch('logbook/handleLoadAuthorEntries', false)
       } else {
         this.$store.commit('user/setSelectedStudent', undefined)
+        this.autocompleteUserList.length = 0
+        this.$store.dispatch('logbook/handleLoadAuthorEntries', true)
+      }
+    },
+    loadAuthorEntries () {
+      this.$store.dispatch('logbook/addFilter', undefined)
+      if (this.isLoadAuthorLogbook === false) {
+        this.$store.dispatch('logbook/handleLoadAuthorEntries', true)
+        this.tagsList.length = 0
         this.autocompleteUserList.length = 0
       }
     }
@@ -177,9 +142,26 @@ export default {
 <style lang="scss" scoped>
 @import '@design';
 
-.first-line{
+.first-line {
   margin-bottom: 0.5rem;
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
+
+  button {
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: solid 1px;
+    cursor: pointer;
+
+    &.disabled {
+      background-color: transparent;
+    }
+  }
+}
+
+.disabled {
+  background-color: transparent;
 }
 </style>

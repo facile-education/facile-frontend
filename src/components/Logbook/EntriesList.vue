@@ -1,16 +1,16 @@
 <template>
   <div
-    v-if="dataToDisplay"
+    v-if="sortedEntriesList"
     class="list-entries"
     :class="mq.phone && (isSecretariat || isTeacher || isDirector) && 'mobile'"
   >
     <EntriesListItem
-      v-for="(data, index) in dataToDisplay"
+      v-for="(data, index) in sortedEntriesList"
       :key="index"
       :data="data"
+      :is-student-entries="isStudentEntries"
       @signed="getChildLogbook(childSelected.userId)"
-      @delete-entry="refresh"
-      @entry-edited="refresh"
+      @refresh="refreshReminder"
     />
   </div>
   <WeprodeSpinner
@@ -23,7 +23,7 @@
     class="placeholder"
   />
   <p
-    v-if="!dataToDisplay && !error"
+    v-if="entriesList.length === 0 && !error && !isLoading"
     class="placeholder"
   >
     {{ $t('Logbook.noEntryPlaceholder') }}
@@ -31,10 +31,13 @@
 </template>
 
 <script>
-import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import WeprodeUtils from '@utils/weprode.utils'
 
-import { getClassLogbook, getLogbookBroadcastPopulations, getStudentLogbook } from '../../api/logbook.service'
-import EntriesListItem from './EntriesListItem.vue'
+import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
+import EntriesListItem from '@/components/Logbook/EntriesListItem.vue'
+import logbookConstants from '@/constants/logbookConstants'
+
+import { getAuthorLogbook, getStudentLogbook } from '../../api/logbook.service'
 
 export default {
   name: 'StudentParentListEntries',
@@ -49,25 +52,27 @@ export default {
       default: false
     }
   },
+  emits: ['isRefreshed'],
   data () {
     return {
-      childEntries: [],
-      classEntries: [],
-      studentEntries: [],
+      entriesList: [],
       firstClass: undefined,
       isLoading: true,
-      error: false
+      error: false,
+      isStudentEntries: false,
+      isChildEntries: false,
+      isAuthorEntries: false
     }
   },
   computed: {
     childSelected () {
       return this.$store.state.user.selectedChild
     },
-    classSelected () {
-      return this.$store.state.user.selectedClass
-    },
     studentSelected () {
       return this.$store.state.user.selectedStudent
+    },
+    isLoadAuthorLogbook () {
+      return this.$store.state.logbook.isLoadAuthorEntries
     },
     isTeacher () {
       return this.$store.state.user.isTeacher
@@ -87,71 +92,63 @@ export default {
     currentUser () {
       return this.$store.state.user
     },
-    dataToDisplay () {
-      if (this.childEntries.length > 0) {
-        return this.childEntries
-      } else if (this.classEntries.length > 0) {
-        return this.classEntries
-      } else if (this.studentEntries.length > 0) {
-        return this.studentEntries
-      } else {
-        return undefined
-      }
+    selectedFilterType () {
+      return this.$store.state.logbook.filterTypeSelected
+    },
+    sortedEntriesList () {
+      return WeprodeUtils.sortArrayWithString(this.entriesList, true, 'modificationDate')
     }
   },
   watch: {
     childSelected (newChild) {
-      this.classEntries = []
-      this.studentEntries = []
       this.getChildLogbook(newChild.userId)
     },
-    classSelected (newClass) {
-      this.childEntries = []
-      this.studentEntries = []
-      if (newClass.orgId === 0) {
-        this.classEntries = []
-      } else {
-        this.getClassLogbook(newClass.orgId)
-      }
-    },
     studentSelected (newStudent) {
-      this.childEntries = []
-      this.classEntries = []
       if (newStudent) {
+        this.isStudentEntries = true
         this.getStudentLogbook(newStudent.userId)
       } else {
-        this.getClassLogbook(this.firstClass.orgId)
+        this.isStudentEntries = false
+        this.getAuthorLogbook(this.currentUser.userId)
       }
     },
     isEntryCreated () {
       this.refresh()
+    },
+    isLoadAuthorLogbook (value) {
+      if (value === true) {
+        this.getAuthorLogbook(this.currentUser.userId)
+      }
+    },
+    selectedFilterType (value) {
+      if (value && value !== logbookConstants.NONE_FILTERS) {
+        this.refresh(value)
+      }
+      if (value === logbookConstants.NONE_FILTERS) {
+        this.refresh()
+      }
     }
   },
   created () {
     if (this.isParent) {
       this.getChildLogbook(this.currentUser.children[0].userId)
     } else if (this.isTeacher || this.isDirector || this.isSecretariat) {
-      getLogbookBroadcastPopulations().then(data => {
-        this.firstClass = data.populations.classes[0]
-        if (data.populations.length === 1) {
-          this.getClassLogbook(this.firstClass.orgId)
-        } else {
-          this.isLoading = false
-        }
-      }, err => {
-        console.log(err)
-      })
+      this.getAuthorLogbook(this.currentUser.userId)
     } else if (this.isStudent) {
       this.getStudentLogbook(this.currentUser.userId)
     }
   },
   methods: {
     getChildLogbook (childId) {
+      this.isLoading = true
       getStudentLogbook(childId).then(data => {
         if (data.success) {
           this.isLoading = false
           this.error = false
-          this.childEntries = data.entries
+          this.isChildEntries = true
+          this.isStudentEntries = false
+          this.isAuthorEntries = false
+          this.entriesList = data.entries
         } else {
           this.error = true
         }
@@ -160,12 +157,20 @@ export default {
         console.error(err)
       })
     },
-    getStudentLogbook (userId) {
+    getStudentLogbook (userId, type = undefined) {
+      this.isLoading = true
       getStudentLogbook(userId).then(data => {
         if (data.success) {
           this.isLoading = false
           this.error = false
-          this.studentEntries = data.entries
+          this.isChildEntries = false
+          this.isStudentEntries = true
+          this.isAuthorEntries = false
+          if (type) {
+            this.entriesList = data.entries.filter(entry => entry.type === type)
+          } else {
+            this.entriesList = data.entries
+          }
         } else {
           this.error = true
         }
@@ -174,12 +179,20 @@ export default {
         console.error(err)
       })
     },
-    getClassLogbook (orgId) {
-      getClassLogbook(orgId).then(data => {
+    getAuthorLogbook (authorId, type = undefined) {
+      this.isLoading = true
+      getAuthorLogbook(authorId).then(data => {
         if (data.success) {
           this.isLoading = false
           this.error = false
-          this.classEntries = data.entries
+          this.isChildEntries = false
+          this.isStudentEntries = false
+          this.isAuthorEntries = true
+          if (type) {
+            this.entriesList = data.entries.filter(entry => entry.type === type)
+          } else {
+            this.entriesList = data.entries
+          }
         } else {
           this.error = true
         }
@@ -188,15 +201,23 @@ export default {
         console.error(err)
       })
     },
-    refresh () {
-      if (this.childEntries.length > 0) {
+    refresh (type = undefined) {
+      if (this.isChildEntries) {
         this.getChildLogbook(this.childSelected.userId)
-      } else if (this.classEntries.length > 0) {
-        this.getClassLogbook(this.classSelected ? this.classSelected.orgId : this.firstClass.orgId)
-      } else if (this.studentEntries.length > 0) {
-        this.getStudentLogbook(this.studentSelected.userId)
-      } else {
-        this.getClassLogbook(this.firstClass.orgId)
+        this.$emit('isRefreshed')
+      } else if (this.isStudentEntries) {
+        this.getStudentLogbook(this.studentSelected.userId, type)
+        this.$emit('isRefreshed')
+      } else if (this.isAuthorEntries) {
+        this.getAuthorLogbook(this.currentUser.userId, type)
+        this.$emit('isRefreshed')
+      }
+    },
+    refreshReminder () {
+      if (this.selectedFilterType && (this.selectedFilterType !== logbookConstants.NONE_FILTERS)) {
+        this.refresh(this.selectedFilterType)
+      } else if (this.selectedFilterType === logbookConstants.NONE_FILTERS || !this.selectedFilterType) {
+        this.refresh()
       }
     }
   }
@@ -204,18 +225,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "@design";
-  .list-entries{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-    padding-bottom: 20px;
-    &.mobile {
-      padding-bottom: 100px
-    }
+@import "@design";
+
+.list-entries {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &.mobile {
+    padding-bottom: 100px
   }
-  .placeholder{
-    @extend %content-placeholder;
-  }
+}
+
+.placeholder {
+  @extend %content-placeholder;
+}
 </style>

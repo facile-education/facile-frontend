@@ -5,6 +5,7 @@ import constants, { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 
 export {
   getClassLogbook,
+  getAuthorLogbook,
   getStudentLogbook,
   getLogbookBroadcastPopulations,
   createEntries,
@@ -25,6 +26,14 @@ function getClassLogbook (orgId) {
   }).then(response => response.data)
 }
 
+function getAuthorLogbook (authorId) {
+  return axios.get(constants.JSON_WS_URL + LOGBOOK_PATH + '/get-author-logbook', {
+    params: {
+      authorId
+    }
+  }).then(response => response.data)
+}
+
 function getStudentLogbook (childId) {
   return axios.get(constants.JSON_WS_URL + LOGBOOK_PATH + '/get-student-logbook', {
     params: {
@@ -37,12 +46,12 @@ function getLogbookBroadcastPopulations () {
   return axios.get(constants.JSON_WS_URL + LOGBOOK_PATH + '/get-logbook-broadcast-populations').then(response => response.data)
 }
 
-function createEntries (title, content, populations, isAuthorisation, needAllParents, limitDateStr) {
+function createEntries (title, content, populations, type, needAllParents, limitDateStr) {
   return axios.post(constants.JSON_WS_URL + LOGBOOK_PATH + '/create-logbook-entry',
     WeprodeUtils.params({
       title,
       content,
-      isAuthorisation,
+      type,
       needAllParents,
       limitDateStr: limitDateStr.format(DATE_EXCHANGE_FORMAT),
       populations: JSON.stringify(populations)

@@ -61,11 +61,6 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/router/views/NotFound')
-  },
-  {
-    path: '/logbook',
-    name: 'Logbook',
-    component: () => import('@/router/views/Logbook')
   }
 ]
 

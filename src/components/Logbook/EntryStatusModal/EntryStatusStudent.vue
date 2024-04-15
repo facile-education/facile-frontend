@@ -2,7 +2,7 @@
   <div class="container-student">
     <button
       class="student"
-      @click="isExtended=!isExtended"
+      @click="isExtended = !isExtended"
     >
       <span>
         <a
@@ -14,13 +14,42 @@
           {{ student.lastName + ' ' + student.firstName }}
         </a>
       </span>
-      <span class="nbSigning">{{ nbSigning }}/{{ student.parents.length }}</span>
+      <div class="right-side">
+        <div class="signing-status">
+          <span
+            v-if="nbSigning === 0"
+            class="nbSigning"
+          >
+            {{ $t('Logbook.entriesItem.waiting') }}
+          </span>
+          <span
+            v-else-if="isOneParentRequired ? nbSigning < 1 : nbSigning < student.parents.length"
+            class="nbSigning"
+          >
+            {{ $t('Logbook.entriesItem.waiting') + '(' + nbSigning + '/' + student.parents.length + ')' }}
+          </span>
+          <span
+            v-else
+            class="is-signing"
+          >
+            <CustomIcon
+              icon-name="icon-check"
+              class="theme-text-color"
+            />
+          </span>
+        </div>
+        <CustomIcon
+          v-if="!isLeaf"
+          :class="isExtended ? 'icon-extend' : 'icon-collapse'"
+          icon-name="icon-chevron-right-s"
+        />
+      </div>
     </button>
 
     <Transition name="slide-fade">
       <ul
         v-if="isExtended"
-        class="parents-details"
+        class="parents-details theme-extra-light-background-color"
       >
         <li
           v-for="parent in student.parents"
@@ -35,20 +64,46 @@
           >
             {{ parent.lastName.toUpperCase() + ' ' + parent.firstName }}
           </a>
-          <span v-if="isAuthorization && parent.hasSigned && parent.hasAuthorized">{{ $t('Logbook.statusModal.hasAuthorized') }}</span>
-          <span v-if="isAuthorization && parent.hasSigned && !parent.hasAuthorized">{{ $t('Logbook.statusModal.hasNotAuthorized') }}</span>
-          <span v-if="isAuthorization && !parent.hasSigned">{{ $t('Logbook.statusModal.isWaiting') }}</span>
-          <span v-if="!isAuthorization && parent.hasSigned">{{ $t('Logbook.statusModal.hasSigned') }}</span>
-          <span v-if="!isAuthorization && !parent.hasSigned && !parent.hasAuthorized">{{ $t('Logbook.statusModal.hasNotSigned') }}</span>
-        </li>
-        <li
-          v-for="member in sortedUnReadMembers"
-          :key="member.userId"
-        >
-          <InfoModalUser
-            :user="member"
-            field="hasRead"
-          />
+          <span
+            v-if="isAuthorization && parent.hasSigned && parent.hasAuthorized"
+            class="theme-text-color"
+          >
+            <CustomIcon
+              icon-name="icon-check"
+              class="theme-text-color"
+            />
+            {{ $t('Logbook.statusModal.hasAuthorized') }}
+          </span>
+          <span
+            v-if="isAuthorization && parent.hasSigned && !parent.hasAuthorized"
+            class="theme-text-color"
+          >
+            <CustomIcon
+              icon-name="icon-cross-s"
+              class="theme-text-color"
+            /> {{ $t('Logbook.statusModal.hasNotAuthorized') }}
+          </span>
+          <span
+            v-if="isAuthorization && !parent.hasSigned"
+            class="waiting"
+          >
+            {{ $t('Logbook.entriesItem.waiting') }}
+          </span>
+          <span
+            v-if="!isAuthorization && parent.hasSigned"
+            class="theme-text-color"
+          >
+            <CustomIcon
+              icon-name="icon-check"
+              class="theme-text-color"
+            /> {{ $t('Logbook.statusModal.hasSigned') }}
+          </span>
+          <span
+            v-if="!isAuthorization && !parent.hasSigned && !parent.hasAuthorized"
+            class="waiting"
+          >
+            {{ $t('Logbook.entriesItem.waiting') }}
+          </span>
         </li>
       </ul>
     </Transition>
@@ -56,11 +111,12 @@
 </template>
 
 <script>
-import InfoModalUser from '@components/Dashboard/ReadInfos/InfoModalUser.vue'
-
+import CustomIcon from '@components/Base/CustomIcon.vue'
 export default {
   name: 'ReadInfoModalPopulation',
-  components: { InfoModalUser },
+  components: {
+    CustomIcon
+  },
   props: {
     student: {
       type: Object,
@@ -74,7 +130,8 @@ export default {
   data () {
     return {
       isExtended: false,
-      nbSigning: 0 // Initialize nbSigning here
+      nbSigning: 0,
+      isOneParentRequired: true
     }
   },
   created () {
@@ -104,77 +161,102 @@ export default {
 }
 </script>
 
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
+@import '@/design';
 
-  .container-student{
-    border-bottom: solid 1px;
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid $neutral-40;
+}
+
+.signing-status {
+  span {
+    @extend %font-regular-s;
+    color: $neutral-60;
   }
+}
 
-  button {
-    cursor: pointer;
-    background-color: transparent;
-    border-radius: 0;
-    padding: 0;
-    margin: 0;
-    border: none;
-  }
+.right-side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    overflow-y: hidden;
-    margin-bottom: 10px;
-    li{
-        display: flex;
-        justify-content: space-between;
-    }
-  }
+.font-icon {
+  margin-right: 0.3em;
+  font-size: 1.6rem;
+}
 
-  .student {
-    width: 100%;
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  overflow-y: hidden;
+  margin-bottom: 10px;
+
+  li {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding-right: 5px;
-    font-size: 1.15rem;
-    margin: 10px 0;
   }
+}
 
-  .parent {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
+.student {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @extend %font-regular-l;
+  margin: 10px 0;
+}
 
-  .icon-collapse, .icon-extend {
-    transition:  transform .4s;
-    margin-left: 0.5rem;
-  }
+.parent {
+  @extend %font-medium-s;
+  padding: 8px;
+}
 
-  .icon-chevron-right-s {
-    font-size: 1.5rem;
-  }
+.waiting {
+  color: $neutral-60;
+}
 
-  .icon-extend {
-    transform: rotate(90deg);
-  }
+.icon-collapse,
+.icon-extend {
+  transition: transform .4s;
+  margin-left: 0.5rem;
+}
 
-  .icon-collapse {
-    transform: rotate(0);
-  }
+.icon-chevron-right-s {
+  font-size: 1.5rem;
+}
 
-  .slide-fade-enter-active {
-    transition: all .3s ease-in;
-  }
-  .slide-fade-leave-active {
-    transition: all .3s ease-out;
-  }
+.icon-extend {
+  transform: rotate(90deg);
+}
 
-  .slide-fade-enter-from, .slide-fade-leave-to {
-    max-height: 0;
-  }
-  .slide-fade-enter-to, .slide-fade-leave-from {
-    /* TODO: make max-height adaptive to content height */
-    max-height: 300px;
-  }
-  </style>
+.icon-collapse {
+  transform: rotate(0);
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease-in;
+}
+
+.slide-fade-leave-active {
+  transition: all .3s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  max-height: 0;
+}
+
+.slide-fade-enter-to,
+.slide-fade-leave-from {
+  /* TODO: make max-height adaptive to content height */
+  max-height: 300px;
+}
+</style>
