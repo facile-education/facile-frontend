@@ -1,6 +1,7 @@
 <template>
   <div
     class="base-tooltip"
+    :class="{'phone': mq.phone}"
     :style="tooltipStyle"
   >
     <header v-if="header">
@@ -11,7 +12,7 @@
         :title="$t('Base.WeprodeWindow.close')"
         @click="$emit('close')"
       >
-        <CustomIcon icon-name="icon-cross-M" />
+        <CustomIcon icon-name="icon-cross-L" />
       </button>
     </header>
     <slot />
@@ -24,6 +25,7 @@ import CustomIcon from '@components/Base/CustomIcon.vue'
 export default {
   name: 'WeprodeTooltip',
   components: { CustomIcon },
+  inject: ['mq'],
   props: {
     header: { type: String, default: undefined },
     top: { type: String, default: '' },
@@ -34,7 +36,7 @@ export default {
   emits: ['close'],
   computed: {
     tooltipStyle () {
-      return `top: ${this.top}; bottom: ${this.bottom}; right: ${this.right}; left: ${this.left};`
+      return !this.mq.phone ? `top: ${this.top}; bottom: ${this.bottom}; right: ${this.right}; left: ${this.left};` : ''
     }
   },
   mounted () {
@@ -64,6 +66,13 @@ export default {
   z-index: 1000;
   border-radius: $border-radius;
   @extend %object-shadow-2;
+
+  &.phone {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 header {
@@ -75,6 +84,7 @@ header {
 
   h3 {
     margin: 0;
+    @extend %font-heading-s;
   }
 
   button {

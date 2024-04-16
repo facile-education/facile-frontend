@@ -789,32 +789,44 @@
     }
   },
   "Call": {
+    "by": "Da",
     "callModalHeader": "Chiamata",
-    "confirmClosure": "Ci sono modifiche in corso, vuoi veramente uscire senza effettuare la chiamata?",
+    "confirmClosure": "Sono in corso modifiche, vuoi davvero uscire senza fare la chiamata?",
     "student": "Studente",
-    "data": "Dati",
+    "data": "Informazioni",
+    "done": "Fatto",
+    "toDo": "DA FARE",
+    "notDone": "Non fatto",
     "presence": "Presenza",
+    "expectedAbsent": "Assente previsto",
+    "absentOnPreviousSession": "Assente nella sessione precedente",
     "late": "Ritardo",
-    "firing": "Espu.",
-    "infirmary": "Inf.",
+    "firing": "Esclusione",
+    "infirmary": "Infermeria",
     "comment": "Commento",
-    "comments": "Commenti",
-    "removeLate": "Rimuovi ritardo",
-    "removeComment": "Rimuovi commento",
+    "commentPlaceholder": "Commento..",
+    "noCommentPlaceholder": "Nessuno",
+    "removeLate": "Rimuovi il ritardo",
+    "removeComment": "Rimuovi il commento",
     "lateDuration": "Durata del ritardo",
     "lateInputPlaceholder": "Minuti di ritardo",
+    "memo": "Memo",
     "minute": "min",
     "nbAbsence": "Nessuna assenza | Una assenza | {n} assenze",
     "nbLate": "Nessun ritardo | Un ritardo | {n} ritardi",
-    "nbFired": "Nessuna espulsione | Un'espulsione | {n} espulsioni",
-    "nbMedical": "Nessuna infermeria | Una infermeria | {n} infermerie",
-    "nbNotes": "Nessun commento | Un commento | {n} commenti",
-    "commentPlaceholder": "Osservazione...",
-    "errorPlaceholder": "Ops, si è verificato un errore...",
+    "nbFired": "Nessuna esclusione | Un'esclusione | {n} esclusioni",
+    "nbMedical": "Nessuna infermeria | Un'infermeria | {n} infermerie",
+    "errorPlaceholder": "Oops, si è verificato un errore...",
     "callSaved": "Chiamata salvata",
+    "callDoneDate": "[Il] DD/MM [alle] HH:mm",
+    "callDoneDateFull": " [il] DD/MM/YYYY [alle] HH:mm",
     "save": "Salva",
+    "schoolLife": "Vita scolastica",
+    "toJustify": "Nessun evento di vita scolastica da giustificare | {n} evento di vita scolastica da giustificare | {n} eventi di vita scolastica da giustificare",
+    "nbStudents": "Nessuno studente | 1 studente | {n} studenti",
     "submit": "Invia",
-    "summary": "Sommario"
+    "summary": "Riepilogo",
+    "shortSummary": "Riep."
   },
   "ContactPicker": {
     "ContactPickerModal": {
@@ -1330,7 +1342,8 @@
     "Logbook": {
       "UnsignedWords": "{count} parola non firmata nel registro | {count} parole non firmate nel registro"
     },
-    "serviceTitle": "Dashboard"
+    "serviceTitle": "pannello di controllo",
+    "currentSession": "Sessione attuale:"
   },
   "FilePicker": {
     "FilePickerArea": {

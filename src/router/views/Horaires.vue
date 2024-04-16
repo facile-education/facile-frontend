@@ -37,7 +37,7 @@
       />
       <CallModal
         v-if="isCallModalDisplayed"
-        :session-id="updatedSession.sessionId"
+        :session="updatedSession"
         :can-edit-call="canEditCall"
         @close="isCallModalDisplayed = !isCallModalDisplayed"
       />
@@ -47,7 +47,6 @@
 
 <script>
 import CustomCalendar from '@components/Base/CustomCalendar/CustomCalendar.vue'
-import CallModal from '@components/Call/CallModal.vue'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 // Lazy loading
@@ -60,6 +59,7 @@ import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vu
 const Timeline = defineAsyncComponent(() => import('@/components/Horaires/Timeline'))
 const SessionTeacherModal = defineAsyncComponent(() => import('@/components/Horaires/SessionTeacherModal'))
 const CreateSessionModal = defineAsyncComponent(() => import('@/components/Horaires/CreateSessionModal'))
+const CallModal = defineAsyncComponent(() => import('@components/Call/CallModal.vue'))
 
 dayjs.extend(customParseFormat)
 

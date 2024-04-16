@@ -18,7 +18,8 @@
       >
         <button
           :disabled="!isInEdition"
-          :class="{'green': !student.isAbsent, 'red': student.isAbsent}"
+          class="presence-button"
+          :class="{'green': !student.isAbsent && (isDone || isInEdition), 'red': student.isAbsent}"
           @click="toggleAbsence"
         >
           <CustomIcon :icon-name="student.isAbsent ? 'icon-no-user' : 'icon-user-16'" />
@@ -31,7 +32,8 @@
 
       <!-- Late -->
       <component
-        :is="mq.phone ? 'v-fragment' : 'td'"
+        :is="mq.phone ? 'div' : 'td'"
+        class="late-container"
         :class="{'button-column': !mq.phone}"
       >
         <button
@@ -80,19 +82,39 @@
       </component>
 
       <!-- Comment -->
-      <component :is="mq.phone ? 'v-fragment' : 'td'">
+      <component
+        :is="mq.phone ? 'div' : 'td'"
+        :class="{'comment-row': !mq.phone}"
+        class="comment-container"
+      >
         <button
           class="comment-button"
           :class="{'phone': mq.phone}"
           :disabled="!canOpenComment"
           @click.stop="isCommentFormDisplayed = !isCommentFormDisplayed"
         >
-          <CustomIcon icon-name="icon-edit" />
+          <CustomIcon
+            v-if="mq.phone"
+            icon-name="icon-edit"
+          />
           <Pellet
-            v-if="student.comment?.length > 0"
+            v-if="mq.phone && student.comment?.length > 0"
             class="pellet theme-border-color"
           />
+          <span
+            v-if="!mq.phone && formattedComment?.length > 0"
+            class="comment"
+          >{{ formattedComment }}</span>
+          <span
+            v-else-if="!mq.phone"
+            class="no-comment-placeholder"
+          >{{ $t(isInEdition && canOpenComment ? 'Call.commentPlaceholder' : '-') }}</span>
         </button>
+
+        <span
+          v-if="!mq.phone && !canOpenComment"
+          class="disabled-layout"
+        />
 
         <CommentTooltip
           v-if="isCommentFormDisplayed"
@@ -113,8 +135,11 @@ import VFragment from '@components/Base/VFragment.vue'
 import CallStudentHeader from '@components/Call/CallStudentHeader.vue'
 import CommentTooltip from '@components/Call/CommentTooltip.vue'
 import LateTooltip from '@components/Call/LateTooltip.vue'
+import dayjs from 'dayjs'
+
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants.js'
 export default {
-  name: 'CallStudentRow',
+  name: 'CallStudent',
   components: {
     VFragment,
     CallStudentHeader,
@@ -129,7 +154,15 @@ export default {
       type: Object,
       required: true
     },
+    session: {
+      type: Object,
+      default: undefined
+    },
     isInEdition: {
+      type: Boolean,
+      default: false
+    },
+    isDone: {
       type: Boolean,
       default: false
     }
@@ -144,18 +177,26 @@ export default {
     }
   },
   computed: {
-    formattedComment () {
-      if (this.comment?.length > 30) {
-        return this.comment.substring(0, 27) + '...'
+    isCurrentSession () {
+      if (this.session) {
+        return dayjs().isAfter(dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT)) &&
+          dayjs().isBefore(dayjs(this.session.endDate, DATE_EXCHANGE_FORMAT))
       } else {
-        return this.comment
+        return false
       }
+    },
+    minutesSinceSessionStart () {
+      return dayjs().diff(dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT), 'minute')
+    },
+    formattedComment () {
+      return this.student.comment
     },
     initialLateValue () {
       if (this.student.isLate) {
         return this.student.delay?.lateDuration
+      } else if (this.isCurrentSession) {
+        return this.minutesSinceSessionStart
       } else {
-        // TODO: get the number of minutes since the session start (if session is on going)
         return undefined
       }
     },
@@ -188,11 +229,12 @@ export default {
       this.$emit('updateStudent', newStudentValue)
     },
     setLateDuration (value) {
-      const newStudentValue = { ...this.student, lateDuration: value }
-      newStudentValue.isLate = !(!value || value <= 0)
+      const numberValue = value ? parseInt(value) : undefined
+      const newStudentValue = { ...this.student, lateDuration: numberValue }
+      newStudentValue.isLate = !(!numberValue || numberValue <= 0)
       if (newStudentValue.isLate) {
         newStudentValue.isAbsent = false
-        newStudentValue.delay = { lateDuration: value }
+        newStudentValue.delay = { lateDuration: numberValue }
       }
       this.$emit('updateStudent', newStudentValue)
     },
@@ -225,10 +267,13 @@ li {
 }
 
 td {
-  //border: 1px solid rgb(160 160 160);
   position: relative;
   padding: 16px 0;
   @extend %font-regular-l;
+
+  .presence-button {
+    margin: auto;
+  }
 }
 
 .phone-buttons {
@@ -277,11 +322,41 @@ button {
   color: white;
 }
 
+.comment-row {
+  max-width: 0;
+
+  .disabled-layout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    cursor: not-allowed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.late-container, .comment-container {
+  position: relative;
+}
+
 .comment-button {
   position: relative;
 
   &:not(.phone) {
+    justify-content: flex-start;
     margin: auto;
+    padding-left: 0.75rem;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .pellet {
@@ -289,5 +364,15 @@ button {
     right: -3px;
     top: -2px;
   }
+
+  .comment {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.no-comment-placeholder {
+  color: $neutral-60;
 }
 </style>

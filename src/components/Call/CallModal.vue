@@ -8,9 +8,16 @@
     @close="confirmClosure"
   >
     <template #header>
-      <h1>
-        {{ $t('Call.callModalHeader') }}
-      </h1>
+      <header>
+        <h1>
+          {{ $t('Call.callModalHeader') }}
+        </h1>
+        <CallStatus
+          v-if="call"
+          :is-editable="canEditCall"
+          :call="call"
+        />
+      </header>
     </template>
 
     <template #body>
@@ -20,46 +27,57 @@
         v-t="'Call.errorPlaceholder'"
         class="placeholder"
       />
-      <component
-        :is="mq.phone ? 'VFragment' : 'table'"
-        v-else-if="call"
-        :aria-describedby="!mq.phone ? 'Call table' : undefined"
-      >
-        <thead v-if="!mq.phone">
-          <tr>
-            <th scope="col" />
-            <th scope="col">
-              {{ $t('Call.presence') }}
-            </th>
-            <th scope="col">
-              <div class="call-separator" />
-            </th>
+      <div v-else-if="call">
+        <CallSessionHeader
+          :call="call"
+          :session="session"
+        />
 
-            <th scope="col">
-              {{ $t('Call.late') }}
-            </th>
-            <th scope="col">
-              {{ $t('Call.firing') }}
-            </th>
-            <th scope="col">
-              {{ $t('Call.infirmary') }}
-            </th>
-            <th scope="col">
-              {{ $t('Call.comments') }}
-            </th>
-          </tr>
-        </thead>
+        <component
+          :is="mq.phone ? 'VFragment' : 'table'"
+          :aria-describedby="!mq.phone ? 'Call table' : undefined"
+        >
+          <thead v-if="!mq.phone">
+            <tr>
+              <th scope="col" />
+              <th
+                scope="col"
+                class="presence"
+              >
+                {{ $t('Call.presence') }}
+              </th>
+              <th scope="col">
+                <div class="call-separator" />
+              </th>
 
-        <component :is="mq.phone ? 'ul' : 'tbody'">
-          <CallStudentRow
-            v-for="student in sortedStudents"
-            :key="student.userId"
-            :student="student"
-            :is-in-edition="canEditCall"
-            @update-student="updateStudent(student, $event)"
-          />
+              <th scope="col">
+                {{ $t('Call.late') }}
+              </th>
+              <th scope="col">
+                {{ $t('Call.firing') }}
+              </th>
+              <th scope="col">
+                {{ $t('Call.infirmary') }}
+              </th>
+              <th scope="col">
+                {{ $t('Call.comment') }}
+              </th>
+            </tr>
+          </thead>
+
+          <component :is="mq.phone ? 'ul' : 'tbody'">
+            <CallStudent
+              v-for="student in sortedStudents"
+              :key="student.userId"
+              :student="student"
+              :session="session"
+              :is-in-edition="canEditCall"
+              :is-done="call.callDate !== undefined"
+              @update-student="updateStudent(student, $event)"
+            />
+          </component>
         </component>
-      </component>
+      </div>
     </template>
     <template #footer>
       <CallModalFooter
@@ -76,7 +94,9 @@
 import VFragment from '@components/Base/VFragment.vue'
 import WeprodeSpinner from '@components/Base/Weprode/WeprodeSpinner.vue'
 import CallModalFooter from '@components/Call/CallModalFooter.vue'
-import CallStudentRow from '@components/Call/CallStudentRow.vue'
+import CallSessionHeader from '@components/Call/CallSessionHeader.vue'
+import CallStatus from '@components/Call/CallStatus.vue'
+import CallStudent from '@components/Call/CallStudent.vue'
 import WeprodeUtils from '@utils/weprode.utils.js'
 
 import { doCall, getCallDetails } from '@/api/call.service.js'
@@ -84,16 +104,18 @@ import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 export default {
   name: 'CallModal',
   components: {
+    CallStatus,
+    CallSessionHeader,
     VFragment,
     WeprodeSpinner,
     WeprodeWindow,
     CallModalFooter,
-    CallStudentRow
+    CallStudent
   },
   inject: ['mq'],
   props: {
-    sessionId: {
-      type: Number,
+    session: {
+      type: Object,
       required: true
     },
     canEditCall: {
@@ -140,7 +162,7 @@ export default {
     },
     getCallDetails () {
       this.isLoading = true
-      getCallDetails(this.sessionId).then(data => {
+      getCallDetails(this.session.sessionId).then(data => {
         this.isLoading = false
         if (data.success) {
           this.error = undefined
@@ -160,7 +182,7 @@ export default {
     doCall () {
       this.isLoading = true
       this.formatStudents()
-      doCall(this.sessionId, this.call.students).then(data => {
+      doCall(this.session.sessionId, this.call.students).then(data => {
         this.isLoading = false
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Call.callSaved'), type: 'success' })
@@ -187,6 +209,12 @@ export default {
         if (!student.comment) {
           student.comment = ''
         }
+
+        // To simulate data
+        // student.isExpectedAbsent = student.isAbsent = Math.random() < 0.3
+        // student.isAbsentOnPreviousSession = Math.random() < 0.3
+        // student.memo = Math.random() < 0.2 ? 'Dislexique' : ''
+        // student.nbUnjustified = Math.random() < 0.3 ? (Math.random() < 0.5 ? 2 : 1) : 0
       })
     },
     onClose () {
@@ -205,8 +233,15 @@ export default {
 }
 </style>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "@design";
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 h1{
   margin: 0;
   @extend %font-heading-s;
@@ -225,13 +260,20 @@ ul {
 
 table {
   border-collapse: collapse;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
   width: 100%;
 }
 
 th {
   @extend %font-regular-s;
+
+  &:last-child {
+    padding-left: 0.75rem;
+    text-align: left;
+  }
+}
+
+th.presence {
+  padding: 0 1rem;
 }
 
 </style>

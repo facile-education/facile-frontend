@@ -789,32 +789,44 @@
     }
   },
   "Call": {
+    "by": "Par",
     "callModalHeader": "Appel",
     "confirmClosure": "Des modifications sont en cours, voulez vous vraiment quitter sans faire l'appel?",
     "student": "Élève",
     "data": "Infos",
+    "done": "Fait",
+    "toDo": "À FAIRE",
+    "notDone": "Non effectué",
     "presence": "Présence",
+    "expectedAbsent": "Déclaré absent",
+    "absentOnPreviousSession": "Absent à la séance précédente",
     "late": "Retard",
     "firing": "Exclu.",
     "infirmary": "Infirm.",
     "comment": "Commentaire",
-    "comments": "Commentaires",
+    "commentPlaceholder": "Commentaire..",
+    "noCommentPlaceholder": "Aucun",
     "removeLate": "Annuler le retard",
     "removeComment": "Supprimer le commentaire",
     "lateDuration": "Durée du retard",
     "lateInputPlaceholder": "Minutes de retard",
+    "memo": "Mémo",
     "minute": "min",
     "nbAbsence": "Aucune absence | Une absence | {n} absences",
     "nbLate": "Aucun retard | Un retard | {n} retards",
     "nbFired": "Aucune exclusion | Une exclusion | {n} exclusions",
     "nbMedical": "Aucune infirmerie | Une infirmerie | {n} infirmeries",
-    "nbNotes": "Aucun commentaire | Un commentaire | {n} commentaires",
-    "commentPlaceholder": "Observation...",
     "errorPlaceholder": "Oups, une erreur est survenue...",
     "callSaved": "Appel enregistré",
+    "callDoneDate": "[Le] DD/MM [à] HH:mm",
+    "callDoneDateFull": " [le] DD/MM/YYYY [à] HH:mm",
     "save": "Enregistrer",
+    "schoolLife": "Vie scolaire",
+    "toJustify": "Aucun évènement de vie scolaires à justifier | {n} évènement de vie scolaires à justifier | {n} évènements de vie scolaires à justifier",
+    "nbStudents": "Aucun élève | 1 élève | {n} élèves",
     "submit": "Valider",
-    "summary": "Récapitulatif"
+    "summary": "Récapitulatif",
+    "shortSummary": "Récap."
   },
   "ContactPicker": {
     "ContactPickerModal": {
@@ -1330,7 +1342,8 @@
     "Logbook": {
       "UnsignedWords": "{count} mot non signé dans le carnet de liaison | {count} mots non signés dans le carnet de liaison"
     },
-    "serviceTitle": "Tableau de bord"
+    "serviceTitle": "Tableau de bord",
+    "currentSession": "En cours:"
   },
   "FilePicker": {
     "FilePickerArea": {

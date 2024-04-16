@@ -1,5 +1,7 @@
 import { getFullName } from '@utils/commons.util'
+import dayjs from 'dayjs'
 
+import { DATE_EXCHANGE_FORMAT } from '@/api/constants.js'
 import { initDashboard } from '@/api/dashboard.service'
 
 export const state = {
@@ -13,6 +15,7 @@ export const state = {
   canAddSchoolNews: undefined,
   canAddEvents: undefined,
   isNewsModalDisplayed: false,
+  currentSession: undefined,
   editedNews: undefined,
   schoolNews: [],
   homeworks: [],
@@ -30,6 +33,7 @@ export const mutations = {
     state.canAddGroupNews = payload.canAddGroupNews
     state.canAddSchoolNews = payload.canAddSchoolNews
     state.canAddEvents = payload.canAddEvents
+    state.currentSession = payload.currentSession
     if (payload.children) {
       payload.children.forEach((child) => {
         child.fullName = getFullName(child)
@@ -46,6 +50,16 @@ export const actions = {
         if (data.success) {
           resolve()
           commit('initDashboard', data)
+
+          // If there is a current session, recall the init dashboard WS at the end of the session to refresh interface
+          if (data.currentSession) {
+            const timeBeforeSessionEnd = dayjs(data.currentSession.endDate, DATE_EXCHANGE_FORMAT).diff(dayjs(), 'millisecond')
+            if (timeBeforeSessionEnd > 0) { // Prevent infinite calls if the result is <=0
+              setTimeout(() => {
+                this.dispatch('dashboard/initDashboard')
+              }, timeBeforeSessionEnd + 60000) // Wait the next minute to reload
+            }
+          }
         }
       }, (err) => {
         reject(err)

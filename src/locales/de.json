@@ -789,32 +789,44 @@
     }
   },
   "Call": {
+    "by": "Durch",
     "callModalHeader": "Anruf",
-    "confirmClosure": "Es gibt laufende Änderungen. Möchten Sie wirklich ohne Durchführung des Anrufs beenden?",
+    "confirmClosure": "Es werden Änderungen vorgenommen. Möchten Sie wirklich ohne Anruf verlassen?",
     "student": "Schüler",
-    "data": "Daten",
+    "data": "Informationen",
+    "done": "Erledigt",
+    "toDo": "ZU TUN",
+    "notDone": "Nicht erledigt",
     "presence": "Anwesenheit",
+    "expectedAbsent": "Erwartet abwesend",
+    "absentOnPreviousSession": "Fehlte in der vorherigen Sitzung",
     "late": "Verspätung",
-    "firing": "Aus.",
-    "infirmary": "Krank.",
+    "firing": "Ausschluss",
+    "infirmary": "Krankenzimmer",
     "comment": "Kommentar",
-    "comments": "Kommentare",
+    "commentPlaceholder": "Kommentar..",
+    "noCommentPlaceholder": "Keiner",
     "removeLate": "Verspätung entfernen",
     "removeComment": "Kommentar entfernen",
-    "lateDuration": "Dauer der Verspätung",
+    "lateDuration": "Verspätungsdauer",
     "lateInputPlaceholder": "Verspätungsminuten",
+    "memo": "Memo",
     "minute": "min",
     "nbAbsence": "Keine Abwesenheit | Eine Abwesenheit | {n} Abwesenheiten",
     "nbLate": "Keine Verspätung | Eine Verspätung | {n} Verspätungen",
     "nbFired": "Kein Ausschluss | Ein Ausschluss | {n} Ausschlüsse",
-    "nbMedical": "Keine Krankenstation | Eine Krankenstation | {n} Krankenstationen",
-    "nbNotes": "Kein Kommentar | Ein Kommentar | {n} Kommentare",
-    "commentPlaceholder": "Beobachtung...",
-    "errorPlaceholder": "Oops, es ist ein Fehler aufgetreten...",
+    "nbMedical": "Kein Krankenzimmer | Ein Krankenzimmer | {n} Krankenzimmer",
+    "errorPlaceholder": "Hoppla, ein Fehler ist aufgetreten...",
     "callSaved": "Anruf gespeichert",
+    "callDoneDate": "[Am] DD/MM [um] HH:mm",
+    "callDoneDateFull": " [am] DD/MM/YYYY [um] HH:mm",
     "save": "Speichern",
-    "submit": "Absenden",
-    "summary": "Zusammenfassung"
+    "schoolLife": "Schulleben",
+    "toJustify": "Keine Schulereignisse zu rechtfertigen | {n} Schulereignis zu rechtfertigen | {n} Schulereignisse zu rechtfertigen",
+    "nbStudents": "Keine Schüler | 1 Schüler | {n} Schüler",
+    "submit": "Einreichen",
+    "summary": "Zusammenfassung",
+    "shortSummary": "Zusammenf."
   },
   "ContactPicker": {
     "ContactPickerModal": {
@@ -1330,7 +1342,8 @@
     "Logbook": {
       "UnsignedWords": "{count} nicht unterschriebenes Wort im Logbuch | {count} nicht unterschriebene Wörter im Logbuch"
     },
-    "serviceTitle": "Dashboard"
+    "serviceTitle": "Armaturenbrett",
+    "currentSession": "Aktuelle Sitzung:"
   },
   "FilePicker": {
     "FilePickerArea": {

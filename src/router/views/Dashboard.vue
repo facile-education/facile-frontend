@@ -3,6 +3,12 @@
     :is-title-visible="true"
     :title="$t('Dashboard.serviceTitle')"
   >
+    <CurrentSessionBanner
+      v-if="currentSession"
+      :session="currentSession"
+      @open-call-modal="openCallModal"
+    />
+
     <div class="dashboard-panel">
       <div class="administration-widgets">
         <DiaryWidget
@@ -80,10 +86,22 @@
         @close="isEventDisplayed = false"
       />
     </teleport>
+    <teleport
+      v-if="isCallModalDisplayed"
+      to="body"
+    >
+      <CallModal
+        :session="sessionToDisplayCall"
+        :can-edit-call="sessionToDisplayCall.canDoCall"
+        @close="isCallModalDisplayed = !isCallModalDisplayed"
+      />
+    </teleport>
   </ServicesWrapper>
 </template>
 
 <script>
+import CallModal from '@components/Call/CallModal.vue'
+import CurrentSessionBanner from '@components/Dashboard/CurrentSessionBanner.vue'
 import { defineAsyncComponent } from 'vue'
 
 import { checkDashboardParameter } from '@/api/dashboard.service'
@@ -103,7 +121,7 @@ const DiaryEventDetailsModal = defineAsyncComponent(() => import('@components/Da
 
 export default {
   name: 'Dashboard',
-  components: { AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, ActivityWidget, NewsDetailsModal, DiaryEventDetailsModal, WeprodeDropdown, ServicesWrapper },
+  components: { CallModal, CurrentSessionBanner, AnnouncementsWidget, DiaryWidget, ScheduleWidget, HomeworkWidget, StatisticWidget, ActivityWidget, NewsDetailsModal, DiaryEventDetailsModal, WeprodeDropdown, ServicesWrapper },
   emits: ['update:layout'],
   data () {
     return {
@@ -111,7 +129,10 @@ export default {
       isNewsDisplayed: false,
       announcement: {},
       isEventDisplayed: false,
-      event: {}
+      event: {},
+      isCallModalDisplayed: false,
+      sessionToDisplayCall: undefined,
+      canEditCall: false
     }
   },
   computed: {
@@ -132,6 +153,9 @@ export default {
     },
     hasStatisticWidget () {
       return this.$store.state.dashboard.hasStatisticWidget
+    },
+    currentSession () {
+      return this.$store.state.dashboard.currentSession
     },
     childList () {
       return this.$store.state.dashboard.childList
@@ -209,6 +233,10 @@ export default {
     })
   },
   methods: {
+    openCallModal () {
+      this.sessionToDisplayCall = { ...this.currentSession }
+      this.isCallModalDisplayed = !this.isCallModalDisplayed
+    }
   }
 }
 </script>

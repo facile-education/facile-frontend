@@ -8,7 +8,7 @@
       class="recap"
       :class="{'phone': mq.phone}"
     >
-      <h3>{{ $t('Call.summary') }}</h3>
+      <h3>{{ $t(mq.phone ? 'Call.shortSummary' : 'Call.summary') }}</h3>
 
       <ul class="recapItems">
         <li
@@ -20,7 +20,7 @@
             class="icon-container red"
             :class="{'inactive': nbAbsence === 0}"
           >
-            <CustomIcon icon-name="icon-user-24" />
+            <CustomIcon icon-name="icon-no-user" />
           </div>
         </li>
         <li
@@ -28,7 +28,7 @@
           :title="$tc('Call.nbLate', nbLate)"
         >
           {{ nbLate }}
-          <div class="icon-container orange">
+          <div class="icon-container">
             <CustomIcon icon-name="icon-clock" />
           </div>
         </li>
@@ -37,7 +37,7 @@
           :title="$tc('Call.nbFired', nbFired)"
         >
           {{ nbFired }}
-          <div class="icon-container orange">
+          <div class="icon-container">
             <CustomIcon icon-name="icon-out" />
           </div>
         </li>
@@ -46,17 +46,8 @@
           :title="$tc('Call.nbMedical', nbMedical)"
         >
           {{ nbMedical }}
-          <div class="icon-container orange">
+          <div class="icon-container">
             <CustomIcon icon-name="icon-soin" />
-          </div>
-        </li>
-        <li
-          v-if="nbNotes > 0"
-          :title="$tc('Call.nbNotes', nbNotes)"
-        >
-          {{ nbNotes }}
-          <div class="icon-container white">
-            <CustomIcon icon-name="icon-edit" />
           </div>
         </li>
       </ul>
@@ -105,11 +96,8 @@ export default {
     nbMedical () {
       return this.call.students.filter(student => student.isMedical).length
     },
-    nbNotes () {
-      return this.call.students.filter(student => student.comment).length
-    },
     displayRecap () {
-      return this.nbAbsence + this.nbFired + this.nbLate + this.nbMedical + this.nbNotes > 0
+      return this.nbAbsence + this.nbFired + this.nbLate + this.nbMedical > 0
     }
   }
 }
@@ -120,32 +108,28 @@ export default {
 
 .footer:not(.phone) {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 30px;
 }
 
 .recap {
-  text-align: center;
-}
-.recap:not(.phone) {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex: 1;
-
-  ul {
-    justify-content: flex-start;
-  }
+  justify-content: center;
+  gap: 1.5rem;
 }
 
 h3{
+  margin: 0;
   @extend %font-heading-xs;
 }
 
 .recap.phone {
-  h3{
-    margin: 0 0 1rem 0;
+  margin: 0.5rem 0 1.5rem 0;
+
+  h3 {
+    @extend %font-bold-l;
   }
 }
 
@@ -154,7 +138,8 @@ ul{
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  padding-left: 0;
+  padding: 0;
+  margin: 0;
 
   li{
     list-style: none;
@@ -172,7 +157,7 @@ ul{
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: black;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.30);
 
   &.orange {
@@ -180,6 +165,7 @@ ul{
   }
   &.red {
     background-color: $danger;
+    color: white;
   }
   &.white {
     background-color: white;
@@ -190,9 +176,5 @@ ul{
     color: black;
     opacity: 0.3%;
   }
-}
-
-.submit-button {
-  margin-left: auto;
 }
 </style>

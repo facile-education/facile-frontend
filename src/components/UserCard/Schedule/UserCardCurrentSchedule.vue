@@ -8,12 +8,12 @@
         class="calendar-icon"
         :icon-name="'icon-calendar'"
       />
-      <span v-if="userDetails.currentCourse">{{ $t('UserCard.UserCardCurrentSchedule.currentlyClass', {startHour: formatedStartHour, endHour: formatedEndHour}) }}</span>
+      <span v-if="userDetails.currentSession">{{ $t('UserCard.UserCardCurrentSchedule.currentlyClass', {startHour: formatedStartHour, endHour: formatedEndHour}) }}</span>
       <span v-else>{{ $t('UserCard.UserCardCurrentSchedule.currently') }}</span>
     </h2>
     <ScheduleItem
-      v-if="userDetails.currentCourse"
-      :session="userDetails.currentCourse"
+      v-if="userDetails.currentSession"
+      :session="userDetails.currentSession"
       :display-hours="false"
       :title="'Voir ses horaires'"
       class="schedule-item"
@@ -47,15 +47,15 @@ export default {
   },
   computed: {
     formatedStartHour () {
-      return dayjs(this.userDetails.currentCourse.startDate).format('HH:mm')
+      return dayjs(this.userDetails.currentSession.startDate).format('HH:mm')
     },
     formatedEndHour () {
-      return dayjs(this.userDetails.currentCourse.endDate).format('HH:mm')
+      return dayjs(this.userDetails.currentSession.endDate).format('HH:mm')
     }
   },
   methods: {
     scheduleItemRedirect () {
-      this.$router.push({ name: SCHEDULE, query: { initialDisplayDate: dayjs(this.userDetails.currentCourse.startDate).format('YYYY/MM/DD'), fromUserCard: true } })
+      this.$router.push({ name: SCHEDULE, query: { initialDisplayDate: dayjs(this.userDetails.currentSession.startDate).format('YYYY/MM/DD'), fromUserCard: true } })
     }
   }
 }

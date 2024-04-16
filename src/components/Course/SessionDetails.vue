@@ -7,7 +7,7 @@
     <div class="first-flex-section">
       <!-- Set 24 to color opacity <=> to add a white background with DD as opacity (FF - DD = 24) -->
       <header
-        :class="{'list-header': isInList}"
+        :class="{'list-header': isInList, 'phone': mq.phone}"
         :style="isInList ? '' : `background-color: ${session.color}24; border-color: ${session.color};`"
       >
         <h2 v-if="isInList">
@@ -17,9 +17,17 @@
           v-else
           class="label"
         >
-          <label>{{ session.subject }} - {{ session.groupName }}</label>
-          <label class="date-label">{{ dateLabel }}</label>
+          <span>{{ session.subject }} - {{ session.groupName }}</span>
+          <span class="date-label">{{ dateLabel }}</span>
         </div>
+
+        <WeprodeButton
+          v-if="session.canDoCall || session.canViewCall"
+          class="call-button"
+          @click="openCallModal"
+        >
+          {{ $t(session.canDoCall ? 'CalendarEventOptions.doCall' : 'CalendarEventOptions.viewCall') }}
+        </WeprodeButton>
       </header>
 
       <section
@@ -150,6 +158,12 @@
         v-if="isHomeworkModalDisplayed"
         @close="isHomeworkModalDisplayed = false"
       />
+      <CallModal
+        v-if="isCallModalDisplayed"
+        :session="session"
+        :can-edit-call="canEditCall"
+        @close="isCallModalDisplayed = !isCallModalDisplayed"
+      />
     </teleport>
     <teleport
       v-if="displayMenu"
@@ -173,6 +187,7 @@
 import CreateButton from '@components/Base/CreateButton.vue'
 import CustomIcon from '@components/Base/CustomIcon.vue'
 import TextContent from '@components/Base/TextContent.vue'
+import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import HomeworkList from '@components/Course/HomeworkList.vue'
 import { updateDeleteContextMenu } from '@utils/contextMenus'
 import dayjs from 'dayjs'
@@ -183,12 +198,15 @@ import { savePrivateNotes } from '@/api/course.service'
 
 const CourseEditModal = defineAsyncComponent(() => import('@/components/Course/CourseEditModal'))
 const HomeworkEditModal = defineAsyncComponent(() => import('@/components/Course/HomeworkEditModal'))
+const CallModal = defineAsyncComponent(() => import('@components/Call/CallModal.vue'))
 const SessionContent = defineAsyncComponent(() => import('@/components/Course/SessionContent'))
 const ContextMenu = defineAsyncComponent(() => import('@/components/ContextMenu/ContextMenu'))
 
 export default {
   name: 'SessionDetails',
   components: {
+    CallModal,
+    WeprodeButton,
     ContextMenu,
     CreateButton,
     CustomIcon,
@@ -213,6 +231,8 @@ export default {
   data () {
     return {
       isHomeworkModalDisplayed: false,
+      isCallModalDisplayed: false,
+      canEditCall: false,
       isModalDisplayed: false,
       selectedDate: dayjs(),
       selectedEvent: undefined,
@@ -252,10 +272,10 @@ export default {
       return dayjs(this.session.sessionContent.publicationDate, DATE_EXCHANGE_FORMAT).format('[' + this.$t('Course.SessionDetails.scheduledOn') + '] YYYY-MM-DD [' + this.$t('at') + '] HH:mm')
     },
     courseTitle () {
-      return (this.session.sessionContent && this.session.sessionContent.title) ? this.session.sessionContent.title : this.$t('Course.SessionDetails.courseContent')
+      return (this.session.sessionContent?.title) ? this.session.sessionContent.title : this.$t('Course.SessionDetails.courseContent')
     },
     dateLabel () {
-      return dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('dddd DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
+      return dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('ddd DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '')
     },
     listDateLabel () {
       return this.$t('Course.SessionDetails.sessionOf', { dateLabel: dayjs(this.session.startDate, DATE_EXCHANGE_FORMAT).format('DD MMMM') + (this.session.slotNumber ? ' - P' + this.session.slotNumber : '') })
@@ -290,6 +310,10 @@ export default {
     }
   },
   methods: {
+    openCallModal () {
+      this.canEditCall = this.session.canDoCall
+      this.isCallModalDisplayed = !this.isCallModalDisplayed
+    },
     openCourseEditModal () {
       this.isModalDisplayed = true
     },
@@ -400,6 +424,9 @@ export default {
 
 header {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
   padding: 1rem 1.5rem;
   align-items: center;
   align-self: stretch;
@@ -407,7 +434,11 @@ header {
   border-radius: 0.375rem;
   border-left: 8px solid;
 
-  label {
+  &.phone {
+    flex-direction: column;
+  }
+
+  span {
     display: flex;
     flex-direction: column;
 
@@ -417,7 +448,6 @@ header {
   &.list-header {
     width: 100%;
     padding: 1rem 0 0.5rem 0;
-    display: block;
     position: sticky;
     top: 0;
     border-radius: 0;
@@ -431,6 +461,10 @@ header {
       @extend %font-heading-xs;
       text-transform: uppercase;
     }
+  }
+
+  button {
+    white-space: nowrap;
   }
 }
 

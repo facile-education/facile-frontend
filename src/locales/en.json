@@ -789,32 +789,44 @@
     }
   },
   "Call": {
+    "by": "By",
     "callModalHeader": "Call",
-    "confirmClosure": "There are ongoing changes, do you really want to exit without making the call?",
+    "confirmClosure": "Changes are in progress, do you really want to exit without making the call?",
     "student": "Student",
     "data": "Data",
+    "done": "Done",
+    "toDo": "TO DO",
+    "notDone": "Not done",
     "presence": "Presence",
+    "expectedAbsent": "Expected absent",
+    "absentOnPreviousSession": "Absent on previous session",
     "late": "Late",
-    "firing": "Fir.",
-    "infirmary": "Inf.",
+    "firing": "Firing",
+    "infirmary": "Infirmary",
     "comment": "Comment",
-    "comments": "Comments",
-    "removeLate": "Remove Late",
-    "removeComment": "Remove Comment",
-    "lateDuration": "Late Duration",
-    "lateInputPlaceholder": "Minutes of late",
+    "commentPlaceholder": "Comment..",
+    "noCommentPlaceholder": "None",
+    "removeLate": "Remove late",
+    "removeComment": "Remove comment",
+    "lateDuration": "Late duration",
+    "lateInputPlaceholder": "Late minutes",
+    "memo": "Memo",
     "minute": "min",
     "nbAbsence": "No absence | One absence | {n} absences",
     "nbLate": "No late | One late | {n} lates",
     "nbFired": "No firing | One firing | {n} firings",
     "nbMedical": "No infirmary | One infirmary | {n} infirmaries",
-    "nbNotes": "No comment | One comment | {n} comments",
-    "commentPlaceholder": "Observation...",
     "errorPlaceholder": "Oops, an error occurred...",
     "callSaved": "Call saved",
+    "callDoneDate": "[On] DD/MM [at] HH:mm",
+    "callDoneDateFull": " [on] DD/MM/YYYY [at] HH:mm",
     "save": "Save",
+    "schoolLife": "School life",
+    "toJustify": "No school life events to justify | {n} school life event to justify | {n} school life events to justify",
+    "nbStudents": "No student | One student | {n} students",
     "submit": "Submit",
-    "summary": "Summary"
+    "summary": "Summary",
+    "shortSummary": "Summary"
   },
   "ContactPicker": {
     "ContactPickerModal": {
@@ -1330,7 +1342,8 @@
     "Logbook": {
       "UnsignedWords": "{count} Unsigned word in the communication notebook. | {count} Unsigned words in the communication notebook."
     },
-    "serviceTitle": "Dashboard"
+    "serviceTitle": "Dashboard",
+    "currentSession": "Current session:"
   },
   "FilePicker": {
     "FilePickerArea": {

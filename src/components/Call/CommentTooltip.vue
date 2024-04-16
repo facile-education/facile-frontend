@@ -3,6 +3,7 @@
     class="comment-tooltip"
     :header="$t('Call.comment')"
     right="0"
+    top="100%"
     @close="close"
   >
     <div class="first-line">
