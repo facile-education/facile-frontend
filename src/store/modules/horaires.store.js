@@ -12,14 +12,13 @@ const manageSessionsOptions = (sessions) => {
         icon: 'icon-edit'
       })
     }
-    if (event.canDoCall) { // TODO: to uncomment
+    if (event.canDoCall) {
       event.options.push({
         name: 'doCall',
         label: i18n.global.t('CalendarEventOptions.doCall'),
         icon: 'icon-users'
       })
-    // } else if (event.canViewCall) {
-    } else if (true) {
+    } else if (event.canViewCall) {
       event.options.push({
         name: 'viewCall',
         label: i18n.global.t('CalendarEventOptions.viewCall'),
