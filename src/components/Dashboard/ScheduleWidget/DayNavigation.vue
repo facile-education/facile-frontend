@@ -7,7 +7,7 @@
       :aria-label="$t('Dashboard.DayNavigation.goPrevious')"
       @click="$emit('go-previous')"
     >
-      <CustomIcon icon-name="icon-chevron-left" />
+      <CustomIcon icon-name="icon-chevron-right-s" />
     </button>
 
     <div class="middle-section">
@@ -40,7 +40,7 @@
       :aria-label="$t('Dashboard.DayNavigation.goAfter')"
       @click="$emit('go-after')"
     >
-      <CustomIcon icon-name="icon-chevron-left" />
+      <CustomIcon icon-name="icon-chevron-right-s" />
     </button>
   </nav>
 </template>
@@ -138,14 +138,18 @@ nav {
     border: none;
     background: $neutral-10;
 
-    img {
-      height: 1rem;
+    .icon-chevron-right-s {
+      font-size: 22px;
     }
   }
 
   .middle-section {
     min-width: 50px;
   }
+}
+
+.previous {
+  transform: rotate(180deg);
 }
 
 .date {
@@ -160,10 +164,6 @@ nav {
 
   text-align: center;
   @extend %font-bold-l;
-}
-
-.after {
-  transform: rotate(180deg);
 }
 
 </style>
