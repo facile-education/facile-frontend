@@ -13,8 +13,8 @@
 
     <template #body>
       <div class="body">
-        <FAIcon
-          name="exclamation-triangle"
+        <CustomIcon
+          icon-name="icon-alert"
           class="icon"
         />
         <p
@@ -45,12 +45,13 @@
 </template>
 
 <script>
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import WeprodeWindow from '@components/Base/Weprode/WeprodeWindow.vue'
 
 export default {
   name: 'WarningModal',
-  components: { WeprodeButton, WeprodeWindow },
+  components: { CustomIcon, WeprodeButton, WeprodeWindow },
   computed: {
     warning () {
       return this.$store.getters['warningModal/firstWarning']
