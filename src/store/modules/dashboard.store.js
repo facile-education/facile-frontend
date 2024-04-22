@@ -54,7 +54,6 @@ export const actions = {
           // If there is a current session, recall the init dashboard WS at the end of the session to refresh interface
           if (data.currentSession) {
             const timeBeforeSessionEnd = dayjs(data.currentSession.endDate, DATE_EXCHANGE_FORMAT).diff(dayjs(), 'millisecond')
-            console.log('start timer of ' + timeBeforeSessionEnd / 60000 + 'min')
             if (timeBeforeSessionEnd > 0) { // Prevent infinite calls if the result is <=0
               setTimeout(() => {
                 this.dispatch('dashboard/initDashboard')
@@ -63,7 +62,6 @@ export const actions = {
           } else if (data.nextSession) {
             const timeBeforeSessionStart = dayjs(data.nextSession.startDate, DATE_EXCHANGE_FORMAT).diff(dayjs(), 'millisecond')
             if (timeBeforeSessionStart > 0) { // Prevent infinite calls if the result is <=0
-              console.log('start timer of ' + timeBeforeSessionStart / 60000 + 'min')
               setTimeout(() => {
                 this.dispatch('dashboard/initDashboard')
               }, timeBeforeSessionStart + 30000) // Wait the next half-minute to reload
