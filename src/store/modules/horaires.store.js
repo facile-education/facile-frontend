@@ -16,13 +16,13 @@ const manageSessionsOptions = (sessions) => {
       event.options.push({
         name: 'doCall',
         label: i18n.global.t('CalendarEventOptions.doCall'),
-        icon: 'icon-users'
+        icon: 'icon-call'
       })
     } else if (event.canViewCall) {
       event.options.push({
         name: 'viewCall',
         label: i18n.global.t('CalendarEventOptions.viewCall'),
-        icon: 'icon-users'
+        icon: 'icon-call'
       })
     }
   })
