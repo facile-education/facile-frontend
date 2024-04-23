@@ -83,7 +83,7 @@ export default {
 }
 
 .icon {
-  font-size: 40px;
+  font-size: 4rem;
   color: orange;
 }
 
