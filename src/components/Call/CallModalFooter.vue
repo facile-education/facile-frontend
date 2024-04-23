@@ -28,7 +28,7 @@
           :title="$tc('Call.nbLate', nbLate)"
         >
           {{ nbLate }}
-          <div class="icon-container">
+          <div class="icon-container orange">
             <CustomIcon icon-name="icon-clock" />
           </div>
         </li>
@@ -37,7 +37,7 @@
           :title="$tc('Call.nbFired', nbFired)"
         >
           {{ nbFired }}
-          <div class="icon-container">
+          <div class="icon-container orange">
             <CustomIcon icon-name="icon-out" />
           </div>
         </li>
@@ -46,7 +46,7 @@
           :title="$tc('Call.nbMedical', nbMedical)"
         >
           {{ nbMedical }}
-          <div class="icon-container">
+          <div class="icon-container orange">
             <CustomIcon icon-name="icon-soin" />
           </div>
         </li>
@@ -162,6 +162,7 @@ ul{
 
   &.orange {
     background-color: $warning;
+    color: white;
   }
   &.red {
     background-color: $danger;
