@@ -129,7 +129,7 @@
     </h3>
     <div v-if="isAuthorization">
       <p
-        v-if="isOneParentSigned"
+        v-if="isOneAuthorized"
         class="theme-text-color"
       >
         <span>
@@ -149,15 +149,15 @@
         <span>
           <CustomIcon icon-name="icon-cross-s" />
         </span>
-        <span v-if="parentConnected.hasAuthorized">{{ $t('Logbook.entriesItem.youNotAuthorized', {
+        <span v-if="!parentConnected.hasAuthorized && parentConnected.hasSigned">{{ $t('Logbook.entriesItem.youNotAuthorized', {
           date:
             formateDate(parentConnected.signatureDate)
         }) }}</span>
-        <span v-else>{{ parentWhoAuthorize.lastName + ' ' + parentWhoAuthorize.firstName + ' ' +
-          $t('Logbook.entriesItem.hasNotAuthorized', { date: formateDate(parentWhoAuthorize.signatureDate) }) }}</span>
+        <span v-else>{{ parentWhoSigned.lastName + ' ' + parentWhoSigned.firstName + ' ' +
+          $t('Logbook.entriesItem.hasNotAuthorized', { date: formateDate(parentWhoSigned.signatureDate) }) }}</span>
       </p>
       <div
-        v-if="!isOneParentSigned"
+        v-if="!isOneParentSigned && !isStudent"
         class="authorization-options"
         :class="mq.phone && 'mobile'"
       >
@@ -193,13 +193,14 @@
           $t('Logbook.entriesItem.hasSigned', { signatureDate: formateDate(parentWhoSigned.signatureDate) }) }}</span>
       </p>
       <WeprodeButton
-        v-else
+        v-else-if="!isStudent"
         :disabled="data.limitDate < currentDate"
         :title="data.limitDate < currentDate && $t('Logbook.entriesItem.deadlinePassed')"
         :label="$t('Logbook.entriesItem.signButtonLabel')"
         data-test="signing-button"
         @click="confirmSigning"
       />
+      <span v-else>{{ $t('Logbook.entriesItem.waiting') }}</span>
     </div>
   </div>
 </template>
@@ -260,6 +261,9 @@ export default {
     isOneParentSigned () {
       return this.data.parents.some(parent => parent.hasSigned)
     },
+    isOneAuthorized () {
+      return this.data.parents.some(parent => parent.hasAuthorized && parent.hasSigned)
+    },
     isOneNotAuthorized () {
       return this.data.parents.some(parent => !parent.hasAuthorized && parent.hasSigned)
     },
@@ -289,6 +293,7 @@ export default {
       })
     },
     confirmNotAuthorize () {
+      this.hasAuthorized = false
       this.$store.dispatch('warningModal/addWarning', {
         text: this.$t('Logbook.notConfirmAuthorizationTextModal'),
         lastAction: { fct: this.handleSignEntry }
@@ -323,20 +328,20 @@ export default {
   .parent {
     flex: 1;
   }
+}
 
-  button {
+button {
     padding: 6px 12px !important;
     text-transform: uppercase;
-    @extend %font-regular-m
+    @extend %font-regular-m;
   }
-}
 
 h3 {
   @extend %font-medium-m;
   text-transform: uppercase;
 }
 
-p {
+p, span {
   @extend %font-regular-xs
 }
 

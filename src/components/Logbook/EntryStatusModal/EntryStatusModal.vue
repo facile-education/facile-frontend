@@ -20,7 +20,7 @@
             v-for="(student, index) in sortedStudents"
             :key="index"
             :student="student"
-            :is-authorization="entry.isAuthorization"
+            :is-authorization="isAuthorization"
           />
         </div>
         <div
@@ -35,8 +35,12 @@
             v-if="entry.reminders"
             class="reminders-infos"
           >
-            <p>{{ 'Relancé déjà' + ' ' + entry.reminders.length + ' ' + 'fois' }}</p>
-            <p>{{ 'Dernière relance le' + ' ' + lastRemindersDate }}</p>
+            <p data-test="nb-reminders">
+              {{ 'Relancé déjà' + ' ' + entry.reminders.length + ' ' + 'fois' }}
+            </p>
+            <p data-test="last-reminder-date">
+              {{ 'Dernière relance le' + ' ' + lastRemindersDate }}
+            </p>
           </div>
         </div>
         <WeprodeSpinner
@@ -56,6 +60,7 @@ import _ from 'lodash'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import EntryStatusStudent from '@/components/Logbook/EntryStatusModal/EntryStatusStudent'
+import logbookConstants from '@/constants/logbookConstants'
 
 import { followupUnsigned, getEntryReadStatus } from '../../../api/logbook.service'
 
@@ -88,6 +93,9 @@ export default {
     },
     lastRemindersDate () {
       return dayjs(this.entry.reminders[this.entry.reminders.length - 1].date).format('DD/MM/YYYY')
+    },
+    isAuthorization () {
+      return this.entry.type === logbookConstants.ENTRY_TYPE_AUTHORIZATION
     }
   },
   created () {

@@ -1,11 +1,15 @@
 <template>
-  <div class="first-line">
+  <div
+    class="first-line"
+    data-test="filters"
+  >
     <WeprodeDropdown
       v-if="childList.length > 1"
       v-model="selectedChild"
       :list="childList"
       :sort="false"
       display-field="firstName"
+      data-test="children-dropdown"
     />
     <WeprodeTagsInput
       v-if="isTeacher || isDirector || isSecretariat"

@@ -2174,7 +2174,7 @@
       "authorizeButtonLabel": "Autoriser",
       "notAuthorizeButtonLabel": "Ne pas autoriser",
       "youAuthorized": "Vous avez autorisé le {date}",
-      "hasAuthorized": "a autorisé le {date}",
+      "hasAuthorized": "A autorisé le {date}",
       "youNotAuthorized": "Vous n'avez pas autorisé",
       "hasNotAuthorized": "N'a pas autorisé",
       "entryTypeInformation": "Information",

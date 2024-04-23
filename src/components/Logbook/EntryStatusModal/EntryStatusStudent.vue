@@ -16,27 +16,41 @@
       </span>
       <div class="right-side">
         <div class="signing-status">
-          <span
-            v-if="nbSigning === 0"
-            class="nbSigning"
-          >
-            {{ $t('Logbook.entriesItem.waiting') }}
-          </span>
-          <span
-            v-else-if="isOneParentRequired ? nbSigning < 1 : nbSigning < student.parents.length"
-            class="nbSigning"
-          >
-            {{ $t('Logbook.entriesItem.waiting') + '(' + nbSigning + '/' + student.parents.length + ')' }}
-          </span>
-          <span
-            v-else
-            class="is-signing"
-          >
-            <CustomIcon
-              icon-name="icon-check"
-              class="theme-text-color"
-            />
-          </span>
+          <div v-if="isAuthorization && isNotAuthorize">
+            <span
+              class="is-signing"
+            >
+              <CustomIcon
+                icon-name="icon-cross-s"
+                class="theme-text-color"
+                data-test="not-authorize-icon"
+              />
+            </span>
+          </div>
+          <div v-else>
+            <span
+              v-if="nbSigning === 0"
+              class="waiting"
+            >
+              {{ $t('Logbook.entriesItem.waiting') }}
+            </span>
+            <span
+              v-else-if="!isOneParentRequired && nbSigning < student.parents.length"
+              class="nbSigning"
+            >
+              {{ $t('Logbook.entriesItem.waiting') + '(' + nbSigning + '/' + student.parents.length + ')' }}
+            </span>
+            <span
+              v-else
+              class="is-signing"
+            >
+              <CustomIcon
+                :icon-name="isAuthorization && isNotAuthorize ? 'icon-cross-s' : 'icon-check'"
+                class="theme-text-color"
+                :data-test="isAuthorization && isNotAuthorize ? 'not-authorize-icon' : 'authorize-icon'"
+              />
+            </span>
+          </div>
         </div>
         <CustomIcon
           v-if="!isLeaf"
@@ -52,7 +66,7 @@
         class="parents-details theme-extra-light-background-color"
       >
         <li
-          v-for="parent in student.parents"
+          v-for="parent in parents"
           :key="parent.userId"
           class="parent"
         >
@@ -64,46 +78,41 @@
           >
             {{ parent.lastName.toUpperCase() + ' ' + parent.firstName }}
           </a>
-          <span
-            v-if="isAuthorization && parent.hasSigned && parent.hasAuthorized"
-            class="theme-text-color"
-          >
-            <CustomIcon
-              icon-name="icon-check"
+          <div v-if="isAuthorization">
+            <span
+              v-if="parent.hasSigned"
               class="theme-text-color"
-            />
-            {{ $t('Logbook.statusModal.hasAuthorized') }}
-          </span>
-          <span
-            v-if="isAuthorization && parent.hasSigned && !parent.hasAuthorized"
-            class="theme-text-color"
-          >
-            <CustomIcon
-              icon-name="icon-cross-s"
+            >
+              <CustomIcon
+                :icon-name="parent.hasAuthorized ? 'icon-check' : 'icon-cross-s'"
+                class="theme-text-color"
+              />
+              {{ parent.hasAuthorized ? $t('Logbook.statusModal.hasAuthorized'): $t('Logbook.statusModal.hasNotAuthorized') }}
+            </span>
+            <span
+              v-else
+              class="waiting"
+            >
+              {{ $t('Logbook.entriesItem.waiting') }}
+            </span>
+          </div>
+          <div v-else>
+            <span
+              v-if="parent.hasSigned"
               class="theme-text-color"
-            /> {{ $t('Logbook.statusModal.hasNotAuthorized') }}
-          </span>
-          <span
-            v-if="isAuthorization && !parent.hasSigned"
-            class="waiting"
-          >
-            {{ $t('Logbook.entriesItem.waiting') }}
-          </span>
-          <span
-            v-if="!isAuthorization && parent.hasSigned"
-            class="theme-text-color"
-          >
-            <CustomIcon
-              icon-name="icon-check"
-              class="theme-text-color"
-            /> {{ $t('Logbook.statusModal.hasSigned') }}
-          </span>
-          <span
-            v-if="!isAuthorization && !parent.hasSigned && !parent.hasAuthorized"
-            class="waiting"
-          >
-            {{ $t('Logbook.entriesItem.waiting') }}
-          </span>
+            >
+              <CustomIcon
+                icon-name="icon-check"
+                class="theme-text-color"
+              /> {{ $t('Logbook.statusModal.hasSigned') }}
+            </span>
+            <span
+              v-else
+              class="waiting"
+            >
+              {{ $t('Logbook.entriesItem.waiting') }}
+            </span>
+          </div>
         </li>
       </ul>
     </Transition>
@@ -131,7 +140,22 @@ export default {
     return {
       isExtended: false,
       nbSigning: 0,
-      isOneParentRequired: true
+      isOneParentRequired: false
+    }
+  },
+  computed: {
+    isNotAuthorize () {
+      return this.student.parents.some(parent => parent.hasSigned && !parent.hasAuthorized)
+    },
+    oneParentSigned () {
+      return this.student.parents.some(parent => parent.hasSigned)
+    },
+    parents () {
+      if (this.isOneParentRequired && this.oneParentSigned) {
+        return this.student.parents.filter(parent => parent.hasSigned)
+      } else {
+        return this.student.parents
+      }
     }
   },
   created () {
@@ -139,18 +163,10 @@ export default {
   },
   methods: {
     countNbSigning () {
-      this.nbSigning = 0 // Reset nbSigning
-      if (this.isAuthorization) {
-        for (const element of this.student.parents) {
-          if (element.hasAuthorized) {
-            this.nbSigning++
-          }
-        }
-      } else {
-        for (const element of this.student.parents) {
-          if (element.hasSigned) {
-            this.nbSigning++
-          }
+      this.nbSigning = 0
+      for (const element of this.student.parents) {
+        if (element.hasSigned) {
+          this.nbSigning++
         }
       }
     },

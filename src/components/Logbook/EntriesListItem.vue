@@ -1,7 +1,7 @@
 <template>
   <div class="entries-list-item">
     <div
-      v-if="isParent && !isCurrentParentSigned && !isOneParentRequired"
+      v-if="isParent && !isCurrentParentSigned && !isOneParentRequired && data.limitDate > currentDate"
       class="pellet theme-background-color"
     />
     <div

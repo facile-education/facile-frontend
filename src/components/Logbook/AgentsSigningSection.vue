@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div
+    class="container"
+    data-test="agent-view"
+  >
     <div class="signing-info">
       <div
         v-if="data.nbStudents === 1"
@@ -36,6 +39,7 @@
         <WeprodeButton
           v-if="data.isAllowedToReadStatus"
           :label="$t('Logbook.entriesItem.entryReadStatusButton')"
+          data-test="open-read-status-button"
           @click="isDisplayStatusModal = true"
         />
       </div>
@@ -47,14 +51,19 @@
       <WeprodeButton
         v-if="data.isAllowedToReadStatus"
         :label="$t('Logbook.entriesItem.followupButton')"
+        data-test="followup-button"
         @click="confirmFollowup"
       />
       <div
         v-if="data.reminders"
         class="reminders-infos"
       >
-        <p>{{ $t('Logbook.totalReminders', {nbReminders: data.reminders.length}) }}</p>
-        <p>{{ $t('Logbook.lastReminderDate', {reminderDate: lastRemindersDate}) }}</p>
+        <p data-test="nb-reminders">
+          {{ $t('Logbook.totalReminders', {nbReminders: data.reminders.length}) }}
+        </p>
+        <p data-test="last-reminder-date">
+          {{ $t('Logbook.lastReminderDate', {reminderDate:lastRemindersDate}) }}
+        </p>
       </div>
     </div>
   </div>

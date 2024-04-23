@@ -10,7 +10,7 @@
       :data="data"
       :is-student-entries="isStudentEntries"
       @signed="getChildLogbook(childSelected.userId)"
-      @refresh="refreshReminder"
+      @refresh="refresh"
     />
   </div>
   <WeprodeSpinner
@@ -23,7 +23,7 @@
     class="placeholder"
   />
   <p
-    v-if="entriesList.length === 0 && !error && !isLoading"
+    v-if="sortedEntriesList.length === 0 && !error && !isLoading"
     class="placeholder"
   >
     {{ $t('Logbook.noEntryPlaceholder') }}
@@ -96,7 +96,24 @@ export default {
       return this.$store.state.logbook.filterTypeSelected
     },
     sortedEntriesList () {
-      return WeprodeUtils.sortArrayWithString(this.entriesList, true, 'modificationDate')
+      if (this.selectedFilterType === logbookConstants.ENTRY_TYPE_INFORMATION) {
+        return WeprodeUtils.sortArrayWithString(this.informationEntriesList, true, 'modificationDate')
+      } else if (this.selectedFilterType === logbookConstants.ENTRY_TYPE_AUTHORIZATION) {
+        return WeprodeUtils.sortArrayWithString(this.authorizationEntriesList, true, 'modificationDate')
+      } else if (this.selectedFilterType === logbookConstants.ENTRY_TYPE_OBSERVATION) {
+        return WeprodeUtils.sortArrayWithString(this.observationEntriesList, true, 'modificationDate')
+      } else {
+        return WeprodeUtils.sortArrayWithString(this.entriesList, true, 'modificationDate')
+      }
+    },
+    informationEntriesList () {
+      return this.entriesList.filter(entry => entry.type === logbookConstants.ENTRY_TYPE_INFORMATION)
+    },
+    authorizationEntriesList () {
+      return this.entriesList.filter(entry => entry.type === logbookConstants.ENTRY_TYPE_AUTHORIZATION)
+    },
+    observationEntriesList () {
+      return this.entriesList.filter(entry => entry.type === logbookConstants.ENTRY_TYPE_OBSERVATION)
     }
   },
   watch: {
@@ -118,14 +135,6 @@ export default {
     isLoadAuthorLogbook (value) {
       if (value === true) {
         this.getAuthorLogbook(this.currentUser.userId)
-      }
-    },
-    selectedFilterType (value) {
-      if (value && value !== logbookConstants.NONE_FILTERS) {
-        this.refresh(value)
-      }
-      if (value === logbookConstants.NONE_FILTERS) {
-        this.refresh()
       }
     }
   },
@@ -201,23 +210,16 @@ export default {
         console.error(err)
       })
     },
-    refresh (type = undefined) {
+    refresh () {
       if (this.isChildEntries) {
+        this.$emit('isRefreshed')
         this.getChildLogbook(this.childSelected.userId)
-        this.$emit('isRefreshed')
       } else if (this.isStudentEntries) {
-        this.getStudentLogbook(this.studentSelected.userId, type)
         this.$emit('isRefreshed')
+        this.getStudentLogbook(this.studentSelected.userId)
       } else if (this.isAuthorEntries) {
-        this.getAuthorLogbook(this.currentUser.userId, type)
         this.$emit('isRefreshed')
-      }
-    },
-    refreshReminder () {
-      if (this.selectedFilterType && (this.selectedFilterType !== logbookConstants.NONE_FILTERS)) {
-        this.refresh(this.selectedFilterType)
-      } else if (this.selectedFilterType === logbookConstants.NONE_FILTERS || !this.selectedFilterType) {
-        this.refresh()
+        this.getAuthorLogbook(this.currentUser.userId)
       }
     }
   }
