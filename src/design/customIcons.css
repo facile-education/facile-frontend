@@ -94,11 +94,11 @@
 .icon-school-life:before {
   content: "\e902";
 }
+.icon-logbook:before {
+  content: "\e92b";
+}
 .icon-resource:before {
   content: "\e907";
-}
-.icon-logbook:before {
-  content: "\e92a";
 }
 .icon-admin:before {
   content: "\e908";
@@ -124,9 +124,6 @@
 .icon-seance:before {
   content: "\e910";
 }
-.icon-call:before {
-  content: "\e92b";
-}
 .icon-users:before {
   content: "\e911";
 }
@@ -141,6 +138,9 @@
 }
 .icon-no-user:before {
   content: "\e923";
+}
+.icon-call:before {
+  content: "\e92a";
 }
 .icon-soin:before {
   content: "\e927";
