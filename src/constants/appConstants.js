@@ -11,6 +11,7 @@ const GROUPS = 'groups'
 const SCHEDULE = 'horaires'
 const SCHOOL_LIFE = 'horaires-hors-cadre'
 const MESSAGING = 'messaging'
+const LOGBOOK = 'logbook'
 const STATISTICS = 'statistics'
 
 const nbCharBeforeCompletion = 2
@@ -86,6 +87,7 @@ export {
   SCHEDULE,
   SCHOOL_LIFE,
   MESSAGING,
+  LOGBOOK,
   STATISTICS
 }
 

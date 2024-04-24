@@ -100,7 +100,10 @@
             {{ $t('Logbook.entriesItem.hasNotAuthorized', { date: formateDate(parent.signatureDate) }) }}
           </p>
           <p v-if="!parent.hasSigned">
-            {{ $t('Logbook.entriesItem.waiting') }}
+            <span><CustomIcon
+              icon-name="icon-warning"
+              class="warning-icon"
+            /></span>{{ $t('Logbook.entriesItem.waiting') }}
           </p>
         </div>
         <div v-else>
@@ -111,7 +114,10 @@
             {{ $t('Logbook.entriesItem.hasSigned', { signatureDate: formateDate(parent.signatureDate) }) }}
           </p>
           <p v-else>
-            {{ $t('Logbook.entriesItem.waitingSigning') }}
+            <span><CustomIcon
+              icon-name="icon-warning"
+              class="warning-icon"
+            /></span>{{ $t('Logbook.entriesItem.waitingSigning') }}
           </p>
         </div>
       </div>
@@ -200,7 +206,10 @@
         data-test="signing-button"
         @click="confirmSigning"
       />
-      <span v-else>{{ $t('Logbook.entriesItem.waiting') }}</span>
+      <span v-else><CustomIcon
+        icon-name="icon-warning"
+        class="warning-icon"
+      />{{ $t('Logbook.entriesItem.waiting') }}</span>
     </div>
   </div>
 </template>
@@ -302,6 +311,7 @@ export default {
     handleSignEntry () {
       signLogbookEntry(this.data.logbookEntryId, this.hasAuthorized).then(data => {
         this.$emit('signed')
+        this.$store.dispatch('menu/updateLogbookNotification', 1)
       }, err => {
         console.log(err)
       })
@@ -328,6 +338,10 @@ export default {
   .parent {
     flex: 1;
   }
+}
+
+.warning-icon{
+  margin-right: 5px;
 }
 
 button {

@@ -31,7 +31,7 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 
-import { COURSES, MESSAGING, SCHOOL_LIFE } from '@/constants/appConstants'
+import { COURSES, LOGBOOK, MESSAGING, SCHOOL_LIFE } from '@/constants/appConstants'
 const CustomIcon = defineAsyncComponent(() => import('@components/Base/CustomIcon.vue'))
 const Pellet = defineAsyncComponent(() => import('@components/Base/Pellet.vue'))
 
@@ -65,6 +65,8 @@ export default {
           return this.$store.state.menu.notifications.courses
         case SCHOOL_LIFE:
           return this.$store.state.menu.notifications.schoollife
+        case LOGBOOK:
+          return this.$store.state.menu.notifications.logbook
         default:
           return 0
       }

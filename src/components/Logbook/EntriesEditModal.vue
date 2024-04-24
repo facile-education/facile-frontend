@@ -63,7 +63,7 @@
 
     <template #footer>
       <div class="footer">
-        <p>{{ $t('Logbook.entriesEditModal.warningCreateEntryMessage') }}</p>
+        <p><span><CustomIcon icon-name="icon-warning" /></span>{{ $t('Logbook.entriesEditModal.warningCreateEntryMessage') }}</p>
         <WeprodeButton
           data-test="submitButton"
           class="dark"
@@ -77,6 +77,7 @@
 
 <script>
 import CustomDatePicker from '@components/Base/CustomDatePicker.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import TextContent from '@components/Base/TextContent.vue'
 import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import { addContactFieldsToContactList } from '@utils/contacts.utils'
@@ -114,7 +115,8 @@ export default {
     TextContent,
     CustomDatePicker,
     WeprodeErrorMessage,
-    WeprodeSpinner
+    WeprodeSpinner,
+    CustomIcon
   },
   inject: ['mq'],
   props: {
@@ -342,6 +344,9 @@ export default {
 }
 
 .footer p {
-  @extend %font-regular-m
+  @extend %font-regular-m;
+  span{
+    margin-right: 5px;
+  }
 }
 </style>

@@ -22,7 +22,8 @@ export const state = {
   notifications: {
     messaging: 0,
     courses: 0,
-    schoollife: 0
+    schoollife: 0,
+    logbook: 0
   },
   sessionTimeout: 900000, // 15 min, Liferay default
   sessionTimeoutWarning: 60000 // 1 min, Liferay default
@@ -63,6 +64,9 @@ export const mutations = {
   },
   updateSchoollifeNotification (state, payload) {
     state.notifications.schoollife -= payload
+  },
+  updateLogbookNotification (state, payload) {
+    state.notifications.logbook -= payload
   },
   setSubMenuCategoryDisplayed (state, { category, status }) {
     state.menu.find(entry => entry.i18nKey === category.i18nKey).showSubMenu = status
@@ -120,6 +124,9 @@ export const actions = {
   },
   updateSchoollifeNotification ({ commit }, nbRead) {
     commit('updateSchoollifeNotification', nbRead)
+  },
+  updateLogbookNotification ({ commit }, nbRead) {
+    commit('updateLogbookNotification', nbRead)
   },
   setSubMenuCategoryDisplayed ({ commit }, { category, status }) {
     commit('setSubMenuCategoryDisplayed', { category, status })

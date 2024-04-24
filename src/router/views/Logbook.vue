@@ -33,6 +33,7 @@
         <component
           :is="isTeacher || isDirector || isSecretariat ? 'v-fragment' : 'WeprodeTabItem'"
           :title="$t('Logbook.entryTabLabel')"
+          :nb-notification="nbNotifications"
         >
           <EntriesList
             :is-entry-created="isEntryCreated"
@@ -156,6 +157,9 @@ export default {
         }
       ]
       return options
+    },
+    nbNotifications () {
+      return this.$store.state.menu.notifications.logbook
     }
   },
   beforeCreate () {

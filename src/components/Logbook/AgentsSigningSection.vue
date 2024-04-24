@@ -11,7 +11,7 @@
         <h3>{{ isAuthorization ? $t('Logbook.entriesItem.authorization') : $t('Logbook.entriesItem.signing') }}</h3>
         <ul>
           <li
-            v-for="parent in data.populations.students[0].parents"
+            v-for="parent in parents"
             :key="parent.userId"
             :class="parent.hasSigned ? 'theme-text-color' : 'waiting'"
           >
@@ -107,7 +107,8 @@ export default {
   emits: ['refresh'],
   data () {
     return {
-      isDisplayStatusModal: false
+      isDisplayStatusModal: false,
+      isOneParentRequired: false
     }
   },
   computed: {
@@ -123,6 +124,16 @@ export default {
     },
     lastRemindersDate () {
       return dayjs(this.data.reminders[this.data.reminders.length - 1].date).format('DD/MM/YYYY')
+    },
+    oneParentSigned () {
+      return this.data.populations.students[0].parents.some(parent => parent.hasSigned)
+    },
+    parents () {
+      if (this.isOneParentRequired && this.oneParentSigned) {
+        return this.data.populations.students[0].parents.filter(parent => parent.hasSigned)
+      } else {
+        return this.data.populations.students[0].parents
+      }
     }
   },
   methods: {

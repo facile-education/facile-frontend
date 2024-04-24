@@ -80,6 +80,7 @@ export default {
 .body {
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 .icon {
