@@ -1,11 +1,11 @@
 <template>
   <div class="entries-list-item">
     <div
-      v-if="isParent && !isCurrentParentSigned && !isOneParentRequired && data.limitDate > currentDate"
+      v-if="isParent && !isCurrentParentSigned && isAllParentsRequired && data.limitDate > currentDate"
       class="pellet theme-background-color"
     />
     <div
-      v-else-if="isParent && isOneParentRequired && !isOneParentSigned"
+      v-else-if="isParent && !isAllParentsRequired && !isOneParentSigned"
       class="pellet theme-background-color"
     />
     <div
@@ -83,8 +83,7 @@ export default {
     return {
       currentDate: dayjs().format(DATE_EXCHANGE_FORMAT),
       authorization: '',
-      isDisplayEditModal: false,
-      isOneParentRequired: false
+      isDisplayEditModal: false
     }
   },
   computed: {
@@ -118,6 +117,9 @@ export default {
     },
     isOneNotAuthorized () {
       return this.data.parents.some(parent => !parent.hasAuthorized && parent.hasSigned)
+    },
+    isAllParentsRequired () {
+      return this.data.parents.every(parent => parent.isMandatory)
     }
   },
   methods: {

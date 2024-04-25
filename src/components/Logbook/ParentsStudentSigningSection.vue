@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="!isOneParentRequired"
+    v-if="isAllParentsRequired"
     class="two-parent-required"
     :class="mq.phone && 'mobile'"
   >
@@ -9,15 +9,12 @@
       :key="index"
       class="parent"
     >
-      <div
-        v-if="parent.userId === currentUser.userId && !isStudent"
-        class="parent-connected"
-      >
+      <div>
         <h3 v-if="!isAuthorization">
-          {{ $t('Logbook.entriesItem.yourSigningTitle', { signingType: $t('Logbook.entriesItem.signing') }) }}
+          {{ parent.userId === currentUser.userId ? $t('Logbook.entriesItem.yourSigningTitle', { signingType: $t('Logbook.entriesItem.signing') }) : $t('Logbook.entriesItem.signingParentTitle', { parentFullName: parent.lastName + ' ' + parent.firstName }) }}
         </h3>
         <h3 v-else>
-          {{ $t('Logbook.entriesItem.yourSigningTitle', { signingType: $t('Logbook.entriesItem.authorization') }) }}
+          {{ parent.userId === currentUser.userId ? $t('Logbook.entriesItem.yourSigningTitle', { signingType: $t('Logbook.entriesItem.authorization') }) : $t('Logbook.entriesItem.authorizationParentTitle', { parentFullName: parent.lastName + ' ' + parent.firstName }) }}
         </h3>
         <div>
           <div v-if="isAuthorization">
@@ -28,7 +25,7 @@
               <span>
                 <CustomIcon icon-name="icon-check" />
               </span>
-              {{ $t('Logbook.entriesItem.youAuthorized', { date: formateDate(parent.signatureDate) }) }}
+              {{ parent.userId === currentUser.userId ? $t('Logbook.entriesItem.youAuthorized', { date: formateDate(parent.signatureDate) }) : $t('Logbook.entriesItem.hasAuthorized', { date: formateDate(parent.signatureDate) }) }}
             </p>
             <p
               v-if="parent.hasSigned && !parent.hasAuthorized"
@@ -37,10 +34,10 @@
               <span>
                 <CustomIcon icon-name="icon-cross-s" />
               </span>
-              {{ $t('Logbook.entriesItem.youNotAuthorized') }}
+              {{ parent.userId === currentUser.userId ? $t('Logbook.entriesItem.youNotAuthorized') : $t('Logbook.entriesItem.hasNotAuthorized') }}
             </p>
             <div
-              v-if="!parent.hasSigned"
+              v-if="!parent.hasSigned && parent.userId === currentUser.userId"
               class="authorization-options"
               :class="mq.phone && 'mobile'"
             >
@@ -59,6 +56,12 @@
                 @click="confirmNotAuthorize"
               />
             </div>
+            <p v-if="!parent.hasSigned && !(parent.userId === currentUser.userId)">
+              <span><CustomIcon
+                icon-name="icon-warning"
+                class="warning-icon"
+              /></span>{{ $t('Logbook.entriesItem.waitingAuthorization') }}
+            </p>
           </div>
           <div v-else>
             <p
@@ -68,57 +71,23 @@
               <span>
                 <CustomIcon icon-name="icon-check" />
               </span>
-              {{ $t('Logbook.entriesItem.youSigned', { signatureDate: formateDate(parent.signatureDate) }) }}
+              {{ parent.userId === currentUser.userId ? $t('Logbook.entriesItem.youSigned', { signatureDate: formateDate(parent.signatureDate) }) : $t('Logbook.entriesItem.hasSigned', { signatureDate: formateDate(parent.signatureDate) }) }}
             </p>
             <WeprodeButton
-              v-else
+              v-else-if="parent.userId === currentUser.userId"
               :disabled="data.limitDate < currentDate"
               :title="data.limitDate < currentDate && $t('Logbook.entriesItem.deadlinePassed')"
               :label="$t('Logbook.entriesItem.signButtonLabel')"
               data-test="signing-button"
               @click="confirmSigning"
             />
+            <p v-else>
+              <span><CustomIcon
+                icon-name="icon-warning"
+                class="warning-icon"
+              /></span>{{ $t('Logbook.entriesItem.waitingSigning') }}
+            </p>
           </div>
-        </div>
-      </div>
-      <div
-        v-else
-        class="other-parent parent"
-      >
-        <h3>{{ $t('Logbook.entriesItem.signingParentTitle', { parentFullName: parentNotConnectedFullName }) }}</h3>
-        <div v-if="isAuthorization">
-          <p v-if="parent.hasSigned && parent.hasAuthorized">
-            <span>
-              <CustomIcon icon-name="icon-check" />
-            </span>
-            {{ $t('Logbook.entriesItem.hasAuthorized', { date: formateDate(parent.signatureDate) }) }}
-          </p>
-          <p v-if="parent.hasSigned && !parent.hasAuthorized">
-            <span>
-              <CustomIcon icon-name="icon-cross-s" />
-            </span>
-            {{ $t('Logbook.entriesItem.hasNotAuthorized', { date: formateDate(parent.signatureDate) }) }}
-          </p>
-          <p v-if="!parent.hasSigned">
-            <span><CustomIcon
-              icon-name="icon-warning"
-              class="warning-icon"
-            /></span>{{ $t('Logbook.entriesItem.waiting') }}
-          </p>
-        </div>
-        <div v-else>
-          <p v-if="parent.hasSigned">
-            <span>
-              <CustomIcon icon-name="icon-check" />
-            </span>
-            {{ $t('Logbook.entriesItem.hasSigned', { signatureDate: formateDate(parent.signatureDate) }) }}
-          </p>
-          <p v-else>
-            <span><CustomIcon
-              icon-name="icon-warning"
-              class="warning-icon"
-            /></span>{{ $t('Logbook.entriesItem.waitingSigning') }}
-          </p>
         </div>
       </div>
     </div>
@@ -127,11 +96,8 @@
     v-else
     class="one-parent-required"
   >
-    <h3 v-if="!isAuthorization">
-      {{ $t('Logbook.entriesItem.oneSignatureRequiredTitle') }}
-    </h3>
-    <h3 v-else>
-      {{ $t('Logbook.entriesItem.oneAuthorizationRequiredTitle') }}
+    <h3>
+      {{ isAuthorization ? $t('Logbook.entriesItem.oneAuthorizationRequiredTitle') : $t('Logbook.entriesItem.oneSignatureRequiredTitle') }}
     </h3>
     <div v-if="isAuthorization">
       <p
@@ -163,7 +129,7 @@
           $t('Logbook.entriesItem.hasNotAuthorized', { date: formateDate(parentWhoSigned.signatureDate) }) }}</span>
       </p>
       <div
-        v-if="!isOneParentSigned && !isStudent"
+        v-if="!isOneParentSigned && !isStudent && isUserCanSigned"
         class="authorization-options"
         :class="mq.phone && 'mobile'"
       >
@@ -182,6 +148,13 @@
           @click="confirmNotAuthorize"
         />
       </div>
+      <span v-else-if="!isUserCanSigned">
+        <CustomIcon
+          icon-name="icon-warning"
+          class="warning-icon"
+        />
+        {{ $t('Logbook.entriesItem.waitingAuthorization') }}
+      </span>
     </div>
     <div v-else>
       <p
@@ -199,17 +172,20 @@
           $t('Logbook.entriesItem.hasSigned', { signatureDate: formateDate(parentWhoSigned.signatureDate) }) }}</span>
       </p>
       <WeprodeButton
-        v-else-if="!isStudent"
+        v-else-if="!isStudent && isUserCanSigned"
         :disabled="data.limitDate < currentDate"
         :title="data.limitDate < currentDate && $t('Logbook.entriesItem.deadlinePassed')"
         :label="$t('Logbook.entriesItem.signButtonLabel')"
         data-test="signing-button"
         @click="confirmSigning"
       />
-      <span v-else><CustomIcon
-        icon-name="icon-warning"
-        class="warning-icon"
-      />{{ $t('Logbook.entriesItem.waiting') }}</span>
+      <span v-else-if="!isUserCanSigned || isStudent">
+        <CustomIcon
+          icon-name="icon-warning"
+          class="warning-icon"
+        />
+        {{ isStudent ? $t('Logbook.entriesItem.waiting') : $t('Logbook.entriesItem.waitingOtherParent', {parentFullName: parentWhoCanSigned.lastName + ' ' + parentWhoCanSigned.firstName}) }}
+      </span>
     </div>
   </div>
 </template>
@@ -243,8 +219,7 @@ export default {
       authorization: '',
       isDisplayEditModal: false,
       isDisplayStatusModal: false,
-      hasAuthorized: false,
-      isOneParentRequired: false
+      hasAuthorized: false
     }
   },
   computed: {
@@ -253,10 +228,6 @@ export default {
     },
     isStudent () {
       return this.$store.state.user.isStudent
-    },
-    parentNotConnectedFullName () {
-      const otherParent = this.data.parents.find((parent) => parent.userId !== this.currentUser.userId)
-      return otherParent.lastName + ' ' + otherParent.firstName
     },
     parentConnected () {
       return this.data.parents.find((parent) => parent.userId === this.currentUser.userId)
@@ -278,6 +249,21 @@ export default {
     },
     isAuthorization () {
       return this.data.type === logbookConstants.ENTRY_TYPE_AUTHORIZATION
+    },
+    isAllParentsRequired () {
+      return this.data.parents.every(parent => parent.isMandatory)
+    },
+    parentWhoCanSigned () {
+      return this.data.parents.find(parent => parent.isMandatory)
+    },
+    isUserCanSigned () {
+      if (this.data.parents.some(parent => parent.isMandatory) && !this.parentConnected.isMandatory) {
+        return false
+      } else if (this.data.parents.some(parent => parent.isMandatory) && this.parentConnected.isMandatory) {
+        return true
+      } else {
+        return true
+      }
     }
   },
   methods: {

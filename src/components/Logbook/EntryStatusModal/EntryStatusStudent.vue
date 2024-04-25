@@ -35,7 +35,7 @@
               {{ $t('Logbook.entriesItem.waiting') }}
             </span>
             <span
-              v-else-if="!isOneParentRequired && nbSigning < student.parents.length"
+              v-else-if="isAllParentsRequired && nbSigning < student.parents.length"
               class="nbSigning"
             >
               {{ $t('Logbook.entriesItem.waiting') + '(' + nbSigning + '/' + student.parents.length + ')' }}
@@ -139,8 +139,7 @@ export default {
   data () {
     return {
       isExtended: false,
-      nbSigning: 0,
-      isOneParentRequired: false
+      nbSigning: 0
     }
   },
   computed: {
@@ -151,11 +150,14 @@ export default {
       return this.student.parents.some(parent => parent.hasSigned)
     },
     parents () {
-      if (this.isOneParentRequired && this.oneParentSigned) {
+      if (!this.isAllParentsRequired && this.oneParentSigned) {
         return this.student.parents.filter(parent => parent.hasSigned)
       } else {
         return this.student.parents
       }
+    },
+    isAllParentsRequired () {
+      return this.student.parents.every(parent => parent.isMandatory)
     }
   },
   created () {

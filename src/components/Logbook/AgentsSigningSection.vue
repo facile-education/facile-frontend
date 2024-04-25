@@ -107,8 +107,7 @@ export default {
   emits: ['refresh'],
   data () {
     return {
-      isDisplayStatusModal: false,
-      isOneParentRequired: false
+      isDisplayStatusModal: false
     }
   },
   computed: {
@@ -129,11 +128,14 @@ export default {
       return this.data.populations.students[0].parents.some(parent => parent.hasSigned)
     },
     parents () {
-      if (this.isOneParentRequired && this.oneParentSigned) {
+      if (!this.isAllParentsRequired && this.oneParentSigned) {
         return this.data.populations.students[0].parents.filter(parent => parent.hasSigned)
       } else {
         return this.data.populations.students[0].parents
       }
+    },
+    isAllParentsRequired () {
+      return this.data.populations.students[0].parents.every(parent => parent.isMandatory)
     }
   },
   methods: {
