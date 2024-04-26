@@ -2183,9 +2183,11 @@
       "entryReadStatusButton": "View signatures",
       "followupButton": "Follow up",
       "signingParentTitle": "{parentFullName}'s Signature",
+      "authorizationParentTitle": "Authorization from {parentFullName}",
       "yourSigningTitle": "Your {signingType}",
-      "oneSignatureRequiredTitle": "Legal guardian signature required",
-      "oneAuthorizationRequiredTitle": "Legal guardian authorization required"
+      "oneSignatureRequiredTitle": "Signature of a legal guardian required",
+      "oneAuthorizationRequiredTitle": "Authorization from a legal guardian required",
+      "waitingOtherParent": "Waiting for {parentFullName}"
     }
   }
 }

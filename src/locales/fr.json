@@ -2183,9 +2183,11 @@
       "entryReadStatusButton": "Voir les signatures",
       "followupButton": "Relancer",
       "signingParentTitle": "Signature de {parentFullName}",
+      "authorizationParentTitle": "autorisation de {parentFullName}",
       "yourSigningTitle": "Votre {signingType}",
       "oneSignatureRequiredTitle": "signature d’un responsable légal",
-      "oneAuthorizationRequiredTitle": "Autorisation d’un responsable légal"
+      "oneAuthorizationRequiredTitle": "Autorisation d’un responsable légal",
+      "waitingOtherParent": "En attente de {parentFullName}"
     }
   }
 }

@@ -2183,9 +2183,11 @@
       "entryReadStatusButton": "Unterschriften anzeigen",
       "followupButton": "Nachverfolgen",
       "signingParentTitle": "Unterschrift von {parentFullName}",
-      "yourSigningTitle": "Ihre {signingType}",
+      "authorizationParentTitle": "Autorisierung von {parentFullName}",
+      "yourSigningTitle": "Ihr {signingType}",
       "oneSignatureRequiredTitle": "Unterschrift eines gesetzlichen Vertreters erforderlich",
-      "oneAuthorizationRequiredTitle": "Genehmigung eines gesetzlichen Vertreters erforderlich"
+      "oneAuthorizationRequiredTitle": "Autorisierung eines gesetzlichen Vertreters erforderlich",
+      "waitingOtherParent": "Warten auf {parentFullName}"
     }
   }
 }

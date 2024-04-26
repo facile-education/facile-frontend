@@ -2183,9 +2183,11 @@
       "entryReadStatusButton": "Visualizza firme",
       "followupButton": "Segui",
       "signingParentTitle": "Firma di {parentFullName}",
-      "yourSigningTitle": "La tua {signingType}",
-      "oneSignatureRequiredTitle": "Firma di un legale rappresentante richiesta",
-      "oneAuthorizationRequiredTitle": "Autorizzazione di un legale rappresentante richiesta"
+      "authorizationParentTitle": "Autorizzazione da {parentFullName}",
+      "yourSigningTitle": "Il tuo {signingType}",
+      "oneSignatureRequiredTitle": "Firma di un tutore legale richiesta",
+      "oneAuthorizationRequiredTitle": "Autorizzazione di un tutore legale richiesta",
+      "waitingOtherParent": "In attesa di {parentFullName}"
     }
   }
 }

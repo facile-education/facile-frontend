@@ -11,7 +11,7 @@
         v-if="mq.phone || mq.tablet"
         class="label"
       >
-        {{ $tc('activeUsersShort', nbUsers) }}
+        {{ $tc('Statistics.StatsActivesUsers.activeUsersShort', nbUsers) }}
       </span>
       <span
         v-else

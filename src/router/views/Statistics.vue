@@ -69,7 +69,7 @@
               :start-time="selectedStartDate"
               :end-time="selectedEndDate"
               :selected-school="selectedSchool"
-              service="documents"
+              :service="$t('Statistics.StatsDoughnut.documents')"
             />
 
             <StatsDoughnut
@@ -77,7 +77,7 @@
               :start-time="selectedStartDate"
               :end-time="selectedEndDate"
               :selected-school="selectedSchool"
-              service="homeworks"
+              :service="$t('Statistics.StatsDoughnut.homeworks')"
             />
 
             <StatsDoughnut
@@ -85,7 +85,7 @@
               :start-time="selectedStartDate"
               :end-time="selectedEndDate"
               :selected-school="selectedSchool"
-              service="schoolLife"
+              :service="$t('Statistics.StatsDoughnut.schoolLife')"
             />
           </div>
 
