@@ -29,29 +29,36 @@
       </div>
 
       <div v-else>
-        <ThreadList />
+        <ThreadList
+          v-touch:drag="onDrag"
+          v-touch:release="onDragLeave"
+          v-touch:press="onDragStart"
+        />
         <Transition name="slide-details">
           <ThreadDetails
             v-if="isMobileDetailsPanelDisplayed"
             class="thread-display"
           />
         </Transition>
-        <Transition name="slide-menu">
+        <Transition
+          name="slide-menu"
+        >
           <MessagingMenu
-            v-show="isMenuPanelDisplayed"
             data-test="messaging-menu"
             class="menu-panel"
-            :is-displayed="isMenuPanelDisplayed"
+            :style="`transform: translateX(${menuPosition});`"
           />
         </Transition>
 
-        <CreateButton
+        <WeprodeButton
           v-if="!isMobileDetailsPanelDisplayed"
           class="create-button"
           data-test="createMessageButton"
           :title="$t('Messaging.new')"
           @click="createNewMessage"
-        />
+        >
+          <CustomIcon icon-name="icon-plus" />
+        </WeprodeButton>
       </div>
 
       <teleport to="body">
@@ -66,14 +73,14 @@
 </template>
 
 <script>
-
-import CreateButton from '@components/Base/CreateButton.vue'
+import CustomIcon from '@components/Base/CustomIcon.vue'
 import MessagingMenu from '@components/Messaging/MessagingMenu.vue'
 import ThreadDetails from '@components/Messaging/ThreadDetails'
 import ThreadList from '@components/Messaging/ThreadList'
 import { defineAsyncComponent } from 'vue'
 
 import configurationService from '@/api/messaging/configuration.service'
+import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
 import messagingUtils from '@/utils/messaging.utils'
 
 import ServicesWrapper from '../../components/ServicesWrapper/ServicesWrapper.vue'
@@ -84,10 +91,11 @@ const PreferencesModal = defineAsyncComponent(() => import('@components/Preferen
 export default {
   name: 'Messaging',
   components: {
-    CreateButton,
+    WeprodeButton,
     MessagingMenu,
     ThreadList,
     ThreadDetails,
+    CustomIcon,
     PreferencesModal,
     // ParametersModal,
     CreateMessageModal,
@@ -95,6 +103,12 @@ export default {
   },
   inject: ['mq'],
   emits: ['update:layout'],
+  data: function () {
+    return {
+      menuPosition: 0,
+      isDragAuthorized: false
+    }
+  },
   computed: {
     isMobileDetailsPanelDisplayed () {
       return this.$store.state.messaging.isMobileDetailsPanelDisplayed &&
@@ -115,6 +129,15 @@ export default {
     },
     isDeleteMessages () {
       return this.$store.getters['currentActions/isInProgress']('deleteMessages')
+    }
+  },
+  watch: {
+    isMenuPanelDisplayed (value) {
+      if (value) {
+        this.menuPosition = 100 + '%'
+      } else {
+        this.menuPosition = 0
+      }
     }
   },
   beforeCreate () {
@@ -170,6 +193,28 @@ export default {
           this.$store.dispatch('messaging/setSignature', data.configuration.signature.content)
         }
       })
+    },
+    onDragStart (event) {
+      if (event.touches[0].clientX < 20) {
+        this.isDragAuthorized = true
+        console.log(this.isDragAuthorized)
+      }
+    },
+    onDrag (event) {
+      if (this.isDragAuthorized) {
+        this.menuPosition = event.touches[0].clientX + 'px'
+      }
+    },
+    onDragLeave (event) {
+      if (this.isDragAuthorized) {
+        if (event.changedTouches[0].clientX > 200) {
+          this.menuPosition = 100 + '%'
+          this.$store.dispatch('messaging/toggleSideMenuPanel')
+        } else {
+          this.menuPosition = 0
+        }
+        this.isDragAuthorized = false
+      }
     }
   }
 }
@@ -188,11 +233,11 @@ export default {
 
   .create-button {
     position: absolute;
-    bottom: 33px;
-    right: 17px;
-    height: 50px;
-    width: 50px;
-    font-size: 3em;
+    bottom: 14px;
+    right: 14px;
+    @extend %create-button;
+    border-radius: 100%;
+    border: 3px solid $neutral-10;
   }
 
   .menu-panel {
@@ -261,8 +306,8 @@ export default {
 
     .menu-panel {
       position: absolute;
+      left: -100%;
       top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
     }
