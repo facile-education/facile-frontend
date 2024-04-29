@@ -1,8 +1,8 @@
 <template>
   <div
-    v-touch:drag="onDrag"
-    v-touch:release="onDragOptionsLeave"
-    v-touch:press="onDragOptionsStart"
+    v-touch:drag="mq.phone && onDrag"
+    v-touch:release="mq.phone && onDragOptionsLeave"
+    v-touch:press="mq.phone && onDragOptionsStart"
     data-test="thread-list-item"
     :draggable="true"
     @dragstart="onDragStart"
