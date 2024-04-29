@@ -282,7 +282,6 @@ export default {
       // Add 'markAsRead' or 'markAsUnread' menus
       let isOneMessageRead = false
       let isOneMessageUnread = false
-      console.log(this.$store.state.messaging.selectedThreads.length)
       for (const thread of this.$store.state.messaging.selectedThreads) {
         for (const message of thread.messages) {
           if (message.isNew) {
@@ -406,6 +405,7 @@ export default {
     .scroll {
       padding: 0;
       height: 100%;  /* 100% - (banner-height + hr-height) */
+      overscroll-behavior: none;
     }
 
     .thread-list-header {

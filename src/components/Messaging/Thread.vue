@@ -8,123 +8,117 @@
     @dragstart="onDragStart"
     @dragend="onDragEnd"
   >
-    <div style="position: relative;">
+    <div>
       <!-- Thread with 1 single message AND thread multi-message collapsed -->
-      <div
-        class="read-drag-option theme-background-color left"
-        :style="`width: ${messagePosition}px`"
-      >
-        <CustomIcon
-          v-if="messagePosition > 20"
-          icon-name="icon-trash"
-          :style="messagePosition > 100 ? 'font-size: 20px': 'font-size: 10px'"
-        />
-      </div>
-      <div
-        class="main"
-        :style="`transform: translate(${messagePosition}px)`"
-        :class="{'theme-background-color': isThreadSelected,
-                 'theme-light-background-color': isSubMessageSelected,
-                 'expanded': isThreadExpanded,
-                 'selection-mode': isMultiSelectionActive,
-                 'phone': mq.phone || mq.tablet}"
-        @click.exact="handleClick()"
-        @dblclick="editDraft()"
-        @click.ctrl.exact="ctrlSelectThread()"
-        @click.meta.exact="ctrlSelectThread()"
-        @click.shift="shiftSelectThread()"
-      >
+      <div style="position: relative;">
         <div
-          v-if="isMultiSelectionActive"
-          class="selected-icon"
+          v-if="!isThreadExpanded"
+          class="read-drag-option theme-background-color"
+          :style="panDirection === 'left' && 'background: red'"
+          :class="panDirection === 'left' ? 'left' : 'right'"
         >
-          <div class="oval">
-            <div
-              v-if="isThreadSelected"
-              class="marked"
-            />
-          </div>
+          <CustomIcon
+            :icon-name="panDirection === 'left' ? 'icon-trash' : 'icon-filter'"
+            :style="panDirection === 'left' ? messagePosition > 100 ? 'font-size: 20px': 'font-size: 10px' : messagePosition < -100 ? 'font-size: 20px': 'font-size: 10px'"
+          />
         </div>
-
         <div
-          class="icons"
-          :class="{'shrink': isMultiSelectionActive}"
+          class="main"
+          :style="`transform: translate(${messagePosition}px)`"
+          :class="{'theme-background-color': isThreadSelected,
+                   'theme-light-background-color': isSubMessageSelected,
+                   'expanded': isThreadExpanded,
+                   'selection-mode': isMultiSelectionActive,
+                   'inactive': !isThreadSelected,
+                   'phone': mq.phone || mq.tablet}"
+          @click.exact="handleClick()"
+          @dblclick="editDraft()"
+          @click.ctrl.exact="ctrlSelectThread()"
+          @click.meta.exact="ctrlSelectThread()"
+          @click.shift="shiftSelectThread()"
         >
           <div
-            v-if="isUnread"
-            class="unread theme-background-color icon"
-            :class="{'selected' :isThreadSelected}"
-            data-test="unread-icon"
-          />
-          <img
-            v-if="hasAttachFiles"
-            class="icon attached-file-icon"
-            :src="require('@assets/icons/paperclip.svg')"
-            alt="paperclip"
-            :title="$t('Messaging.hasAttachedFiles')"
+            v-if="isMultiSelectionActive"
+            class="selected-icon"
           >
-          <img
-            v-if="isAnswered"
-            class="icon answered-icon"
-            :src="require('@assets/icons/answer.svg')"
-            alt="is answered"
-            :title="$t('Messaging.answered')"
-          >
-          <img
-            v-if="isForwarded"
-            class="icon forwarded-icon"
-            :src="require('@assets/icons/share.svg')"
-            alt="is forwarded"
-            :title="$t('Messaging.forwarded')"
-          >
-        </div>
-        <div class="body">
-          <!-- Line 1 : sender + date -->
-          <div class="line1">
-            <div class="sender">
-              {{ displayedName }}
-            </div>
-            <div
-              class="sendDate"
-              data-test="sent-date"
-            >
-              {{ formatSentDate(mainMessage) }}
-            </div>
-          </div>
-
-          <!-- Line 2 : subject + thread toggle -->
-          <div class="line2">
-            <p :title="mainMessage.subject">
-              {{ mainMessage.subject }}
-            </p>
-            <button
-              v-if="thread.messages.length > 1"
-              class="thread-toggle"
-              @click.stop="toggleThreadExtension"
-            >
-              <span>{{ thread.messages.length }}</span>
-              <CustomIcon
-                :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
-                :icon-name="'icon-chevron-right-m'"
+            <div class="oval">
+              <div
+                v-if="isThreadSelected"
+                class="marked"
               />
-            </button>
+            </div>
           </div>
 
-          <!-- Line 3 : content -->
-          <div class="line3">
-            <p>{{ mainMessage.previewContent }}</p>
+          <div
+            class="icons"
+            :class="{'shrink': isMultiSelectionActive}"
+          >
+            <div
+              v-if="isUnread"
+              class="unread theme-background-color icon"
+              :class="{'selected' :isThreadSelected}"
+              data-test="unread-icon"
+            />
+            <img
+              v-if="hasAttachFiles"
+              class="icon attached-file-icon"
+              :src="require('@assets/icons/paperclip.svg')"
+              alt="paperclip"
+              :title="$t('Messaging.hasAttachedFiles')"
+            >
+            <img
+              v-if="isAnswered"
+              class="icon answered-icon"
+              :src="require('@assets/icons/answer.svg')"
+              alt="is answered"
+              :title="$t('Messaging.answered')"
+            >
+            <img
+              v-if="isForwarded"
+              class="icon forwarded-icon"
+              :src="require('@assets/icons/share.svg')"
+              alt="is forwarded"
+              :title="$t('Messaging.forwarded')"
+            >
+          </div>
+          <div class="body">
+            <!-- Line 1 : sender + date -->
+            <div class="line1">
+              <div class="sender">
+                {{ displayedName }}
+              </div>
+              <div
+                class="sendDate"
+                data-test="sent-date"
+              >
+                {{ formatSentDate(mainMessage) }}
+              </div>
+            </div>
+
+            <!-- Line 2 : subject + thread toggle -->
+            <div class="line2">
+              <p :title="mainMessage.subject">
+                {{ mainMessage.subject }}
+              </p>
+              <button
+                v-if="thread.messages.length > 1"
+                class="thread-toggle"
+                @click.stop="toggleThreadExtension"
+              >
+                <span>{{ thread.messages.length }}</span>
+                <CustomIcon
+                  :class="isThreadExpanded ? 'collapse-thread': 'extend-thread'"
+                  :icon-name="'icon-chevron-right-m'"
+                />
+              </button>
+            </div>
+
+            <!-- Line 3 : content -->
+            <div class="line3">
+              <p>{{ mainMessage.previewContent }}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="read-drag-option theme-background-color right"
-        :style="`width: ${-messagePosition}px`"
-      >
-        <CustomIcon
-          v-if="messagePosition < 0 && isDragAuthorized"
-          icon-name="icon-trash"
-          :style="messagePosition > -100 ? 'font-size: 10px': 'font-size: 20px'"
-        />
       </div>
 
       <!-- Expanded thread : contains all thread's messages -->
@@ -189,7 +183,9 @@ export default {
       startX: 0,
       startY: 0,
       isDeletable: false,
-      isDraggable: true
+      isEditable: false,
+      isDraggable: true,
+      panDirection: undefined
     }
   },
   computed: {
@@ -419,38 +415,30 @@ export default {
     },
     onDrag (event) {
       if (this.isDragAuthorized && !this.isMultiSelectionActive) {
-        const newX = event.touches[0].clientX
-        const deltaY = Math.abs(event.touches[0].clientY - this.startY)
-        const deltaX = newX - this.startX
-
-        if (this.isDraggable) {
-          if (deltaX > 0 && this.isDraggable) {
-            if (deltaX < 200) {
-              this.messagePosition = deltaX
-              this.isDeletable = Math.abs(deltaX) > 100
-            }
-          } else {
-            if (Math.abs(deltaX) < 200 && this.isDraggable) {
-              this.messagePosition = deltaX
-              this.isDeletable = Math.abs(deltaX) > 100
-            }
-          }
-        } else {
-          if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            this.isDraggable = true
+        const deltaY = event.touches[0].clientY - this.startY
+        const deltaX = event.touches[0].clientX - this.startX
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          if (deltaX < 200) {
+            this.messagePosition = event.touches[0].clientX - this.startX
             if (deltaX > 0) {
-              if (deltaX < 200) {
-                this.messagePosition = deltaX
-                this.isDeletable = Math.abs(deltaX) > 100
+              this.panDirection = 'left'
+              if (event.touches[0].clientX - this.startX > 100) {
+                this.isDeletable = true
+                this.isEditable = false
+              } else {
+                this.isDeletable = false
+                this.isEditable = false
               }
             } else {
-              if (Math.abs(deltaX) < 200 && this.isDraggable) {
-                this.messagePosition = deltaX
-                this.isDeletable = Math.abs(deltaX) > 100
+              this.panDirection = 'right'
+              if (event.touches[0].clientX - this.startX < -100) {
+                this.isDeletable = false
+                this.isEditable = true
+              } else {
+                this.isDeletable = false
+                this.isEditable = false
               }
             }
-          } else {
-            this.isDraggable = false
           }
         }
       }
@@ -461,6 +449,11 @@ export default {
         if (this.isDeletable) {
           this.$store.dispatch('messaging/setSelectedThreads', [this.thread])
           messagingUtils.deleteSelectedThreads()
+        }
+        if (this.isEditable) {
+          this.$store.dispatch('messaging/setSelectedThreads', [this.thread])
+          messagingUtils.markMessagesAsReadUnread([this.thread.mainMessageId], true)
+          this.$store.dispatch('messaging/setSelectedThreads', [])
         }
         this.messagePosition = 0
         this.startX = 0
@@ -477,15 +470,15 @@ export default {
 
 .read-drag-option{
   position: absolute;
-  display: flex;
-  align-items: center;
   height: 100%;
-  transition-property: all;
-  transition-duration: .3s;
+  width: 100%;
   z-index: -1;
   &.left{
     i{
-      margin-left: 20px;
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
       transform-origin: center;
       transition: all .2s ease;
     }
@@ -493,9 +486,11 @@ export default {
   &.right{
     top: 0;
     right: 0;
-    justify-content: flex-end;
     i{
-      margin-right: 20px;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
       transform-origin: center;
       transition: all .2s ease;
     }
@@ -516,6 +511,9 @@ export default {
   transition-duration: .3s;
   &.phone {
     --icons-width: 25px;
+  }
+  &.inactive {
+    background-color: white;
   }
   &.selection-mode {
     .body {
