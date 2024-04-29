@@ -93,8 +93,8 @@ import constants, { MESSAGING } from '@/constants/appConstants'
 import contextMenus from '@/utils/contextMenus'
 import messagingUtils from '@/utils/messaging.utils'
 
-let mouseY = 0
 let startMouseY = 0
+let startMouseX = 0
 let oldScrollTop = 0
 let refrechTimeout
 
@@ -109,10 +109,19 @@ export default {
     WeprodeSpinner
   },
   inject: ['mq'],
+  props: {
+    isDragging: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       isContextMenuDisplayed: false,
-      isWaiting: false
+      isWaiting: false,
+      mouseY: 0,
+      isThreadDragging: false,
+      isScrollable: true
     }
   },
   computed: {
@@ -194,34 +203,45 @@ export default {
       }
     },
     pointerDown (e) {
-      if (this.$refs.scroll.scrollTop <= 50) {
-        startMouseY = mouseY = e.touches[0].clientY
-        window.addEventListener('touchmove', this.pointerMove)
+      this.isScrollable = true
+      if (!this.isDragging) {
+        if (this.$refs.scroll.scrollTop <= 50) {
+          startMouseY = this.mouseY = e.touches[0].clientY
+          startMouseX = this.mouseY = e.touches[0].clientX
+          window.addEventListener('touchmove', this.pointerMove)
+        }
       }
     },
     pointerUp () {
-      if (!this.isWaiting) {
-        this.$refs.scroll.style.marginTop = '0'
-        this.$refs.PTRIcon.$refs.iconOption.style.transform = 'translate(-50%, -50%) rotate(0deg)'
-        this.$refs.PTRIcon.$refs.iconOption.style.opacity = 0
+      if (!this.isDragging) {
+        if (!this.isWaiting) {
+          this.$refs.scroll.style.marginTop = '0'
+          this.$refs.PTRIcon.$refs.iconOption.style.transform = 'translate(-50%, -50%) rotate(0deg)'
+          this.$refs.PTRIcon.$refs.iconOption.style.opacity = 0
+        }
+        window.removeEventListener('touchmove', this.pointerMove)
       }
-      window.removeEventListener('touchmove', this.pointerMove)
     },
     pointerMove (e) {
-      const newY = e.touches[0].clientY
-      if (newY > mouseY && this.$refs.scroll.scrollTop === 0) {
-        const d = newY - startMouseY
-        if (d < 200) {
-          this.$refs.scroll.style.marginTop = d / 4 + 'px'
-          this.$refs.PTRIcon.$refs.iconOption.style.transform = 'translate(-50%, -50%) rotate(' + d + 'deg)'
-          this.$refs.PTRIcon.$refs.iconOption.style.opacity = d / 200
+      if (!this.isDragging) {
+        const newY = e.touches[0].clientY
+        const deltaY = newY - startMouseY
+
+        if (deltaY > 0 && Math.abs(deltaY) > Math.abs(e.touches[0].clientX - startMouseX) && this.$refs.scroll.scrollTop === 0) {
+          if (deltaY < 200 && this.isScrollable) {
+            this.$refs.scroll.style.marginTop = deltaY / 4 + 'px'
+            this.$refs.PTRIcon.$refs.iconOption.style.transform = 'translate(-50%, -50%) rotate(' + deltaY + 'deg)'
+            this.$refs.PTRIcon.$refs.iconOption.style.opacity = deltaY / 200
+            this.waitBeforeRefresh()
+          } else {
+            this.isScrollable = false
+          }
         } else {
-          this.waitBeforeRefresh()
+          this.isScrollable = false
         }
-      } else {
-        window.removeEventListener('mousemove', this.pointerMove)
       }
     },
+
     waitBeforeRefresh () {
       clearTimeout(refrechTimeout)
       // Make a new timeout set to go off in 800ms

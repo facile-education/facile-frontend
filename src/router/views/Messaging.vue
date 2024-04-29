@@ -33,6 +33,7 @@
           v-touch:drag="onDrag"
           v-touch:release="onDragLeave"
           v-touch:press="onDragStart"
+          :is-dragging="isDragAuthorized"
         />
         <Transition name="slide-details">
           <ThreadDetails

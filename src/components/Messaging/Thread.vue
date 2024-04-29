@@ -1,14 +1,28 @@
 <template>
   <div
+    v-touch:drag="onDrag"
+    v-touch:release="onDragOptionsLeave"
+    v-touch:press="onDragOptionsStart"
     data-test="thread-list-item"
     :draggable="true"
     @dragstart="onDragStart"
     @dragend="onDragEnd"
   >
-    <div>
+    <div style="position: relative;">
       <!-- Thread with 1 single message AND thread multi-message collapsed -->
       <div
+        class="read-drag-option theme-background-color left"
+        :style="`width: ${messagePosition}px`"
+      >
+        <CustomIcon
+          v-if="messagePosition > 20"
+          icon-name="icon-trash"
+          :style="messagePosition > 100 ? 'font-size: 20px': 'font-size: 10px'"
+        />
+      </div>
+      <div
         class="main"
+        :style="`transform: translate(${messagePosition}px)`"
         :class="{'theme-background-color': isThreadSelected,
                  'theme-light-background-color': isSubMessageSelected,
                  'expanded': isThreadExpanded,
@@ -102,6 +116,16 @@
           </div>
         </div>
       </div>
+      <div
+        class="read-drag-option theme-background-color right"
+        :style="`width: ${-messagePosition}px`"
+      >
+        <CustomIcon
+          v-if="messagePosition < 0 && isDragAuthorized"
+          icon-name="icon-trash"
+          :style="messagePosition > -100 ? 'font-size: 10px': 'font-size: 20px'"
+        />
+      </div>
 
       <!-- Expanded thread : contains all thread's messages -->
       <Transition name="slide-fade">
@@ -159,7 +183,13 @@ export default {
   emits: ['openContextMenu'],
   data: function () {
     return {
-      isThreadExpanded: false
+      isThreadExpanded: false,
+      isDragAuthorized: false,
+      messagePosition: 0,
+      startX: 0,
+      startY: 0,
+      isDeletable: false,
+      isDraggable: true
     }
   },
   computed: {
@@ -378,13 +408,99 @@ export default {
       }
 
       this.$emit('openContextMenu', e, message.threadId)
+    },
+    onDragOptionsStart (event) {
+      if (event.touches[0].clientX > 30 && !this.isThreadExpanded) {
+        this.isDraggable = false
+        this.isDragAuthorized = true
+        this.startX = event.touches[0].clientX
+        this.startY = event.touches[0].clientY
+      }
+    },
+    onDrag (event) {
+      if (this.isDragAuthorized && !this.isMultiSelectionActive) {
+        const newX = event.touches[0].clientX
+        const deltaY = Math.abs(event.touches[0].clientY - this.startY)
+        const deltaX = newX - this.startX
+
+        if (this.isDraggable) {
+          if (deltaX > 0 && this.isDraggable) {
+            if (deltaX < 200) {
+              this.messagePosition = deltaX
+              this.isDeletable = Math.abs(deltaX) > 100
+            }
+          } else {
+            if (Math.abs(deltaX) < 200 && this.isDraggable) {
+              this.messagePosition = deltaX
+              this.isDeletable = Math.abs(deltaX) > 100
+            }
+          }
+        } else {
+          if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            this.isDraggable = true
+            if (deltaX > 0) {
+              if (deltaX < 200) {
+                this.messagePosition = deltaX
+                this.isDeletable = Math.abs(deltaX) > 100
+              }
+            } else {
+              if (Math.abs(deltaX) < 200 && this.isDraggable) {
+                this.messagePosition = deltaX
+                this.isDeletable = Math.abs(deltaX) > 100
+              }
+            }
+          } else {
+            this.isDraggable = false
+          }
+        }
+      }
+    },
+
+    onDragOptionsLeave () {
+      if (this.isDragAuthorized) {
+        if (this.isDeletable) {
+          this.$store.dispatch('messaging/setSelectedThreads', [this.thread])
+          messagingUtils.deleteSelectedThreads()
+        }
+        this.messagePosition = 0
+        this.startX = 0
+        this.isDragAuthorized = false
+      }
     }
+
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '@design';
+
+.read-drag-option{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  transition-property: all;
+  transition-duration: .3s;
+  z-index: -1;
+  &.left{
+    i{
+      margin-left: 20px;
+      transform-origin: center;
+      transition: all .2s ease;
+    }
+  }
+  &.right{
+    top: 0;
+    right: 0;
+    justify-content: flex-end;
+    i{
+      margin-right: 20px;
+      transform-origin: center;
+      transition: all .2s ease;
+    }
+  }
+}
 
 .sender, .line2 p {
   font-size: 0.9rem;
@@ -396,7 +512,7 @@ export default {
   display: flex;
   width: 100%;
   cursor: pointer;
-  transition-property: border-bottom-right-radius, border-bottom-left-radius;
+  transition-property: border-bottom-right-radius, border-bottom-left-radius, transform;
   transition-duration: .3s;
   &.phone {
     --icons-width: 25px;
