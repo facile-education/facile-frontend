@@ -68,7 +68,7 @@ import HHCCalendar from '@components/NotUsualSlotManager/HHCCalendar.vue'
 import dayjs from 'dayjs'
 import { defineAsyncComponent } from 'vue'
 
-import schoolLifeService from '@/api/schoolLife-portlet.service'
+import offScheduleService from '@/api/offSchedule.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import SelectedSchool from '@/components/NotUsualSlotManager/SelectedSchool'
@@ -138,7 +138,7 @@ export default {
   },
   methods: {
     getPendingFirings () {
-      schoolLifeService.getPendingFirings().then((data) => {
+      offScheduleService.getPendingFirings().then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/setPendingFirings', data.pendingRenvois)
         }

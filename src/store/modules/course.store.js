@@ -70,7 +70,7 @@ export const actions = {
       scheduleService.getUserSessions(targetUserId, state.startDate, state.endDate).then(
         (data) => {
           if (data.success) {
-            commit('setSessionList', [...data.sessions, ...data.schoollifeSessions])
+            commit('setSessionList', [...data.sessions, ...data.offScheduleSessions])
           }
           commit('endLoading')
         },
@@ -84,7 +84,7 @@ export const actions = {
       scheduleService.getGroupSessions(state.selectedGroup.groupId, state.startDate, state.endDate).then(
         (data) => {
           if (data.success) {
-            commit('setSessionList', [...data.sessions, ...data.schoollifeSessions])
+            commit('setSessionList', [...data.sessions, ...data.offScheduleSessions])
           }
           commit('endLoading')
         },

@@ -87,8 +87,8 @@ export const actions = {
       commit('setLoading', false)
       if (data.success) {
         commit('setError', false)
-        formatNonUsualSlots(data.schoollifeSessions)
-        const sessions = [...data.sessions, ...data.schoollifeSessions]
+        formatNonUsualSlots(data.offScheduleSessions)
+        const sessions = [...data.sessions, ...data.offScheduleSessions]
         manageSessionsOptions(sessions)
         commit('setSessionList', sessions)
       } else {

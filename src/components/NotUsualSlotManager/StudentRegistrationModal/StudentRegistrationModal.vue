@@ -160,7 +160,7 @@ import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
-import schoolLifeService from '@/api/schoolLife-portlet.service'
+import offScheduleService from '@/api/offSchedule.service'
 import userManagementService from '@/api/userManagement.service'
 import WeprodeCheckbox from '@/components/Base/Weprode/WeprodeCheckbox.vue'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
@@ -249,7 +249,7 @@ export default {
   },
   created () {
     if (this.isFired) {
-      schoolLifeService.getCandidateSessions(this.student, this.event.sessionId).then((data) => {
+      offScheduleService.getCandidateSessions(this.student, this.event.sessionId).then((data) => {
         if (data.success) {
           this.studentsDaySessions = data.candidateSessions
           this.studentsDaySessions.forEach((session) => { this.formatSession(session) })
@@ -312,7 +312,7 @@ export default {
 
       if (this.student) {
         this.isLoading = true
-        schoolLifeService.registerStudent(this.student, this.event.sessionId, this.comment, this.notifyParents, subjectName).then((data) => {
+        offScheduleService.registerStudent(this.student, this.event.sessionId, this.comment, this.notifyParents, subjectName).then((data) => {
           this.isLoading = false
           if (data.success) {
             this.$store.dispatch('notUsualSlots/refreshCalendar')
@@ -324,7 +324,7 @@ export default {
         })
       } else if (this.selectedClass.orgId > 0) {
         this.isLoading = true
-        schoolLifeService.registerClass(this.selectedClass.orgId, this.event.sessionId, this.comment, this.notifyParents, subjectName).then((data) => {
+        offScheduleService.registerClass(this.selectedClass.orgId, this.event.sessionId, this.comment, this.notifyParents, subjectName).then((data) => {
           this.isLoading = false
           if (data.success) {
             this.$store.dispatch('notUsualSlots/refreshCalendar')
@@ -339,7 +339,7 @@ export default {
     confirmDeregistration () {
       const allSession = this.slotType.type === notUsualSlotsConstants.studyType
       this.isLoading = true
-      schoolLifeService.unRegisterStudent(this.student, this.event.sessionId, allSession).then((data) => {
+      offScheduleService.unRegisterStudent(this.student, this.event.sessionId, allSession).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
@@ -358,9 +358,9 @@ export default {
       } else {
         sourceTeacherId = this.selectedSession.teachers.length > 1 ? this.dropdownSelectedTeacher.teacherId : this.selectedSession.teachers[0].teacherId
       }
-      const sourceSchoollifeSessionId = (this.selectedSession.sessionId === undefined) ? 0 : this.selectedSession.sessionId
+      const sourceOffScheduleSessionId = (this.selectedSession.sessionId === undefined) ? 0 : this.selectedSession.sessionId
       this.isLoading = true
-      schoolLifeService.registerFiring(this.event.sessionId, this.student, this.selectedSession.sessionId, sourceTeacherId, sourceSchoollifeSessionId, this.registrationDate.format(DATE_EXCHANGE_FORMAT)).then((data) => {
+      offScheduleService.registerFiring(this.event.sessionId, this.student, this.selectedSession.sessionId, sourceTeacherId, sourceOffScheduleSessionId, this.registrationDate.format(DATE_EXCHANGE_FORMAT)).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')
@@ -374,7 +374,7 @@ export default {
     deregisterFiring () {
       this.isLoading = true
       console.log('this.student=', this.student)
-      schoolLifeService.unRegisterFiring(this.event.sessionId, this.student).then((data) => {
+      offScheduleService.unRegisterFiring(this.event.sessionId, this.student).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.$store.dispatch('notUsualSlots/refreshCalendar')

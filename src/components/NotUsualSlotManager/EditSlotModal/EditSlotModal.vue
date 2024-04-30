@@ -114,8 +114,8 @@ import { required } from '@vuelidate/validators'
 import dayjs from 'dayjs'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
+import offScheduleService from '@/api/offSchedule.service'
 import { getSchoolSlotConfiguration } from '@/api/schedule.service'
-import schoolLifeService from '@/api/schoolLife-portlet.service'
 import WeprodeDropdown from '@/components/Base/Weprode/WeprodeDropdown.vue'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeInput from '@/components/Base/Weprode/WeprodeInput.vue'
@@ -299,7 +299,7 @@ export default {
         this.v$.$touch()
       } else {
         if (this.isEventCreation) {
-          schoolLifeService.createSlot(
+          offScheduleService.createSlot(
             this.selectedSchool.schoolId,
             this.newEvent.firstSessionDate.format(DATE_EXCHANGE_FORMAT),
             this.newEvent.lastSessionDate.format(DATE_EXCHANGE_FORMAT),
@@ -319,7 +319,7 @@ export default {
             }
           })
         } else {
-          schoolLifeService.updateSlot(
+          offScheduleService.updateSlot(
             this.newEvent.sessionId,
             this.newEvent.firstSessionDate.format(DATE_EXCHANGE_FORMAT), // convert from calendar format to back-end format
             this.newEvent.lastSessionDate.format(DATE_EXCHANGE_FORMAT),

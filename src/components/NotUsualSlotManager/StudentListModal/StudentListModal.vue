@@ -63,7 +63,7 @@ import StudentListItem from '@components/NotUsualSlotManager/StudentListModal/St
 import dayjs from 'dayjs'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
-import schoolLifeService from '@/api/schoolLife-portlet.service'
+import offScheduleService from '@/api/offSchedule.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
@@ -112,7 +112,7 @@ export default {
   methods: {
     loadStudentList () {
       this.isLoading = true
-      schoolLifeService.getSessionMembers(this.event.sessionId).then((data) => {
+      offScheduleService.getSessionMembers(this.event.sessionId).then((data) => {
         this.isLoading = false
         if (data.success) {
           this.studentList = data.members
@@ -125,7 +125,7 @@ export default {
     callRoll () {
       this.isRollLoading = true
       const jsonStudentPresence = JSON.stringify(this.studentList)
-      schoolLifeService.markStudentsPresent(this.event.sessionId, jsonStudentPresence).then((data) => {
+      offScheduleService.markStudentsPresent(this.event.sessionId, jsonStudentPresence).then((data) => {
         this.isRollLoading = false
         if (data.success) {
           this.studentList = data.members

@@ -1,6 +1,6 @@
+import offScheduleService from '@/api/offSchedule.service'
 import { getSchoolClassList } from '@/api/organization.service'
 import scheduleService from '@/api/schedule.service'
-import schoolLifeService from '@/api/schoolLife-portlet.service'
 import notUsualSlotsConstants from '@/constants/notUsualSlots'
 import i18n from '@/i18n'
 import { formatNonUsualSlots } from '@/utils/notUsualSlot.util'
@@ -40,7 +40,7 @@ const formatUsualSlot = (sessions) => {
 
 function getNonUsualSlots (store) {
   store.dispatch('currentActions/addAction', { name: 'getNonUsualSlots' })
-  schoolLifeService.getWeekSessions(store.state.user.selectedSchool.schoolId, store.state.notUsualSlots.currentSlotType.type, store.state.notUsualSlots.displayedDates.startDate.hour(1), store.state.notUsualSlots.displayedDates.endDate.hour(23)).then(
+  offScheduleService.getWeekSessions(store.state.user.selectedSchool.schoolId, store.state.notUsualSlots.currentSlotType.type, store.state.notUsualSlots.displayedDates.startDate.hour(1), store.state.notUsualSlots.displayedDates.endDate.hour(23)).then(
     (data) => {
       store.dispatch('currentActions/removeAction', { name: 'getNonUsualSlots' })
       if (data.success) {
@@ -68,8 +68,8 @@ function getSessions (store) {
       (data) => {
         store.dispatch('currentActions/removeAction', { name: 'getSessions' })
         if (data.success) {
-          formatNonUsualSlots(data.schoollifeSessions)
-          const sessions = [...data.sessions, ...data.schoollifeSessions]
+          formatNonUsualSlots(data.offScheduleSessions)
+          const sessions = [...data.sessions, ...data.offScheduleSessions]
           formatUsualSlot(sessions)
           data.sessions.forEach(slot => { slot.isUserSlot = true })
           store.commit('notUsualSlots/setUserSlots', sessions)

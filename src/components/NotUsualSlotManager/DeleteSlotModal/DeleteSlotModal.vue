@@ -55,7 +55,7 @@ import WeprodeButton from '@components/Base/Weprode/WeprodeButton.vue'
 import dayjs from 'dayjs'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
-import schoolLifeService from '@/api/schoolLife-portlet.service'
+import offScheduleService from '@/api/offSchedule.service'
 import WeprodeSpinner from '@/components/Base/Weprode/WeprodeSpinner.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
 export default {
@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     getLastSessionDate () {
-      schoolLifeService.getSessionLimitSlotDate(this.initEvent.sessionId).then((data) => {
+      offScheduleService.getSessionLimitSlotDate(this.initEvent.sessionId).then((data) => {
         if (data.success) {
           this.deleteEndDate = dayjs(data.lastSessionDate, DATE_EXCHANGE_FORMAT)
         }
@@ -132,7 +132,7 @@ export default {
       })
     },
     deleteSlot () {
-      schoolLifeService.deleteSlot(
+      offScheduleService.deleteSlot(
         this.initEvent.sessionId,
         this.deleteStartDate.hour(4).format(DATE_EXCHANGE_FORMAT), // Set hour early in the morning
         this.deleteEndDate.format(DATE_EXCHANGE_FORMAT)

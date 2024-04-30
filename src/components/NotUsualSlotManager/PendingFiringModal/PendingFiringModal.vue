@@ -59,7 +59,7 @@ import dayjs from 'dayjs'
 import { nextTick } from 'vue'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
-import schoolLifeService from '@/api/schoolLife-portlet.service'
+import offScheduleService from '@/api/offSchedule.service'
 import WeprodeErrorMessage from '@/components/Base/Weprode/WeprodeErrorMessage.vue'
 import WeprodeTextArea from '@/components/Base/Weprode/WeprodeTextArea.vue'
 import WeprodeWindow from '@/components/Base/Weprode/WeprodeWindow.vue'
@@ -86,7 +86,7 @@ export default {
       return this.pendingFiring.student + ' - ' + this.pendingFiring.className
     },
     formattedSlot () {
-      if (this.pendingFiring.sourceSchoollifeSessionId !== 0) {
+      if (this.pendingFiring.sourceOffScheduleSessionId !== 0) {
         return this.pendingFiring.subject + ' ' +
           this.$t('Moment.of') + ' ' + dayjs(this.pendingFiring.sessionDate, DATE_EXCHANGE_FORMAT).format('DD MMMM YYYY ' + this.$t('Moment.at') + ' HH:mm')
       } else {
@@ -111,7 +111,7 @@ export default {
       }
     },
     setFiringReason () {
-      schoolLifeService.setFiringReason(this.pendingFiring.sessionId, this.pendingFiring.userId, this.justification).then((data) => {
+      offScheduleService.setFiringReason(this.pendingFiring.sessionId, this.pendingFiring.userId, this.justification).then((data) => {
         if (data.success) {
           this.$store.dispatch('notUsualSlots/removePendingFirings', this.pendingFiring)
           // Decrement notification count
