@@ -14,12 +14,12 @@
         <div
           v-if="!isThreadExpanded"
           class="read-drag-option theme-background-color"
-          :style="panDirection === 'left' && 'background: red'"
-          :class="panDirection === 'left' ? 'left' : 'right'"
+          :style="panDirection === 'right' && 'background: red'"
+          :class="panDirection === 'right' ? 'right' : 'left'"
         >
           <CustomIcon
-            :icon-name="panDirection === 'left' ? 'icon-trash' : 'icon-filter'"
-            :style="panDirection === 'left' ? messagePosition > 100 ? 'font-size: 20px': 'font-size: 10px' : messagePosition < -100 ? 'font-size: 20px': 'font-size: 10px'"
+            :icon-name="panDirection === 'right' ? 'icon-trash' : 'icon-filter'"
+            :class="panDirection === 'left' ? messagePosition > 100 && 'grow' : messagePosition < -250 && 'grow'"
           />
         </div>
         <div
@@ -183,8 +183,8 @@ export default {
       startX: 0,
       startY: 0,
       isDeletable: false,
-      isEditable: false,
-      isDraggable: true,
+      canMarkAsRead: false,
+      isDraggable: undefined,
       panDirection: undefined
     }
   },
@@ -406,38 +406,45 @@ export default {
       this.$emit('openContextMenu', e, message.threadId)
     },
     onDragOptionsStart (event) {
-      if (event.touches[0].clientX > 30 && !this.isThreadExpanded) {
-        this.isDraggable = false
-        this.isDragAuthorized = true
-        this.startX = event.touches[0].clientX
-        this.startY = event.touches[0].clientY
+      if (event.touches) {
+        if (event.touches[0].clientX > 30 && !this.isThreadExpanded) {
+          this.isDraggable = undefined
+          this.isDragAuthorized = true
+          this.startX = event.touches[0].clientX
+          this.startY = event.touches[0].clientY
+        }
       }
     },
     onDrag (event) {
       if (this.isDragAuthorized && !this.isMultiSelectionActive) {
         const deltaY = event.touches[0].clientY - this.startY
         const deltaX = event.touches[0].clientX - this.startX
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-          if (deltaX < 200) {
-            this.messagePosition = event.touches[0].clientX - this.startX
-            if (deltaX > 0) {
-              this.panDirection = 'left'
-              if (event.touches[0].clientX - this.startX > 100) {
-                this.isDeletable = true
-                this.isEditable = false
-              } else {
-                this.isDeletable = false
-                this.isEditable = false
-              }
+        if (!this.isDraggable) {
+          if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            this.isDraggable = 1
+          } else {
+            this.isDraggable = 2
+          }
+        }
+        if (this.isDraggable === 1) {
+          this.messagePosition = event.touches[0].clientX - this.startX
+          if (deltaX > 0) {
+            this.panDirection = 'left'
+            if (event.touches[0].clientX - this.startX > 100) {
+              this.isDeletable = false
+              this.canMarkAsRead = true
             } else {
-              this.panDirection = 'right'
-              if (event.touches[0].clientX - this.startX < -100) {
-                this.isDeletable = false
-                this.isEditable = true
-              } else {
-                this.isDeletable = false
-                this.isEditable = false
-              }
+              this.isDeletable = false
+              this.canMarkAsRead = false
+            }
+          } else {
+            this.panDirection = 'right'
+            if (event.touches[0].clientX - this.startX < -250) {
+              this.isDeletable = true
+              this.canMarkAsRead = false
+            } else {
+              this.isDeletable = false
+              this.canMarkAsRead = false
             }
           }
         }
@@ -450,14 +457,15 @@ export default {
           this.$store.dispatch('messaging/setSelectedThreads', [this.thread])
           messagingUtils.deleteSelectedThreads()
         }
-        if (this.isEditable) {
+        if (this.canMarkAsRead) {
           this.$store.dispatch('messaging/setSelectedThreads', [this.thread])
-          messagingUtils.markMessagesAsReadUnread([this.thread.mainMessageId], true)
+          messagingUtils.markMessagesAsReadUnread([this.thread.mainMessageId], this.thread.messages[0].isNew)
           this.$store.dispatch('messaging/setSelectedThreads', [])
         }
         this.messagePosition = 0
         this.startX = 0
         this.isDragAuthorized = false
+        this.isDraggable = 2
       }
     }
 
@@ -473,26 +481,23 @@ export default {
   height: 100%;
   width: 100%;
   z-index: -1;
+  i{
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    transition: all .2s ease;
+    &.grow{
+      transform: translateY(-50%) scale(1.5);
+    }
+  }
   &.left{
     i{
-      position: absolute;
       left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      transform-origin: center;
-      transition: all .2s ease;
     }
   }
   &.right{
-    top: 0;
-    right: 0;
     i{
-      position: absolute;
       right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      transform-origin: center;
-      transition: all .2s ease;
     }
   }
 }

@@ -196,8 +196,10 @@ export default {
       })
     },
     onDragStart (event) {
-      if (event.touches[0].clientX < 20) {
-        this.isDragAuthorized = true
+      if (event.touches) {
+        if (event.touches[0]?.clientX < 20) {
+          this.isDragAuthorized = true
+        }
       }
     },
     onDrag (event) {
