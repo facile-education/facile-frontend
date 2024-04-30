@@ -151,7 +151,7 @@ export default {
       }
     },
     confirmClosure () {
-      if (JSON.stringify(this.call.students) !== this.initialForm) {
+      if (this.call && JSON.stringify(this.call.students) !== this.initialForm) {
         this.$store.dispatch('warningModal/addWarning', {
           text: this.$t('Call.confirmClosure'),
           lastAction: { fct: this.onClose }
@@ -187,8 +187,8 @@ export default {
         if (data.success) {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Call.callSaved'), type: 'success' })
 
-          this.getCallDetails()
-          // this.onClose()
+          // this.getCallDetails()
+          this.onClose()
         } else {
           this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
           console.error('Error while doing call')

@@ -7,12 +7,14 @@
       v-if="displayRecap"
       class="recap"
       :class="{'phone': mq.phone}"
+      data-test="call-summary"
     >
       <h3>{{ $t(mq.phone ? 'Call.shortSummary' : 'Call.summary') }}</h3>
 
       <ul class="recapItems">
         <li
           v-if="nbAbsence > 0"
+          data-test="absence-count"
           :title="$tc('Call.nbAbsence', nbAbsence)"
         >
           {{ nbAbsence }}
@@ -25,6 +27,7 @@
         </li>
         <li
           v-if="nbLate > 0"
+          data-test="late-count"
           :title="$tc('Call.nbLate', nbLate)"
         >
           {{ nbLate }}
@@ -34,6 +37,7 @@
         </li>
         <li
           v-if="nbFired > 0"
+          data-test="fired-count"
           :title="$tc('Call.nbFired', nbFired)"
         >
           {{ nbFired }}
@@ -43,6 +47,7 @@
         </li>
         <li
           v-if="nbMedical > 0"
+          data-test="medical-count"
           :title="$tc('Call.nbMedical', nbMedical)"
         >
           {{ nbMedical }}

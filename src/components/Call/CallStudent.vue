@@ -1,6 +1,7 @@
 <template>
   <component
     :is="mq.phone ? 'li' : 'tr'"
+    data-test="call-student"
     class="student-row"
   >
     <component :is="mq.phone ? 'v-fragment' : 'td'">
@@ -20,6 +21,8 @@
           :disabled="!isInEdition"
           class="presence-button"
           :class="{'green': !student.isAbsent && (isDone || isInEdition), 'red': student.isAbsent}"
+          :aria-label="$t('Call.presence')"
+          :title="$t('Call.presence')"
           @click="toggleAbsence"
         >
           <CustomIcon :icon-name="student.isAbsent ? 'icon-no-user' : 'icon-user-16'" />
@@ -39,6 +42,8 @@
         <button
           :disabled="!isInEdition && !initialLateValue"
           :class="{'orange': student.isLate }"
+          :aria-label="$t('Call.late')"
+          :title="$t('Call.late')"
           @click.stop="isLateFormDisplayed = !isLateFormDisplayed"
         >
           <CustomIcon icon-name="icon-clock" />
@@ -61,6 +66,8 @@
         <button
           :class="{'orange': student.isFired }"
           :disabled="!isInEdition"
+          :aria-label="$t('Call.firing')"
+          :title="$t('Call.firing')"
           @click="toggleFiring"
         >
           <CustomIcon icon-name="icon-out" />
@@ -75,6 +82,8 @@
         <button
           :class="{'orange': student.isMedical }"
           :disabled="!isInEdition"
+          :aria-label="$t('Call.infirmary')"
+          :title="$t('Call.infirmary')"
           @click="toggleMedical"
         >
           <CustomIcon icon-name="icon-soin" />
@@ -91,6 +100,8 @@
           class="comment-button"
           :class="{'phone': mq.phone}"
           :disabled="!canOpenComment"
+          :aria-label="$t('Call.comment')"
+          :title="$t('Call.comment')"
           @click.stop="isCommentFormDisplayed = !isCommentFormDisplayed"
         >
           <CustomIcon

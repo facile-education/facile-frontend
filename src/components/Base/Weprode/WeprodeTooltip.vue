@@ -2,6 +2,7 @@
   <div
     class="base-tooltip"
     :class="{'phone': mq.phone}"
+    data-test="base-tooltip"
     :style="tooltipStyle"
   >
     <header v-if="header">

@@ -1,6 +1,7 @@
 <template>
   <section
     class="current-session"
+    data-test="current-session"
     :style="`background-color: ${session.color}24; border-color: ${session.color};`"
   >
     <div>
