@@ -37,7 +37,6 @@
         />
         <Transition name="slide-details">
           <ThreadDetails
-            v-if="isMobileDetailsPanelDisplayed"
             class="thread-display"
           />
         </Transition>
@@ -45,6 +44,9 @@
           name="slide-menu"
         >
           <MessagingMenu
+            v-touch:drag="onDragMenu"
+            v-touch:release="onDragLeaveMenu"
+            v-touch:press="onDragStartMenu"
             data-test="messaging-menu"
             class="menu-panel"
             :style="`transform: translateX(${menuPosition});`"
@@ -79,6 +81,7 @@ import MessagingMenu from '@components/Messaging/MessagingMenu.vue'
 import ThreadDetails from '@components/Messaging/ThreadDetails'
 import ThreadList from '@components/Messaging/ThreadList'
 import { defineAsyncComponent } from 'vue'
+import { useCookies } from 'vue3-cookies'
 
 import configurationService from '@/api/messaging/configuration.service'
 import WeprodeButton from '@/components/Base/Weprode/WeprodeButton.vue'
@@ -107,7 +110,8 @@ export default {
   data: function () {
     return {
       menuPosition: 0,
-      isDragAuthorized: false
+      isDragAuthorized: false,
+      startXDragMenu: 0
     }
   },
   computed: {
@@ -130,6 +134,10 @@ export default {
     },
     isDeleteMessages () {
       return this.$store.getters['currentActions/isInProgress']('deleteMessages')
+    },
+    isMobileApp () {
+      const { cookies } = useCookies()
+      return cookies.get('isMobileApp') === 'true'
     }
   },
   watch: {
@@ -217,6 +225,24 @@ export default {
         }
         this.isDragAuthorized = false
       }
+    },
+    onDragStartMenu (event) {
+      if (event.touches) {
+        this.startXDragMenu = event.touches[0].clientX
+      }
+    },
+    onDragMenu (event) {
+      if (this.startXDragMenu > event.touches[0].clientX) {
+        this.menuPosition = event.touches[0].clientX + 'px'
+      }
+    },
+    onDragLeaveMenu (event) {
+      if (event.changedTouches[0].clientX < 250) {
+        this.menuPosition = 0
+        this.$store.dispatch('messaging/toggleSideMenuPanel')
+      } else {
+        this.menuPosition = 100 + '%'
+      }
     }
   }
 }
@@ -300,10 +326,11 @@ export default {
     .thread-display {
       position: absolute;
       top: 0;
-      left: 0;
+      left: 100%;
       width: 100%;
       height: 100%;
       background-color: white;
+      transition: all .3s;
     }
 
     .menu-panel {

@@ -19,7 +19,7 @@
         >
           <CustomIcon
             :icon-name="panDirection === 'right' ? 'icon-trash' : 'icon-filter'"
-            :class="panDirection === 'left' ? messagePosition > 100 && 'grow' : messagePosition < -250 && 'grow'"
+            :class="panDirection === 'left' ? messagePosition > 100 && 'grow' : messagePosition < -200 && 'grow'"
           />
         </div>
         <div
@@ -151,6 +151,7 @@ import CustomIcon from '@components/Base/CustomIcon.vue'
 import ThreadMessage from '@components/Messaging/ThreadMessage'
 import dayjs from 'dayjs'
 import _ from 'lodash'
+import { useCookies } from 'vue3-cookies'
 
 import { DATE_EXCHANGE_FORMAT } from '@/api/constants'
 import messageService from '@/api/messaging/message.service'
@@ -283,6 +284,10 @@ export default {
     },
     isDisplayMessageFromRouting () {
       return this.$store.state.messaging.displayMessageFromRouting
+    },
+    isMobileApp () {
+      const { cookies } = useCookies()
+      return cookies.get('isMobileApp') === 'true'
     }
   },
   mounted () {
@@ -406,13 +411,11 @@ export default {
       this.$emit('openContextMenu', e, message.threadId)
     },
     onDragOptionsStart (event) {
-      if (event.touches) {
-        if (event.touches[0].clientX > 30 && !this.isThreadExpanded) {
-          this.isDraggable = undefined
-          this.isDragAuthorized = true
-          this.startX = event.touches[0].clientX
-          this.startY = event.touches[0].clientY
-        }
+      if (event.touches[0].clientX > 30 && !this.isThreadExpanded) {
+        this.isDraggable = undefined
+        this.isDragAuthorized = true
+        this.startX = event.touches[0].clientX
+        this.startY = event.touches[0].clientY
       }
     },
     onDrag (event) {
@@ -439,7 +442,7 @@ export default {
             }
           } else {
             this.panDirection = 'right'
-            if (event.touches[0].clientX - this.startX < -250) {
+            if (event.touches[0].clientX - this.startX < -200) {
               this.isDeletable = true
               this.canMarkAsRead = false
             } else {
