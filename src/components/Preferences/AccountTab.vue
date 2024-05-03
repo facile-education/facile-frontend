@@ -79,15 +79,6 @@
         @update:model-value="onColorChange"
       />
     </section>
-    <!-- <section class="activity-report">
-      <h4 v-t="'Preferences.AccountTab.activityReport'" />
-      <WeprodeDropdown
-        :model-value="selectedFrequency"
-        :list="frequency"
-        display-field="label"
-        @update:model-value="onFrequencySelect"
-      />
-    </section> -->
   </div>
 
   <teleport to="body">
@@ -199,22 +190,6 @@ export default {
           this.$router.push({ name: currentRouteName })
         })
       })
-    },
-    onFrequencySelect (newfrequency) {
-      if (this.selectedFrequency) {
-        userService.updateReportFrequency(newfrequency.value).then((data) => {
-          if (data.success) {
-            this.$store.dispatch('user/updatePersonalDetails', {
-              ...this.details,
-              reportFrequency: newfrequency.value
-            })
-            this.selectedFrequency = this.frequency[newfrequency.value]
-            this.$emit('save')
-          } else {
-            this.$store.dispatch('popups/pushPopup', { message: this.$t('Popup.error'), type: 'error' })
-          }
-        })
-      }
     },
     toggleImagePicker () {
       this.show = !this.show
