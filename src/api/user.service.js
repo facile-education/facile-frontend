@@ -11,7 +11,6 @@ export default {
   updateInterfacePreferences,
   updateThemeColor,
   updateLocale,
-  updateReportFrequency,
   acceptTermsOfUse,
   getParentInfos
 }

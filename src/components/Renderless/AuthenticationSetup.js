@@ -214,7 +214,6 @@ export default () => {
     fetch(constants.BASE_API_URL + '/c/common/authentication-check').then(response => {
       response.json().then(data => {
         if (response.status === 200 && data.isAuthenticated === true) {
-
           if (isMobileAppLoading.value) {
             // Manage mobile token
             let service = DASHBOARD
