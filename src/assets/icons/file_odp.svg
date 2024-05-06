@@ -1,0 +1,36 @@
+
+<svg width="30px" height="31px" viewBox="0 0 30 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <polygon id="path--mwfpxfja7-1" points="30 0 30 30 0 30 0 0"></polygon>
+        <polygon id="path--mwfpxfja7-3" points="30 0 30 34 0 34 0 0"></polygon>
+        <polygon id="path--mwfpxfja7-5" points="26.6666666 0 26.6666666 15 0 15 0 0"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="odp" transform="translate(-0.000000, 0.007805)">
+            <mask id="mask--mwfpxfja7-2" fill="white">
+                <use xlink:href="#path--mwfpxfja7-1"></use>
+            </mask>
+            <g id="Path"></g>
+            <g id="Group" mask="url(#mask--mwfpxfja7-2)">
+                <g id="Clipped">
+                    <mask id="mask--mwfpxfja7-4" fill="white">
+                        <use xlink:href="#path--mwfpxfja7-3"></use>
+                    </mask>
+                    <g id="Path"></g>
+                    <polygon id="Path" fill="#EB8D59" fill-rule="nonzero" mask="url(#mask--mwfpxfja7-4)" points="0 0 30 0 30 34 0 34"></polygon>
+                </g>
+                <g id="Clipped" transform="translate(2.000000, 9.000000)">
+                    <mask id="mask--mwfpxfja7-6" fill="white">
+                        <use xlink:href="#path--mwfpxfja7-5"></use>
+                    </mask>
+                    <g id="Path"></g>
+                    <g id="Group" mask="url(#mask--mwfpxfja7-6)" fill="#FFFFFF" fill-rule="nonzero">
+                        <g transform="translate(-0.333750, -0.666250)" id="Path">
+                            <polygon points="0 0 26.66625 0 26.66625 15 0 15"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

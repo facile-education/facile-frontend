@@ -1,0 +1,25 @@
+<svg width="135px" height="130px" viewBox="0 0 135 130" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <defs>
+       <filter x="-0.7%" y="-1.1%" width="101.3%" height="102.3%" filterUnits="objectBoundingBox" id="filter-ggxpbtuwfg-1">
+           <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+           <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+           <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+           <feMerge>
+               <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+               <feMergeNode in="SourceGraphic"></feMergeNode>
+           </feMerge>
+       </filter>
+   </defs>
+   <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+       <g id="version-finale-messagerie-copy" transform="translate(-673.000000, -178.000000)" fill-rule="nonzero" stroke="#000000">
+           <g id="Colonne-droite" filter="url(#filter-ggxpbtuwfg-1)" transform="translate(-68.000000, 48.000000)">
+               <g id="image-Etat-vide" transform="translate(751.079319, 140.000000)">
+                   <path d="M112.706155,11.7113759 L51.8099423,0.0626081493 C50.1894549,-0.263231513 48.6542562,0.714287465 48.3983897,2.26202584 L40.8929741,38.0229283 C40.5518188,39.5706666 41.5752846,41.0369451 43.1957721,41.2813248 L104.177274,52.9300926 C105.797762,53.2559322 107.332961,52.2784133 107.588827,50.730675 L115.094242,14.9697725 C115.350109,13.503494 114.326643,12.0372156 112.706155,11.7113759 Z" id="mail" fill="#D9E2EA"></path>
+                   <path d="M51.8327511,0.00942489835 L52.077527,0.0190798831 L52.077527,0.0190798831 L52.228836,0.0455808154 L113.076758,11.5987495 C113.996294,11.7822734 114.723441,12.3305749 115.133333,13.0364989 L77.9198426,32.919708 L50.6260047,0.450397336 C50.9661148,0.219052054 51.3895173,0.0670251548 51.8327511,0.00942489835 L51.9269335,0 L51.8327511,0.00942489835 Z" id="mail" fill="#FFFFFF"></path>
+                   <path d="M96.998117,84.8389272 L85.8715438,41.1013362 C85.1071227,38.1854968 82.0494383,36.3526834 79.0766896,37.1024707 L4.24835872,55.4306041 C1.27561005,56.1803914 -0.592974833,59.1795404 0.171446255,62.0953798 L11.2130842,105.832971 C11.9775053,108.74881 15.0351896,110.581623 18.0079383,109.831836 L92.8362692,91.5037029 C95.8939536,90.7539156 97.7625383,87.7547666 96.998117,84.8389272 Z" id="mail" fill="#D9E2EA"></path>
+                   <path d="M4.46488306,55.252755 L79.4412535,37.1008537 C81.1082411,36.6852708 82.8018838,37.0707989 84.1044917,37.9971112 L51.6133919,81.8978102 L0.816548463,58.1008965 C1.50108673,56.7952492 2.72042446,55.7538665 4.25385305,55.3096038 L4.46488306,55.252755 L79.4412535,37.1008537 L4.46488306,55.252755 Z" id="mail" fill="#FFFFFF"></path>
+               </g>
+           </g>
+       </g>
+   </g>
+</svg>

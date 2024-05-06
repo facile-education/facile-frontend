@@ -1,0 +1,82 @@
+$font-xs: 0.6875rem;
+$font-s: 0.75rem;
+$font-m: 0.875rem;
+$font-l: 1rem;
+
+%font-regular-xs {
+  font-size: $font-xs;
+  font-weight: 400;
+  line-height: normal;
+}
+
+%font-regular-s {
+  font-size: $font-s;
+  font-weight: 400;
+  line-height: 1rem;
+}
+
+%font-medium-s {
+  font-size: $font-s;
+  font-weight: 500;
+  line-height: 1rem;
+}
+
+%font-bold-s {
+  font-size: $font-s;
+  font-weight: 700;
+  line-height: 1rem;
+}
+
+%font-bold-l {
+  font-size: $font-l;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+%font-regular-m {
+  font-size: $font-m;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+
+%font-medium-m {
+  font-size: $font-m;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+%font-regular-l {
+  font-size: $font-l;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+%font-bold-l {
+  font-size: $font-l;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+%font-heading-xs {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.75rem;
+}
+
+%font-heading-s {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 2rem;
+}
+
+%font-heading-m {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 2.5rem;
+}
+
+%font-heading-l {
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 3rem;
+}

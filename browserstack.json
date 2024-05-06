@@ -1,0 +1,47 @@
+{
+    "auth": {
+        "username": "sitech_9N6DsQ",
+        "access_key": "TO_ADD"
+    },
+    "browsers": [
+        {
+            "browser": "chrome",
+            "os": "Windows 10",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        },
+        {
+            "browser": "firefox",
+            "os": "Windows 10",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        }
+    ],
+    "run_settings": {
+        "cypress_config_file": "cypress.config.cjs",
+        "spec_timeout": 10,
+	"project_name": "Facile",
+        "build_name": "facile-build",
+        "exclude": [],
+        "parallels": "1",
+        "npm_dependencies": {},
+        "package_config_options": {},
+        "headless": true,
+	"specs": ["tests/e2e/integration/Messaging/deleteMessage.spec.js"],
+	"npm_dependencies": {
+        	"cypress": "^13.3.0",
+		"browserstack-cypress-cli": "^1.28.1"
+   	}
+    },
+    "connection_settings": {
+        "local": true,
+        "local_identifier": "MyTest",
+        "local_mode": null,
+        "local_config_file": null
+    },
+    "disable_usage_reporting": false
+}

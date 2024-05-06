@@ -1,0 +1,140 @@
+@import "fonts";
+@import "colors";
+
+$border: 1px solid $color-border;
+$border-radius: 6px;
+$content-boarder-radius: 8px;
+$search-bar-border-radius: 10px;
+
+h1 {
+  margin: 0;
+  line-height: 2em;
+}
+
+%side-menu-transition {
+  -webkit-transition: width .3s;
+  transition: width .3s;
+}
+
+// Mixins
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: -o-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+// Extends
+%object-shadow {
+  box-shadow: 0 3px 6px rgba(0,0,0,.19),0 3px 6px rgba(0,0,0,.24);
+}
+
+%object-shadow-2 {
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.10);
+}
+
+// Create button
+%create-button {
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 100%;
+  display: flex !important;
+  align-items: center !important;
+
+  span {
+    margin-left: 8px;
+  }
+
+  .icon-plus {
+    font-weight: bold;
+  }
+
+  &.phone {
+    padding: 9px 10px;
+  }
+}
+
+%toggle-password-type {
+  height: 1rem;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  img {
+    height: 1rem;
+  }
+}
+
+%no-text-highlight {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+%count-pellet {
+  height: 1rem;
+  min-width: 1rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  white-space: nowrap;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.tab-item-notification-pellet {
+  @extend %count-pellet;
+}
+
+// v-calendar workaround for button style (issue #1327 https://github.com/nathanreyes/v-calendar/issues/1327)
+.vc-container button {
+  background-color: transparent !important;
+  font-family: inherit;
+}
+.vc-nav-container button {
+  font-family: inherit;
+}
+
+.vc-nav-container button:not(.is-active) {
+  background-color: transparent !important;
+}
+
+%content-placeholder {
+  margin: 0;
+  width: 100%;
+  padding: 1rem 0;
+  background-color: $neutral-20;
+  text-align: center;
+  @extend %font-regular-l;
+}
+
+.toggle-user-card{
+  text-decoration: none;
+  &:hover{
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.user-card-link-new-light {
+  color: $color-new-light-text;
+}
+

@@ -1,0 +1,150 @@
+@font-face {
+  font-family: 'CustomIcons';
+  src: url('@/assets/fonts/Custom-icons-font.ttf') format('truetype');
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: "CustomIcons", sans-serif !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-check:before {
+  content: "\e920";
+}
+.icon-chevron-right-m:before {
+  content: "\e918";
+}
+.icon-chevron-right-s:before {
+  content: "\e919";
+}
+.icon-double-chevron-left:before {
+  content: "\e912";
+}
+.icon-plus:before {
+  content: "\e91a";
+}
+.icon-cross-L:before {
+  content: "\e915";
+}
+.icon-cross-M:before {
+  content: "\e91b";
+}
+.icon-cross-s:before {
+  content: "\e91c";
+}
+.icon-logout:before {
+  content: "\e91d";
+}
+.icon-alert:before {
+  content: "\e921";
+}
+.icon-warning:before {
+  content: "\e928";
+}
+.icon-info:before {
+  content: "\e929";
+}
+.icon-download:before {
+  content: "\e917";
+}
+.icon-upload:before {
+  content: "\e909";
+}
+.icon-stats:before {
+  content: "\e916";
+}
+.icon-edit:before {
+  content: "\e922";
+}
+.icon-trash:before {
+  content: "\e91e";
+}
+.icon-burger:before {
+  content: "\e914";
+}
+.icon-filter:before {
+  content: "\e901";
+}
+.icon-filter-plain:before {
+  content: "\e913";
+}
+.icon-folder:before {
+  content: "\e900";
+}
+.icon-calendar:before {
+  content: "\e903";
+}
+.icon-langues:before {
+  content: "\e904";
+}
+.icon-clock:before {
+  content: "\e905";
+}
+.icon-home:before {
+  content: "\e906";
+}
+.icon-school-life:before {
+  content: "\e902";
+}
+.icon-logbook:before {
+  content: "\e92b";
+}
+.icon-resource:before {
+  content: "\e907";
+}
+.icon-admin:before {
+  content: "\e908";
+}
+.icon-Aa:before {
+  content: "\e90a";
+}
+.icon-record:before {
+  content: "\e90b";
+}
+.icon-link:before {
+  content: "\e90c";
+}
+.icon-h5p:before {
+  content: "\e90d";
+}
+.icon-play:before {
+  content: "\e90e";
+}
+.icon-homework:before {
+  content: "\e90f";
+}
+.icon-seance:before {
+  content: "\e910";
+}
+.icon-users:before {
+  content: "\e911";
+}
+.icon-user-24:before {
+  content: "\e91f";
+}
+.icon-user-16:before {
+  content: "\e925";
+}
+.icon-add-user:before {
+  content: "\e926";
+}
+.icon-no-user:before {
+  content: "\e923";
+}
+.icon-call:before {
+  content: "\e92a";
+}
+.icon-soin:before {
+  content: "\e927";
+}
+.icon-out:before {
+  content: "\e924";
+}

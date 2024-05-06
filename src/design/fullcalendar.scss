@@ -1,0 +1,100 @@
+$default-background-filter-color: #FFFFFFDD;
+$selected-background-filter-color: #FFFFFF99;
+
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 0.7em;
+}
+
+.fc-col-header-cell-cushion {
+  color: inherit;
+}
+
+.fc-event {
+  &:focus::before, &:focus::after {
+    background: none;
+    position: static;
+  }
+}
+
+.fc-timegrid-event .fc-event-main {
+  padding: 0;
+}
+
+.fc-timegrid-slots tr {
+  border-top: 1px dotted silver;
+  border-bottom: 1px dotted silver;
+}
+
+// Touch action to allow swipe
+.fc-timegrid-slots td,
+.fc-timegrid-event {
+  touch-action: pan-y;
+}
+
+.fc .fc-timegrid-slot-label {
+  vertical-align: top;
+}
+
+.fc-timegrid-event-harness {
+  transition: inset .1s;
+
+  &.selected {
+    inset-inline-start: 0% !important;
+    inset-inline-end: 0% !important;
+    z-index: 10 !important;
+
+    .fc-timegrid-event .fc-event-main {
+      background-color: $selected-background-filter-color;
+    }
+  }
+
+  &:hover .fc-timegrid-event .fc-event-main {
+      background-color: $selected-background-filter-color;
+  }
+}
+
+.grayed {
+  filter: grayscale(100%);
+  //filter: opacity(60%);
+  //filter: grayscale(60%) opacity(60%);
+}
+
+.fc-timegrid-event {
+  border: none;
+  border-left: 4px solid;
+  border-radius: 0;
+
+  .fc-event-main {
+    background-color: $default-background-filter-color;
+    position: relative;
+    line-height: 1.1rem;
+  }
+
+  .fc-event-time {
+    display: none;
+  }
+
+  .fc-event-title-container {
+    flex-grow: 0;
+  }
+
+  .fc-event-title {
+    font-weight: bold;
+  }
+
+  .fc-event-teacher {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .fc-event-room {
+    font-style: italic;
+  }
+
+  .fc-event-inscription {
+    position: absolute;
+    right: 5px;
+    bottom: 0;
+  }
+}

@@ -1,0 +1,2193 @@
+{
+  "AttachedFiles": {
+    "view": "View",
+    "download": "Download",
+    "remove": "Remove",
+    "attachedFile": "{n} attachment | {n} attachment | {n} attachments",
+    "title": "Attachments:",
+    "addLocalAttachFileButton": "Add attachment from my workstation",
+    "addToFolder": "Save to my documents",
+    "addToFolderSuccess": "File saved",
+    "AttachedFile": {
+      "addLocalAttachFileButton": "Add attachment from my workstation",
+      "save": "Save",
+      "addToFolderSuccess": "File saved",
+      "download": "Download",
+      "options": "Options",
+      "viewFile": "View {target}",
+      "remove": "Remove"
+    }
+  },
+  "CalendarEventOptions": {
+    "delete": "Delete",
+    "doCall": "Make the call",
+    "registerStudent": "Register student",
+    "saveTeacherSubstitute": "@:CalendarEventOptions.download",
+    "showStudentList": "List of registered",
+    "update": "Update",
+    "viewCall": "View the call"
+  },
+  "Commons": {
+    "back": "Back",
+    "delete": "Delete",
+    "download": "Download",
+    "submit": "Submit",
+    "formDateOrder": "End date must be greater than start date",
+    "formInvalidDate": "Invalid date format",
+    "formInvalidEmail": "Invalid email format",
+    "formRequired": "Required field",
+    "new": "New",
+    "required": "Required field",
+    "size": "Size",
+    "type": "Type",
+    "update": "Update"
+  },
+  "CommunicationManager": {
+    "InternalRightList": {
+      "informations": "This service allows you to define, by user profile, the contact lists that will be automatically created in the users' address book. You can thus manage the communication possibilities for each profile within your establishment or school complex.",
+      "save": "Save",
+      "title": "Internal Communication"
+    },
+    "InternalRoleTab": {
+      "allOthersInSchool": "All community staff of the institution",
+      "allPersonalsInSchool": "All staff of the institution",
+      "allParentsInSchool": "All parents of the institution",
+      "allStudentsInSchool": "All students of the institution",
+      "allTeachersInSchool": "All teachers of the institution",
+      "childrenClassesParents": "Parents of his children's classes",
+      "childrenClassesTeachers": "Teachers of his children's classes",
+      "collectivityLabel": "This profile can communicate with all teachers and staff of the institution",
+      "hisChildren": "His children",
+      "hisParents": "His parents",
+      "parentsOfEachClass": "Parents of classes",
+      "parentsOfHisClass": "Parents of students in his classes",
+      "personalLabel": "This profile can communicate with all users of the institution",
+      "studentsOfHisClass": "Students in his classes",
+      "studentsOfEachClass": "Students of classes",
+      "teacherLabel": "This profile can communicate with students and parents of his classes as well as with all teachers and staff of the institution",
+      "teachersOfEachClass": "Teachers of classes",
+      "teachersOfHisClass": "Teachers of his classes"
+    },
+    "ExternalRightList": {
+      "informations": "You can manage the permission, by user profile, to add email accounts.",
+      "save": "Save",
+      "title": "External Communication"
+    },
+    "ExternalRoleItem": {
+      "no": "no",
+      "yes": "yes"
+    },
+    "serviceTitle": "Communication Administration"
+  },
+  "Documents": {
+    "antivirusException": "A virus has been detected in one of the uploaded files",
+    "documentDeleted": "Item(s) deleted",
+    "errorNoFiles": "Upload not allowed",
+    "extensionException": "Unsupported extension",
+    "failedDelete": "Failed to delete {entityName}",
+    "file": "File",
+    "files": "Files",
+    "fileSizeException": "File exceeds maximum allowed size of {maxUploadSize}",
+    "folder": "Folder",
+    "group": "Group",
+    "permissionException": "You do not have permission to perform this action",
+    "subEntityFailedDelete": "Sub-element {entityName} cannot be deleted",
+    "unKnownSubEntityFailedDelete": "A hidden sub-element prevents complete deletion of the folder",
+    "uploadError": "An error occurred during upload",
+    "deletionWarning": "This document will be permanently lost",
+    "moveInCurrentFolder": "The destination folder is the same as the starting one!",
+    "serviceTitle": "My documents",
+    "rootCollaborativeUploadForbidden": "It is not allowed to add a document here",
+    "missingPastePermissions": "Unauthorized drop here",
+    "documentFields": {
+      "creationDate": "Creation",
+      "downloadCount": "Downloads",
+      "lastModifiedDate": "Last modified",
+      "name": "Name",
+      "size": "Size",
+      "viewCount": "Views",
+      "totalViewCount": "Total views count",
+      "totalDownloadCount": "Total downloads count"
+    },
+    "documentDetails": {
+      "lastVersion": "Current version",
+      "restoreVersion": "Restore to this version",
+      "versions": "Versions",
+      "viewVersion": "View"
+    },
+    "options": {
+      "download": "@:Commons.download",
+      "details": "Details",
+      "delete": "Delete",
+      "documents": "Personal",
+      "duplicate": "Duplicate",
+      "groups": "Collaborative",
+      "import": "Import",
+      "managePermissions": "Permissions",
+      "copyUrl": "Copy URL",
+      "move": "Move",
+      "newAudio": "Voice recording",
+      "newFolder": "@:Documents.folder",
+      "newGeogebra": "Geogebra",
+      "newHTML": "Note",
+      "newMindMap": "Mind map",
+      "newODT": "Text",
+      "newODS": "Spreadsheet",
+      "newODP": "Presentation",
+      "newScratch": "Scratch",
+      "open": "Open",
+      "recent": "Recent",
+      "rename": "Rename",
+      "resetFields": "Reset to default",
+      "toggleDetailsLabel": "Details",
+      "uploadFiles": "Upload a file",
+      "mobileUploadFiles": "Upload",
+      "uploadFolder": "Upload a folder"
+    },
+    "BreadCrumbItem": {
+      "goBack": "Back"
+    },
+    "DocumentPlaceHolder": {
+      "isLoadDocumentsError": "Problem encountered while loading documents",
+      "noDocumentToDisplay": "Drop your files here",
+      "noDocumentToDisplay2": "or use the + button",
+      "noDocumentToDisplayMobile": "Add a document with the + button"
+    },
+    "FilesFields": {
+      "ascending": "Ascending",
+      "descending": "Descending"
+    },
+    "OptionItem": {
+      "new": "NEW"
+    },
+    "UploadProgression": {
+      "cancel": "Cancel",
+      "close": "Close",
+      "collapse": "Collapse",
+      "extend": "Extend",
+      "uploadOn": "{done} upload on {total} | {done} upload on {total} | {done} uploads on {total}",
+      "uploadfinished": "{nb} upload finished | {nb} upload finished | {nb} uploads finished"
+    },
+    "DocumentDetailsModal": {
+      "noData": "There is no information to display",
+      "noDocumentSelected": "No document selected",
+      "selectedDocuments": "{n} documents selected",
+      "tooManyData": "Too many documents selected"
+    },
+    "DocumentDetails": {
+      "close": "Close",
+      "noData": "There is no information to display",
+      "noDocumentSelected": "No document selected",
+      "selectedDocuments": "{n} documents selected"
+    },
+    "DocumentVersion": {
+      "restoredVersion": "Restored version"
+    },
+    "GridDocument": {
+      "details": "Show details",
+      "members": "Members"
+    },
+    "FileDisplayModal": {
+      "collapse": "Collapse",
+      "expand": "Full screen",
+      "close": "Close"
+    },
+    "FileDisplay": {
+      "lockWarning": "This file is being edited by another user. Open for viewing only...",
+      "lockWarningUser": "This file is being edited by {userName}. Open for viewing only...",
+      "quitWithoutSaving": "Any unsaved changes will be lost",
+      "Unsupported": "Unsupported file type",
+      "Forbidden": "You do not have permission to view this file"
+    },
+    "ImageDocument": {
+      "unknown-url": "Document not available"
+    },
+    "WISIWIG": {
+      "documentSaved": "Document saved",
+      "saveError": "Error saving file"
+    },
+    "FileNameModal": {
+      "backError": "An error occurred",
+      "containsNoCotes": "Must not contain special characters",
+      "createHeader": "New",
+      "createSubmit": "Create",
+      "notBeginByDot": "Must not begin with a '.'",
+      "rename": "Rename",
+      "renameHeader": "Rename",
+      "sizeLimit": "Must not exceed {maxSize} characters"
+    },
+    "FolderNameModal": {
+      "backError": "An error occurred",
+      "containsNoCotes": "Must not contain special characters",
+      "createHeader": "New folder",
+      "duplicateFileException": "A folder with the same name already exists",
+      "createSubmit": "Create",
+      "notBeginByDot": "Must not begin with a '.'",
+      "rename": "Rename",
+      "renameHeader": "Rename",
+      "sizeLimit": "Must not exceed {maxSize} characters"
+    },
+    "PermissionsModal": {
+      "header": "Manage permissions",
+      "reset": "Reset",
+      "add": "Add",
+      "view": "View",
+      "update": "Update",
+      "delete": "Delete",
+      "permissions": "Permissions",
+      "recursiveLabel": "Apply these permissions to all items contained within the folder",
+      "name": "Role",
+      "submit": "Submit",
+      "permission-success": "Permissions saved"
+    },
+    "RolePermissions": {
+      "National_1": "Student",
+      "National_2": "Legal guardian",
+      "National_3": "Teacher",
+      "National_4": "Principal",
+      "Group_admin": "Site admin",
+      "Assistanttechnique": "Technical assistant",
+      "Caissiercomptable": "Accounting cashier",
+      "Conseillersocial": "Social counselor",
+      "Conseillerd'orientation": "Guidance counselor",
+      "Doyen": "Dean",
+      "Infirmiere": "Nurse",
+      "Bibliothecaire": "Librarian",
+      "Psychologue": "Psychologist",
+      "Secretaire": "Secretary",
+      "SiteAdministrator": "Site administrator",
+      "SiteOwner": "Site owner"
+    }
+  },
+  "Menu": {
+    "access-admin": "Access",
+    "administration": "Administration",
+    "AgreeTermsOfUse": "Terms of Use",
+    "AllActivities": "All Activities",
+    "AllAnnouncements": "All Announcements",
+    "AllEvents": "All Events",
+    "application-admin": "Applications",
+    "Authentication": "ENTA Home",
+    "AuthenticationRequired": "Authentication Required",
+    "cdt": "Courses & Assignments",
+    "logbook": "Logbook",
+    "communication": "Communication",
+    "contacts": "Contacts",
+    "cortex": "Cortex",
+    "dashboard": "Home",
+    "dashboard-admin": "Dashboard",
+    "disciplines-co": "Co-Teaching",
+    "documents": "Documents",
+    "GroupDocuments": "Collaborative Documents",
+    "groups": "Collaborative Spaces",
+    "grr": "GRR",
+    "h5p": "H5P",
+    "horaires": "Schedules",
+    "horaires-admin": "Schedules",
+    "horaires-hors-cadre": "School Schedules",
+    "maintenance": "Maintenance",
+    "messaging": "Messaging",
+    "NotFound": "404 Not Found",
+    "PasswordChange": "Password Change",
+    "resources": "Resources",
+    "school-life": "School Life",
+    "statistics": "Statistics",
+    "universalis": "Universalis",
+    "universalis-junior": "Universalis Junior",
+    "user-admin": "Users",
+    "Viewer": "Viewer",
+    "route": {
+      "access-admin": "administration-access",
+      "application-admin": "administration-applications",
+      "cdt": "courses-and-assignments",
+      "logbook": "logbook",
+      "contacts": "contacts",
+      "cortex": "cortex",
+      "dashboard": "dashboard",
+      "dashboard-admin": "administration-dashboard",
+      "disciplines-co": "co-teaching",
+      "documents": "documents",
+      "groups": "groups",
+      "grr": "grr",
+      "h5p": "h5p",
+      "horaires": "schedules",
+      "horaires-admin": "administration-schedules",
+      "horaires-hors-cadre": "school-schedules",
+      "maintenance": "maintenance",
+      "messaging": "messaging",
+      "statistics": "statistics",
+      "universalis": "universalis",
+      "universalis-junior": "universalis-junior",
+      "user-admin": "administration-users",
+      "agree-terms-of-use": "agree-terms-of-use",
+      "password-change": "password-change"
+    },
+    "LayoutMenu": {
+      "close": "Close menu",
+      "collapse": "Collapse",
+      "extend": "Extend"
+    },
+    "MenuCategory": {
+      "collapse": "Collapse",
+      "extend": "Expand"
+    },
+    "MenuItemList": {
+      "errorPlaceholder": "An error occurred while loading the menu"
+    }
+  },
+  "Messaging": {
+    "answered": "Answered",
+    "addFolder": "New folder",
+    "addSubFolder": "New sub-folder",
+    "boxes": "Folders",
+    "deleteFolder": "@:ContextMenuOptions.delete",
+    "draft": "Drafts",
+    "forwarded": "Forwarded",
+    "hasAttachedFiles": "Contains attachments",
+    "inbox": "Inbox",
+    "title": "Messaging",
+    "new": "New",
+    "personalFolders": "My folders",
+    "findInFolder": "Found in folder",
+    "hasRead": "Read",
+    "deleteMessage": "Delete",
+    "editDraft": "Edit",
+    "noRecipient": "(No recipient)",
+    "rename": "Rename",
+    "reply": "Reply",
+    "replyAll": "Reply all",
+    "forward": "Forward",
+    "unreadOnly": "Unread",
+    "multiThreads": "{n} selected threads",
+    "markAsRead": "@:ContextMenuOptions.markAsRead",
+    "markAsUnread": "@:ContextMenuOptions.markAsUnread",
+    "multiSelection": "Multiple selection",
+    "OtherRecipient": "and one other | and {n} others",
+    "lessRecipients": "Show less",
+    "search": "Search",
+    "sent": "Sent",
+    "serviceTitle": "Messaging",
+    "showAllRecipients": "Details",
+    "hideAllRecipients": "Hide",
+    "to": "To:",
+    "trash": "Trash",
+    "noObjectWarning": "You are about to send a message without a subject",
+    "confirmFolderDeletionWarning": "Messages in the deleted folder will be moved to Trash",
+    "userDelete": "{user} (deleted user)",
+    "Parameters": {
+      "header": "Messaging settings",
+      "submitButton": "Save",
+      "forward": "Forward",
+      "forwardPlaceHolder": "Enter email addresses",
+      "signature": "Signature",
+      "signaturePlaceHolder": "Signature",
+      "autoReply": "Auto-reply",
+      "autoReplyPlaceHolder": "Out of office message"
+    },
+    "CreateMessageModal": {
+      "header": "New message",
+      "headerForward": "Forward",
+      "headerReply": "Reply",
+      "headerReplyAll": "Reply all",
+      "submitButton": "Send",
+      "recipientsPlaceHolder": "Recipients",
+      "subjectPlaceHolder": "Subject",
+      "draftButton": "Save as draft",
+      "draftSaved": "Draft saved",
+      "successMessage": "Message sent",
+      "required": "Required field",
+      "missingRecipient": "Select at least one recipient",
+      "addRecipients": "Add recipients",
+      "closeWarning": "Do you want to close this window? (You will lose its content)",
+      "previousContentHeader": "On {dateLabel} {senderName} wrote:",
+      "othersLabel": "and {nbOthers} others"
+    },
+    "MenuFolder": {
+      "newFolder": "New folder"
+    },
+    "ThreadDetails": {
+      "noSelectedMessage": "Select a thread or message"
+    },
+    "ThreadListHeader": {
+      "unRead": "0 unread | 1 unread | {count} unread",
+      "messages": "No messages | 1 message | {count} messages",
+      "filterByUnread": "Filtered by unread"
+    },
+    "ThreadListOptions": {
+      "mark": "Mark",
+      "trash": "Delete",
+      "displayMenuPanel": "Show menu",
+      "hideMenuPanel": "Hide menu",
+      "all": "All",
+      "refresh": "Refresh"
+    },
+    "ThreadList": {
+      "noMessage": "No messages",
+      "noNewMessage": "No new messages",
+      "emptyFolder": "This folder is empty",
+      "loadingError": "Error loading resource",
+      "permissionError": "Permission denied",
+      "refresh": "Refresh"
+    }
+  },
+  "ContextMenuOptions": {
+    "delete": "Delete",
+    "markAsRead": "Mark as read",
+    "markAsUnread": "Mark as unread"
+  },
+  "Moment": {
+    "at": "at",
+    "of": "of",
+    "the": "the",
+    "today": "today",
+    "tomorrow": "Tomorrow at",
+    "yesterday": "Yesterday at"
+  },
+  "NotUsualSlots": {
+    "classPlaceholder": "Class",
+    "detention": "Detention",
+    "fired": "Fired",
+    "remainingPlaces": "{n} available place | {n} available place | {n} available places",
+    "replayTest": "Retest",
+    "study": "Study Circle",
+    "tutoring": "Tutoring",
+    "studentNamePlaceHolder": "Student Name",
+    "EditSlotModal": {
+      "deleteSlot": "Delete",
+      "haveToSelectHour": "Please enter a valid time slot (hh:mm)",
+      "header-create": "Create a {slotType} slot",
+      "header-modify": "Modify a {slotType} slot",
+      "longDeleteSlot": "Delete the slot",
+      "roomCapacity": "Room Capacity",
+      "registered": "{n} registered",
+      "roomNamePlaceHolder": "Room",
+      "teacherNamePlaceHolder": "Supervising Teacher"
+    },
+    "PendingFiringModal": {
+      "courseOf": "Course of {courseName}",
+      "information": "A notification message will be sent to parents and the dean with the reason for dismissal.",
+      "information2": "Please contact a student's referring Dean or the administration.",
+      "firedTimestamp": "Recorded: ",
+      "haveToWriteJustification": "Please enter a reason for dismissal",
+      "justificationPlaceholder": "Reason for dismissal",
+      "header": "Motivate Dismissal",
+      "slot": "Dismissal: ",
+      "student": "@:NotUsualSlots.StudentRegistrationModal.student",
+      "sendReason": "Send"
+    },
+    "StudentListModal": {
+      "header": "Student List",
+      "noStudentPresent": "No students are registered for this slot",
+      "present": "Present",
+      "slot": "Slot: ",
+      "unsubscribe": "Unsubscribe",
+      "callRollButton": "Call Roll"
+    },
+    "StudentRegistrationModal": {
+      "arrival": "Arrival Time in Detention Room: ",
+      "class": "Students of: ",
+      "commentPlaceholder": "Reason for detention",
+      "firedBy": "Dismissed by: ",
+      "haveToSelectSlot": "Please select a class",
+      "haveToSelectSubject": "Please select a subject",
+      "haveToSelectValidTime": "Please enter a valid time (hh:mm)",
+      "header": "Registration",
+      "deregistrationHeader": "Deregistration",
+      "notifyParents": "Notify Parents",
+      "noSlotAvailable": "No class can be selected at the moment",
+      "noSubjectsAvailable": "No subject can be selected",
+      "subject": "Subject: ",
+      "selectSlot": "Select a class",
+      "selectSubject": "Select a subject",
+      "slot": "@:NotUsualSlots.StudentListModal.slot",
+      "student": "Student: ",
+      "sourceSlot": "Dismissed from class: ",
+      "register": "Register",
+      "unregister": "Unregister"
+    }
+  },
+  "Popup": {
+    "copied": "Copied",
+    "cut": "Cut",
+    "documentCopied": "Items Copied",
+    "documentCut": "Items Cut",
+    "duplicated": "Item(s) duplicated",
+    "duplicationFailure": "Error while copying {entityName}",
+    "moveFailure": "Error while moving {entityName}",
+    "unauthorizedCut": "You do not have permission to move {entityName}",
+    "error": "An error occurred",
+    "moved": "Item(s) moved",
+    "success": "Success"
+  },
+  "Unauthenticated": "Please log in to access this service",
+  "UnAuthorised": "Your status does not allow you to access this page",
+  "ConflictModal": {
+    "header": "Conflict in Progress",
+    "cancelButton": "Cancel",
+    "renameButton": "Keep Both",
+    "replaceButton": "Replace",
+    "text": "\"{entityName}\" already exists at this location. Do you want to replace the existing one with a new version or keep both items?",
+    "textWithoutReplaceOption": "\"{entityName}\" already exists at this location. Do you want to continue while keeping both documents?"
+  },
+  "VersionNotes": {
+    "updateOf": "Updated on {dateLabel}",
+    "SaveVersionNoteModal": {
+      "contentLabel": "Content:",
+      "create": "Create",
+      "createHeader": "Creating a version note",
+      "error": "Request failed",
+      "required": "Required fields",
+      "titlePlaceholder": "Title",
+      "update": "Edit",
+      "updateHeader": "Editing a version note"
+    },
+    "VersionNoteSelector": {
+      "delete": "Delete",
+      "deleteVersionNoteWarning": "You are about to delete a version note, this action cannot be undone",
+      "emptyPlaceholder": "No version notes available",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "options": "Options",
+      "update": "Edit"
+    },
+    "VersionNotesModal": {
+      "errorPlaceholder": "Oops, an error occurred...",
+      "new": "New",
+      "versionNotesHeader": "What's New in Your ENTA"
+    }
+  },
+  "WarningModal": {
+    "header": "Do you wish to continue?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Continue"
+  },
+  "Accesses": {
+    "AccessCategoryInput": {
+      "newCategory": "New Category"
+    },
+    "AccessCategoryItem": {
+      "delete": "Delete this category",
+      "deleteCategoryWarning": "Do you want to delete the category {categoryName} and its accesses?",
+      "saveSuccess": "Category saved",
+      "deleteSuccess": "Category deleted"
+    },
+    "AccessCreateButton": {
+      "category": "Category",
+      "access": "Access",
+      "new": "New"
+    },
+    "AccessesPlaceholder": {
+      "noAccess": "No access",
+      "createAccess": "Add your first access!"
+    },
+    "AccessItem": {
+      "deleteAccessWarning": "Do you want to delete access {accessName}?",
+      "profiles": "Profiles: ",
+      "saveSuccess": "Access updated"
+    },
+    "AccessRedirectionSelector": {
+      "urlPlaceHolder": "URL",
+      "TYPE_EXTERNAL_URL": "External URL",
+      "TYPE_COLLABORATIVE_FOLDER": "Internal Folder",
+      "TYPE_SHARED_FILE": "Internal File",
+      "urlRequired": "Field required",
+      "urlInvalid": "Invalid URL",
+      "folderRequired": "Please select a folder",
+      "fileRequired": "Please select a file",
+      "selectFolder": "Select a folder",
+      "selectFile": "Select a file"
+    },
+    "CategoriesPlaceholder": {
+      "noAccess": "No access",
+      "createCategory": "Add your first access category!"
+    },
+    "SaveAccessModal": {
+      "creationTitle": "Add an access",
+      "updateTitle": "Edit an access",
+      "namePlaceHolder": "Title",
+      "placeholderCategory": "Choose a category",
+      "rolesPlaceholder": "Target profiles",
+      "creationSubmit": "Create",
+      "updateSubmit": "Edit",
+      "sizeLimit": "Must not exceed {maxSize} characters",
+      "saveSuccess": "Access updated",
+      "selectRoles": "Please select at least one target profile",
+      "selectCategory": "Please select a category",
+      "selectFolder": "Select a collaborative folder",
+      "selectFile": "Select a collaborative file"
+    },
+    "SeeAccessesAs": {
+      "seeAs": "View as"
+    },
+    "AccessModal": {
+      "myAccesses": "My accesses",
+      "AccessesOf": "Accesses of a {roleLabel}",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "emptyPlaceholder": "No access"
+    },
+    "AccessPopover": {
+      "AccessesOf": "Accesses of the {roleLabel}",
+      "close": "Close",
+      "emptyPlaceholder": "No access",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "myAccesses": "My accesses"
+    }
+  },
+  "ApplicationManager": {
+    "AMToolbar": {
+      "allENT": "All ENTA"
+    },
+    "ApplicationDetails": {
+      "broadcastButtonTooltip": "Broadcast",
+      "broadcastLabel": "Broadcasted to the following profiles:",
+      "configurationButtonTooltip": "Manage broadcast rules",
+      "customUrlPlaceholder": "http(s)://...",
+      "deleteButtonTooltip": "Delete",
+      "editButtonTooltip": "Edit",
+      "exportLabel": "Exports required:",
+      "noBroadcastLabel": "The application is not broadcasted.",
+      "addRule": "Please add a broadcast rule first.",
+      "otherExportButton": "Resources",
+      "parentsExportButton": "Parents",
+      "removalConfirmButtonLabel": "Delete",
+      "removalConfirmMessage": "Do you really want to delete this application?",
+      "removalConfirmTitle": "Deletion",
+      "studentsExportButton": "Students",
+      "teachersExportButton": "Teachers",
+      "export": "Export",
+      "exportSuccess": "Export completed",
+      "exportError": "An error occurred during export"
+    },
+    "ApplicationEditionModal": {
+      "addModalTitle": "Add a new application",
+      "categoryPlaceholder": "Category",
+      "customUrlCombobox": "Custom URL",
+      "editModalTitle": "Edit an application",
+      "exportOtherCheckbox": "Resources",
+      "exportParentsCheckbox": "Parents",
+      "exportStudentsCheckbox": "Students",
+      "exportTeachersCheckbox": "Teachers",
+      "exportLabel": "Export one or more user types",
+      "globalUrlCombobox": "Global URL",
+      "globalUrlPlaceholder": "https://...",
+      "keyPlaceholder": "Key",
+      "modalSaveButton": "Save",
+      "namePlaceholder": "Name",
+      "noUrlCombobox": "None",
+      "menuEntryLabel": "Corresponding menu ID",
+      "rolesPlaceholder": "Default profile(s)",
+      "schoolsPlaceholder": "Schools filter",
+      "urlTypeLabel": "Link type"
+    },
+    "BroadcastScopeModal": {
+      "addRuleButton": "Add broadcast rule",
+      "defaultLabel": "The application is not broadcasted",
+      "modalTitle": "Broadcast rules",
+      "updateButton": "Save"
+    },
+    "CategoryList": {
+      "documentsInfo": " - Available directly within the \"My Documents\" service"
+    },
+    "RuleItem": {
+      "allSchool": "Whole establishment",
+      "orgsPlaceholder": "List of classes",
+      "fromLabel": "from",
+      "rolesPlaceholder": "List of profiles"
+    },
+    "RuleLabel": {
+      "allSchoolLabel": "from the entire establishment",
+      "everyRoleLabel": "All profiles",
+      "fromOrgsLabel": "from classes"
+    },
+    "serviceTitle": "Application Management"
+  },
+  "Assistance": {
+    "AssistanceModal": {
+      "applyContextText": "Remember to explain the context of your error, if necessary provide a screenshot and any other information you deem useful for us to reproduce your issue.",
+      "addFilesButtonLabel": "Add a file (optional)",
+      "submitButtonLabel": "Send",
+      "issueDescription": "Issue Description",
+      "suggestionDescription": "Suggestion Description",
+      "assistanceHeaderLabel": "Report an Issue",
+      "suggestionHeaderLabel": "Submit a Suggestion",
+      "nonAdminAssistanceMessage": "Your support request will be forwarded to your institution's administrator.",
+      "nonAdminSuggestionMessage": "Your suggestion will be forwarded to your institution's administrator.",
+      "adminAssistanceMessage": "Your support request will be handled by the Weprode teams, you will receive a response in your messaging.",
+      "adminSuggestionMessage": "Your suggestion will be forwarded to the Weprode teams, you will receive a response in your messaging.",
+      "serviceLabel": "Affected Service:",
+      "serviceConcernLabel": "Concerned Service:",
+      "success": "Request sent"
+    }
+  },
+  "Banner": {
+    "BannerPopoverMenu": {
+      "assistance": "Assistance",
+      "controlPanel": "Control Panel",
+      "informations": "Information",
+      "logout": "Logout",
+      "news": "News",
+      "preferences": "Preferences",
+      "suggestion": "Suggestion"
+    },
+    "BannerSearch": {
+      "searchLabel": "Search"
+    },
+    "BannerServices": {
+      "accesses": "Access",
+      "help": "Help"
+    },
+    "toggleMenu": "Menu"
+  },
+  "Base": {
+    "InformationIcon": {
+      "infoLetter": "i"
+    },
+    "PopulationList": {
+      "populations": "{n} populations"
+    },
+    "AudioRecorderModal": {
+      "namePlaceholder": "Title",
+      "title": "Audio Recording",
+      "save": "Save"
+    },
+    "EmbedContentModal": {
+      "add": "Add",
+      "cancel": "Cancel",
+      "creationTitle": "Add a video",
+      "creationTitleH5p": "Add H5P content",
+      "edit": "Edit",
+      "editionTitle": "Edit a video",
+      "editionTitleH5p": "Edit H5P content",
+      "embedElementCheckFailed": "This is not a valid embed code (e.g., {embedText})",
+      "embedElementCheckFailed-h5p": "This type of content is not a valid embedded content",
+      "getH5pResourceFrom": "Retrieve an activity from {h5pDomain}",
+      "namePlaceholder": "Title",
+      "srcRequired": "Embedded content must have a non-empty \"src\" attribute",
+      "UnauthorizedUrlException": "This domain is not authorized for this type of content",
+      "urlPlaceholder": "Paste the video embed code here",
+      "urlPlaceholder-h5p": "Paste the H5P embed code here"
+    },
+    "LinkModal": {
+      "creationTitle": "Add a link",
+      "editionTitle": "Edit a link",
+      "cancel": "Cancel",
+      "add": "Add",
+      "edit": "Edit",
+      "namePlaceholder": "Title",
+      "urlPlaceholder": "https://www.mylink.com",
+      "UnauthorizedUrlException": "Invalid URL"
+    },
+    "CustomCalendar": {
+      "clickToAddSlot": "Click to add a slot"
+    },
+    "WeprodeTagItem": {
+      "remove": "Remove"
+    },
+    "WeprodeWindow": {
+      "close": "Close",
+      "collapse": "Collapse",
+      "expand": "Full Screen"
+    }
+  },
+  "Call": {
+    "by": "By",
+    "callModalHeader": "Call",
+    "confirmClosure": "Changes are in progress, do you really want to exit without making the call?",
+    "student": "Student",
+    "data": "Data",
+    "done": "Done",
+    "toDo": "TO DO",
+    "notDone": "Not done",
+    "presence": "Presence",
+    "expectedAbsent": "Expected absent",
+    "absentOnPreviousSession": "Absent on previous session",
+    "late": "Late",
+    "firing": "Firing",
+    "infirmary": "Infirmary",
+    "comment": "Comment",
+    "commentPlaceholder": "Comment..",
+    "noCommentPlaceholder": "None",
+    "removeLate": "Remove late",
+    "removeComment": "Remove comment",
+    "lateDuration": "Late duration",
+    "lateInputPlaceholder": "Late minutes",
+    "memo": "Memo",
+    "minute": "min",
+    "nbAbsence": "No absence | One absence | {n} absences",
+    "nbLate": "No late | One late | {n} lates",
+    "nbFired": "No firing | One firing | {n} firings",
+    "nbMedical": "No infirmary | One infirmary | {n} infirmaries",
+    "errorPlaceholder": "Oops, an error occurred...",
+    "callSaved": "Call saved",
+    "callDoneDate": "[On] DD/MM [at] HH:mm",
+    "callDoneDateFull": " [on] DD/MM/YYYY [at] HH:mm",
+    "save": "Save",
+    "schoolLife": "School life",
+    "toJustify": "No school life events to justify | {n} school life event to justify | {n} school life events to justify",
+    "nbStudents": "No student | One student | {n} students",
+    "submit": "Submit",
+    "summary": "Summary",
+    "shortSummary": "Summary"
+  },
+  "ContactPicker": {
+    "ContactPickerModal": {
+      "header": "Contact Selection"
+    },
+    "ContactPickerToolTip": {
+      "header": "Contact Selection"
+    },
+    "addressBook": "Address Book",
+    "advancedSearch": "Directory",
+    "addContacts": "Recipient added | Recipient added | {count} recipients added",
+    "removeContacts": "Recipient removed",
+    "AddressBookItem": {
+      "add": "Add",
+      "remove": "Remove"
+    },
+    "AddressBook": {
+      "errorPlaceholder": "Oops, an error occurred..."
+    },
+    "AddressBookClasses": {
+      "classes": "Classes"
+    },
+    "AddressBookCommunities": {
+      "communities": "Communities"
+    },
+    "AddressBookCourses": {
+      "courses": "Courses"
+    },
+    "AddressBookPersonals": {
+      "personals": "Personnel"
+    },
+    "AddressBookSchool": {
+      "myClass": "My class",
+      "myStudents": "Students in charge",
+      "relatives": "Legal guardians",
+      "myRelatives": "My legal guardians"
+    },
+    "ContactAdvancedSearch": {
+      "queryPlaceholder": "Last name/First name",
+      "emptyRequest": "Please enter at least 2 characters for the search or select an item from one of the drop-down lists",
+      "rolesPlaceHolder": "All profiles",
+      "schoolsPlaceHolder": "All establishments",
+      "search": "Search"
+    },
+    "ContactUserListHeader": {
+      "searchPlaceHolder": "Filter"
+    },
+    "ContactUserListItem": {
+      "add": "Add",
+      "remove": "Remove"
+    },
+    "ContactUserList": {
+      "addressBookEmptyPlaceholder": "No contacts",
+      "advancedSearchEmptyPlaceholder": "No contacts match the search",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "addressBookPlaceholder": "Select a list to display contacts",
+      "advancedSearchPlaceholder": "Perform a search to display contacts"
+    }
+  },
+  "Course": {
+    "ChoosePublicationDateModal": {
+      "choosePublicationDate": "Schedule Publication",
+      "schedule": "Schedule"
+    },
+    "ContentPicker": {
+      "addFile": "Add an attachment from your ENTA documents",
+      "addOSFile": "Add an attachment from the workstation",
+      "addH5p": "Add an H5P element",
+      "addLink": "Add a link",
+      "addSound": "Add an audio recording",
+      "addText": "Add text",
+      "addVideo": "Add a video"
+    },
+    "CourseContentItem": {
+      "audio": "Audio",
+      "file": "File",
+      "h5p": "Rich Content",
+      "link": "External Link",
+      "video": "Video",
+      "addToFolderSuccess": "File deposited",
+      "save": "Save",
+      "download": "Download"
+    },
+    "CourseDetails": {
+      "andOthers": "and {nbRemaining} others",
+      "back": "Back to courses",
+      "emptyCoursePlaceholder": "No content to display for this course",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "showDrafts": "Show unpublished",
+      "hideDrafts": "Hide unpublished"
+    },
+    "CourseEditModal": {
+      "title": "Course Material {courseName} - Session {day} at {hour}",
+      "courseTitle": "Title of the course material*",
+      "publish": "Publish",
+      "schedule": "Schedule",
+      "setPublishDate": "Schedule Publication",
+      "publishLater": "Save as draft",
+      "scheduledOn": "Scheduled for:",
+      "error": "Oops, an error occurred...",
+      "previousSession": "View previous session",
+      "description": "Description",
+      "required": "Required field",
+      "confirmClosure": "Changes are not saved, are you sure you want to exit editing and lose the changes?"
+    },
+    "CourseSchedule": {
+      "nextDay": "Next day",
+      "previousDay": "Previous day",
+      "displayWholeWeek": "Display entire week",
+      "instructions": "Please select a session to access its content"
+    },
+    "CourseTab": {
+      "errorPlaceholder": "Oops, an error occurred...",
+      "emptyPlaceholder": "No courses to display"
+    },
+    "DoneInfoModal": {
+      "header": "Done by {n} student out of {totalCount} | Done by {n} student out of {totalCount} | Done by {n} students out of {totalCount}",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "emptyPlaceholder": "this assignment has not been distributed to any students"
+    },
+    "HomeworkEditModal": {
+      "allStudents": "All students",
+      "basicInstruction": "Basic instruction",
+      "confirmClosure": "Changes are not saved, are you sure you want to exit editing and lose the changes?",
+      "docToComplete": "Doc. to complete",
+      "docToReturn": "Doc. to return",
+      "error": "Oops, an error occurred...",
+      "for": "For",
+      "getNextSessionsError": "An error occurred while retrieving the next sessions",
+      "instructions": "Instruction",
+      "duration": "Estimated duration",
+      "homeworkTitle": "Title of the assignment*",
+      "homeworkType": "Type of assignment",
+      "futureDate": "To be done by ",
+      "publish": "Publish",
+      "schedule": "Schedule",
+      "setPublishDate": "Schedule Publication",
+      "publishLater": "Save as draft",
+      "preview": "Preview",
+      "required": "Required field",
+      "scheduledOn": "Scheduled on",
+      "select": "Select",
+      "sessionDate": "To be done during the session",
+      "someStudents": "One student out of {total} | {count} students out of {total}",
+      "creationTitle": "Assign homework",
+      "updateTitle": "Edit homework",
+      "workLoad": "Workload"
+    },
+    "HomeworkTab": {
+      "later": "Later:",
+      "nextWeek": "Next week:",
+      "currentWeek": "This week:"
+    },
+    "Homework": {
+      "at": "at",
+      "delete": "Delete",
+      "doneStatus": "Done by {nbDone} student out of {nbStudents} | Done by {nbDone} student out of {nbStudents} | Done by {nbDone} students out of {nbStudents}",
+      "edit": "Edit",
+      "hourLabel": "h",
+      "minuteLabel": "min",
+      "publishedOn": "Published on ",
+      "draftStatus": "Draft",
+      "toDoHomework": "To be done for this session",
+      "sessionHomework": "To be done during the session",
+      "scheduled": "Scheduled",
+      "scheduledOn": "Scheduled for",
+      "givenHomework": "For {targetDate}"
+    },
+    "ScheduleTab": {
+      "back": "Back to weekly schedule"
+    },
+    "SessionContent": {
+      "courseContentPlaceholder": "No content"
+    },
+    "SessionDetails": {
+      "add": "Add",
+      "options": "Options",
+      "delete": "Delete",
+      "draftStatus": "Draft",
+      "edit": "Edit",
+      "error": "Oops, an error occurred...",
+      "selectSessionPlaceholder": "Please select a session to access its content",
+      "noHomeworksPlaceholder": "No assignments",
+      "sessionOf": "Session of {dateLabel}",
+      "courseContent": "Course material",
+      "notes": "Private note",
+      "notesPlaceholder": "My private note",
+      "publishedOn": "Published on {dateLabel}",
+      "workToDo": "Work to be done",
+      "scheduled": "Scheduled",
+      "scheduledOn": "Scheduled for",
+      "courseContentPlaceholder": "No course material recorded"
+    },
+    "StudentHomework": {
+      "done": "Done",
+      "error": "Oops, an error occurred...",
+      "given": "Given on {date}",
+      "modified": "modified on {date}",
+      "todo": "To do",
+      "hourLabel": "h",
+      "minuteLabel": "minutes"
+    },
+    "StudentListModal": {
+      "errorPlaceholder": "Oops, an error occurred...",
+      "title": "Recipient students",
+      "whole-class": "Whole class",
+      "specific": "Specific",
+      "save": "Save"
+    },
+    "TeacherHomeworkTab": {
+      "no-homeworks": "No assignments to correct"
+    },
+    "WeekHomeworks": {
+      "forDate": "For {dateLabel}",
+      "emptyPlaceholder": "No work to do",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "works": "No new work | {count} Assignment | {count} Assignments"
+    },
+    "WorkDay": {
+      "emptyPlaceholder": "No work"
+    },
+    "WorkItem": {
+      "hourLabel": "h",
+      "minuteLabel": "min",
+      "givenThe": "Given on {dateLabel}"
+    },
+    "WorkLoadModal": {
+      "errorPlaceholder": "Oops, an error occurred...",
+      "nbSelectedStudents": "no student from | {count} student from | {count} students from",
+      "WorkLoadFor": "Workload for {populationName}"
+    },
+    "course": "Course",
+    "serviceTitle": "Courses & Assignments",
+    "schedule": "Sessions",
+    "homework": "To do",
+    "toCorrect": "To correct"
+  },
+  "Dashboard": {
+    "ActivityFilter": {
+      "allGroups": "All spaces",
+      "filter": "Filter",
+      "news": "News",
+      "docs": "Documents",
+      "schoolLife": "School life",
+      "membership": "Group lifecycle",
+      "sessions": "Courses and assignments"
+    },
+    "ActivityHeader": {
+      "activities": "Activities",
+      "allActivities": "All activities",
+      "dashboard": "Dashboard",
+      "create-news": "Share news",
+      "showMore": "Show more"
+    },
+    "ActivityItem": {
+      "unknown-activity": "Unknown activity"
+    },
+    "ActivityWidget": {
+      "errorPlaceholder": "Oops, an error occurred...",
+      "emptyPlaceholder": "No activity to display",
+      "newsSince": "What's new since {date}"
+    },
+    "DocActivity": {
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
+      "TYPE_FILE_CREATION": "shared the file ",
+      "TYPE_FILE_MODIFICATION": "renamed the file ",
+      "TYPE_FILE_MOVE": "moved the file ",
+      "TYPE_FILE_DELETION": "deleted the file",
+      "TYPE_FOLDER_CREATION": "shared the folder ",
+      "TYPE_FOLDER_MODIFICATION": "renamed the folder ",
+      "TYPE_FOLDER_MOVE": "moved the folder ",
+      "TYPE_FOLDER_DELETION": "deleted the folder"
+    },
+    "ExpiredGroupActivity": {
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
+      "spaceIsDeactivated": "The space is deactivated. Do you want to ",
+      "deactivation": "Deactivate",
+      "reactivate": "reactivate",
+      "reactivationConfirmMessage": "Do you really want to reactivate the group {groupName}?",
+      "extension-success": "Group reactivated"
+    },
+    "HHCActivity": {
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
+      "courseDateFormat": "MMM DD, YYYY [at] HH:mm'",
+      "TYPE_SCHOOL_RENVOI": "has dismissed {firedUser} from the {courseName} course on {courseDate}",
+      "TYPE_PENDING_RENVOI": "Remember to justify the dismissal of {firedUser} from the {courseName} course on {courseDate} ",
+      "setFiringReason": "Dismissal justification"
+    },
+    "MembershipActivity": {
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
+      "addedYou": "added you to this space",
+      "added": "added ",
+      "removedYou": "removed you from this space",
+      "removed": "removed ",
+      "nb-users": "{nbUsers} users ",
+      "inThisSpace": "in this space",
+      "fromThisSpace": "from this space"
+    },
+    "NewsActivity": {
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
+      "see": "See",
+      "groups-activity": "My groups' activity feed",
+      "update": "Update",
+      "delete": "Delete",
+      "deleteNewsWarning": "Delete this news?",
+      "selectToConsult": "Consult",
+      "hasPublishedInfo": "published {newsTitle}",
+      "hasPublishedAnnounce": "published the announcement {newsTitle}",
+      "show": "Show"
+    },
+    "SessionActivity": {
+      "activityTimeFormat": "MMM DD, YYYY [at] HH:mm",
+      "TYPE_SESSION": "added a support to the {courseDate} course",
+      "TYPE_HOMEWORK": "assigned homework for the {homeworkDate} course",
+      "unknown-activity": "Unknown activity"
+    },
+    "LogbookActivity": {
+      "entryCreated": "added a word to logbook"
+    },
+    "AnnouncementItem": {
+      "announcementDate": "On {dateLabel}",
+      "by": " by ",
+      "update": "Update",
+      "delete": "Delete",
+      "removalConfirmMessage": "Please confirm the deletion of the announcement \"{target}\"",
+      "selectToConsult": "Consult",
+      "descriptionPlaceholder": "No description"
+    },
+    "AnnouncementsHeader": {
+      "announcements": "Announcements",
+      "unreadFilter": "Filter unread",
+      "create-annouce": "Create Announcement",
+      "showMore": "Show More"
+    },
+    "AnnouncementsWidget": {
+      "errorPlaceholder": "Oops, an error occurred...",
+      "emptyPlaceholder": "No announcements",
+      "unReadEmptyPlaceholder": "No new announcement"
+    },
+    "NewsDetailsModal": {
+      "update": "Update",
+      "delete": "Delete"
+    },
+    "NewsDetails": {
+      "populations": "Sent to",
+      "at": "On ",
+      "by": " by ",
+      "readBy": "Read by",
+      "update": "Update",
+      "delete": "Delete",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "contentPlaceholder": "No content for this news",
+      "removalAnnouncementConfirmMessage": "Please confirm the removal of the announcement \"{target}\"",
+      "removalGroupNewsConfirmMessage": "Delete this information?"
+    },
+    "SaveNewsModal": {
+      "creationTitle": "Share Information",
+      "updateTitle": "Update Information",
+      "schoolCreationTitle": "Create Announcement",
+      "schoolUpdateTitle": "Update Announcement",
+      "releaseDateLabel": "Release Date",
+      "namePlaceHolder": "Title",
+      "contentPlaceHolder": "Details",
+      "populationPlaceholder": "Recipients",
+      "addFile": "Add File",
+      "markAsUnreadForAll": "Notify recipients",
+      "creationSubmit": "Create",
+      "updateSubmit": "Update",
+      "sizeLimit": "Must not exceed {maxSize} characters",
+      "selectPopulations": "Please select a target population",
+      "dateInPast": "Release date must not be in the past",
+      "switchHelp": "This option notifies the recipients and the announcement will be considered unread",
+      "confirmClosure": "Do you want to close this window? (You will lose its content)",
+      "announcementCreationSuccess": "Announcement created",
+      "groupNewsCreationSuccess": "Information created",
+      "announcementUpdateSuccess": "Announcement updated",
+      "groupNewsUpdateSuccess": "Information updated"
+    },
+    "AllAnnouncementsHeader": {
+      "header": "All Announcements",
+      "dashboard": "Dashboard",
+      "unreadFilter": "Filter unread",
+      "errorPlaceholder": "Oops, an error occurred..."
+    },
+    "DiaryEventDetailsModal": {
+      "update": "Update",
+      "delete": "Delete"
+    },
+    "DiaryEventDetails": {
+      "descriptionPlaceholder": "No description for this event",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "hourRangeFormat": "From {fromHour} to {endHour}",
+      "dayRangeFormat": "From {fromDate} to {endDate}",
+      "sameYearDateFormat": "dddd, DD MMMM [at] HH:mm",
+      "otherYearDateFormat": "DD-MM-YY HH:mm",
+      "by": "By ",
+      "populations": "Sent to",
+      "readBy": "Read by",
+      "update": "Update",
+      "delete": "Delete",
+      "removalConfirmMessage": "Please confirm the removal of the event \"{target}\""
+    },
+    "DiaryEventItem": {
+      "delete": "Delete",
+      "update": "Update",
+      "removalConfirmMessage": "Please confirm the removal of the event \"{target}\"",
+      "selectToConsult": "Consult"
+    },
+    "DiaryHeader": {
+      "diary": "Diary",
+      "unreadFilter": "Filter unread",
+      "create-event": "Create Event",
+      "showMore": "Show More"
+    },
+    "DiaryWidget": {
+      "errorPlaceholder": "Oops, an error occurred...",
+      "emptyPlaceholder": "No upcoming events",
+      "unReadEmptyPlaceholder": "No new events"
+    },
+    "SaveDiaryEventModal": {
+      "creationTitle": "Create Event",
+      "updateTitle": "Update Event",
+      "namePlaceHolder": "Title",
+      "locationPlaceHolder": "Location",
+      "startDateLabel": "Event Date / Time",
+      "endDateLabel": "End Date / Time",
+      "descriptionPlaceHolder": "Details",
+      "populationPlaceholder": "Target Population",
+      "markAsUnreadForAll": "Notify recipients",
+      "creationSubmit": "Create",
+      "updateSubmit": "Update",
+      "sizeLimit": "Must not exceed {maxSize} characters",
+      "selectPopulations": "Please select a target population",
+      "dateInPast": "Start date must not be in the past",
+      "dateOrder": "End date must be after start date",
+      "switchHelp": "This option notifies the recipients and the event will be considered unread",
+      "confirmClosure": "Do you want to close this window? (You will lose its content)",
+      "creationSuccess": "Event created",
+      "updateSuccess": "Event updated",
+      "popupError": "An error occurred. Please try again"
+    },
+    "AllDiaryEventsHeader": {
+      "header": "All Events",
+      "dashboard": "Dashboard",
+      "unreadFilter": "Filter unread",
+      "errorPlaceholder": "Oops, an error occurred..."
+    },
+    "HomeworkHeader": {
+      "homeworks": "Homework",
+      "unreadFilter": "Filter unfinished",
+      "showMore": "Show More"
+    },
+    "HomeworkItem": {
+      "done": "Done",
+      "todo": "To Do",
+      "returned": "Returned",
+      "toReturn": "To Return"
+    },
+    "HomeworkWidget": {
+      "errorPlaceholder": "Oops, an error occurred...",
+      "emptyPlaceholder": "No homework to do",
+      "for": "For"
+    },
+    "InfoModalUser": {
+      "unread": "Unread",
+      "read": "Read",
+      "done": "Done",
+      "unDone": "Not Done"
+    },
+    "ReadInfoModal": {
+      "header": "Read by {n} recipient out of {totalCount} | Read by {n} recipient out of {totalCount} | Read by {n} recipients out of {totalCount}"
+    },
+    "ReadInfos": {
+      "readBy": "Read by ",
+      "usersOn": "{n} recipient out of {totalCount} | {n} recipient out of {totalCount} | {n} recipients out of {totalCount}"
+    },
+    "DayNavigation": {
+      "goAfter": "Next Day",
+      "goPrevious": "Previous Day"
+    },
+    "ScheduleHeader": {
+      "goAfter": "Next Day",
+      "goBefore": "Previous Day",
+      "schedule": "Schedule",
+      "redirect": "Go to Weekly Schedule"
+    },
+    "ScheduleItem": {
+      "room": "Room: "
+    },
+    "ScheduleWidget": {
+      "errorPlaceholder": "Oops, an error occurred...",
+      "emptyPlaceholder": "No classes"
+    },
+    "StatisticItem": {
+      "compareLabel": "{percentageGain} compared to the last 7 days.",
+      "evolution": "Evolution",
+      "activityDetails": "Activities include information, document creations, course materials, and homework"
+    },
+    "StatisticsHeader": {
+      "statistics": "Statistics"
+    },
+    "StatisticsWidget": {
+      "errorPlaceholder": "Oops, an error occurred...",
+      "emptyPlaceholder": "No statistics to display",
+      "lastWeek": "Last 7 days",
+      "nbActivities": "Activities",
+      "nbConnexions": "Sessions",
+      "nbUsers": "Unique Visitors"
+    },
+    "LogbookHeader": {
+      "Logbook": "logbook"
+    },
+    "Logbook": {
+      "UnsignedWords": "{count} Unsigned word in the communication notebook. | {count} Unsigned words in the communication notebook."
+    },
+    "serviceTitle": "Dashboard",
+    "currentSession": "Current session:"
+  },
+  "FilePicker": {
+    "FilePickerArea": {
+      "errorNoFiles": "File upload not allowed",
+      "dropZoneLabel": "Drop a document"
+    },
+    "FilePickerModalDocuments": {
+      "emptyPlaceholder": "No documents"
+    },
+    "FilePickerModal": {
+      "createFolder": "New folder",
+      "documents": "Personal",
+      "errorNoFiles": "File upload not allowed",
+      "groups": "Collaborative",
+      "headerImagePicker": "Select an image",
+      "headerFolder": "Select destination folder",
+      "headerFile": "Add a document",
+      "noSelectedFolder": "Unable to drop",
+      "submitButton": "Add",
+      "uploadFile": "Upload one or more documents",
+      "chooseCurrentFolder": "Choose this folder",
+      "chooseSelectedFolder": "Choose {folderName}"
+    },
+    "SelectFilesButtons": {
+      "addFile": "Add an attachment from your ENTA documents",
+      "addOSFile": "Add an attachment from the workstation"
+    }
+  },
+  "Groups": {
+    "GroupItem": {
+      "class": "Class",
+      "delete": "Delete",
+      "disabledSpace": "Deactivated before deletion",
+      "edit": "Edit",
+      "institutional": "Institutional",
+      "members": "No member | {count} member | {count} members",
+      "pedagogical": "Pedagogical",
+      "reactivate": "Reactivate",
+      "school": "School",
+      "subject": "Subject",
+      "warning": "Deleting this group is permanent.",
+      "extension-success": "Group reactivated"
+    },
+    "GroupList": {
+      "noContentFound": "No groups",
+      "addGroup": "Create your group!"
+    },
+    "GroupToolbar": {
+      "add": "NEW",
+      "community": "Personal",
+      "institutional": "Institutional",
+      "pedagogical": "Pedagogical",
+      "SearchPlaceholder": "Filter by name",
+      "spaces": "My spaces"
+    },
+    "EditGroupModal": {
+      "color-selection": "Color",
+      "create": "Create",
+      "description": "Description",
+      "edit": "Edit",
+      "group": "Group",
+      "isPedagogical": "Pedagogical space",
+      "name": "Group name",
+      "identity": "Identity",
+      "profile": "Profile",
+      "school": "School",
+      "searchPlaceholder": "Search by name",
+      "admin": "Administrator",
+      "creation-success": "Group created",
+      "edition-success": "Group edited",
+      "community-name-exists": "A space already exists with this name, please choose another one",
+      "reactivate-community": "A space with the same name was found, created by yourself on {creationDate}, and expired since {expirationDate}. We invite you to reactivate it.",
+      "community-reactivated": "Your community has been reactivated"
+    },
+    "SelectedGroupMemberItem": {
+      "admin": "Administrator"
+    },
+    "GroupDetails": {
+      "activities": "Activities",
+      "class": "Class",
+      "close": "Close details",
+      "delete": "Delete",
+      "details": "Details",
+      "edit": "Edit",
+      "institutionnal": "Institutional",
+      "pedagogical": "Pedagogical",
+      "school": "School",
+      "subject": "Subject",
+      "warning": "Deleting this group is permanent."
+    },
+    "GroupActivityTab": {
+      "activity-feed": "Activity feed",
+      "noActivity": "No activity in this group"
+    },
+    "DetailsTabMember": {
+      "send-message": "Send a message"
+    },
+    "GroupDetailsTab": {
+      "accessToDocuments": "Access documents",
+      "admins": "Administrator | Administrator | Administrators",
+      "expire": "Expires on {dateLabel}",
+      "members": "No member | {count} Member | {count} Members",
+      "others": "Personal | Personal",
+      "parents": "Legal guardian | Legal guardians",
+      "publishNew": "Publish news",
+      "students": "Student | Students",
+      "teachers": "Teacher | Teachers"
+    },
+    "MemberPack": {
+      "collapse": "Collapse",
+      "unCollapse": "Expand"
+    }
+  },
+  "HelpModal": {
+    "HelpMenuCategory": {
+      "confirmCategoryRemovalMessage": "Delete category permanently?"
+    },
+    "HelpMenuItem": {
+      "confirmItemRemovalMessage": "Delete article permanently?"
+    },
+    "HelpMenu": {
+      "helpMenuErrorPlaceholder": "No menu available",
+      "helpMenuEmptyPlaceholder": "No results",
+      "createCategoryLabel": "+ Create a category",
+      "loading": "Loading..."
+    },
+    "helpModalTitle": "Help Service",
+    "HelpSearch": {
+      "searchPlaceholder": "Search"
+    },
+    "CreateArticleModal": {
+      "title": "CREATE AN ARTICLE",
+      "namePlaceHolder": "Title",
+      "rolesPlaceholder": "Roles (leave blank for all)",
+      "submit": "Submit"
+    },
+    "CreateCategoryModal": {
+      "title": "CREATE A CATEGORY",
+      "namePlaceHolder": "Title",
+      "submit": "Submit"
+    },
+    "CreateExternalLinkModal": {
+      "title": "EDIT A LINK",
+      "linkLabelPlaceHolder": "Label",
+      "linkUrlPlaceHolder": "Url",
+      "overflowUrlSize": "The URL must not exceed the following size: {maxSize}",
+      "submit": "Submit"
+    },
+    "CreateQuestionModal": {
+      "title": "ADD A QUESTION/ANSWER",
+      "questionPlaceHolder": "Question",
+      "answerPlaceholder": "Answer",
+      "submit": "Submit"
+    },
+    "CreateRelatedItemModal": {
+      "title": "EDIT A RELATION",
+      "submit": "Submit"
+    },
+    "EditArticleTitleModal": {
+      "title": "EDIT THE MANUAL",
+      "titlePlaceHolder": "Title",
+      "submit": "Submit"
+    },
+    "EditManualModal": {
+      "title": "EDIT THE MANUAL",
+      "submit": "Submit"
+    },
+    "EditVideoModal": {
+      "title": "EDIT A VIDEO",
+      "videoUrlPlaceHolder": "Video URL (leave blank for no video)",
+      "videoDescriptionPlaceHolder": "Description",
+      "submit": "Submit"
+    },
+    "ExternalLinks": {
+      "external-links": "External Links",
+      "confirmLinkRemovalMessage": "Delete link permanently?"
+    },
+    "HelpArticle": {
+      "articlePlaceholder": "Please select help content",
+      "articleErrorPlaceholder": "Error loading article",
+      "edit": "Edit"
+    },
+    "HelpFAQSection": {
+      "FAQ": "F.A.Q.",
+      "frequentlyAskedQuestions": "Frequently Asked Questions",
+      "add-question": "+ Add"
+    },
+    "HelpManualSection": {
+      "manual": "MANUAL",
+      "edit": "Edit",
+      "showMore": "SHOW MORE",
+      "showLess": "SHOW LESS"
+    },
+    "HelpQuestion": {
+      "confirmQuestionRemovalMessage": "Delete question permanently?"
+    },
+    "HelpVideoSection": {
+      "editVideo": "Edit Video"
+    },
+    "RelatedItems": {
+      "related-articles": "Related Articles",
+      "confirmRelationRemovalMessage": "Delete link permanently?"
+    }
+  },
+  "Horaires": {
+    "CreateSessionModal": {
+      "title": "Creation of sessions",
+      "the": "The",
+      "in": "in slot",
+      "group": "Class / Group",
+      "subject": "Subject",
+      "teachersPlaceHolder": "Teachers",
+      "roomPlaceHolder": "Room",
+      "recurrence": "Every week until the end of the school year",
+      "Create": "Create",
+      "day": "Please select the day",
+      "time": "Please enter a valid time range (hh:mm)",
+      "startBeforeAfter": "Start time must be before end time",
+      "groupError": "Please select a group",
+      "teachers": "Please select at least one teacher",
+      "required": "Required field"
+    },
+    "DatepickerNav": {
+      "selectDate": "Select a date"
+    },
+    "HorairesToolbar": {
+      "add": "NEW",
+      "groupFilter": "Group",
+      "userInput": "Student / Teacher",
+      "childFilter": "Child",
+      "timetableOf": "Timetable of ",
+      "createSession": "Create a class",
+      "toggleGroupsFilter": "Select classes / users"
+    },
+    "SessionTeacherModal": {
+      "allSessions": "Apply replacement for all {course} sessions",
+      "confirm": "Confirm",
+      "firstSession": "First affected session: {date} from {start} to {end}",
+      "lastSession": "Last affected session:",
+      "substitute": "Substitute",
+      "substitutedBy": " substituted by ",
+      "teacherManagement": "Manage teachers for {course}"
+    },
+    "Timeline": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "TimeLineWeekItem": {
+      "weekTitle": "From {firstWeekDay} to {lastWeekDay}",
+      "weekNumber": "W.{weekNumber}"
+    },
+    "serviceTitle": "Timetable"
+  },
+  "Informations": {
+    "InformationModal": {
+      "modalHeaderLabel": "General information related to ENTA",
+      "accessibilityLabel": "Accessibility",
+      "privacyLabel": "Privacy",
+      "termsOfUseTabLabel": "Terms of Use"
+    },
+    "TermsOfUse": {
+      "confidentialityRulesLinkText": "Confidentiality Rules"
+    },
+    "VersionEditionForm": {
+      "addVersionButtonLabel": "Add a version",
+      "jsonContent": "JSON Content",
+      "versionNumber": "Version number",
+      "invalidJson": "The specified JSON structure is not valid",
+      "invalidVersionName": "The version number must have the following format X.X.X where X is a number",
+      "invalidJsonContent": "The JSON object must contain fields \"news\" and \"others\""
+    }
+  },
+  "Maintenance": {
+    "Administration": {
+      "synchro": "Synchronization",
+      "parentSynchro": "Parent Synchronization",
+      "success": "Operation completed successfully",
+      "error": "Operation completed with errors",
+      "startFsAnalysis": "Explore the file system",
+      "startFsAnalysisV2": "Explore files in the database",
+      "runAbsenceNotifications": "HHC absence notifications"
+    },
+    "GroupsMaintenance": {
+      "archive": "Archiving",
+      "groupDeletion": "Group deletion(s)",
+      "deleteGroup": "Delete group",
+      "success": "Operation completed successfully",
+      "error": "Operation completed with errors"
+    },
+    "OneShotMaintenance": {
+      "cleanupObsoleteFolders": "Cleanup obsolete folders (tmp images and sending boxes)",
+      "success": "Operation completed successfully",
+      "error": "Operation completed with errors",
+      "pAuth": "Dummy pAuth",
+      "runDataFeed": "Data feed (integration only)",
+      "setNewsPermissions": "News attachment permissions",
+      "deleteFolders": "Delete folders",
+      "setCoursePermissions": "Course and homework support permissions"
+    },
+    "PasswordUpdate": {
+      "identity": "Identity",
+      "profile": "Profile",
+      "screenName": "Login",
+      "school": "School",
+      "searchPlaceholder": "Search by name",
+      "passwordPlaceholder": "New password",
+      "update-password": "Change password",
+      "success": "Password changed",
+      "error": "Error changing password"
+    },
+    "administration": "Administration",
+    "groups": "Groups",
+    "oneShotTools": "One-shot tools",
+    "passwordUpdate": "Password update"
+  },
+  "Mediacenter": {
+    "ResourceItem": {
+      "details": "Details"
+    },
+    "serviceTitle": "Mediacenter"
+  },
+  "Facile": {
+    "AudioRecorder": {
+      "browserError": "Your browser does not support media content recording.",
+      "continue": "Continue",
+      "deniedError": "An error occurred while accessing computer resources (Access denied)",
+      "listen": "Listen",
+      "namePlaceholder": "Title",
+      "title": "Audio Recording",
+      "pause": "Pause",
+      "recording": "Recording...",
+      "restart": "Restart",
+      "start": "Start",
+      "stop": "Stop"
+    },
+    "CookiesAgreement": {
+      "cookiesPolicy": "This site only uses cookies necessary for the platform to function.",
+      "moreDetails": "More information here.",
+      "IAgree": "I understand"
+    },
+    "ImagePicker": {
+      "header": "Choose an image",
+      "saveButton": "Save",
+      "changePictureLabel": "Change picture"
+    },
+    "SessionEndAdvertising": {
+      "sessionExpiresIn": "Your session will expire in {remainingTime}",
+      "keepSessionAlive": "Keep session active"
+    }
+  },
+  "NotUsualSlotManager": {
+    "DeleteSlotModal": {
+      "deleteWarning": "Deleting this slot will be permanent",
+      "deleteSlot": "Delete",
+      "message": "Delete sessions of {slotType} on {dayLabel} from {startHour} to {endHour}",
+      "onThePeriod": "On the period",
+      "title": "Delete an school-schedule slot"
+    },
+    "EditSlotModal": {
+      "updateMessage": "Modifications will affect all sessions affected by this slot",
+      "formMoreThanRegistered": "Room capacity must be at least greater than the number of registered",
+      "allThe": "All {dayLabel}s in",
+      "the": "The {dayLabel} in",
+      "until-school-year-end": "until the end of the school year.",
+      "onThePeriod": "On the period"
+    },
+    "TimeSelection": {
+      "to": "to",
+      "required": "Required field",
+      "afterStartDate": "This date must be in the format \"HH:mm\" and must be after the start date",
+      "invalidDateFormat": "Invalid date format, please use \"HH:mm\" format"
+    }
+  },
+  "Preferences": {
+    "AccountTab": {
+      "none": "None",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "addressLabel": "Address: ",
+      "language": "Language",
+      "deleteButtonTitle": "Delete profile picture",
+      "addButtonTitle": "Add profile picture",
+      "activityReport": "Activity report",
+      "themeColor": "Theme color",
+      "userPicture": "Profile picture"
+    },
+    "MessagingTab": {
+      "addRedirection": "Add an email redirection",
+      "signature": "Signature",
+      "autoReply": "Automatic reply",
+      "save": "Save",
+      "forward": "Be notified by email",
+      "forwardInfo": "Enter an email address to be notified of new messages.",
+      "successMessage": "Settings saved",
+      "invalidEmailAddress": "Invalid email address"
+    },
+    "PreferencesModal": {
+      "accountTabLabel": "My account",
+      "infoLabel": "Settings saved - {timestamp}",
+      "messagingTabLabel": "Messaging",
+      "modalHeaderLabel": "Preferences"
+    }
+  },
+  "ScheduleManager": {
+    "GlobalScheduleSettings": {
+      "serviceTitle": "Global schedule settings",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "submit": "Submit configuration",
+      "success": "Configuration updated",
+      "error": "Failed to save"
+    },
+    "HolidayForm": {
+      "namePlaceHolder": "Name",
+      "submit": "Create",
+      "cancel": "Cancel",
+      "required": "Required field",
+      "afterStartDate": "This date must be after the start date"
+    },
+    "HolidayItem": {
+      "startDate": "Start date: ",
+      "endDate": "End date: ",
+      "delete": "Delete"
+    },
+    "Holidays": {
+      "holidays": "Holidays",
+      "addHoliday": "Add holidays",
+      "holidaysInfos": "For a pair of holiday dates, the first date is the date of the first day of vacation, and the second date is the date of the first day of classes."
+    },
+    "WeeksParity": {
+      "weekParity": "Weeks parity",
+      "weekParityInfos": "The field formatting is in the form: \"[WeekNumber],[WeekNumber], [...], [WeekNumber]\", for example: \"1,3,5\"",
+      "h1WeeksPlaceholder": "Weeks categorized as \"H1\"",
+      "h2WeeksPlaceholder": "Weeks categorized as \"H2\""
+    },
+    "YearDates": {
+      "schoolYear": "School year",
+      "startDateLabel": "Start of school year",
+      "semesterDateLabel": "Semester change date",
+      "endDateLabel": "End of school year",
+      "required": "Required field",
+      "betweenStartAndEnd": "This date must be between the start and end of the school year",
+      "afterStartDate": "This date must be after the start of the school year"
+    },
+    "SchoolScheduleSettings": {
+      "serviceTitle": "School schedule management"
+    },
+    "SchoolSlotItem": {
+      "from": "From",
+      "delete": "Delete"
+    },
+    "SchoolSlots": {
+      "schoolSlots": "School time slots",
+      "errorPlaceholder": "Oops, an error occurred...",
+      "addSlot": "Add a slot",
+      "submit": "Submit slots",
+      "success": "Slots updated",
+      "error": "Failed to save",
+      "slotsOverlaps": "Slots must not overlap"
+    },
+    "globalSettings": "Global settings",
+    "schoolSettings": "School settings"
+  },
+  "Search": {
+    "QuickSearchPanelHeader": {
+      "advancedSearch": "Advanced search",
+      "history": "Recently searched...",
+      "result": "Result",
+      "results": "Results"
+    },
+    "SearchResultPreview": {
+      "folder": "Folder",
+      "group": "Space",
+      "news": "Announcement",
+      "message": "Message",
+      "1": "News",
+      "2": "News",
+      "3": "Messaging",
+      "4": "Messaging",
+      "5": "Document",
+      "6": "Document",
+      "7": "Collaborative document",
+      "8": "Collaborative document",
+      "9": "Progress",
+      "10": "Progress",
+      "11": "Progress",
+      "12": "Progress",
+      "18": "Agenda"
+    },
+    "QuickSearchResultItem": {
+      "score": "Relevance"
+    }
+  },
+  "Statistics": {
+    "ActionsChart": {
+      "allServices": "All services",
+      "error": "Oops, an error occurred...",
+      "serviceActions": "Attendance by service (Number of accesses to the service)"
+    },
+    "GlobalStat": {
+      "messaging": "Messages sent",
+      "news": "News",
+      "error": "Oops, an error occurred...",
+      "schoolNews": "School announcements"
+    },
+    "StatsActivesUsers": {
+      "activeUsers": "No unique user on the period | unique user on the period | unique users on the period",
+      "activeUsersShort": "No unique user | unique user | unique users"
+    },
+    "StatsDoughnut": {
+      "documents": "Documents",
+      "error": "Oops, an error occurred...",
+      "homeworks": "Homework assigned",
+      "schoolLife": "school-schedule times",
+      "documentsPlaceholder": "No document uploaded",
+      "homeworkPlaceholder": "No homework assigned",
+      "schoolLifePlaceholder": "No data",
+      "1": "Simple instruction",
+      "2": "Document to complete",
+      "3": "Document to submit",
+      "slot-1": "Referral",
+      "slot-2": "Detention",
+      "slot-3": "Work to redo",
+      "slot-4": "Assistance",
+      "slot-5": "Study circle",
+      "text": "Text",
+      "other": "Other",
+      "tab": "Spreadsheet",
+      "pres": "Presentation",
+      "pdf": "PDF",
+      "html": "HTML",
+      "image": "Image",
+      "audio": "Audio",
+      "video": "Video",
+      "solidworks": "Solidworks",
+      "geogebra": "Geogebra",
+      "scratch": "Scratch",
+      "mindmap": "Mind map"
+    },
+    "VisitsChart": {
+      "allServices": "All services",
+      "globalVisits": "Global attendance (Number of connections)",
+      "error": "Oops, an error occurred..."
+    },
+    "allSchools": "All schools",
+    "serviceTitle": "Statistics"
+  },
+  "UserManagement": {
+    "AddAffectedUserModal": {
+      "add-affected-user-title": "Add a user for assignment",
+      "completionPlaceholder": "Enter the name or first name",
+      "add": "Add",
+      "added": "User(s) added"
+    },
+    "AddDelegationModal": {
+      "addDelegationTitle": "Add a delegation",
+      "completionPlaceholder": "Enter the name or first name",
+      "add": "Add"
+    },
+    "Affectations": {
+      "nameFilterPlaceholder": "Filter by name/first name",
+      "add-affected-user": "Add an assignment",
+      "pleaseSelectSchool": "Please select a school",
+      "no-affectation": "No assignment for this establishment",
+      "no-affectation-for-filter": "No assignment with the filter '{filter}'",
+      "lastName": "Last Name",
+      "firstName": "First Name",
+      "role": "Profile",
+      "nbAffectations": "Number of assignments",
+      "edit-affectations": "Edit"
+    },
+    "Delegations": {
+      "add-delegation": "Add a delegation",
+      "no-delegation": "No delegation for this establishment",
+      "pleaseSelectSchool": "Please select a school",
+      "warning": "The deletion of this administrator is permanent.",
+      "error": "Error while saving the delegation"
+    },
+    "EditUserModal": {
+      "creationTitle": "Create a user",
+      "editionTitle": "Edit a user",
+      "add": "Create",
+      "edit": "Validate",
+      "delete": "Delete",
+      "lastNamePlaceholder": "Last Name",
+      "firstNamePlaceholder": "First Name",
+      "emailPlaceholder": "Email",
+      "school": "School",
+      "role": "Profile",
+      "parentAccount": "Identifier: {0}",
+      "emailWarning": "NB: An email containing the authentication information will be sent to the created user.",
+      "deleteWarning": "The deletion of this user is permanent.",
+      "userAdded": "User created",
+      "userEdited": "User edited",
+      "userRemoved": "User deleted",
+      "popupError": "An error occurred. Please try again",
+      "existingEmail": "The email address already exists. You can use the assignment service to assign the user to your establishment.",
+      "passwordPlaceholder": "New password",
+      "update-password": "Change password",
+      "password-policy": "The password must be at least 8 characters long and contain a capital letter, a number, and a special character",
+      "success": "Password changed",
+      "error": "Error changing password",
+      "relative": "Legal guardian of"
+    },
+    "ManualUsers": {
+      "action": "Edit",
+      "pagination": "Results 1 to {currentIndex} out of {nbResults}",
+      "create": "Add a user",
+      "noUsers": "No manual accounts for this establishment",
+      "noUsersForFilter": "No manual account with filter '{filter}'",
+      "pleaseSelectSchool": "Please select a school",
+      "email": "Email",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "login": "Identifier",
+      "role": "Profile",
+      "search": "Search",
+      "nameFilterPlaceholder": "Filter by name / first name"
+    },
+    "UserAffectationsModal": {
+      "addAffectationTitle": "Manage {userName}'s assignments",
+      "affectationPlaceholder": "Enter the name or first name",
+      "collapse": "Collapse",
+      "expand": "Expand",
+      "no-affectation": "No assignment",
+      "remove-affectation": "Remove assignment",
+      "add": "Close",
+      "classnameFilterPlaceholder": "Filter",
+      "affected-by": "Assignment added by {userName} on {affectationDate}",
+      "added": "Assignment saved",
+      "removed": "Assignment removed"
+    },
+    "UserFields": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "roles": "Profile",
+      "affectations": "Assignments",
+      "isSchoolAdmin": "Local Administrator",
+      "isNewsDelegate": "Announcement Editor"
+    },
+    "serviceTitle": "User Management",
+    "manual-users": "Manual Accounts",
+    "delegations": "Delegations",
+    "affectations": "Assignments"
+  },
+  "UserCard": {
+    "errorPlaceholder": "Oops, an error occurred...",
+    "UserCardClasses": {
+      "assignment": "Assignment",
+      "discipline": "Discipline | Disciplines",
+      "mainTeacherClassesLabel": "Main teacher of",
+      "doyenClassesLabel": "Dean of"
+    },
+    "UserCardMain": {
+      "contact": "Contact this user",
+      "relative": "Legal guardian",
+      "studentLabel": "Student of {grade}th grade",
+      "homePhone": "Home"
+    },
+    "UserCardContact": {
+      "contact": "Contact this user",
+      "homePhone": "Home"
+    },
+    "UserCardResponsibility": {
+      "relativeTitle": "Legal guardian(s) ",
+      "responsibility": "In charge of "
+    },
+    "UserCardCurrentSchedule": {
+      "currently": "Currently",
+      "currentlyClass": "Currently: from {startHour} to {endHour}",
+      "noClass": "No class"
+    },
+    "UserCardHHC": {
+      "hhcTitle": "School schedules"
+    }
+  },
+  "AccessManager": {
+    "errorPlaceholder": "Oops, an error occurred...",
+    "serviceTitle": "Access Management",
+    "saveSuccess": "Category saved",
+    "noRolePlaceholder": "Error retrieving roles, please contact technical support"
+  },
+  "AdvancedSearch": {
+    "search": "Search",
+    "serviceTitle": "Advanced Search",
+    "searchPlaceholder": "Keywords",
+    "buttonLabel": "Search"
+  },
+  "AgreeTermsOfUse": {
+    "title": "Acceptance of Terms of Use",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "AllAnnouncements": {
+    "errorPlaceholder": "Oops, an error occurred...",
+    "emptyPlaceholder": "No announcements published",
+    "detailsPlaceholder": "Please select an announcement"
+  },
+  "AllDiaryEvents": {
+    "errorPlaceholder": "Oops, an error occurred...",
+    "emptyPlaceholder": "No upcoming events",
+    "detailsPlaceholder": "Please select an event"
+  },
+  "AuthenticationRequired": {
+    "title": "Authentication Required",
+    "authRequired": "Authentication is required to access the service.",
+    "redirected": "You will be redirected to the authentication page."
+  },
+  "Authentication": {
+    "title": "Authentication",
+    "authenticate": "Log in",
+    "authenticationOnGoing": "Logging in...",
+    "eelImg": "Online School Logo",
+    "edulogImg": "Edulog Logo",
+    "facileImg": "Facile Logo",
+    "entLogin": "Log in to ENTA",
+    "gvaImg": "Geneva Canton Logo",
+    "login": "Username",
+    "parentOther": "Parents / Other profiles",
+    "password": "Password",
+    "studentTeacher": "Student / Teacher",
+    "loginError": "Incorrect username or password",
+    "inactiveAccount": "Your account is inactive.",
+    "forgot-password": "Forgot password",
+    "loginLabel": "Enter your username. You will receive a password reset link for your ENTA account on the email associated with your account.",
+    "loginPlaceholder": "Username",
+    "send-recovery": "Send",
+    "sessionErrorMessage": "We are unable to identify you, please contact your school institution.",
+    "main-form": "Back to form",
+    "showPassword": "Show",
+    "check-email": "Check your email",
+    "nbRemainingTries": "You have {nbRemainingTries} attempts remaining",
+    "accountLocked": "Your account is locked for {lockoutDuration} minutes."
+  },
+  "ExternalResource": {
+    "clickHereLabel": "click here",
+    "noConfigLabel": "None of your institutions have a {resourceName} configuration.",
+    "contactLabel": "You can report an incident by {0}.",
+    "newTabLabel": "{resourceName} has been opened in a new tab.",
+    "openAgainLabel": "If you don't see it, {0} to open it again.",
+    "popupIssueLabel": "If the problem persists, your browser may be blocking pop-up windows opened from ENTA.",
+    "openInTabLabel": "You can also {0} to open the service in a new tab."
+  },
+  "NotAllowed": {
+    "notAllowed": "You do not have permission to access this service",
+    "useOthersServicesPlease": "Use the services available in your menu"
+  },
+  "NotFound": {
+    "message": "Oops, this page does not exist",
+    "serviceTitle": "Error 404: Resource not found"
+  },
+  "NotUsualSlotsManager": {
+    "groupFilter": "Group",
+    "serviceTitle": "Non-standard Schedule"
+  },
+  "PasswordChange": {
+    "title": "Update your password",
+    "passwordPlaceholder": "Password",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "submit": "Update",
+    "differentPasswords": "Passwords do not match",
+    "errorMessage": "An error occurred",
+    "passwordPolicy": "Password must be at least 8 characters long, including one uppercase letter, one number, and one special character",
+    "emptyPassword": "Please enter a password",
+    "showPassword": "Show",
+    "unknownError": "Oops, an error occurred...",
+    "logout": "Cancel"
+  },
+  "Viewer": {
+    "close": "Close"
+  },
+  "Logbook": {
+    "serviceTitle": "Logbook",
+    "entryTabLabel": "Correspondences",
+    "schoolLifeTabLabel": "School Life",
+    "newEntryButtonLabel": "New",
+    "errorPlaceholder": "Oops, an error occurred...",
+    "warningMessageDeleteEntry": "Do you really want to delete this entry?",
+    "successCreateEntry": "Entry created successfully",
+    "successUpdateEntry": "Entry updated successfully",
+    "noEntryPlaceholder": "No entry",
+    "confirmSigningTextModal": "Are you sure you want to sign this {entryType}",
+    "confirmAuthorizationTextModal": "You are about to give your authorization",
+    "notConfirmAuthorizationTextModal": "You are not going to give your authorization",
+    "confirmReminderTextModal": "You are going to remind the {nbParents} parents who have not signed yet",
+    "totalReminders": "Already reminded {nbReminders} times",
+    "lastReminderDate": "Last reminder on {reminderDate}",
+    "entriesFilters": {
+      "searchStudentPlaceholder": "Students",
+      "myEntriesButtonLabel": "My correspondences",
+      "myEntriesButtonTitle": "Show my correspondences"
+    },
+    "entriesEditModal": {
+      "modalTitle": "Create an entry - {entryType}",
+      "populationPlaceholder": "Populations",
+      "titlePlaceholder": "Title",
+      "contentPlaceholder": "Entry content",
+      "signingLabel": "Parent's Signature",
+      "authorizationLabel": "Exit Authorization",
+      "maxDateLabel": "Deadline",
+      "createSubmit": "Create",
+      "editSubmit": "Edit",
+      "warningCreateEntryMessage": "You won't be able to modify the entry once it's created and sent"
+    },
+    "statusModal": {
+      "titleModal": "Signature Details",
+      "followupSubmit": "Follow up non-signers",
+      "hasAuthorized": "Has authorized",
+      "hasNotAuthorized": "Has not authorized",
+      "isWaiting": "Waiting",
+      "hasSigned": "Has signed",
+      "hasNotSigned": "Has not signed"
+    },
+    "entriesItem": {
+      "entryPublicationDate": "On {date}",
+      "agentNbSignedInfos": "Signed for {nbSigned} students out of {nbStudents}",
+      "agentNbAuthorizationInfos": "Authorized for {nbSigned} students out of {nbStudents}",
+      "editButtonLabel": "Edit",
+      "deleteButtonLabel": "Delete",
+      "signing": "Signing",
+      "authorization": "Authorization",
+      "youSigned": "You signed on {signatureDate}",
+      "hasSigned": "Signed on {signatureDate}",
+      "signButtonLabel": "Sign",
+      "deadlinePassed": "Deadline passed",
+      "waiting": "Waiting:",
+      "waitingSigning": "Has not yet signed",
+      "waitingAuthorization": "Has not yet responded",
+      "authorizeButtonLabel": "Authorize",
+      "notAuthorizeButtonLabel": "Do not authorize",
+      "youAuthorized": "You authorized on {date}",
+      "hasAuthorized": "Authorized on {date}",
+      "youNotAuthorized": "You did not authorize",
+      "hasNotAuthorized": "Did not authorize",
+      "entryTypeInformation": "Information",
+      "entryTypeAuthorization": "Authorization",
+      "entryTypeObservation": "Observation",
+      "entryReadStatusButton": "View signatures",
+      "followupButton": "Follow up",
+      "signingParentTitle": "{parentFullName}'s Signature",
+      "authorizationParentTitle": "Authorization from {parentFullName}",
+      "yourSigningTitle": "Your {signingType}",
+      "oneSignatureRequiredTitle": "Signature of a legal guardian required",
+      "oneAuthorizationRequiredTitle": "Authorization from a legal guardian required",
+      "waitingOtherParent": "Waiting for {parentFullName}"
+    }
+  }
+}
